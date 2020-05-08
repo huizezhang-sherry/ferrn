@@ -12,3 +12,14 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/huizezhang-sherry/ferrn
 BugReports: https://github.com/huizezhang-sherry/ferrn/issues
+Imports: 
+    rlang,
+    dplyr,
+    magrittr,
+    patchwork,
+    scales,
+    forcats,
+    gganimate,
+    ggplot2,
+    tibble
+RoxygenNote: 7.1.0
