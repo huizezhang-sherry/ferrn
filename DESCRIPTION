@@ -1,13 +1,12 @@
 Package: ferrn
-Title: What the Package Does (One Line, Title Case)
+Title: Facilitate Exploration of touRR optimisatioN
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Sherry",
+           family = "Zhang",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "Huize.Zhang@monash.edu")
 Description: What the package does (one paragraph).
-License: What license it uses
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
