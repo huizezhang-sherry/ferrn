@@ -14,6 +14,7 @@
 #'@return a ggplot object plotting the trace
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
+#'@importFrom patchwork "|"
 #'@export
 #'@rdname explore_trace_all
 explore_trace_all <- function(glb_obj, magnify = FALSE){
@@ -64,7 +65,6 @@ explore_trace_all <- function(glb_obj, magnify = FALSE){
 #'@export
 #'@rdname explore_trace_all
 explore_trace_interp <- function(glb_obj, point = FALSE){
-  #browser()
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
