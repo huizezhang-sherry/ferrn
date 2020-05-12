@@ -37,20 +37,20 @@ explore_proj_pca <- function(glb_obj, animate = FALSE){
     dplyr::ungroup()
 
 
-  # re-arrange the info level - maybe this could be done in the tourr
-  if (combined$method[[1]] == "geodesic"){
-    combined <- combined %>%
-      dplyr::mutate(info =  forcats::fct_relevel(!!info,
-                                                 c("start", "direction_search",
-                                                   "best_direction_search",
-                                                   "line_search",
-                                                   "best_line_search")))
-  }else{
-    combined <- combined %>%
-      dplyr::mutate(info = forcats::fct_relevel(!!info,
-                                                c("start","random_search",
-                                                  "new_basis", "interpolation")))
-  }
+  #re-arrange the info level - maybe this could be done in the tourr
+  # if (combined$method[[1]] == "search_geodesic"){
+  #   combined <- combined %>%
+  #     dplyr::mutate(info =  forcats::fct_relevel(!!info,
+  #                                                c("start", "direction_search",
+  #                                                  "best_direction_search",
+  #                                                  "line_search",
+  #                                                  "best_line_search")))
+  # }else{
+  #   combined <- combined %>%
+  #     dplyr::mutate(info = forcats::fct_relevel(!!info,
+  #                                               c("start","random_search",
+  #                                                 "new_basis", "interpolation")))
+  # }
 
 
   p <- combined %>%
