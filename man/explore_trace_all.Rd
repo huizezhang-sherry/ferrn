@@ -3,11 +3,14 @@
 \name{explore_trace_all}
 \alias{explore_trace_all}
 \alias{explore_trace_interp}
+\alias{explore_trace_search}
 \title{explore trace plot}
 \usage{
-explore_trace_all(glb_obj, magnify = FALSE)
+explore_trace_all(glb_obj, col = info, magnify = FALSE)
 
-explore_trace_interp(glb_obj)
+explore_trace_interp(glb_obj, point = FALSE)
+
+explore_trace_search(glb_obj, col = alpha)
 }
 \arguments{
 \item{glb_obj}{a global object resulted from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package}
