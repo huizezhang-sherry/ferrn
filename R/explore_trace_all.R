@@ -90,15 +90,17 @@ explore_trace_all <- function(glb_obj, col = info, magnify = FALSE){
 
 #'@export
 #'@rdname explore_trace_all
-explore_trace_interp <- function(glb_obj, point = FALSE){
+explore_trace_interp <- function(glb_obj, x = id,  col = NULL){
   #browser()
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
   info <- rlang::sym("info")
-  id <- rlang::sym("id")
   index_val <- rlang::sym("index_val")
   method <- rlang::sym("method")
+  col <- rlang::enexpr(col)
+  x <- rlang::ensym(x)
+
 
   interp <- glb_obj %>%
     dplyr::filter(!!info == "interpolation" | (!!info == "polish_best" & !!method == "search_polish")) %>%
@@ -110,17 +112,12 @@ explore_trace_interp <- function(glb_obj, point = FALSE){
   #   #tidyr::pivot_wider(c(),names_from = id, values_from = id)
 
   p <- interp %>%
-    ggplot(aes(x = !!id, y = !!index_val, group = 1))  +
-    geom_line()
-
-  if (point){
-    p <- p + geom_point(aes(col = method))
-  }
-
+    ggplot(aes(x = !!x, y = !!index_val, group = 1))  +
+    geom_line() +
+    geom_point(aes(col = !!col))
 
   p
 }
-
 
 #'@export
 #'@rdname explore_trace_all
@@ -134,7 +131,7 @@ explore_trace_search <- function(glb_obj, col = alpha){
   index_val <- rlang::sym("index_val")
   method <- rlang::sym("method")
   alpha <- rlang::sym("alpha")
-  col <- rlang::ensym(col)
+  col <- rlang::enexpr(col)
 
   search <- glb_obj %>%
     dplyr::filter(info != "interpolation") %>%
