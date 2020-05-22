@@ -90,17 +90,13 @@ explore_trace_all <- function(glb_obj, col = info, magnify = FALSE){
 
 #'@export
 #'@rdname explore_trace_all
-explore_trace_interp <- function(glb_obj, x = id,  col = NULL){
-  #browser()
+explore_trace_interp <- function(glb_obj = NULL, iter = id,  col = tries){
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
   info <- rlang::sym("info")
   index_val <- rlang::sym("index_val")
   method <- rlang::sym("method")
-  col <- rlang::enexpr(col)
-  x <- rlang::ensym(x)
-
 
   interp <- glb_obj %>%
     dplyr::filter(!!info == "interpolation" | (!!info == "polish_best" & !!method == "search_polish")) %>%
@@ -112,34 +108,57 @@ explore_trace_interp <- function(glb_obj, x = id,  col = NULL){
   #   #tidyr::pivot_wider(c(),names_from = id, values_from = id)
 
   p <- interp %>%
-    ggplot(aes(x = !!x, y = !!index_val, group = 1))  +
+    ggplot(aes(x = !!rlang::enexpr(iter), y = !!index_val,
+               group = 1, col = as.factor(!!rlang::enexpr(col))))  +
     geom_line() +
-    geom_point(aes(col = !!col))
+    geom_point()
 
   p
 }
 
 #'@export
 #'@rdname explore_trace_all
-explore_trace_search <- function(glb_obj, col = alpha){
+explore_trace_search <- function(glb_obj, iter = tries, cutoff = 15){
+  dt <- glb_obj %>%
+    dplyr::filter(info != "interpolation") %>%
+    dplyr::mutate(id = dplyr::row_number()) %>%
+    dplyr::group_by(!!rlang::enexpr(iter)) %>%
+    dplyr::add_count()
+
+  dt_count <- dt %>%
+    dplyr::count() %>%
+    dplyr::mutate(index_val = min(dt$index_val))
+
+  largest <- eval(rlang::expr(`$`(dt, !!rlang::enexpr(iter))))
+
+  p <- dt %>%
+    ggplot(aes(x = !!rlang::enexpr(iter), y = index_val, col = as.factor(!!rlang::enexpr(iter)))) +
+    geom_boxplot(data = dt %>% dplyr::filter(tries %in% which(dt_count$n >= cutoff))) +
+    geom_point(data = dt %>% dplyr::filter(tries %in% which(dt_count$n < cutoff))) +
+    geom_line(data = dt %>% dplyr::group_by(!!rlang::ensym(iter)) %>% dplyr::filter(index_val == max(index_val)),
+              aes(group = 1)) +
+    geom_label(data = dt_count, aes(y = 0.99*index_val, label = n)) +
+    scale_x_continuous(breaks = seq(1, max(largest), 1)) +
+    theme(legend.position = "none")
+
+  p
+
+}
+
+
+explore_trace_parameter <- function(glb_obj, var, iter = tries){
   #browser()
 
-  # check there is a column called info, there is a value called interpolation
-  # check other variables as well
-  info <- rlang::sym("info")
-  id <- rlang::sym("id")
-  index_val <- rlang::sym("index_val")
-  method <- rlang::sym("method")
-  alpha <- rlang::sym("alpha")
-  col <- rlang::enexpr(col)
-
-  search <- glb_obj %>%
+  dt <- glb_obj %>%
     dplyr::filter(info != "interpolation") %>%
-    dplyr::mutate(id = dplyr::row_number()-1)
+    dplyr::mutate(id = dplyr::row_number())
 
-  p <- search %>%
-    ggplot(aes(x = !!id, y = !!index_val, group = 1, col = !!col))  +
-    geom_point()
+  p <- dt %>%
+    ggplot(aes(x =!!rlang::enexpr(iter), y = !!rlang::enexpr(var))) +
+    geom_jitter(aes(col = as.factor(!!rlang::enexpr(iter)))) +
+    geom_line(data = dt %>% dplyr::group_by(!!rlang::enexpr(iter)) %>% dplyr::filter(index_val == max(index_val)),
+              aes(group = 1))  +
+    theme(legend.position = "none")
 
   p
 }
