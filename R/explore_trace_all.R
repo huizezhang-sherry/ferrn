@@ -99,7 +99,7 @@ explore_trace_interp <- function(glb_obj = NULL, iter = id,  col = tries){
   method <- rlang::sym("method")
 
   interp <- glb_obj %>%
-    dplyr::filter(!!info == "interpolation" | (!!info == "polish_best" & !!method == "search_polish")) %>%
+    dplyr::filter((!!info == "interpolation" & !!method != "search_polish") | (!!info == "polish_best" & !!method == "search_polish")) %>%
     dplyr::mutate(id = dplyr::row_number()-1)
 
   # bg <- interp %>%
