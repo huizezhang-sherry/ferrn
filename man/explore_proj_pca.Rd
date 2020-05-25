@@ -4,7 +4,7 @@
 \alias{explore_proj_pca}
 \title{explore projected basis in 2D}
 \usage{
-explore_proj_pca(glb_obj, animate = FALSE)
+explore_proj_pca(glb_obj, col = col, animate = FALSE)
 }
 \arguments{
 \item{glb_obj}{a global object resulted from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package}
