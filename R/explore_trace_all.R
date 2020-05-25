@@ -14,7 +14,6 @@
 #'@return a ggplot object plotting the trace
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
-#'@importFrom patchwork "|"
 #'@export
 #'@rdname explore_trace_all
 explore_trace_all <- function(glb_obj, col = info, magnify = FALSE){
@@ -54,33 +53,33 @@ explore_trace_all <- function(glb_obj, col = info, magnify = FALSE){
 
 
 
-  if (magnify){
-
-    if (glb_obj$method %>% tail(1) != "search_geodesic"){
-      message("magnify is only applicable for geodesic search!")
-    }else{
-      tries_to_magnify <- glb_obj %>%
-        dplyr::filter(loop == max(!!loop, na.rm = TRUE)) %>%
-        dplyr::pull(tries) %>% unique()
-
-      frac <- glb_obj %>%
-        dplyr::filter(tries == tries_to_magnify, info != "line_search")
-
-      num_level <- length(levels(as.factor(glb_obj$info)))
-      level_selected <- which(levels(as.factor(glb_obj$info)) %in% levels(as.factor(frac$info)))
-
-      p_frac <- frac %>%
-        ggplot(aes(x = !!id, y = !!index_val, col = !!col)) +
-        geom_point() +
-        xlim(1, max(frac$id)) +
-        scale_color_manual(values = scales::hue_pal()(num_level)[level_selected]) +
-        theme(legend.position = "none")
-
-      p <- p_frac/p +
-        patchwork::plot_layout(heights = c(1, 2), guides = "collect")
-    }
-
-  }
+  # if (magnify){
+  #
+  #   if (glb_obj$method %>% tail(1) != "search_geodesic"){
+  #     message("magnify is only applicable for geodesic search!")
+  #   }else{
+  #     tries_to_magnify <- glb_obj %>%
+  #       dplyr::filter(loop == max(!!loop, na.rm = TRUE)) %>%
+  #       dplyr::pull(tries) %>% unique()
+  #
+  #     frac <- glb_obj %>%
+  #       dplyr::filter(tries == tries_to_magnify, info != "line_search")
+  #
+  #     num_level <- length(levels(as.factor(glb_obj$info)))
+  #     level_selected <- which(levels(as.factor(glb_obj$info)) %in% levels(as.factor(frac$info)))
+  #
+  #     p_frac <- frac %>%
+  #       ggplot(aes(x = !!id, y = !!index_val, col = !!col)) +
+  #       geom_point() +
+  #       xlim(1, max(frac$id)) +
+  #       scale_color_manual(values = scales::hue_pal()(num_level)[level_selected]) +
+  #       theme(legend.position = "none")
+  #
+  #     p <- p_frac/p +
+  #       patchwork::plot_layout(heights = c(1, 2), guides = "collect")
+  #   }
+  #
+  # }
 
   p
 
