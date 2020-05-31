@@ -61,34 +61,36 @@ compute_pca <- function(glb_obj) {
 
 #'@export
 #'@rdname explore_proj_pca
-explore_proj_pca <- function(glb_obj, col = info, animate = FALSE){
+explore_proj_pca <- function(glb_obj, col = info, size = 1, alpha = 1, animate = FALSE){
   #browser()
 
   animate_id <- rlang::sym("animate_id")
+  info <- rlang::sym("info")
   PC1 <- rlang::sym("PC1")
   PC2 <- rlang::sym("PC2")
   col <- rlang::enexpr(col)
 
-  #re-arrange the info level - maybe this could be done in the tourr
-  # if (combined$method[[1]] == "search_geodesic"){
-  #   combined <- combined %>%
-  #     dplyr::mutate(info =  forcats::fct_relevel(!!info,
-  #                                                c("start", "direction_search",
-  #                                                  "best_direction_search",
-  #                                                  "line_search",
-  #                                                  "best_line_search")))
-  # }else{
-  #   combined <- combined %>%
-  #     dplyr::mutate(info = forcats::fct_relevel(!!info,
-  #                                               c("start","random_search",
-  #                                                 "new_basis", "interpolation")))
-  # }
-
   pca_obj <- compute_pca(glb_obj)
 
-  p <- pca_obj$combined %>%
-    ggplot(aes(x = !!PC1, y = !!PC2)) +
+  if (pca_obj$combined$method[1] == "search_geodesic"){
+    dt <- pca_obj$combined %>%
+      dplyr::mutate(info =  forcats::fct_relevel(!!info,
+                                                 c("start", "direction_search",
+                                                   "best_direction_search",
+                                                   "line_search",
+                                                   "best_line_search")))
+  }else{
+    dt <- pca_obj$combined
+  }
+
+
+  p <- dt %>%
+    ggplot(aes(x = !!PC1, y = !!PC2), size = size, alpha = alpha) +
     geom_point(aes(col = !!col)) +
+    geom_point(data = dt %>% filter(info == "start"), col = scales::hue_pal()(6)[1]) +
+    geom_point(data = dt %>% filter(info == "best_direction_search"), col = scales::hue_pal()(6)[3]) +
+    geom_point(data = dt %>% filter(info == "best_line_search"), col = scales::hue_pal()(6)[5]) +
+
     #stat_density(aes(fill = after_stat(nlevel)), geom = "polygon", alpha = 0.5) +
     theme(aspect.ratio = 1)
 
