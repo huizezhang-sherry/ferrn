@@ -19,7 +19,7 @@ compute_pca <- function(glb_obj) {
   num_row <- nrow(glb_obj$basis[[1]])
 
   if (num_col != 1){
-    stop("Ferrn only supports PCA for 1D projection")
+    stop("Ferrn will flatten projection matrix to colomn vector")
   }
 
   basis <- purrr::flatten_dbl(glb_obj$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
@@ -34,7 +34,7 @@ compute_pca <- function(glb_obj) {
     dplyr::mutate(animate_id = dplyr::group_indices()) %>%
     dplyr::ungroup()
 
-  return(list(pca_summary = pca, combined = combined ))
+  return(list(pca_summary = pca, combined = combined))
 
 
   # if(num_col == 2){
