@@ -118,17 +118,18 @@ explore_trace_interp <- function(glb_obj = NULL, iter = id,  col = tries){
 #'@export
 #'@rdname explore_trace_all
 explore_trace_search <- function(glb_obj, iter = tries, cutoff = 15){
+  #browser()
+
   dt <- glb_obj %>%
     dplyr::filter(info != "interpolation") %>%
-    dplyr::mutate(id = dplyr::row_number()) %>%
-    dplyr::group_by(!!rlang::enexpr(iter)) %>%
-    dplyr::add_count()
+    dplyr::mutate(id = dplyr::row_number())
 
   dt_count <- dt %>%
-    dplyr::count() %>%
-    dplyr::mutate(index_val = min(dt$index_val))
+    group_by(!!rlang::enexpr(iter)) %>%
+    summarise(n = n())
 
   largest <- eval(rlang::expr(`$`(dt, !!rlang::enexpr(iter))))
+  lowest_index_val <- min(glb_obj$index_val)
 
   p <- dt %>%
     ggplot(aes(x = !!rlang::enexpr(iter), y = index_val, col = as.factor(!!rlang::enexpr(iter)))) +
@@ -136,7 +137,7 @@ explore_trace_search <- function(glb_obj, iter = tries, cutoff = 15){
     geom_point(data = dt %>% dplyr::filter(tries %in% which(dt_count$n < cutoff))) +
     geom_line(data = dt %>% dplyr::group_by(!!rlang::ensym(iter)) %>% dplyr::filter(index_val == max(index_val)),
               aes(group = 1)) +
-    geom_label(data = dt_count, aes(y = 0.99*index_val, label = n)) +
+    geom_label(data = dt_count, aes(y = 0.99*lowest_index_val, label = n)) +
     scale_x_continuous(breaks = seq(1, max(largest), 1)) +
     theme(legend.position = "none")
 
