@@ -2,6 +2,7 @@
 #'@export
 #'@rdname botanical_color
 botanical_palettes <- list(
+  #quantitative
   daisy = c("#252B53", # purple
             "#C493D9", # pink
             #"#FDFAF6", # white
@@ -11,33 +12,43 @@ botanical_palettes <- list(
             "#60812A" # green
   ),
 
-  fern = c("#50372B", # mature dark brown
-           "#654431", # mature dark brown
-           "#804C23", # young curl brown
-           "#895825", # mature light brown
-           "#A66C22", # mature light brown
-           "#8F6B30", # young lighter brown
-           "#AF8A45", # young lighter brown
+  # sequential
+  fern_brown = c("#50372B", # mature dark brown
+           # "#654431", # mature dark brown
+           # "#804C23", # young curl brown
+           # "#895825", # mature light brown
+           "#A66C22" # mature light brown
+           # "#8F6B30", # young lighter brown
+           # "#AF8A45" # young lighter brown
+  ),
 
-           "#A3C3BE", # leaves light green
-           "#C2EE94", # young stem green
-           "#A7BA3D", # young stem green
-           "#72A066", # leaves dark green
-           "#557664", # mature green
-           "#385730", # mature green
-           #"#5A6929", # young stem green
-           "#2D431A" # leaves darker green
+  fern_green = c(
+
+           "#2D431A", # leaves darker green
+           # "#385730", # mature green
+           # "#557664", # mature green
+           "#72A066" # leaves dark green
+           # "#5A6929", # young stem green
+           # "#A3C3BE", # leaves light green
+           # "#A7BA3D", # young stem green
+           # "#C2EE94" # young stem green
 
   ),
 
-  cherry = c("#F3B422", # yellow
+  cherry = c("#524340",  #orchre
+             "#B4B754",  # green
+             "#F3B422", # yellow
+             "#D5A04D" # yellow with shade
              #"#FDFAF6", # white
-             "#524340", #orchre
-             "#B4B754" # green
+
+
   ),
 
-  acacia = c("#FBCC0A", # yellow
-             "#51771A" # leaf
+  # diverging
+  acacia = c("#7F6219", # dark yellow
+             "#FBCC0A" # yellow
+             #"#FEF531" # bright yellow
+             #"#51771A" # leaf
   ),
 
   banksia = c("#4B1E07", # edge red
@@ -65,7 +76,7 @@ botanical_pal <- function(palette = "fern", reverse = FALSE){
 scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE){
 
   if (discrete){
-    discrete_scale("color", "botanical", palette = botanical_pal(palette))
+    discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
   }else{
     scale_color_gradientn(colors = botanical_pal(palette)(256))
   }
