@@ -10,23 +10,23 @@
 #'@importFrom dplyr bind_cols group_by mutate ungroup
 #'@export
 #'@rdname explore_proj_pca
-compute_pca <- function(glb_obj) {
+compute_pca <- function(dt) {
 
   info <- sym("info")
   tries <- sym("tries")
   loop <- sym("loop")
 
-  num_col <- ncol(glb_obj$basis[[1]])
-  num_row <- nrow(glb_obj$basis[[1]])
+  num_col <- ncol(dt$basis[[1]])
+  num_row <- nrow(dt$basis[[1]])
 
-  basis <- purrr::flatten_dbl(glb_obj$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
+  basis <- purrr::flatten_dbl(dt$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
 
   if (num_col == 1){
     pca <- basis %>% stats::prcomp(scale. = TRUE)
 
-    combined <- tibble::as_tibble(basis) %>%
+    aug <- tibble::as_tibble(basis) %>%
       bind_cols(pca %>% stats::predict() %>% tibble::as_tibble()) %>%
-      bind_cols(glb_obj %>% dplyr::select(-basis)) %>%
+      bind_cols(dt %>% dplyr::select(-basis)) %>%
       group_by(!!tries, !!loop, !!info) %>%
       mutate(animate_id = dplyr::group_indices()) %>%
       ungroup()
@@ -41,10 +41,10 @@ compute_pca <- function(glb_obj) {
     v2 <- pca2 %>% stats::predict() %>% tibble::as_tibble()
     colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2*num_row)))
 
-    combined <- tibble::as_tibble(basis) %>%
+    aug <- tibble::as_tibble(basis) %>%
       bind_cols(v1) %>%
       bind_cols(v2) %>%
-      bind_cols(glb_obj %>% dplyr::select(-basis)) %>%
+      bind_cols(dt %>% dplyr::select(-basis)) %>%
       group_by(!!tries, !!loop, !!info) %>%
       mutate(animate_id = dplyr::group_indices()) %>%
       ungroup()
@@ -53,42 +53,58 @@ compute_pca <- function(glb_obj) {
     stop("ferrn can only handle 1d or 2d bases!")
   }
 
-  return(list(pca_summary = pca, combined = combined))
-
-
+  return(list(pca_summary = pca, aug = aug))
 
 }
 
 #'@export
+#'@importFrom dplyr filter
 #'@rdname explore_proj_pca
-explore_proj_pca <- function(glb_obj, col = info, size = 1, alpha = 1, animate = FALSE){
+explore_proj_pca <- function(dt, col = info, size = 10, alpha = 1, facet = NULL,  animate = FALSE){
 
-  animate_id <- rlang::sym("animate_id")
+  animate_id <- sym("animate_id")
   col <- rlang::enexpr(col)
+  facet <- rlang::enexpr(facet)
 
-  pca_obj <- compute_pca(glb_obj)
-
-  if (pca_obj$combined$method[2] == "search_geodesic"){
-    dt <- pca_obj$combined %>%
-      dplyr::mutate(info =  forcats::fct_relevel(info,
-                                                 c("start", "direction_search",
-                                                   "best_direction_search",
-                                                   "line_search",
-                                                   "best_line_search")))
+  if ("PC1" %in% colnames(dt)){
+    pca_obj <- dt
   }else{
-    dt <- pca_obj$combined
+    pca_obj <- compute_pca(dt)$aug
   }
 
 
-  p <- dt %>%
-    ggplot(aes(x = PC1, y = PC2), size = size, alpha = alpha) +
-    geom_point(aes(col = !!col)) +
-    geom_point(data = dt %>% dplyr::filter(info == "start"), col = scales::hue_pal()(6)[1]) +
-    geom_point(data = dt %>% dplyr::filter(info == "best_direction_search"), col = scales::hue_pal()(6)[3]) +
-    geom_point(data = dt %>% dplyr::filter(info == "best_line_search"), col = scales::hue_pal()(6)[5]) +
+  if (pca_obj$method[2] == "search_geodesic"){
+    pca_obj <- pca_obj %>%
+      mutate(info =  forcats::fct_relevel(info,
+                                                 c("direction_search",
+                                                   "best_direction_search",
+                                                   "line_search",
+                                                   "best_line_search")))
+  } else if (pca_obj$method[2] == "search_better"){
+   pca_boj <- pca_obj %>%
+     mutate(info == forcats::fct_relevel(info, c("new_basis", "interpolation",
+                                                 "random_search")))
+  }
 
+  start <- pca_obj %>% group_by(!!facet) %>% dplyr::filter(!!sym("id") == 1)
+  last <- pca_obj  %>% dplyr::filter(!!sym("info") == "interpolation") %>%  group_by(!!facet) %>%
+    filter(!!sym("id") == max(id))
+
+
+  p <- pca_obj %>%
+    ggplot(aes(x = !!sym("PC1"), y = !!sym("PC2"), col = !!col), alpha = alpha) +
+    geom_point() +
+    geom_point(data = start, size = size) +
+    geom_point(data = last, size = size) +
+    scale_color_botanical(palette = "banksia") +
     #stat_density(aes(fill = after_stat(nlevel)), geom = "polygon", alpha = 0.5) +
-    theme(aspect.ratio = 1)
+    theme(aspect.ratio = 1, legend.position = "bottom") +
+    facet_wrap(vars(!!facet))
+
+  if ("theory" %in% pca_obj$info){
+    p <-  p +
+      geom_point(data = pca_obj %>% filter(!!sym("info") == "theory"), size = size)
+  }
 
   if (animate){
     p <- p +
