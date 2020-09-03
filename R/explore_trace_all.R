@@ -89,16 +89,18 @@ explore_trace_all <- function(glb_obj, col = info, magnify = FALSE){
 
 #'@export
 #'@rdname explore_trace_all
-explore_trace_interp <- function(glb_obj = NULL, iter = id,  col = tries){
+explore_trace_interp <- function(dt, iter = id,  col = tries, facet = NULL){
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
   info <- rlang::sym("info")
   index_val <- rlang::sym("index_val")
   method <- rlang::sym("method")
+  facet <- rlang::enexpr(facet)
 
-  interp <- glb_obj %>%
+  interp <- dt %>%
     dplyr::filter((!!info == "interpolation" & !!method != "search_polish") | (!!info == "polish_best" & !!method == "search_polish")) %>%
+    group_by(!!facet) %>%
     dplyr::mutate(id = dplyr::row_number()-1)
 
   # bg <- interp %>%
@@ -110,7 +112,9 @@ explore_trace_interp <- function(glb_obj = NULL, iter = id,  col = tries){
     ggplot(aes(x = !!rlang::enexpr(iter), y = !!index_val,
                group = 1, col = as.factor(!!rlang::enexpr(col))))  +
     geom_line() +
-    geom_point()
+    geom_point() +
+    facet_wrap(vars(!!facet), labeller = "label_both") +
+    scale_color_botanical(palette = "banksia")
 
   p
 }
