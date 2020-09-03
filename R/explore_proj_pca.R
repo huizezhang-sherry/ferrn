@@ -60,7 +60,7 @@ compute_pca <- function(dt) {
 #'@export
 #'@importFrom dplyr filter
 #'@rdname explore_proj_pca
-explore_proj_pca <- function(dt, col = info, size = 10, alpha = 1, facet = NULL,  animate = FALSE){
+explore_proj_pca <- function(dt, axis = 1,  col = info, size = 10, alpha = 1, facet = NULL,  animate = FALSE){
 
   animate_id <- sym("animate_id")
   col <- rlang::enexpr(col)
@@ -90,9 +90,18 @@ explore_proj_pca <- function(dt, col = info, size = 10, alpha = 1, facet = NULL,
   last <- pca_obj  %>% dplyr::filter(!!sym("info") == "interpolation") %>%  group_by(!!facet) %>%
     filter(!!sym("id") == max(id))
 
+ if (axis == 1) {
+   x = sym("PC1"); y = sym("PC2")
+ } else if (axis == 2) {
+   num <- length(stringr::str_subset(colnames(dt), "PC"))/2
+   x = sym(paste0("PC", num + 1)); y = sym(paste0("PC", num + 2))
+ } else{
+   stop("ferrn can only handle 1d or 2d bases!")
+ }
+
 
   p <- pca_obj %>%
-    ggplot(aes(x = !!sym("PC1"), y = !!sym("PC2"), col = !!col), alpha = alpha) +
+    ggplot(aes(x = !!x, y = !!y, col = !!col), alpha = alpha) +
     geom_point() +
     geom_point(data = start, size = size) +
     geom_point(data = last, size = size) +
