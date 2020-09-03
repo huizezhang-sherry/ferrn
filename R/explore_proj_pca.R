@@ -7,55 +7,55 @@
 #'@return a ggplot object plotting the 2D projection of the basis
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
+#'@importFrom dplyr bind_cols group_by mutate ungroup
 #'@export
 #'@rdname explore_proj_pca
 compute_pca <- function(glb_obj) {
 
-  info <- rlang::sym("info")
-  tries <- rlang::sym("tries")
-  loop <- rlang::sym("loop")
+  info <- sym("info")
+  tries <- sym("tries")
+  loop <- sym("loop")
 
   num_col <- ncol(glb_obj$basis[[1]])
   num_row <- nrow(glb_obj$basis[[1]])
 
-  if (num_col != 1){
-    message("Ferrn will flatten projection matrix to colomn vector")
-  }
-
   basis <- purrr::flatten_dbl(glb_obj$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
 
-  pca <- basis %>%
-    stats::prcomp()
+  if (num_col == 1){
+    pca <- basis %>% stats::prcomp(scale. = TRUE)
 
-  combined <- tibble::as_tibble(basis) %>%
-    dplyr::bind_cols(pca %>% stats::predict() %>% tibble::as_tibble()) %>%
-    dplyr::bind_cols(glb_obj %>% dplyr::select(-basis)) %>%
-    dplyr::group_by(!!tries, !!loop, !!info) %>%
-    dplyr::mutate(animate_id = dplyr::group_indices()) %>%
-    dplyr::ungroup()
+    combined <- tibble::as_tibble(basis) %>%
+      bind_cols(pca %>% stats::predict() %>% tibble::as_tibble()) %>%
+      bind_cols(glb_obj %>% dplyr::select(-basis)) %>%
+      group_by(!!tries, !!loop, !!info) %>%
+      mutate(animate_id = dplyr::group_indices()) %>%
+      ungroup()
+
+  } else if(num_col ==2){
+    message("Ferrn will perform PCA separately on each dimension")
+    pca1 <- stats::prcomp(basis[,1:num_row], scale. = TRUE)
+    pca2 <- stats::prcomp(basis[,(num_row + 1):(2*num_row)], scale. = TRUE)
+    pca <- list(pca1, pca2)
+
+    v1 <- pca1 %>% stats::predict() %>% tibble::as_tibble()
+    v2 <- pca2 %>% stats::predict() %>% tibble::as_tibble()
+    colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2*num_row)))
+
+    combined <- tibble::as_tibble(basis) %>%
+      bind_cols(v1) %>%
+      bind_cols(v2) %>%
+      bind_cols(glb_obj %>% dplyr::select(-basis)) %>%
+      group_by(!!tries, !!loop, !!info) %>%
+      mutate(animate_id = dplyr::group_indices()) %>%
+      ungroup()
+
+  } else{
+    stop("ferrn can only handle 1d or 2d bases!")
+  }
 
   return(list(pca_summary = pca, combined = combined))
 
 
-  # if(num_col == 2){
-  #   v1 <- stats::prcomp(basis[,1:num_row]) %>%
-  #     stats::predict() %>%
-  #     tibble::as_tibble() %>%
-  #     dplyr::select(PC1)
-  #
-  #   v2 <- stats::prcomp(basis[,(num_row + 1):(2*num_row)]) %>%
-  #     stats::predict() %>%
-  #     tibble::as_tibble() %>%
-  #     dplyr::select(PC1) %>% rename(PC2 = PC1)
-  #
-  #   combined <- tibble::as_tibble(basis) %>%
-  #     dplyr::bind_cols(v1) %>%
-  #     dplyr::bind_cols(v2) %>%
-  #     dplyr::bind_cols(glb_obj %>% dplyr::select(-basis)) %>%
-  #     dplyr::group_by(!!tries, !!loop, !!info) %>%
-  #     dplyr::mutate(animate_id = dplyr::group_indices()) %>%
-  #     dplyr::ungroup()
-  #
 
 }
 
