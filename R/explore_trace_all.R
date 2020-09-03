@@ -113,9 +113,12 @@ explore_trace_interp <- function(dt, iter = id,  col = tries, facet = NULL){
                group = 1, col = as.factor(!!rlang::enexpr(col))))  +
     geom_line() +
     geom_point() +
-    facet_wrap(vars(!!facet), labeller = "label_both") +
-    scale_color_botanical(palette = "banksia")
 
+    scale_color_botanical(palette = "fern")
+
+  if (!is.null(facet)){
+    p <- p + facet_wrap(vars(!!facet), labeller = "label_both")
+  }
   p
 }
 

@@ -35,6 +35,10 @@ botanical_palettes <- list(
 
   ),
 
+  fern = c("#A66C22",  # mature light brown
+            "#72A066" # leaves dark green
+            ),
+
   cherry = c("#524340",  #orchre
              "#B4B754",  # green
              "#F3B422", # yellow
