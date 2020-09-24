@@ -3,8 +3,8 @@
 #'@param group the grouping variable, useful when there are multiple trial of tours in dt
 #'@param var the variable to select if not returning everything
 #'@examples
-#'\dontrun{gholes_1d_better %>% get_start()}
-#'\dontrun{bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method, var = c(basis, index_val))}
+#'gholes_1d_better %>% get_start()
+#'bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method, var = c(basis, index_val))
 #'@return a tibble with the start/best observation(s)
 #'@export
 #'@rdname get_best
@@ -37,7 +37,15 @@ get_start <- function(dt){
 }
 
 
-#' @title bind the theoretical basis to a given data object
+#' bind external data to a given data object
+#'
+#'These functions allows you to bind the theoretical best basis and randomly generated basis on a hollow sphere to the data object
+#'
+#' In a simulation setting, the theoretical best basis is known for a given problem.
+#'
+#' Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
+#' Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
+#'
 #' @param dt the data object being binded to
 #' @param matrix the theoretical basis to bind
 #' @param index the index function used to calculate index value
@@ -47,6 +55,7 @@ get_start <- function(dt){
 #' dt <- bind_rows(holes_1d_better, holes_1d_geo)
 #' dt %>%  bind_theoretical(best, tourr::holes()) %>% tail()
 #' @export
+#' @rdname bind_theoretical
 bind_theoretical <- function(dt, matrix, index){
 
   num_row <- nrow(dt$basis[[1]])
@@ -56,7 +65,7 @@ bind_theoretical <- function(dt, matrix, index){
     stop("theoretical best matrix need to be of the same dimension as the data object!")
   }
 
-  if (tourr::is_orthonormal(matrix)){
+  if (!tourr::is_orthonormal(matrix)){
     stop("The theoretical best basis needs to be orthonormal!")
   }
 
@@ -74,5 +83,40 @@ bind_theoretical <- function(dt, matrix, index){
 
 
   dt %>% dplyr::bind_rows(theo)
+
+}
+
+
+
+#' @export
+#' @rdname bind_theoretical
+bind_random <- function(dt, ...){
+  p <- nrow(dt$basis[[1]])
+  ncol <- nrow(dt$basis[[1]])
+
+  fix_matrix <- function(dt){
+    dt <- t(as.matrix(dt, nrow = p, ncol = ncol))
+    rownames(dt) <- NULL
+    dt
+  }
+
+  sphere_basis <- geozoo::sphere.hollow(p, ...)$points %>%
+    as_tibble() %>%
+    dplyr::nest_by(id = dplyr::row_number()) %>%
+    ungroup() %>%
+    mutate(basis = purrr::map(data, fix_matrix)) %>%
+    dplyr::select(basis)
+
+  sphere_points <- sphere_basis %>%
+    dplyr::mutate(index_val = NA,
+           tries = NA,
+           info = "randomly_generated",
+           loop = NA,
+           method = "randomly_generated",
+           alpha = NA,
+           id = max(dt$id) + 1,
+           )
+
+  dt %>% dplyr::bind_rows(sphere_points)
 
 }
