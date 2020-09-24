@@ -8,9 +8,9 @@
 \usage{
 explore_trace_all(glb_obj, col = info, magnify = FALSE)
 
-explore_trace_interp(glb_obj, point = FALSE)
+explore_trace_interp(dt, iter = id, col = tries, facet = NULL)
 
-explore_trace_search(glb_obj, col = alpha)
+explore_trace_search(glb_obj, iter = tries, cutoff = 15)
 }
 \arguments{
 \item{glb_obj}{a global object resulted from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package}

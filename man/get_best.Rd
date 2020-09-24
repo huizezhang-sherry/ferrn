@@ -2,20 +2,27 @@
 % Please edit documentation in R/get.R
 \name{get_best}
 \alias{get_best}
+\alias{get_start}
 \title{get the basis/ index value}
 \usage{
-get_best(dt)
+get_best(dt, group = NULL, var = NULL)
+
+get_start(dt)
 }
 \arguments{
 \item{dt}{a data object from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package}
+
+\item{group}{the grouping variable, useful when there are multiple trial of tours in dt}
+
+\item{var}{the variable to select if not returning everything}
 }
 \value{
-a list with the best index value along with its basis
+a tibble with the start/best observation(s)
 }
 \description{
 get the basis/ index value
 }
 \examples{
-\dontrun{get_best(holes_1d_better)$basis}
-\dontrun{get_best(holes_1d_better)$index_val}
+gholes_1d_better \%>\% get_start()
+bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_best(group = method, var = c(basis, index_val))
 }
