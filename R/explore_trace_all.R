@@ -89,35 +89,31 @@ explore_trace_all <- function(glb_obj, col = info, magnify = FALSE){
 
 #'@export
 #'@rdname explore_trace_all
-explore_trace_interp <- function(dt, iter = id,  col = tries, facet = NULL){
+explore_trace_interp <- function(dt, iter = id,  col = tries, group = NULL){
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
-  info <- rlang::sym("info")
-  index_val <- rlang::sym("index_val")
-  method <- rlang::sym("method")
-  facet <- rlang::enexpr(facet)
+  group <- rlang::enexpr(group)
+  iter <- rlang::enexpr(iter)
+  col <- rlang::enexpr(col)
 
-  interp <- dt %>%
-    dplyr::filter((!!info == "interpolation" & !!method != "search_polish") | (!!info == "polish_best" & !!method == "search_polish")) %>%
-    group_by(!!facet) %>%
-    dplyr::mutate(id = dplyr::row_number()-1)
+  a <- dt %>%
+    group_by(!!group) %>%
+    dplyr::summarise(row = dplyr::n(), diff = max(!!iter)- min(!!iter) + 1)
 
-  # bg <- interp %>%
-  #   dplyr::group_by(tries) %>%
-  #   dplyr::filter(id == min(id) | id == max(id))
-  #   #tidyr::pivot_wider(c(),names_from = id, values_from = id)
+  if(!all(a$row == a$diff, TRUE)){
+    stop("there is gap(s) in the variable iter!")
+  }
 
-  p <- interp %>%
-    ggplot(aes(x = !!rlang::enexpr(iter), y = !!index_val,
-               group = 1, col = as.factor(!!rlang::enexpr(col))))  +
+
+  p <- dt %>%
+    ggplot(aes(x = !!iter, y = !!sym("index_val"), col = as.factor(!!col)))  +
     geom_line() +
-    geom_point() +
+    geom_point()
 
-    scale_color_botanical(palette = "fern")
-
-  if (!is.null(facet)){
-    p <- p + facet_wrap(vars(!!facet), labeller = "label_both")
+  if (!is.null(group)){
+    p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1) +
+      theme(legend.position = "bottom")
   }
   p
 }
