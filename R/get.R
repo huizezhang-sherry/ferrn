@@ -56,6 +56,10 @@ bind_theoretical <- function(dt, matrix, index){
     stop("theoretical best matrix need to be of the same dimension as the data object!")
   }
 
+  if (tourr::is_orthonormal(matrix)){
+    stop("The theoretical best basis needs to be orthonormal!")
+  }
+
   method_index <- !is.na(unique(dt$method))
   method <- unique(dt$method)[method_index]
 
