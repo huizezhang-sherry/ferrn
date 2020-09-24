@@ -1,52 +1,51 @@
-#'@title explore projected basis in 2D
-#'@param glb_obj a global object resulted from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package
-#'@param animate a boolean value indicating whether to animate the projected basis across id
+#' Plotting the data object in the space reduced by PCA
+#'
+#' The set of functions returns a primary ggplot object
+#' that plots the data object in a space reduced by PCA.
+#' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
+#'
+#'@param dt a data object to plot
 #'@examples
-#'\dontrun{holes_1d_geo %>% explore_proj_pca()}
-#'\dontrun{bind_rows(holes_1d_geo, holes_1d_geo_polish) %>% explore_proj_pca(col = method)}
-#'@return a ggplot object plotting the 2D projection of the basis
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@importFrom dplyr bind_cols group_by mutate ungroup
+#'@importFrom tibble as_tibble
 #'@export
-#'@rdname explore_proj_pca
+#'@rdname explore_space_pca
 compute_pca <- function(dt) {
 
-  info <- sym("info")
-  tries <- sym("tries")
-  loop <- sym("loop")
+  info <- sym("info"); tries <- sym("tries"); loop <- sym("loop")
 
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
   basis <- purrr::flatten_dbl(dt$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
 
+  # Compute PCA
   if (num_col == 1){
     pca <- basis %>% stats::prcomp(scale. = TRUE)
 
-    aug <- tibble::as_tibble(basis) %>%
-      bind_cols(pca %>% stats::predict() %>% tibble::as_tibble()) %>%
-      bind_cols(dt %>% dplyr::select(-basis)) %>%
-      group_by(!!tries, !!loop, !!info) %>%
-      mutate(animate_id = dplyr::group_indices()) %>%
+    aug <- dt %>%
+      bind_cols(pca %>% stats::predict() %>% as_tibble(.name_repair = "minimal")) %>%
+      group_by(!!tries,  !!info) %>%
+      mutate(animate_id = dplyr::cur_group_id()) %>%
       ungroup()
 
-  } else if(num_col ==2){
+  } else if(num_col == 2){
     message("Ferrn will perform PCA separately on each dimension")
     pca1 <- stats::prcomp(basis[,1:num_row], scale. = TRUE)
     pca2 <- stats::prcomp(basis[,(num_row + 1):(2*num_row)], scale. = TRUE)
     pca <- list(pca1, pca2)
 
-    v1 <- pca1 %>% stats::predict() %>% tibble::as_tibble()
-    v2 <- pca2 %>% stats::predict() %>% tibble::as_tibble()
+    v1 <- pca1 %>% stats::predict() %>% as_tibble(.name_repair = "minimal")
+    v2 <- pca2 %>% stats::predict() %>% as_tibble(.name_repair = "minimal")
     colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2*num_row)))
 
-    aug <- tibble::as_tibble(basis) %>%
+    aug <- dt %>%
       bind_cols(v1) %>%
       bind_cols(v2) %>%
-      bind_cols(dt %>% dplyr::select(-basis)) %>%
-      group_by(!!tries, !!loop, !!info) %>%
-      mutate(animate_id = dplyr::group_indices()) %>%
+      group_by(!!tries, !!info) %>%
+      mutate(animate_id = dplyr::cur_group_id()) %>%
       ungroup()
 
   } else{
@@ -54,73 +53,37 @@ compute_pca <- function(dt) {
   }
 
   return(list(pca_summary = pca, aug = aug))
-
 }
 
-#'@export
+#'@param pca a data object after performing PCA
+#'@param col the color of the point
+#'@examples
+#'best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
+#'with_theo <- bind_theoretical(holes_1d_better, best, tourr::holes())
+#'pca <- compute_pca(with_theo)$aug
+#'explore_space_pca(pca)
+#'@import ggplot2
 #'@importFrom dplyr filter
-#'@rdname explore_proj_pca
-explore_proj_pca <- function(dt, axis = 1,  col = info, size = 10, alpha = 1, facet = NULL,  animate = FALSE){
-
-  animate_id <- sym("animate_id")
+#'@export
+#'@rdname explore_space_pca
+explore_space_pca <- function(pca, col = info){
   col <- rlang::enexpr(col)
-  facet <- rlang::enexpr(facet)
 
-  if ("PC1" %in% colnames(dt)){
-    pca_obj <- dt
-  }else{
-    pca_obj <- compute_pca(dt)$aug
+  if (!sum(stringr::str_detect(colnames(pca), "PC"))){
+    stop("The data object needs to contain principal components!")
   }
 
-
-  if (pca_obj$method[2] == "search_geodesic"){
-    pca_obj <- pca_obj %>%
-      mutate(info =  forcats::fct_relevel(info,
-                                                 c("direction_search",
-                                                   "best_direction_search",
-                                                   "line_search",
-                                                   "best_line_search")))
-  } else if (pca_obj$method[2] == "search_better"){
-   pca_boj <- pca_obj %>%
-     mutate(info == forcats::fct_relevel(info, c("new_basis", "interpolation",
-                                                 "random_search")))
-  }
-
-  start <- pca_obj %>% group_by(!!facet) %>% dplyr::filter(!!sym("id") == 1)
-  last <- pca_obj  %>% dplyr::filter(!!sym("info") == "interpolation") %>%  group_by(!!facet) %>%
-    filter(!!sym("id") == max(id))
-
- if (axis == 1) {
-   x = sym("PC1"); y = sym("PC2")
- } else if (axis == 2) {
-   num <- length(stringr::str_subset(colnames(dt), "PC"))/2
-   x = sym(paste0("PC", num + 1)); y = sym(paste0("PC", num + 2))
- } else{
-   stop("ferrn can only handle 1d or 2d bases!")
- }
-
-
-  p <- pca_obj %>%
-    ggplot(aes(x = !!x, y = !!y, col = !!col), alpha = alpha) +
+  p <- pca %>%
+    ggplot(aes(x = PC1, y = PC2, col = !!col)) +
     geom_point() +
-    geom_point(data = start, size = size) +
-    geom_point(data = last, size = size) +
-    scale_color_botanical(palette = "banksia") +
-    #stat_density(aes(fill = after_stat(nlevel)), geom = "polygon", alpha = 0.5) +
-    theme(aspect.ratio = 1, legend.position = "bottom") +
-    facet_wrap(vars(!!facet))
+    theme(aspect.ratio = 1)
 
-  if ("theory" %in% pca_obj$info){
-    p <-  p +
-      geom_point(data = pca_obj %>% filter(!!sym("info") == "theory"), size = size)
-  }
-
-  if (animate){
+  if ("theoretical" %in% pca$info){
     p <- p +
-      gganimate::transition_time(!!animate_id) +
-      gganimate::shadow_mark()
+      geom_point(data = pca %>% filter(info == "theoretical"), size = 10) +
+      geom_point(data = get_start(pca), size = 10)
   }
 
   p
-}
 
+}
