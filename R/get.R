@@ -1,14 +1,17 @@
-#'@title get the basis/ index value
-#'@param dt a data object from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package
-#'@param group the grouping variable, useful when there are multiple trial of tours in dt
-#'@param var the variable to select if not returning everything
+#' get the basis/ index value
+#'
+#'This set of functions allows you to grab the best basis found by the optimisation in guided tour
+#'as well as the bases on the interpolation path.
+#'
+#'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@param group The grouping variable, useful when there are multiple algorithms in the data object
 #'@examples
-#'gholes_1d_better %>% get_start()
-#'bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method, var = c(basis, index_val))
-#'@return a tibble with the start/best observation(s)
+#'holes_1d_better %>% get_start()
+#'holes_1d_better %>% get_interp()
+#'bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
 #'@export
 #'@rdname get_best
-get_best <- function(dt, group = NULL, var = NULL){
+get_best <- function(dt, group = NULL){
 
   group <- rlang::enexpr(group)
   var <- rlang::enexprs(var)
@@ -34,6 +37,17 @@ get_start <- function(dt){
 
   dt %>%
     dplyr::filter(!!sym("id") == 1)
+}
+
+
+#' @export
+#' @rdname get_best
+get_interp <- function(dt, group = NULL){
+
+  dt %>%
+    filter(!!sym("info") == "interpolation") %>%
+    group_by(!!enexpr(group)) %>%
+    mutate(id = dplyr::row_number())
 }
 
 
