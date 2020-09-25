@@ -44,8 +44,30 @@ get_start <- function(dt){
 #' @rdname get_best
 get_interp <- function(dt, group = NULL){
 
+  group <- enexpr(group)
   dt %>%
     filter(!!sym("info") == "interpolation") %>%
-    group_by(!!enexpr(group)) %>%
+    group_by(!!group) %>%
     mutate(id = dplyr::row_number())
+}
+
+
+#' @export
+#' @rdname get_best
+get_search_count <- function(dt, iter = tries, group = NULL){
+  group <- enexpr(group)
+  iter <- enexpr(iter)
+
+  dt_search <- dt %>%
+    filter(!!sym("info") != "interpolation") %>%
+    group_by(!!iter)
+
+  if (!is.null(group)) dt_search <- dt_search %>% group_by(!!iter, !!group)
+
+  dt_count <- dt_search %>%
+    dplyr::summarise(n = dplyr::n())
+
+  if (!is.null(group)) dt_count <- dt_count %>% dplyr::arrange(!!group)
+
+  dt_count
 }

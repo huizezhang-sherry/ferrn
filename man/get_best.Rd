@@ -3,26 +3,29 @@
 \name{get_best}
 \alias{get_best}
 \alias{get_start}
+\alias{get_interp}
+\alias{get_search_count}
 \title{get the basis/ index value}
 \usage{
-get_best(dt, group = NULL, var = NULL)
+get_best(dt, group = NULL)
 
 get_start(dt)
+
+get_interp(dt, group = NULL)
+
+get_search_count(dt, iter = tries, group = NULL)
 }
 \arguments{
-\item{dt}{a data object from the \href{https://cran.r-project.org/web/packages/tourr}{tourr} package}
+\item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{group}{the grouping variable, useful when there are multiple trial of tours in dt}
-
-\item{var}{the variable to select if not returning everything}
-}
-\value{
-a tibble with the start/best observation(s)
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 }
 \description{
-get the basis/ index value
+This set of functions allows you to grab the best basis found by the optimisation in guided tour
+as well as the bases on the interpolation path.
 }
 \examples{
-gholes_1d_better \%>\% get_start()
-bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_best(group = method, var = c(basis, index_val))
+holes_1d_better \%>\% get_start()
+holes_1d_better \%>\% get_interp()
+bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_best(group = method)
 }
