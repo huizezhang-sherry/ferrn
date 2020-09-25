@@ -21,5 +21,11 @@ Imports:
     forcats,
     gganimate,
     ggplot2,
-    tibble
+    tibble,
+    purrr,
+    geozoo,
+    tourr,
+    stringr
 RoxygenNote: 7.1.0
+Depends: 
+    R (>= 2.10)

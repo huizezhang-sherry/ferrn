@@ -10,10 +10,11 @@
 #' @param dt the data object being binded to
 #' @param matrix the theoretical basis to bind
 #' @param index the index function used to calculate index value
+#' @param ... Additional parameters pass to geozoo::sphere.hollow()
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 #' holes_1d_better %>% bind_theoretical(best, tourr::holes()) %>% tail()
-#' dt <- bind_rows(holes_1d_better, holes_1d_geo)
+#' dt <- dplyr::bind_rows(holes_1d_better, holes_1d_geo)
 #' dt %>%  bind_theoretical(best, tourr::holes()) %>% tail()
 #' @export
 #' @rdname bind_theoretical
@@ -65,8 +66,8 @@ bind_random <- function(dt, ...){
     as_tibble() %>%
     dplyr::nest_by(id = dplyr::row_number()) %>%
     ungroup() %>%
-    mutate(basis = purrr::map(data, fix_matrix)) %>%
-    dplyr::select(basis)
+    mutate(basis = purrr::map(.data$data, fix_matrix)) %>%
+    dplyr::select(.data$basis)
 
   sphere_points <- sphere_basis %>%
     dplyr::mutate(index_val = NA,

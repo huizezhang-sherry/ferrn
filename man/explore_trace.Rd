@@ -25,11 +25,11 @@ trace the index value of search/ interpolation points in guided tour optimisatio
 }
 \examples{
 # Summary plots for search points in two algorithms
-1D <- holes_1d_better \%>\% mutate(proj = "1D"),
-2D <- holes_2d_better_max_tries \%>\% mutate(proj = "2D")
-bind_rows(1D, 2D) \%>\% explore_trace_search(group = proj)
+proj_1D <- holes_1d_better \%>\% dplyr::mutate(proj = "1D")
+proj_2D <- holes_2d_better_max_tries \%>\% dplyr::mutate(proj = "2D")
+dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj)
 
 # Compare the trace of interpolated points in two algorithms
-interp <- bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_interp(group = method)
+interp <- dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_interp(group = method)
 interp \%>\% explore_trace_interp(group = method)
 }

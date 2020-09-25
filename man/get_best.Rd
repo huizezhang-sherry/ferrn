@@ -19,6 +19,8 @@ get_search_count(dt, iter = tries, group = NULL)
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+
+\item{iter}{The variable used to be counted by}
 }
 \description{
 This set of functions allows you to grab the best basis found by the optimisation in guided tour
@@ -27,5 +29,5 @@ as well as the bases on the interpolation path.
 \examples{
 holes_1d_better \%>\% get_start()
 holes_1d_better \%>\% get_interp()
-bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_best(group = method)
+dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_best(group = method)
 }

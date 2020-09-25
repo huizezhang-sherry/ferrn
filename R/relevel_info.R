@@ -27,12 +27,12 @@ relevel_geo <- function(dt){
     stop("use relevel_geo only when the searching method is search_geodesic!")
   }
 
-    dt %>%
-      mutate(info = forcats::fct_relevel(info, c("new_basis",
-                                                 "direction_search",
-                                                 "best_direction_search",
-                                                 "best_line_search",
-                                                 "interpolation")))
+  dt %>%
+    mutate(info = forcats::fct_relevel(.data$info, c("new_basis",
+                                                     "direction_search",
+                                                     "best_direction_search",
+                                                     "best_line_search",
+                                                     "interpolation")))
 
 }
 
@@ -50,8 +50,8 @@ relevel_better <- function(dt){
   }
 
   dt %>%
-    mutate(info = forcats::fct_relevel(info, c("random_search",
-                                                "new_basis",
-                                                "interpolation")))
+    mutate(info = forcats::fct_relevel(.data$info, c("random_search",
+                                                     "new_basis",
+                                                     "interpolation")))
 
 }

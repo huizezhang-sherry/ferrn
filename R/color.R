@@ -13,25 +13,25 @@ botanical_palettes <- list(
   ),
 
   # sequential
-  fern_brown = c("#50372B", # mature dark brown
-           # "#654431", # mature dark brown
-           # "#804C23", # young curl brown
-           # "#895825", # mature light brown
-           "#A66C22" # mature light brown
-           # "#8F6B30", # young lighter brown
-           # "#AF8A45" # young lighter brown
+  fern_brown = c("#50372B", # mature dark brown##
+           "#654431", # mature dark brown
+           "#804C23", # young curl brown
+           "#895825", # mature light brown
+           "#A66C22", # mature light brown ##
+           "#8F6B30", # young lighter brown
+           "#AF8A45" # young lighter brown
   ),
 
   fern_green = c(
 
-           "#2D431A", # leaves darker green
-           # "#385730", # mature green
-           # "#557664", # mature green
-           "#72A066" # leaves dark green
-           # "#5A6929", # young stem green
-           # "#A3C3BE", # leaves light green
-           # "#A7BA3D", # young stem green
-           # "#C2EE94" # young stem green
+           "#2D431A", # leaves darker green##
+           "#385730", # mature green
+           "#557664", # mature green
+           "#72A066", # leaves dark green##
+           "#5A6929", # young stem green
+           "#A3C3BE", # leaves light green
+           "#A7BA3D", # young stem green
+           "#C2EE94" # young stem green
 
   ),
 
@@ -41,18 +41,18 @@ botanical_palettes <- list(
 
   cherry = c("#524340",  #orchre
              "#B4B754",  # green
-             "#F3B422", # yellow
-             "#D5A04D" # yellow with shade
+             "#F3B422" # yellow
+             #"#D5A04D" # yellow with shade
              #"#FDFAF6", # white
 
 
   ),
 
   # diverging
-  acacia = c("#7F6219", # dark yellow
-             "#FBCC0A" # yellow
-             #"#FEF531" # bright yellow
-             #"#51771A" # leaf
+  acacia = c("#7F6219", # dark yellow##
+             "#FBCC0A", # yellow
+             #"#FEF531", # bright yellow
+             "#51771A" # leaf##
   ),
 
   banksia = c("#4B1E07", # edge red
@@ -62,6 +62,9 @@ botanical_palettes <- list(
 )
 
 #'@title Color interpolation for botanical palettes
+#'@param palette Color palette from the botanical_palette
+#'@param reverse logical, if the color should be reversed
+#'@importFrom grDevices colorRampPalette
 #'@export
 #'@rdname botanical_color
 botanical_pal <- function(palette = "fern", reverse = FALSE){
@@ -75,6 +78,10 @@ botanical_pal <- function(palette = "fern", reverse = FALSE){
 
 
 #'@title A scale function in compatible with ggplot2
+#'@param ... Arguments passed into scale_color_gradientn
+#'@param palette Color palette from the botanical_palette
+#'@param discrete logical, whether use a discrete or continuous color
+#'@param reverse logical, if the color should be reversed
 #'@export
 #'@rdname botanical_color
 scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE){
@@ -82,7 +89,7 @@ scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, revers
   if (discrete){
     discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
   }else{
-    scale_color_gradientn(colors = botanical_pal(palette)(256))
+    scale_color_gradientn(colors = botanical_pal(palette, ...)(256))
   }
 
 }

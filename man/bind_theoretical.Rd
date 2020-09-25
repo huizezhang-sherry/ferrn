@@ -15,6 +15,8 @@ bind_random(dt, ...)
 \item{matrix}{the theoretical basis to bind}
 
 \item{index}{the index function used to calculate index value}
+
+\item{...}{Additional parameters pass to geozoo::sphere.hollow()}
 }
 \description{
 These functions allows you to bind the theoretical best basis and randomly generated basis on a hollow sphere to the data object
@@ -28,6 +30,6 @@ Generating random points on the sphere is useful to preceive the data object in 
 \examples{
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 holes_1d_better \%>\% bind_theoretical(best, tourr::holes()) \%>\% tail()
-dt <- bind_rows(holes_1d_better, holes_1d_geo)
+dt <- dplyr::bind_rows(holes_1d_better, holes_1d_geo)
 dt \%>\%  bind_theoretical(best, tourr::holes()) \%>\% tail()
 }

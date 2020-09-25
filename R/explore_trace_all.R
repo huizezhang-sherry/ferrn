@@ -9,12 +9,12 @@
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
 #'@examples
 #'# Summary plots for search points in two algorithms
-#'1D <- holes_1d_better %>% mutate(proj = "1D"),
-#'2D <- holes_2d_better_max_tries %>% mutate(proj = "2D")
-#'bind_rows(1D, 2D) %>% explore_trace_search(group = proj)
+#'proj_1D <- holes_1d_better %>% dplyr::mutate(proj = "1D")
+#'proj_2D <- holes_2d_better_max_tries %>% dplyr::mutate(proj = "2D")
+#'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj)
 #'
 #'# Compare the trace of interpolated points in two algorithms
-#'interp <- bind_rows(holes_1d_better, holes_1d_geo) %>% get_interp(group = method)
+#'interp <- dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_interp(group = method)
 #'interp %>% explore_trace_interp(group = method)
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
@@ -94,5 +94,5 @@ explore_trace_search <- function(dt, iter = tries, col = tries, cutoff = 15, gro
   p
 
 }
-
+globalVariables(c("id", "tries", "n", "index_val"))
 

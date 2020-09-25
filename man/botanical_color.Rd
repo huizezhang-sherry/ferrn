@@ -7,7 +7,7 @@
 \alias{scale_color_botanical}
 \title{A customised color palette based on australian botanicals}
 \format{
-An object of class \code{list} of length 5.
+An object of class \code{list} of length 7.
 }
 \usage{
 botanical_palettes
@@ -15,6 +15,15 @@ botanical_palettes
 botanical_pal(palette = "fern", reverse = FALSE)
 
 scale_color_botanical(..., palette = "fern", discrete = TRUE, reverse = FALSE)
+}
+\arguments{
+\item{palette}{Color palette from the botanical_palette}
+
+\item{reverse}{logical, if the color should be reversed}
+
+\item{...}{Arguments passed into scale_color_gradientn}
+
+\item{discrete}{logical, whether use a discrete or continuous color}
 }
 \description{
 A customised color palette based on australian botanicals

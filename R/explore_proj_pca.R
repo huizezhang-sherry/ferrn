@@ -5,7 +5,6 @@
 #' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
 #'
 #'@param dt a data object to plot
-#'@examples
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@importFrom dplyr bind_cols group_by mutate ungroup
@@ -87,3 +86,4 @@ explore_space_pca <- function(pca, col = info){
   p
 
 }
+globalVariables(c("PC1", "PC2", "info"))

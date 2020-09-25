@@ -5,10 +5,11 @@
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
+#'@param iter The variable used to be counted by
 #'@examples
 #'holes_1d_better %>% get_start()
 #'holes_1d_better %>% get_interp()
-#'bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
+#'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
 #'@export
 #'@rdname get_best
 get_best <- function(dt, group = NULL){
@@ -71,3 +72,4 @@ get_search_count <- function(dt, iter = tries, group = NULL){
 
   dt_count
 }
+globalVariables(c("id"))
