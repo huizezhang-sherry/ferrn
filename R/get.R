@@ -72,4 +72,20 @@ get_search_count <- function(dt, iter = tries, group = NULL){
 
   dt_count
 }
+
+#' @export
+get_basis_matrix <- function(dt, colname = TRUE){
+
+  if (!"basis" %in% colnames(dt)){
+    stop("The dataset needs to have a basis column")
+  }
+
+  num_col <- ncol(dt$basis[[1]])
+  num_row <- nrow(dt$basis[[1]])
+
+  basis <- purrr::flatten_dbl(dt$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
+  colnames(basis) <- paste0("V", 1: num_row * num_col)
+  basis
+}
+
 globalVariables(c("id"))

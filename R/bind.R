@@ -18,7 +18,7 @@
 #' dt %>%  bind_theoretical(best, tourr::holes()) %>% tail()
 #' @export
 #' @rdname bind_theoretical
-bind_theoretical <- function(dt, matrix, index){
+bind_theoretical <- function(dt, matrix, index, data_raw){
 
   num_row <- nrow(dt$basis[[1]])
   num_col <- ncol(dt$basis[[1]])
@@ -62,7 +62,8 @@ bind_random <- function(dt, ...){
     dt
   }
 
-  sphere_basis <- geozoo::sphere.hollow(p, ...)$points %>%
+  set.seed(1)
+  sphere_basis <- geozoo::sphere.hollow(p,...)$points %>%
     as_tibble() %>%
     dplyr::nest_by(id = dplyr::row_number()) %>%
     ungroup() %>%
@@ -80,5 +81,21 @@ bind_random <- function(dt, ...){
     )
 
   dt %>% dplyr::bind_rows(sphere_points)
+
+}
+
+#' @export
+bind_random_matrix <- function(basis, ...){
+
+  if (!is.matrix(basis)){
+    stop("You need to supply a matrix!")
+  }
+
+  p <- ncol(basis)
+  set.seed(1)
+  sphere_basis <- geozoo::sphere.hollow(p, ...)$points
+  colnames(sphere_basis) <- colnames(basis)
+
+  basis %>% rbind(sphere_basis)
 
 }

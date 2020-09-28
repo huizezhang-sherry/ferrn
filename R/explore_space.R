@@ -3,6 +3,9 @@
 #' The set of functions returns a primary ggplot object
 #' that plots the data object in a space reduced by PCA.
 #' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
+#'@example
+#'
+#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
 #'
 #'@param dt a data object to plot
 #'@import ggplot2
@@ -10,15 +13,19 @@
 #'@importFrom dplyr bind_cols group_by mutate ungroup
 #'@importFrom tibble as_tibble
 #'@export
-#'@rdname explore_space_pca
-compute_pca <- function(dt) {
+#'@rdname explore_space
+compute_pca <- function(dt, random = TRUE) {
 
   info <- sym("info"); tries <- sym("tries"); loop <- sym("loop")
 
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
-  basis <- purrr::flatten_dbl(dt$basis)  %>% matrix(ncol = num_row * num_col, byrow = TRUE)
+
+  if (random){
+    dt <- dt %>% bind_random(n = 1000)
+    basis <- get_basis_matrix(dt) %>% bind_random_matrix(n = 1000)
+  }
 
   # Compute PCA
   if (num_col == 1){
@@ -64,26 +71,52 @@ compute_pca <- function(dt) {
 #'@import ggplot2
 #'@importFrom dplyr filter
 #'@export
-#'@rdname explore_space_pca
-explore_space_pca <- function(pca, col = info){
+#'@rdname explore_space
+explore_space_pca <- function(dt, pca = TRUE, col = info){
   col <- rlang::enexpr(col)
 
-  if (!sum(stringr::str_detect(colnames(pca), "PC"))){
+  if (!pca){
+    dt <- compute_pca(dt)$aug
+  }
+
+
+  if (!sum(stringr::str_detect(colnames(dt), "PC"))){
     stop("The data object needs to contain principal components!")
   }
 
-  p <- pca %>%
-    ggplot(aes(x = PC1, y = PC2, col = !!col)) +
-    geom_point() +
+  p <- dt %>%
+    ggplot(aes(x = PC1, y = PC2,)) +
+    geom_point(data = dt %>% dplyr::filter(info != "randomly_generated"), aes(col = !!col)) +
+    geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), col = "grey") +
     theme(aspect.ratio = 1)
 
-  if ("theoretical" %in% pca$info){
+  if ("theoretical" %in% dt$info){
     p <- p +
-      geom_point(data = pca %>% filter(info == "theoretical"), size = 10) +
-      geom_point(data = get_start(pca), size = 10)
+      geom_point(data = dt %>% filter(info == "theoretical"), size = 10) +
+      geom_point(data = get_start(dt), size = 5)
   }
 
   p
 
 }
+
+#' @export
+#' @rdname explore_space
+explore_space_tour <- function(dt, color, pal = pal, ...){
+
+  color <- rlang::enexpr(color)
+  basis <- get_basis_matrix(dt) %>% bind_random_matrix()
+
+
+  n_rand <- nrow(basis) - nrow(dt)
+  pal <- c("#D95F02","#7570B3", "#E7298A")
+  col <- c(pal[as.factor(dt %>% dplyr::pull(!!color))], rep("#D3D3D3", n_rand))
+
+  tourr::animate_xy(basis, col = col)
+
+
+}
+
+
+
 globalVariables(c("PC1", "PC2", "info"))
