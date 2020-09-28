@@ -14,8 +14,7 @@
 #'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj)
 #'
 #'# Compare the trace of interpolated points in two algorithms
-#'interp <- dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_interp(group = method)
-#'interp %>% explore_trace_interp(group = method)
+#'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% explore_trace_interp(group = method)
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@export
@@ -28,7 +27,10 @@ explore_trace_interp <- function(dt, iter = id,  col = tries, group = NULL){
   iter <- rlang::enexpr(iter)
   col <- rlang::enexpr(col)
 
-  a <- dt %>%
+
+  dt_interp <- get_interp(dt, group = !!group)
+
+  a <- dt_interp %>%
     group_by(!!group) %>%
     dplyr::summarise(row = dplyr::n(), diff = max(!!iter) - min(!!iter) + 1)
 
@@ -37,7 +39,7 @@ explore_trace_interp <- function(dt, iter = id,  col = tries, group = NULL){
   }
 
 
-  p <- dt %>%
+  p <- dt_interp %>%
     ggplot(aes(x = !!iter, y = !!sym("index_val"), col = as.factor(!!col)))  +
     geom_line() +
     geom_point()

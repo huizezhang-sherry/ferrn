@@ -30,6 +30,5 @@ proj_2D <- holes_2d_better_max_tries \%>\% dplyr::mutate(proj = "2D")
 dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj)
 
 # Compare the trace of interpolated points in two algorithms
-interp <- dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_interp(group = method)
-interp \%>\% explore_trace_interp(group = method)
+dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% explore_trace_interp(group = method)
 }
