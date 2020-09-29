@@ -35,7 +35,7 @@ bind_theoretical <- function(dt, matrix, index, data_raw){
   method <- unique(dt$method)[method_index]
 
   theo <- tibble::tibble(basis = list(matrix),
-                         index_val = index(matrix),
+                         index_val = index(data_raw %*% matrix),
                          tries = NA,
                          info = "theoretical",
                          loop = NA,

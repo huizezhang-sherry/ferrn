@@ -24,7 +24,7 @@ compute_pca <- function(dt, random = TRUE) {
 
   if (random){
     dt <- dt %>% bind_random(n = 1000)
-    basis <- get_basis_matrix(dt) %>% bind_random_matrix(n = 1000)
+    basis <- get_basis_matrix(dt)
   }
 
   # Compute PCA
@@ -75,17 +75,12 @@ compute_pca <- function(dt, random = TRUE) {
 explore_space_pca <- function(dt, pca = TRUE, col = info){
   col <- rlang::enexpr(col)
 
-  if (!pca){
+  if (pca){
     dt <- compute_pca(dt)$aug
   }
 
-
-  if (!sum(stringr::str_detect(colnames(dt), "PC"))){
-    stop("The data object needs to contain principal components!")
-  }
-
   p <- dt %>%
-    ggplot(aes(x = PC1, y = PC2,)) +
+    ggplot(aes(x = PC1, y = PC2)) +
     geom_point(data = dt %>% dplyr::filter(info != "randomly_generated"), aes(col = !!col)) +
     geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), col = "grey") +
     theme(aspect.ratio = 1)
