@@ -11,6 +11,7 @@
 #' @param matrix The theoretical basis to bind
 #' @param index The index function used to calculate index value
 #' @param raw_data The original data, used to compute the index value for the theoretical best basis
+#' @param basis A matrix with each basis flattern into one raw. Use \code{get_basis_matrix(dt)} for an easy extraction of the basis
 #' @param ... Additional parameters pass to geozoo::sphere.hollow()
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
@@ -85,9 +86,9 @@ bind_random <- function(dt, ...){
 
 #' @export
 #' @rdname bind_theoretical
-bind_random_matrix <- function(dt, ...){
+bind_random_matrix <- function(basis, ...){
 
-  basis <- dt %>% get_basis_matrix()
+  basis <- basis %>% get_basis_matrix()
   p <- ncol(basis)
   set.seed(1)
   sphere_basis <- geozoo::sphere.hollow(p, ...)$points
