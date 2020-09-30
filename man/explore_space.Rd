@@ -3,16 +3,21 @@
 \name{compute_pca}
 \alias{compute_pca}
 \alias{explore_space_pca}
+\alias{explore_space_tour}
 \title{Plotting the data object in the space reduced by PCA}
 \usage{
-compute_pca(dt)
+compute_pca(dt, random = TRUE)
 
-explore_space_pca(pca, col = info)
+explore_space_pca(dt, pca = TRUE, color = info, animate = FALSE, ...)
+
+explore_space_tour(dt, color = info, pal = pal, ...)
 }
 \arguments{
 \item{dt}{a data object to plot}
 
 \item{pca}{a data object after performing PCA}
+
+\item{...}{other arguments passed into \code{explore_space_pca}}
 
 \item{col}{the color of the point}
 }

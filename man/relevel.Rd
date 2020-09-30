@@ -5,9 +5,13 @@
 \alias{relevel_better}
 \title{Relevel the info column with proper order}
 \usage{
-relevel_geo(dt)
+relevel_geo(
+  dt,
+  order = c("new_basis", "direction_search", "best_direction_search",
+    "best_line_search", "interpolation")
+)
 
-relevel_better(dt)
+relevel_better(dt, order = c("random_search", "new_basis", "interpolation"))
 }
 \arguments{
 \item{dt}{the data object to relevel}

@@ -5,7 +5,7 @@
 \alias{bind_random}
 \title{bind external data to a given data object}
 \usage{
-bind_theoretical(dt, matrix, index)
+bind_theoretical(dt, matrix, index, data_raw)
 
 bind_random(dt, ...)
 }

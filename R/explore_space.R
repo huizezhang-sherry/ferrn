@@ -71,7 +71,7 @@ compute_pca <- function(dt, random = TRUE) {
 #'@importFrom dplyr filter
 #'@export
 #'@rdname explore_space
-explore_space_pca <- function(dt, pca = TRUE, col = info, ...){
+explore_space_pca <- function(dt, pca = TRUE, color = info, animate = FALSE,...){
   col <- rlang::enexpr(col)
 
   if (pca){
@@ -81,13 +81,19 @@ explore_space_pca <- function(dt, pca = TRUE, col = info, ...){
   p <- dt %>%
     ggplot(aes(x = PC1, y = PC2)) +
     geom_point(data = dt %>% dplyr::filter(info != "randomly_generated"), aes(col = !!col)) +
-    geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), col = "grey") +
+    geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), color = "grey") +
     theme(aspect.ratio = 1)
 
   if ("theoretical" %in% dt$info){
     p <- p +
-      geom_point(data = dt %>% filter(info == "theoretical"), size = 10) +
-      geom_point(data = get_start(dt), size = 5)
+      geom_point(data = dt %>% filter(info == "theoretical"), aes(col = !!col), size = 10) +
+      geom_point(data = get_start(dt), aes(col = !!col), size = 5)
+  }
+
+  if (animate){
+    p <- p + theme(legend.position = "none") +
+        transition_states(id) +
+        shadow_mark()
   }
 
   p
