@@ -18,7 +18,11 @@
 #'
 #' @export
 #' @rdname relevel
-relevel_geo <- function(dt){
+relevel_geo <- function(dt, order = c("new_basis", "direction_search", "best_direction_search",
+                                      "best_line_search", "interpolation")){
+  if (any(order %in% unique(dt$info), FALSE)){
+    stop("All the order level must present in the data!")
+  }
   method <- unique(dt$method)
 
   if (!"info" %in% colnames(dt)){
@@ -27,31 +31,30 @@ relevel_geo <- function(dt){
     stop("use relevel_geo only when the searching method is search_geodesic!")
   }
 
-  dt %>%
-    mutate(info = forcats::fct_relevel(.data$info, c("new_basis",
-                                                     "direction_search",
-                                                     "best_direction_search",
-                                                     "best_line_search",
-                                                     "interpolation")))
+  dt %>% mutate(info = forcats::fct_relevel(.data$info, order))
 
 }
 
 #' @export
 #' @rdname relevel
-relevel_better <- function(dt){
+relevel_better <- function(dt, order =  c("random_search","new_basis", "interpolation")){
 
   method_index <- !is.na(unique(dt$method))
   method <- unique(dt$method)[method_index]
 
+  # checking before relevel
   if (!"info" %in% colnames(dt)){
     stop("the data object needs to have an info column!")
-  } else if(!method %in% c("search_better", "search_better_random")){
+  }
+
+  if(!method %in% c("search_better", "search_better_random")){
     stop("use relevel_better if searching method is search_better or search_better_random!")
   }
 
-  dt %>%
-    mutate(info = forcats::fct_relevel(.data$info, c("random_search",
-                                                     "new_basis",
-                                                     "interpolation")))
+  if (any(order %in% unique(dt$info), FALSE)){
+    stop("All the order level must present in the data!")
+  }
+
+  dt %>% mutate(info = forcats::fct_relevel(.data$info, order))
 
 }

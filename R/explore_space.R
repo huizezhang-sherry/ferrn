@@ -22,10 +22,8 @@ compute_pca <- function(dt, random = TRUE) {
   num_row <- nrow(dt$basis[[1]])
 
 
-  if (random){
-    dt <- dt %>% bind_random(n = 1000)
-    basis <- get_basis_matrix(dt)
-  }
+  if (random) dt <- dt %>% bind_random(n = 1000)
+  basis <- get_basis_matrix(dt)
 
   # Compute PCA
   if (num_col == 1){
@@ -63,6 +61,7 @@ compute_pca <- function(dt, random = TRUE) {
 
 #'@param pca a data object after performing PCA
 #'@param col the color of the point
+#'@param ... other arguments passed into \code{explore_space_pca}
 #'@examples
 #'best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 #'with_theo <- bind_theoretical(holes_1d_better, best, tourr::holes())
@@ -72,11 +71,11 @@ compute_pca <- function(dt, random = TRUE) {
 #'@importFrom dplyr filter
 #'@export
 #'@rdname explore_space
-explore_space_pca <- function(dt, pca = TRUE, col = info){
+explore_space_pca <- function(dt, pca = TRUE, col = info, ...){
   col <- rlang::enexpr(col)
 
   if (pca){
-    dt <- compute_pca(dt)$aug
+    dt <- compute_pca(dt, ...)$aug
   }
 
   p <- dt %>%
@@ -97,14 +96,17 @@ explore_space_pca <- function(dt, pca = TRUE, col = info){
 
 #' @export
 #' @rdname explore_space
-explore_space_tour <- function(dt, color, pal = pal, ...){
+explore_space_tour <- function(dt, color = info, pal = pal, ...){
 
   color <- rlang::enexpr(color)
   basis <- get_basis_matrix(dt) %>% bind_random_matrix()
 
 
   n_rand <- nrow(basis) - nrow(dt)
-  pal <- c("#D95F02","#7570B3", "#E7298A")
+  pal <-  c("#524340",  #orchre
+            "#B4B754",  # green
+            "#F3B422" # yellow
+  )
   col <- c(pal[as.factor(dt %>% dplyr::pull(!!color))], rep("#D3D3D3", n_rand))
 
   tourr::animate_xy(basis, col = col)

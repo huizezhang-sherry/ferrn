@@ -37,7 +37,7 @@ bind_theoretical <- function(dt, matrix, index, data_raw){
   theo <- tibble::tibble(basis = list(matrix),
                          index_val = index(data_raw %*% matrix),
                          tries = NA,
-                         info = "theoretical",
+                         info = as.factor("theoretical"),
                          loop = NA,
                          method = method,
                          alpha = NA,
@@ -73,9 +73,9 @@ bind_random <- function(dt, ...){
   sphere_points <- sphere_basis %>%
     dplyr::mutate(index_val = NA,
                   tries = NA,
-                  info = "randomly_generated",
+                  info = as.factor("randomly_generated"),
                   loop = NA,
-                  method = "randomly_generated",
+                  method = as.factor("randomly_generated"),
                   alpha = NA,
                   id = max(dt$id) + 1,
     )
