@@ -13,13 +13,19 @@ explore_space_pca(dt, pca = TRUE, color = info, animate = FALSE, ...)
 explore_space_tour(dt, color = info, pal = pal, ...)
 }
 \arguments{
-\item{dt}{a data object to plot}
+\item{dt}{A data object to plot}
 
-\item{pca}{a data object after performing PCA}
+\item{random}{Boolean, if the random data from the high dimensional sphere should be bounded}
 
-\item{...}{other arguments passed into \code{explore_space_pca}}
+\item{pca}{A data object after performing PCA}
 
-\item{col}{the color of the point}
+\item{color}{The color of the point}
+
+\item{animate}{Whether the plot should be animated}
+
+\item{...}{Other arguments passed into \code{explore_space_pca}}
+
+\item{pal}{Color palette for \code{explore_space_tour()}}
 }
 \description{
 The set of functions returns a primary ggplot object
@@ -27,6 +33,7 @@ that plots the data object in a space reduced by PCA.
 \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
 }
 \examples{
+
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 with_theo <- bind_theoretical(holes_1d_better, best, tourr::holes())
 pca <- compute_pca(with_theo)$aug

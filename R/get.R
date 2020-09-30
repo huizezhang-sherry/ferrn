@@ -74,7 +74,8 @@ get_search_count <- function(dt, iter = tries, group = NULL){
 }
 
 #' @export
-get_basis_matrix <- function(dt, colname = TRUE){
+#'@rdname get_best
+get_basis_matrix <- function(dt){
 
   if (!"basis" %in% colnames(dt)){
     stop("The dataset needs to have a basis column")

@@ -23,3 +23,13 @@
 #' of tries to be sufficiently large
 #' @rdname data
 "holes_2d_better_max_tries"
+
+
+#' @format
+#' @rdname data
+"data"
+
+
+#' @format
+#' @rdname data
+"data_mult"

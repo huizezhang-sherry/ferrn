@@ -5,6 +5,7 @@
 \alias{get_start}
 \alias{get_interp}
 \alias{get_search_count}
+\alias{get_basis_matrix}
 \title{get the basis/ index value}
 \usage{
 get_best(dt, group = NULL)
@@ -14,6 +15,8 @@ get_start(dt)
 get_interp(dt, group = NULL)
 
 get_search_count(dt, iter = tries, group = NULL)
+
+get_basis_matrix(dt)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

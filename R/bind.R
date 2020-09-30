@@ -7,18 +7,17 @@
 #' Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
 #' Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
 #'
-#' @param dt the data object being binded to
-#' @param matrix the theoretical basis to bind
-#' @param index the index function used to calculate index value
+#' @param dt The data object being binded to
+#' @param matrix The theoretical basis to bind
+#' @param index The index function used to calculate index value
+#' @param raw_data The original data, used to compute the index value for the theoretical best basis
 #' @param ... Additional parameters pass to geozoo::sphere.hollow()
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-#' holes_1d_better %>% bind_theoretical(best, tourr::holes()) %>% tail()
-#' dt <- dplyr::bind_rows(holes_1d_better, holes_1d_geo)
-#' dt %>%  bind_theoretical(best, tourr::holes()) %>% tail()
+#' holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = data) %>% tail()
 #' @export
 #' @rdname bind_theoretical
-bind_theoretical <- function(dt, matrix, index, data_raw){
+bind_theoretical <- function(dt, matrix, index, raw_data){
 
   num_row <- nrow(dt$basis[[1]])
   num_col <- ncol(dt$basis[[1]])
@@ -35,7 +34,7 @@ bind_theoretical <- function(dt, matrix, index, data_raw){
   method <- unique(dt$method)[method_index]
 
   theo <- tibble::tibble(basis = list(matrix),
-                         index_val = index(data_raw %*% matrix),
+                         index_val = index(as.matrix(raw_data) %*% matrix),
                          tries = NA,
                          info = as.factor("theoretical"),
                          loop = NA,
@@ -85,12 +84,10 @@ bind_random <- function(dt, ...){
 }
 
 #' @export
-bind_random_matrix <- function(basis, ...){
+#' @rdname bind_theoretical
+bind_random_matrix <- function(dt, ...){
 
-  if (!is.matrix(basis)){
-    stop("You need to supply a matrix!")
-  }
-
+  basis <- dt %>% get_basis_matrix()
   p <- ncol(basis)
   set.seed(1)
   sphere_basis <- geozoo::sphere.hollow(p, ...)$points

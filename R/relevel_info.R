@@ -11,7 +11,8 @@
 #'\itemize{
 #'\item{random_search < new_basis < interpolation}}
 #'
-#' @param dt the data object to relevel
+#' @param dt The data object to relevel
+#' @param order A vector that allows you to customise the order of info
 #' @examples
 #' holes_1d_geo %>% relevel_geo()
 #' holes_1d_better %>% relevel_better()

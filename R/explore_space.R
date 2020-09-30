@@ -3,11 +3,15 @@
 #' The set of functions returns a primary ggplot object
 #' that plots the data object in a space reduced by PCA.
 #' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
-#'@example
+#'@examples
 #'
-#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
-#'
-#'@param dt a data object to plot
+# explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
+#'@param dt A data object to plot
+#'@param random Boolean, if the random data from the high dimensional sphere should be bounded
+#'@param pca Boolean, if principal components needs to be pre-computed
+#'@param color A variable from the object that the diagnostic plot should be colored by
+#'@param animate Boolean, if the plot should be animated
+#'@param pal Color palette for \code{explore_space_tour()}
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@importFrom dplyr bind_cols group_by mutate ungroup
@@ -59,9 +63,10 @@ compute_pca <- function(dt, random = TRUE) {
   return(list(pca_summary = pca, aug = aug))
 }
 
-#'@param pca a data object after performing PCA
-#'@param col the color of the point
-#'@param ... other arguments passed into \code{explore_space_pca}
+#'@param pca A data object after performing PCA
+#'@param color The color of the point
+#'@param animate Whether the plot should be animated
+#'@param ... Other arguments passed into \code{explore_space_pca}
 #'@examples
 #'best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 #'with_theo <- bind_theoretical(holes_1d_better, best, tourr::holes())
@@ -71,8 +76,8 @@ compute_pca <- function(dt, random = TRUE) {
 #'@importFrom dplyr filter
 #'@export
 #'@rdname explore_space
-explore_space_pca <- function(dt, pca = TRUE, color = info, animate = FALSE,...){
-  col <- rlang::enexpr(col)
+explore_space_pca <- function(dt, pca = TRUE, color = info, animate = FALSE, ...){
+  col <- rlang::enexpr(color)
 
   if (pca){
     dt <- compute_pca(dt, ...)$aug
@@ -92,8 +97,8 @@ explore_space_pca <- function(dt, pca = TRUE, color = info, animate = FALSE,...)
 
   if (animate){
     p <- p + theme(legend.position = "none") +
-        transition_states(id) +
-        shadow_mark()
+      gganimate::transition_states(id) +
+      gganimate::shadow_mark()
   }
 
   p
@@ -119,7 +124,4 @@ explore_space_tour <- function(dt, color = info, pal = pal, ...){
 
 
 }
-
-
-
 globalVariables(c("PC1", "PC2", "info"))

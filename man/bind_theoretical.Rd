@@ -3,18 +3,23 @@
 \name{bind_theoretical}
 \alias{bind_theoretical}
 \alias{bind_random}
+\alias{bind_random_matrix}
 \title{bind external data to a given data object}
 \usage{
-bind_theoretical(dt, matrix, index, data_raw)
+bind_theoretical(dt, matrix, index, raw_data)
 
 bind_random(dt, ...)
+
+bind_random_matrix(dt, ...)
 }
 \arguments{
-\item{dt}{the data object being binded to}
+\item{dt}{The data object being binded to}
 
-\item{matrix}{the theoretical basis to bind}
+\item{matrix}{The theoretical basis to bind}
 
-\item{index}{the index function used to calculate index value}
+\item{index}{The index function used to calculate index value}
+
+\item{raw_data}{The original data, used to compute the index value for the theoretical best basis}
 
 \item{...}{Additional parameters pass to geozoo::sphere.hollow()}
 }
@@ -29,7 +34,5 @@ Generating random points on the sphere is useful to preceive the data object in 
 }
 \examples{
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-holes_1d_better \%>\% bind_theoretical(best, tourr::holes()) \%>\% tail()
-dt <- dplyr::bind_rows(holes_1d_better, holes_1d_geo)
-dt \%>\%  bind_theoretical(best, tourr::holes()) \%>\% tail()
+holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = data) \%>\% tail()
 }

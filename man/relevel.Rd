@@ -14,7 +14,9 @@ relevel_geo(
 relevel_better(dt, order = c("random_search", "new_basis", "interpolation"))
 }
 \arguments{
-\item{dt}{the data object to relevel}
+\item{dt}{The data object to relevel}
+
+\item{order}{A vector that allows you to customise the order of info}
 }
 \description{
 Relevel the \code{info} column in the data object to be the step in the optimisation algorithms.
