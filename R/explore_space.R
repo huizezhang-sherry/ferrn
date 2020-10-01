@@ -107,17 +107,13 @@ explore_space_pca <- function(dt, pca = TRUE, color = info, animate = FALSE, ...
 
 #' @export
 #' @rdname explore_space
-explore_space_tour <- function(dt, color = info, pal = pal, ...){
+explore_space_tour <- function(dt, color = info, pal = botanical_palettes$banksia, ...){
 
   color <- rlang::enexpr(color)
   basis <- get_basis_matrix(dt) %>% bind_random_matrix()
 
 
   n_rand <- nrow(basis) - nrow(dt)
-  pal <-  c("#524340",  #orchre
-            "#B4B754",  # green
-            "#F3B422" # yellow
-  )
   col <- c(pal[as.factor(dt %>% dplyr::pull(!!color))], rep("#D3D3D3", n_rand))
 
   tourr::animate_xy(basis, col = col)
