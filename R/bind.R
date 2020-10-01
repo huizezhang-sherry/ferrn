@@ -88,7 +88,6 @@ bind_random <- function(dt, ...){
 #' @rdname bind_theoretical
 bind_random_matrix <- function(basis, ...){
 
-  basis <- basis %>% get_basis_matrix()
   p <- ncol(basis)
   set.seed(1)
   sphere_basis <- geozoo::sphere.hollow(p, ...)$points
