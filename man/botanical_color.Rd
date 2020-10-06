@@ -7,7 +7,7 @@
 \alias{scale_color_botanical}
 \title{A customised color palette based on australian botanicals}
 \format{
-An object of class \code{list} of length 7.
+An object of class \code{list} of length 5.
 }
 \usage{
 botanical_palettes

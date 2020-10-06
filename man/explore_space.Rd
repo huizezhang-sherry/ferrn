@@ -10,7 +10,7 @@ compute_pca(dt, random = TRUE)
 
 explore_space_pca(dt, pca = TRUE, color = info, animate = FALSE, ...)
 
-explore_space_tour(dt, color = info, pal = pal, ...)
+explore_space_tour(dt, color = info, pal = botanical_palettes$banksia, ...)
 }
 \arguments{
 \item{dt}{A data object to plot}
