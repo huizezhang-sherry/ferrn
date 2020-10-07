@@ -42,7 +42,8 @@ explore_trace_interp <- function(dt, iter = id,  col = tries, group = NULL){
   p <- dt_interp %>%
     ggplot(aes(x = !!iter, y = !!sym("index_val"), col = as.factor(!!col)))  +
     geom_line() +
-    geom_point()
+    geom_point() +
+    ylab("index value")
 
   if (!is.null(group)){
     p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1) +
@@ -86,7 +87,8 @@ explore_trace_search <- function(dt, iter = tries, col = tries, cutoff = 15, gro
     geom_line(data =search_line, aes(group = 1)) +
     geom_label(data = search_count, aes(y = 0.99*lowest_index_val, label = n)) +
     scale_x_continuous(breaks = seq(1, largest, 1)) +
-    theme(legend.position = "none")
+    theme(legend.position = "none") +
+    ylab("index value")
 
   if(!is.null(group)){
     p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1) +
