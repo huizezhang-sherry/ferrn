@@ -21,7 +21,8 @@ get_best <- function(dt, group = NULL){
   res <- dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
-    dplyr::filter(index_val == max(index_val))
+    dplyr::filter(index_val == max(index_val)) %>%
+    distinct(index_val, .keep_all = TRUE)
 
   # if (!is.null(var)){
   #   if(!(!!var %in% colnames(dt))){
