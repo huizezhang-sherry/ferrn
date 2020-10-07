@@ -41,7 +41,7 @@ bind_theoretical <- function(dt, matrix, index, raw_data){
                          loop = NA,
                          method = method,
                          alpha = NA,
-                         id = max(dt$id) + 1)
+                         id = 0)
 
 
   dt %>% dplyr::bind_rows(theo)
@@ -53,7 +53,7 @@ bind_theoretical <- function(dt, matrix, index, raw_data){
 #' @export
 #' @rdname bind_theoretical
 bind_random <- function(dt, ...){
-  p <- nrow(dt$basis[[1]])
+  p <- nrow(dt$basis[[1]]) * ncol(dt$basis[[1]])
   ncol <- nrow(dt$basis[[1]])
 
   fix_matrix <- function(dt){
@@ -77,7 +77,7 @@ bind_random <- function(dt, ...){
                   loop = NA,
                   method = as.factor("randomly_generated"),
                   alpha = NA,
-                  id = max(dt$id) + 1,
+                  id = 0,
     )
 
   dt %>% dplyr::bind_rows(sphere_points)
@@ -88,7 +88,7 @@ bind_random <- function(dt, ...){
 #' @rdname bind_theoretical
 bind_random_matrix <- function(basis, ...){
 
-  p <- ncol(basis)
+  p <- ncol(basis) * nrow(basis)
   set.seed(1)
   sphere_basis <- geozoo::sphere.hollow(p, ...)$points
   colnames(sphere_basis) <- colnames(basis)
