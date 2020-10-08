@@ -91,27 +91,4 @@ get_basis_matrix <- function(dt){
   basis
 }
 
-#'@export
-#'@rdname get_best
-flip_sign_matrix <- function(basis){
-
-  if (!is.matrix(basis)){
-    stop("The input needs to be a matrix!")
-  }
-
-  max_col <- which.max(abs(basis %>% colSums()))
-
-
-  for(i in 1: nrow(basis)){
-    if (basis[i, max_col] < 0){
-      basis[i, ] <- -basis[i, ]
-    }else{
-      basis[i, ] <- basis[i,]
-    }
-  }
-
-  basis
-}
-
-
 globalVariables(c("id"))

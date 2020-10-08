@@ -21,7 +21,8 @@
 #' @rdname relevel
 relevel_geo <- function(dt, order = c("new_basis", "direction_search", "best_direction_search",
                                       "best_line_search", "interpolation")){
-  if (any(order %in% unique(dt$info), FALSE)){
+
+  if (!all(order %in% unique(dt$info))){
     stop("All the order level must present in the data!")
   }
   method <- unique(dt$method)
@@ -52,7 +53,7 @@ relevel_better <- function(dt, order =  c("random_search","new_basis", "interpol
     stop("use relevel_better if searching method is search_better or search_better_random!")
   }
 
-  if (any(order %in% unique(dt$info), FALSE)){
+  if (!all(order %in% unique(dt$info))){
     stop("All the order level must present in the data!")
   }
 

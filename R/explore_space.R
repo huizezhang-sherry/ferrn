@@ -20,21 +20,26 @@
 #'@rdname explore_space
 compute_pca <- function(dt, random = TRUE) {
 
+  #browser()
+
   info <- sym("info"); tries <- sym("tries"); loop <- sym("loop")
 
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
+#
+#   if (random) dt <- dt %>% bind_random(n = 1000)
+#   basis <- get_basis_matrix(dt) %>% abs()
 
-  if (random) dt <- dt %>% bind_random(n = 1000)
-  basis <- get_basis_matrix(dt)
+  basis <- get_basis_matrix(dt) %>% abs() %>% bind_random_matrix(n = 1000)
+
 
   # Compute PCA
   if (num_col == 1){
     pca <- basis %>% stats::prcomp(scale. = TRUE)
 
-    aug <- dt %>%
-      bind_cols(pca %>% stats::predict() %>% as_tibble(.name_repair = "minimal")) %>%
+    aug <- dt %>% bind_random(n = 1000) %>%
+      bind_cols(-pca$x %>% as_tibble(.name_repair = "minimal")) %>%
       group_by(!!tries,  !!info) %>%
       mutate(animate_id = dplyr::cur_group_id()) %>%
       ungroup()
@@ -45,11 +50,11 @@ compute_pca <- function(dt, random = TRUE) {
     pca2 <- stats::prcomp(basis[,(num_row + 1):(2*num_row)], scale. = TRUE)
     pca <- list(pca1, pca2)
 
-    v1 <- pca1 %>% stats::predict() %>% as_tibble(.name_repair = "minimal")
-    v2 <- pca2 %>% stats::predict() %>% as_tibble(.name_repair = "minimal")
+    v1 <- -pca1$x %>% as_tibble(.name_repair = "minimal")
+    v2 <- -pca2$x %>% as_tibble(.name_repair = "minimal")
     colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2*num_row)))
 
-    aug <- dt %>%
+    aug <- dt %>% bind_random(n = 1000) %>%
       bind_cols(v1) %>%
       bind_cols(v2) %>%
       group_by(!!tries, !!info) %>%
@@ -110,7 +115,7 @@ explore_space_pca <- function(dt, pca = TRUE, color = info, animate = FALSE, ...
 explore_space_tour <- function(dt, color = info, pal = botanical_palettes$banksia, ...){
 
   color <- rlang::enexpr(color)
-  basis <- get_basis_matrix(dt) %>% bind_random_matrix()
+  basis <- get_basis_matrix(dt) %>% bind_random_matrix() %>% flip_sign_matrix()
 
 
   n_rand <- nrow(basis) - nrow(dt)
