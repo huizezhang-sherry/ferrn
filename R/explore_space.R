@@ -36,6 +36,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
+  dt <- dt %>% mutate(row_num = row_number())
+
   if (!is.null(group)){
 
     group_name <- dt %>% get_best(group = !!group) %>% pull(!!group)
@@ -63,7 +65,9 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
   if (num_col == 1){
     pca <- basis %>% stats::prcomp(scale. = TRUE)
 
-    aug <- dt %>% bind_random(n = 1000, ...) %>%
+    aug <- dt %>% filter(!!group %in% group_to_flip) %>%
+      add_row(dt %>% filter(!(!!group) %in% group_to_flip)) %>%
+      bind_random(n = 1000, ...) %>%
       bind_cols(pca$x %>% as_tibble(.name_repair = "minimal")) %>%
       group_by(!!tries,  !!info) %>%
       mutate(animate_id = dplyr::cur_group_id()) %>%
