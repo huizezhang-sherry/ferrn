@@ -31,15 +31,12 @@ bind_theoretical <- function(dt, matrix, index, raw_data){
     stop("The theoretical best basis needs to be orthonormal!")
   }
 
-  method_index <- !is.na(unique(dt$method))
-  method <- unique(dt$method)[method_index]
-
   theo <- tibble::tibble(basis = list(matrix),
                          index_val = index(as.matrix(raw_data) %*% matrix),
                          tries = NA,
                          info = as.factor("theoretical"),
                          loop = NA,
-                         method = method,
+                         method = as.factor("theoretical"),
                          alpha = NA,
                          id = 0)
 
