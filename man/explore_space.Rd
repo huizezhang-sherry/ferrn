@@ -4,26 +4,35 @@
 \alias{compute_pca}
 \alias{explore_space_pca}
 \alias{explore_space_tour}
-\title{Plotting the data object in the space reduced by PCA}
+\title{Explore the parameter space}
 \usage{
-compute_pca(dt, random = TRUE)
+compute_pca(dt, group = NULL, random = TRUE, ...)
 
-explore_space_pca(dt, pca = TRUE, color = info, animate = FALSE, ...)
+explore_space_pca(
+  dt,
+  pca = TRUE,
+  group = NULL,
+  color = NULL,
+  animate = FALSE,
+  ...
+)
 
 explore_space_tour(dt, color = info, pal = botanical_palettes$banksia, ...)
 }
 \arguments{
 \item{dt}{A data object to plot}
 
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+
 \item{random}{Boolean, if the random data from the high dimensional sphere should be bounded}
 
-\item{pca}{A data object after performing PCA}
+\item{...}{Other arguments passed into \code{explore_space_pca}}
 
-\item{color}{The color of the point}
+\item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
+
+\item{color}{A variable from the object that the diagnostic plot should be colored by}
 
 \item{animate}{Whether the plot should be animated}
-
-\item{...}{Other arguments passed into \code{explore_space_pca}}
 
 \item{pal}{Color palette for \code{explore_space_tour()}}
 }
@@ -33,9 +42,5 @@ that plots the data object in a space reduced by PCA.
 \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
 }
 \examples{
-
-best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-with_theo <- bind_theoretical(holes_1d_better, best, tourr::holes())
-pca <- compute_pca(with_theo)$aug
-explore_space_pca(pca)
+explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
 }

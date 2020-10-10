@@ -22,7 +22,8 @@ get_best <- function(dt, group = NULL){
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
     dplyr::filter(index_val == max(index_val)) %>%
-    distinct(index_val, .keep_all = TRUE)
+    distinct(index_val, .keep_all = TRUE) %>%
+    dplyr::bind_rows(dt %>% dplyr::filter(!!sym("info") == "theoretical"))
 
   # if (!is.null(var)){
   #   if(!(!!var %in% colnames(dt))){
@@ -91,4 +92,18 @@ get_basis_matrix <- function(dt){
   basis
 }
 
+flip_basis_matrix <- function(basis){
+
+  if (!is.matrix(basis)){
+    stop("The input needs to be a matrix!")
+  }
+
+
+
+
+
+  basis
+}
+
 globalVariables(c("id"))
+
