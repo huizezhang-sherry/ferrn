@@ -6,7 +6,7 @@
 \alias{holes_1d_better}
 \alias{holes_2d_better}
 \alias{holes_2d_better_max_tries}
-\alias{boa_all}
+\alias{boa}
 \alias{boa5}
 \alias{boa6}
 \title{Simulated data}
@@ -39,7 +39,24 @@ holes_2d_better_max_tries <-
                                            max.tries = 500),
              rescale = FALSE, verbose = TRUE)
 
+library(tidyverse)
+set.seed(1234)
+x1 <- rnorm(1000, 0, 1)
+x2 <- sample(c(rnorm(500, -3, 1), rnorm(500, 3, 1)), size = 1000)
+x3 <- sample(c(rep(-1, 500), rep(1, 500)), size = 1000)
+x4 <- sample(c(rnorm(250, -3, 1), rnorm(750, 3, 1)), size = 1000)
+x5 <- sample(c(rnorm(330, -5, 1), rnorm(340, 0, 1), rnorm(330, 5, 1)), size = 1000)
+x6 <- sample(c(rnorm(450, -5, 1), rnorm(100, 0, 1), rnorm(450, 5, 1)), size = 1000)
+x7 <- sample(c(rnorm(500, -5, 1), rnorm(500, 5, 1)), size = 1000)
+x8 <- rnorm(1000, 0, 1)
+x9 <- rnorm(1000, 0, 1)
+x10 <- rnorm(1000, 0, 1)
 
+boa <- tibble(x1 = x1, x2 = x2, x3 = x3, x4 = x4, x5 = x5,
+              x6 = x6, x7 = x7, x8 = x8, x9 = x9, x10 = x10) %>%
+boa <- as_tibble(scale(boa))
+boa5 <- select(boa, x1, x2, x8: x10)
+boa6 <- select(boa, x1, x2, x7: x10)
 }
 
 
@@ -63,7 +80,7 @@ holes_2d_better
 
 holes_2d_better_max_tries
 
-boa_all
+boa
 
 boa5
 
@@ -82,7 +99,7 @@ Simulated data using different optimisation algorithms in guided tour.
 }
 \examples{
 
-boa_all \%>\%
+boa \%>\%
  pivot_longer(cols = x1: x10, names_to = "var", values_to = "value") \%>\%
  ggplot(aes(x = value)) +
  geom_density() +
