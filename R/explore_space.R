@@ -36,24 +36,28 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
-  group_name <- dt %>% get_best(group = !!group) %>% pull(!!group)
-  num_method <- group_name %>% length()
-  max_bases <- dt %>% get_best(group = !!group) %>% pull(basis)
-  max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
-  extract <- function(matrix, pos) matrix[pos %% nrow(matrix), (pos %/% nrow(matrix)) + 1]
-  max_sign <- mapply(extract, max_bases, max_id) %>% sign()
-  group_to_flip <- group_name[max_sign < 0]
+  if (!is.null(group)){
+
+    group_name <- dt %>% get_best(group = !!group) %>% pull(!!group)
+    num_method <- group_name %>% length()
+    max_bases <- dt %>% get_best(group = !!group) %>% pull(basis)
+    max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
+    extract <- function(matrix, pos) matrix[pos %% nrow(matrix), (pos %/% nrow(matrix)) + 1]
+    max_sign <- mapply(extract, max_bases, max_id) %>% sign()
+    group_to_flip <- group_name[max_sign < 0]
 
 
-  if (length(group_to_flip) == 0){
-    basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
-  }else{
-    basis1 <- dt %>% filter(!!group %in% group_to_flip) %>% get_basis_matrix() %>% -.
-    basis <- basis1 %>%
-      rbind(dt %>% filter(!(!!group) %in% group_to_flip) %>% get_basis_matrix()) %>%
-      bind_random_matrix(n = 1000, ...)
-
+    if (length(group_to_flip) == 0){
+      basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
+    }else{
+      basis1 <- dt %>% filter(!!group %in% group_to_flip) %>% get_basis_matrix() %>% -.
+      basis <- basis1 %>%
+        rbind(dt %>% filter(!(!!group) %in% group_to_flip) %>% get_basis_matrix()) %>%
+        bind_random_matrix(n = 1000, ...)
+    }
   }
+
+  basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
 
   # Compute PCA
   if (num_col == 1){
