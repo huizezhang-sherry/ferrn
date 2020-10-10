@@ -55,9 +55,9 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
         rbind(dt %>% filter(!(!!group) %in% group_to_flip) %>% get_basis_matrix()) %>%
         bind_random_matrix(n = 1000, ...)
     }
+  }else{
+    basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
   }
-
-  basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
 
   # Compute PCA
   if (num_col == 1){
@@ -98,6 +98,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
 #'@rdname explore_space
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               animate = FALSE, ...){
+  #browser()
   color <- group <- enexpr(group)
 
   if (pca){
