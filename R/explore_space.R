@@ -19,16 +19,15 @@
 #'@param pca Boolean, if \code{compute_pca()} should be performed on the data
 #'@param animate Whether the plot should be animated
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
-#'@param ... Other arguments passed into \code{explore_space_pca}
 #'@import ggplot2
-#'@importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr
+#'@importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr pull row_number
 #'@importFrom rlang "!!"
 #'@importFrom tibble as_tibble
 #'@export
 #'@rdname explore_space
-compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
+compute_pca <- function(dt, group = NULL, random = TRUE) {
 
-  #browser()
+  browser()
 
   group <- enexpr(group)
   info <- sym("info"); tries <- sym("tries"); loop <- sym("loop")
@@ -66,7 +65,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
     pca <- basis %>% stats::prcomp(scale. = TRUE)
 
     aug <- dt %>% filter(!!group %in% group_to_flip) %>%
-      add_row(dt %>% filter(!(!!group) %in% group_to_flip)) %>%
+      dplyr::add_row(dt %>% filter(!(!!group) %in% group_to_flip)) %>%
       bind_random(n = 1000, ...) %>%
       bind_cols(pca$x %>% as_tibble(.name_repair = "minimal")) %>%
       group_by(!!tries,  !!info) %>%
@@ -101,12 +100,12 @@ compute_pca <- function(dt, group = NULL, random = TRUE, ...) {
 #'@export
 #'@rdname explore_space
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
-                              animate = FALSE, ...){
+                              animate = FALSE){
   #browser()
   color <- group <- enexpr(group)
 
   if (pca){
-    dt <- compute_pca(dt, group = !!group, ...)$aug
+    dt <- compute_pca(dt, group = !!group)$aug
   }
 
   p <- dt %>%

@@ -24,8 +24,6 @@ get_basis_matrix(dt)
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
 \item{iter}{The variable used to be counted by}
-
-\item{basis}{A matrix produced by \code{get_basis_matrix()}}
 }
 \description{
 This set of functions allows you to grab the best basis found by the optimisation in guided tour

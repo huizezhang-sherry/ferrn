@@ -21,8 +21,6 @@ botanical_palettes <- list(
 
   # sequential
   fern = c("#A56C30", "#7D5F24", "#B89436","#4D6F32", "#364F24", "#2C4409"),
-
-  # diverging
   acacia = c("#A39224","#CCB113" ,"#7C8C60", "#4A5529")
 
 )

@@ -6,7 +6,6 @@
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
 #'@param iter The variable used to be counted by
-#'@param basis A matrix produced by \code{get_basis_matrix()}
 #'@examples
 #'holes_1d_better %>% get_start()
 #'holes_1d_better %>% get_interp()
@@ -22,7 +21,7 @@ get_best <- function(dt, group = NULL){
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
     dplyr::filter(index_val == max(index_val)) %>%
-    distinct(index_val, .keep_all = TRUE) %>%
+    dplyr::distinct(index_val, .keep_all = TRUE) %>%
     dplyr::bind_rows(dt %>% dplyr::filter(!!sym("info") == "theoretical"))
 
   # if (!is.null(var)){
@@ -92,18 +91,6 @@ get_basis_matrix <- function(dt){
   basis
 }
 
-flip_basis_matrix <- function(basis){
-
-  if (!is.matrix(basis)){
-    stop("The input needs to be a matrix!")
-  }
-
-
-
-
-
-  basis
-}
 
 globalVariables(c("id"))
 

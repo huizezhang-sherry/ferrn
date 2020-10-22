@@ -6,16 +6,9 @@
 \alias{explore_space_tour}
 \title{Explore the parameter space}
 \usage{
-compute_pca(dt, group = NULL, random = TRUE, ...)
+compute_pca(dt, group = NULL, random = TRUE)
 
-explore_space_pca(
-  dt,
-  pca = TRUE,
-  group = NULL,
-  color = NULL,
-  animate = FALSE,
-  ...
-)
+explore_space_pca(dt, pca = TRUE, group = NULL, color = NULL, animate = FALSE)
 
 explore_space_tour(dt, color = info, pal = botanical_palettes$banksia, ...)
 }
@@ -25,8 +18,6 @@ explore_space_tour(dt, color = info, pal = botanical_palettes$banksia, ...)
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
 \item{random}{Boolean, if the random data from the high dimensional sphere should be bounded}
-
-\item{...}{Other arguments passed into \code{explore_space_pca}}
 
 \item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
 

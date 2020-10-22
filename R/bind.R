@@ -15,7 +15,7 @@
 #' @param ... Additional parameters pass to geozoo::sphere.hollow()
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-#' holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = data) %>% tail()
+#' holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5) %>% tail()
 #' @export
 #' @rdname bind_theoretical
 bind_theoretical <- function(dt, matrix, index, raw_data){
