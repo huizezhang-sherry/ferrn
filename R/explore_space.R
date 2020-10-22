@@ -27,8 +27,6 @@
 #'@rdname explore_space
 compute_pca <- function(dt, group = NULL, random = TRUE) {
 
-  browser()
-
   group <- enexpr(group)
   info <- sym("info"); tries <- sym("tries"); loop <- sym("loop")
 
