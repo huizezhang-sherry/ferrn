@@ -13,31 +13,32 @@
 \format{
 The code for simulating each data object is as follows:
 \preformatted{
+optoins("tourr.verbose" = TRUE)
 set.seed(123456);
 holes_1d_geo <-
   animate_dist(boa5, tour_path = guided_tour(holes(), d = 1,
                                              search_f =  search_geodesic),
-               rescale = FALSE, verbose = TRUE)
+               rescale = FALSE)
 
 set.seed(123456)
 holes_1d_better <-
   animate_dist(boa5, tour_path = guided_tour(holes(), d = 1,
                                              search_f =  search_better),
-               rescale = FALSE, verbose = TRUE)
+               rescale = FALSE)
 
 
 set.seed(123456)
 holes_2d_better <-
   animate_xy(boa6, tour_path = guided_tour(holes(), d = 2,
                                            search_f =  search_better),
-            rescale = FALSE, verbose = TRUE)
+            rescale = FALSE)
 
 set.seed(123456)
 holes_2d_better_max_tries <-
   animate_xy(boa6, tour_path = guided_tour(holes(), d = 2,
                                            search_f = search_better,
                                            max.tries = 500),
-             rescale = FALSE, verbose = TRUE)
+             rescale = FALSE)
 
 library(tidyverse)
 set.seed(1234)

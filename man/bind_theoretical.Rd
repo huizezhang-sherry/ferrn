@@ -8,9 +8,9 @@
 \usage{
 bind_theoretical(dt, matrix, index, raw_data)
 
-bind_random(dt)
+bind_random(dt, ...)
 
-bind_random_matrix(basis)
+bind_random_matrix(basis, ...)
 }
 \arguments{
 \item{dt}{The data object being binded to}
@@ -20,6 +20,8 @@ bind_random_matrix(basis)
 \item{index}{The index function used to calculate index value}
 
 \item{raw_data}{The original data, used to compute the index value for the theoretical best basis}
+
+\item{...}{Additional parameters pass to geozoo::sphere.hollow()}
 
 \item{basis}{A matrix with each basis flattern into one raw. Use \code{get_basis_matrix(dt)} for an easy extraction of the basis}
 }
