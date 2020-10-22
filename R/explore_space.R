@@ -52,7 +52,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
       basis1 <- dt %>% filter(!!group %in% group_to_flip) %>% get_basis_matrix() %>% -.
       basis <- basis1 %>%
         rbind(dt %>% filter(!(!!group) %in% group_to_flip) %>% get_basis_matrix()) %>%
-        bind_random_matrix(n = 1000, ...)
+        bind_random_matrix(n = 1000)
     }
   }else{
     basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
@@ -64,7 +64,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 
     aug <- dt %>% filter(!!group %in% group_to_flip) %>%
       dplyr::add_row(dt %>% filter(!(!!group) %in% group_to_flip)) %>%
-      bind_random(n = 1000, ...) %>%
+      bind_random(n = 1000) %>%
       bind_cols(pca$x %>% as_tibble(.name_repair = "minimal")) %>%
       group_by(!!tries,  !!info) %>%
       mutate(animate_id = dplyr::cur_group_id()) %>%
