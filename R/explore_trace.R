@@ -1,31 +1,26 @@
-#' trace the progression of the search
+#' Plot the trace the search progression
 #'
-#' trace the index value of search/ interpolation points in guided tour optimisation
+#' Trace the index value of search/ interpolation points in guided tour optimisation
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param iter The iterator on the x-axis
-#'@param col Colored by a particular varaible
-#'@param cutoff The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
+#'@param colpr Colored by a particular varaible
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
 #'@examples
-#'# Summary plots for search points in two algorithms
-#'proj_1D <- holes_1d_better %>% dplyr::mutate(proj = "1D")
-#'proj_2D <- holes_2d_better_max_tries %>% dplyr::mutate(proj = "2D")
-#'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj)
-#'
 #'# Compare the trace of interpolated points in two algorithms
 #'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% explore_trace_interp(group = method)
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
+#'@family plot
 #'@export
 #'@rdname explore_trace
-explore_trace_interp <- function(dt, iter = id,  col = tries, group = NULL){
+explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
   group <- rlang::enexpr(group)
   iter <- rlang::enexpr(iter)
-  col <- rlang::enexpr(col)
+  col <- rlang::enexpr(color)
 
 
   dt_interp <- get_interp(dt, group = !!group)
@@ -52,13 +47,25 @@ explore_trace_interp <- function(dt, iter = id,  col = tries, group = NULL){
   p
 }
 
+#' Plot the count in each iteration
+#'
+#'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@param iter The iterator on the x-axis
+#'@param color Colored by a particular varaible
+#'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
+#'@param cutoff The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
+#'@examples
+#'# Summary plots for search points in two algorithms
+#'proj_1D <- holes_1d_better %>% dplyr::mutate(proj = "1D")
+#'proj_2D <- holes_2d_better_max_tries %>% dplyr::mutate(proj = "2D")
+#'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj)
+#'@family plot
 #'@export
-#'@rdname explore_trace
-explore_trace_search <- function(dt, iter = tries, col = tries, cutoff = 15, group = NULL){
+explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, group = NULL){
 
   iter <- enexpr(iter)
   group <- enexpr(group)
-  col <- enexpr(col)
+  col <- enexpr(color)
 
   search <- dt %>%dplyr::filter(info != "interpolation")
   search_count <- search %>% get_search_count(group = !!group)

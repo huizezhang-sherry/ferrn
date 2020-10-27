@@ -2,18 +2,12 @@
 % Please edit documentation in R/bind.R
 \name{bind_theoretical}
 \alias{bind_theoretical}
-\alias{bind_random}
-\alias{bind_random_matrix}
-\title{bind external data to a given data object}
+\title{Bind the theoretical best record}
 \usage{
 bind_theoretical(dt, matrix, index, raw_data)
-
-bind_random(dt, ...)
-
-bind_random_matrix(basis, ...)
 }
 \arguments{
-\item{dt}{The data object being binded to}
+\item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{matrix}{The theoretical basis to bind}
 
@@ -21,20 +15,19 @@ bind_random_matrix(basis, ...)
 
 \item{raw_data}{The original data, used to compute the index value for the theoretical best basis}
 
-\item{...}{Additional parameters pass to geozoo::sphere.hollow()}
-
 \item{basis}{A matrix with each basis flattern into one raw. Use \code{get_basis_matrix(dt)} for an easy extraction of the basis}
 }
 \description{
-These functions allows you to bind the theoretical best basis and randomly generated basis on a hollow sphere to the data object
-}
-\details{
-In a simulation setting, the theoretical best basis is known for a given problem.
-
-Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
-Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
+The theoretical best basis is usually known for a simulated problem.
+Augment this information into the data object allows for evaluating the performance of optimisation against the theory.
 }
 \examples{
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = boa5) \%>\% tail()
+tail(holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = boa5))
 }
+\seealso{
+Other bind: 
+\code{\link{bind_random_matrix}()},
+\code{\link{bind_random}()}
+}
+\concept{bind}

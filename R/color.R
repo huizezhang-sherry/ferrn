@@ -1,6 +1,7 @@
+#' Available colors in the palettes
 #'@title A customised color palette based on australian botanicals
+#'@family botan
 #'@export
-#'@rdname botanical_color
 botanical_palettes <- list(
   #quantitative
   daisy = c("#252B53", # purple
@@ -25,12 +26,13 @@ botanical_palettes <- list(
 
 )
 
-#'@title Color interpolation for botanical palettes
+#' Color interpolation
+#'
 #'@param palette Color palette from the botanical_palette
 #'@param reverse logical, if the color should be reversed
 #'@importFrom grDevices colorRampPalette
 #'@export
-#'@rdname botanical_color
+#'@family botan
 botanical_pal <- function(palette = "fern", reverse = FALSE){
   pal <- botanical_palettes[[palette]]
 
@@ -40,14 +42,14 @@ botanical_pal <- function(palette = "fern", reverse = FALSE){
   return(colorRampPalette(pal))
 }
 
-
-#'@title A scale function in compatible with ggplot2
+#' Scale color function in compatible with ggplot2 syntax
+#'
 #'@param ... Arguments passed into scale_color_gradientn
 #'@param palette Color palette from the botanical_palette
 #'@param discrete logical, whether use a discrete or continuous color
 #'@param reverse logical, if the color should be reversed
 #'@export
-#'@rdname botanical_color
+#'@family botan
 scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE){
 
   if (discrete){

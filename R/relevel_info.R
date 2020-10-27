@@ -1,4 +1,4 @@
-#' Relevel the info column with proper order
+#' Clean factor levels in the data object
 #'
 #' Relevel the \code{info} column in the data object to be the step in the optimisation algorithms.
 #'

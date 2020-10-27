@@ -1,17 +1,11 @@
-#' get the basis/ index value
-#'
-#'This set of functions allows you to grab the best basis found by the optimisation in guided tour
-#'as well as the bases on the interpolation path.
+#' Extract the record with the largest index value
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
-#'@param iter The variable used to be counted by
 #'@examples
-#'holes_1d_better %>% get_start()
-#'holes_1d_better %>% get_interp()
 #'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
+#'@family get functions
 #'@export
-#'@rdname get_best
 get_best <- function(dt, group = NULL){
 
   group <- rlang::enexpr(group)
@@ -34,17 +28,29 @@ get_best <- function(dt, group = NULL){
   res
 }
 
+
+#' Extract the starting records
+#'
+#'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@examples
+#'holes_1d_better %>% get_start()
+#'@family get functions
 #'@export
-#'@rdname get_best
 get_start <- function(dt){
 
   dt %>%
     dplyr::filter(!!sym("id") == 1)
 }
 
-
+#' Extract interpolated records
+#'
+#' @param  dt A data object from the running the optimisation algorithm in guided tour
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @examples
+#' holes_1d_better %>% get_interp()
+#' get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#' @family get functions
 #' @export
-#' @rdname get_best
 get_interp <- function(dt, group = NULL){
 
   group <- enexpr(group)
@@ -54,9 +60,16 @@ get_interp <- function(dt, group = NULL){
     mutate(id = dplyr::row_number())
 }
 
-
-#' @export
-#' @rdname get_best
+#' Extract the count in each iteration
+#'
+#'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@param iter The variable used to be counted by
+#'@param group The grouping variable, useful when there are multiple algorithms in the data object
+#'@examples
+#'get_search_count(holes_1d_better)
+#'get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#'@family get functions
+#'@export
 get_search_count <- function(dt, iter = tries, group = NULL){
   group <- enexpr(group)
   iter <- enexpr(iter)
@@ -75,8 +88,14 @@ get_search_count <- function(dt, iter = tries, group = NULL){
   dt_count
 }
 
-#' @export
-#'@rdname get_best
+
+#' Extract all the bases as a matrix
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @examples
+#'head(get_basis_matrix(holes_1d_better), 5)
+#'@family get functions
+#'@export
 get_basis_matrix <- function(dt){
 
   if (!"basis" %in% colnames(dt)){

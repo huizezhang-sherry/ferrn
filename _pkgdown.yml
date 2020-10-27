@@ -1,0 +1,61 @@
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right: github
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/huizezhang-sherry/ferrn
+
+reference:
+- title: Plotting Functions
+  desc: >
+    Main diagnostic plotting functions
+  contents:
+  - explore_trace_search
+  - explore_trace_interp
+  - explore_space_pca
+  - explore_space_tour
+- title: Get functions
+  desc: >
+    Extracting components from existing data object
+  contents:
+  - get_start
+  - get_best
+  - get_interp
+  - get_search_count
+  - get_basis_matrix
+- title: Bind functions
+  desc: >
+    Bind external data to the existing data object
+  contents:
+  - bind_theoretical
+  - bind_random
+  - bind_random_matrix
+- title: Color palette
+  desc: >
+    An australian botanical color palette
+  contents:
+  - botanical_palettes
+  - botanical_pal
+  - scale_color_botanical
+- title: Miscellaneous
+  desc: >
+    Other misc functions
+  contents:
+  - compute_pca
+  - relevel_geo
+  - relevel_better
+

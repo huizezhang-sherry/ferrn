@@ -1,23 +1,19 @@
-#' bind external data to a given data object
+#' Bind the theoretical best record
 #'
-#'These functions allows you to bind the theoretical best basis and randomly generated basis on a hollow sphere to the data object
+#' The theoretical best basis is usually known for a simulated problem.
+#' Augment this information into the data object allows for evaluating the performance of optimisation against the theory.
 #'
-#' In a simulation setting, the theoretical best basis is known for a given problem.
-#'
-#' Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
-#' Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
-#'
-#' @param dt The data object being binded to
+#' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param matrix The theoretical basis to bind
 #' @param index The index function used to calculate index value
 #' @param raw_data The original data, used to compute the index value for the theoretical best basis
 #' @param basis A matrix with each basis flattern into one raw. Use \code{get_basis_matrix(dt)} for an easy extraction of the basis
-#' @param ... Additional parameters pass to geozoo::sphere.hollow()
+
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-#' holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5) %>% tail()
+#' tail(holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5))
+#' @family bind
 #' @export
-#' @rdname bind_theoretical
 bind_theoretical <- function(dt, matrix, index, raw_data){
 
   num_row <- nrow(dt$basis[[1]])
@@ -45,11 +41,18 @@ bind_theoretical <- function(dt, matrix, index, raw_data){
 
 }
 
-
-
+#' Bind random bases in the projection bases space
+#'
+#' Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
+#' Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param n Number of random points to generate in each dimension
+#' @examples
+#' bind_random(holes_1d_better) %>% tail(5)
+#' @family bind
 #' @export
-#' @rdname bind_theoretical
-bind_random <- function(dt, ...){
+bind_random <- function(dt, n = 500){
   p <- nrow(dt$basis[[1]]) * ncol(dt$basis[[1]])
   ncol <- nrow(dt$basis[[1]])
 
@@ -60,7 +63,8 @@ bind_random <- function(dt, ...){
   }
 
   set.seed(1)
-  sphere_basis <- geozoo::sphere.hollow(p,...)$points %>%
+  n_geozoo <- p * n
+  sphere_basis <- geozoo::sphere.hollow(p,n_geozoo)$points %>%
     as_tibble() %>%
     dplyr::nest_by(id = dplyr::row_number()) %>%
     ungroup() %>%
@@ -81,13 +85,22 @@ bind_random <- function(dt, ...){
 
 }
 
+#' Bind random bases in the projection bases space as a matrix
+#'
+#' @param basis A basis matrix returned by \code{get_basis_matrix()}
+#'@param n Number of random points to generate in each dimension
+#' @examples
+#' data <- get_basis_matrix(holes_1d_geo)
+#' bind_random_matrix(data) %>% tail(5)
+#' @return matrix
+#' @family bind
 #' @export
-#' @rdname bind_theoretical
-bind_random_matrix <- function(basis, ...){
+bind_random_matrix <- function(basis, n = 500){
 
   p <- ncol(basis)
+  n_geozoo <- p * n
   set.seed(1)
-  sphere_basis <- geozoo::sphere.hollow(p, ...)$points
+  sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points
   colnames(sphere_basis) <- colnames(basis)
 
   basis %>% rbind(sphere_basis)

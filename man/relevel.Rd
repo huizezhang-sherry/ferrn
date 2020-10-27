@@ -3,7 +3,7 @@
 \name{relevel_geo}
 \alias{relevel_geo}
 \alias{relevel_better}
-\title{Relevel the info column with proper order}
+\title{Clean factor levels in the data object}
 \usage{
 relevel_geo(
   dt,

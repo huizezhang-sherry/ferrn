@@ -2,33 +2,30 @@
 % Please edit documentation in R/explore_trace.R
 \name{explore_trace_interp}
 \alias{explore_trace_interp}
-\alias{explore_trace_search}
-\title{trace the progression of the search}
+\title{Plot the trace the search progression}
 \usage{
-explore_trace_interp(dt, iter = id, col = tries, group = NULL)
-
-explore_trace_search(dt, iter = tries, col = tries, cutoff = 15, group = NULL)
+explore_trace_interp(dt, iter = id, color = tries, group = NULL)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{iter}{The iterator on the x-axis}
 
-\item{col}{Colored by a particular varaible}
-
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object to plot}
 
-\item{cutoff}{The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}}
+\item{colpr}{Colored by a particular varaible}
 }
 \description{
-trace the index value of search/ interpolation points in guided tour optimisation
+Trace the index value of search/ interpolation points in guided tour optimisation
 }
 \examples{
-# Summary plots for search points in two algorithms
-proj_1D <- holes_1d_better \%>\% dplyr::mutate(proj = "1D")
-proj_2D <- holes_2d_better_max_tries \%>\% dplyr::mutate(proj = "2D")
-dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj)
-
 # Compare the trace of interpolated points in two algorithms
 dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% explore_trace_interp(group = method)
 }
+\seealso{
+Other plot: 
+\code{\link{explore_space_pca}()},
+\code{\link{explore_space_tour}()},
+\code{\link{explore_trace_search}()}
+}
+\concept{plot}

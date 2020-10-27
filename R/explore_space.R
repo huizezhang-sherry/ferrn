@@ -1,30 +1,11 @@
-#' Explore the parameter space
+#' Compute PCA for the projection bases
 #'
-#' The set of functions returns a primary ggplot object
-#' that plots the data object in a space reduced by PCA.
-#' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
-#'@examples
-# dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
-#   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
-#                    index = tourr::holes(), raw_data = boa5) %>%
-#   explore_space_pca(group = method)  +
-#   scale_color_botanical(palette = "cherry") +
-#   ggplot2::theme(legend.position = "bottom")
-#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
-#'@param dt A data object to plot
-#'@param random Boolean, if the random data from the high dimensional sphere should be bounded
-#'@param color A variable from the object that the diagnostic plot should be colored by
-#'@param animate Boolean, if the plot should be animated
-#'@param pal Color palette for \code{explore_space_tour()}
-#'@param pca Boolean, if \code{compute_pca()} should be performed on the data
-#'@param animate Whether the plot should be animated
+#'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
-#'@import ggplot2
-#'@importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr pull row_number
-#'@importFrom rlang "!!"
-#'@importFrom tibble as_tibble
+#'@param random Boolean, if the random data from the high dimensional sphere should be bounded
+#'@examples
+#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #'@export
-#'@rdname explore_space
 compute_pca <- function(dt, group = NULL, random = TRUE) {
 
   group <- enexpr(group)
@@ -94,9 +75,31 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
   return(list(pca_summary = pca, aug = aug))
 }
 
-
+#' Plot the PCA projection of the projection bases space
+#'
+#' The set of functions returns a primary ggplot object
+#' that plots the data object in a space reduced by PCA.
+#' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
+#'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@param color A variable from the object that the diagnostic plot should be colored by
+#'@param animate Boolean, if the plot should be animated
+#'@param pal Color palette for \code{explore_space_tour()}
+#'@param pca Boolean, if \code{compute_pca()} should be performed on the data
+#'@param animate Whether the plot should be animated
+#'@param group The grouping variable, useful when there are multiple algorithms in the data object
+#'@examples
+# dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
+#   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
+#                    index = tourr::holes(), raw_data = boa5) %>%
+#   explore_space_pca(group = method)  +
+#   scale_color_botanical(palette = "cherry") +
+#   ggplot2::theme(legend.position = "bottom")
+#'@import ggplot2
+#'@importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr pull row_number
+#'@importFrom rlang "!!"
+#'@importFrom tibble as_tibble
+#'@family plot
 #'@export
-#'@rdname explore_space
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               animate = FALSE){
   #browser()
@@ -128,17 +131,22 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
 }
 
+#' Plot the grand tour animation of the projection bases space
+#'
+#'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@param color A variable from the object that the diagnostic plot should be colored by
+#'@param palette The color palette to use
+#'@examples
+#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
+#' @family plot
 #' @export
-#' @rdname explore_space
-explore_space_tour <- function(dt, color = info, pal = botanical_palettes$banksia, ...){
+explore_space_tour <- function(dt, color = info, palette = botanical_palettes$banksia, ...){
 
   color <- rlang::enexpr(color)
+  col <- c(palette[as.factor(dt %>% dplyr::pull(!!color))], rep("#D3D3D3", n_rand))
   basis <- get_basis_matrix(dt) %>% bind_random_matrix()
 
-
   n_rand <- nrow(basis) - nrow(dt)
-  col <- c(pal[as.factor(dt %>% dplyr::pull(!!color))], rep("#D3D3D3", n_rand))
-
   tourr::animate_xy(basis, col = col)
 
 
