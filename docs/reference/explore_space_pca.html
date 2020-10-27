@@ -54,6 +54,16 @@ compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SPC6B94B10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SPC6B94B10');
+</script>
+
 
   </head>
 
@@ -157,7 +167,7 @@ that plots the data object in a space reduced by PCA.
  <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>5</span>),
                   <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw pkg'>tourr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span>(), <span class='kw'>raw_data</span> <span class='kw'>=</span> <span class='no'>boa5</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>explore_space_pca</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)  +
- <span class='fu'><a href='botanical_color.html'>scale_color_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"cherry"</span>) +
+ <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"cherry"</span>) +
  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)</div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
