@@ -9,3 +9,6 @@ deploy:
   skip_cleanup: true
 after_success:
   - Rscript -e 'covr::codecov()'
+r_binary_packages:
+    - harfbuzz
+    -fribidi
