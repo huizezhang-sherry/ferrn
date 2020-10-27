@@ -32,4 +32,5 @@ Depends:
 Suggests: 
     roxygen2,
     tidyr,
-    covr
+    covr,
+    pkgdown
