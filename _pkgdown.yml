@@ -1,6 +1,10 @@
+url: https://huizezhang-sherry.github.io/ferrn/
+
+
 template:
   params:
     bootswatch: cosmo
+    ganalytics: G-SPC6B94B10
 
 reference:
 - title: Plotting Functions

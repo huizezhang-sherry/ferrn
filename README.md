@@ -7,6 +7,8 @@
 
 [![R build
 status](https://github.com/huizezhang-sherry/ferrn/workflows/R-CMD-check/badge.svg)](https://github.com/huizezhang-sherry/ferrn/actions)
+[![Travis build
+status](https://travis-ci.com/huizezhang-sherry/ferrn.svg?branch=master)](https://travis-ci.com/huizezhang-sherry/ferrn)
 <!-- badges: end -->
 
 The goal of ferrn is to Facilitate the Exploration of touRR
