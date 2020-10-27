@@ -14,8 +14,6 @@ bind_theoretical(dt, matrix, index, raw_data)
 \item{index}{The index function used to calculate index value}
 
 \item{raw_data}{The original data, used to compute the index value for the theoretical best basis}
-
-\item{basis}{A matrix with each basis flattern into one raw. Use \code{get_basis_matrix(dt)} for an easy extraction of the basis}
 }
 \description{
 The theoretical best basis is usually known for a simulated problem.

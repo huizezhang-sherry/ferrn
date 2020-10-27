@@ -15,14 +15,20 @@ explore_space_pca(dt, pca = TRUE, group = NULL, color = NULL, animate = FALSE)
 
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
-\item{animate}{Whether the plot should be animated}
-
-\item{pal}{Color palette for \code{explore_space_tour()}}
+\item{animate}{Boolean, if the plot should be animated}
 }
 \description{
 The set of functions returns a primary ggplot object
 that plots the data object in a space reduced by PCA.
 \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
+}
+\examples{
+dplyr::bind_rows(holes_1d_geo, holes_1d_better) \%>\%
+ bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
+                  index = tourr::holes(), raw_data = boa5) \%>\%
+ explore_space_pca(group = method)  +
+ scale_color_botanical(palette = "cherry") +
+ ggplot2::theme(legend.position = "bottom")
 }
 \seealso{
 Other plot: 

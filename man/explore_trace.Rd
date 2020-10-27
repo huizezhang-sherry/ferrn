@@ -11,9 +11,9 @@ explore_trace_interp(dt, iter = id, color = tries, group = NULL)
 
 \item{iter}{The iterator on the x-axis}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object to plot}
+\item{color}{Colored by a particular varaible}
 
-\item{colpr}{Colored by a particular varaible}
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object to plot}
 }
 \description{
 Trace the index value of search/ interpolation points in guided tour optimisation

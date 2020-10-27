@@ -4,7 +4,7 @@
 \alias{explore_space_tour}
 \title{Plot the grand tour animation of the projection bases space}
 \usage{
-explore_space_tour(dt, color = info, palette = botanical_palettes$banksia, ...)
+explore_space_tour(dt, color = info, palette = botanical_palettes$banksia)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

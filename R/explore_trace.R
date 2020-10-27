@@ -4,7 +4,7 @@
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param iter The iterator on the x-axis
-#'@param colpr Colored by a particular varaible
+#'@param color Colored by a particular varaible
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
 #'@examples
 #'# Compare the trace of interpolated points in two algorithms

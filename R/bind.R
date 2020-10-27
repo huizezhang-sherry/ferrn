@@ -7,8 +7,6 @@
 #' @param matrix The theoretical basis to bind
 #' @param index The index function used to calculate index value
 #' @param raw_data The original data, used to compute the index value for the theoretical best basis
-#' @param basis A matrix with each basis flattern into one raw. Use \code{get_basis_matrix(dt)} for an easy extraction of the basis
-
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 #' tail(holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5))
@@ -18,10 +16,6 @@ bind_theoretical <- function(dt, matrix, index, raw_data){
 
   num_row <- nrow(dt$basis[[1]])
   num_col <- ncol(dt$basis[[1]])
-
-  if (ncol(matrix) != num_col | nrow(matrix) != num_row){
-    stop("theoretical best matrix need to be of the same dimension as the data object!")
-  }
 
   if (!tourr::is_orthonormal(matrix)){
     stop("The theoretical best basis needs to be orthonormal!")
