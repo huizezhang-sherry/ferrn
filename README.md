@@ -20,8 +20,8 @@ You can install the development version of ferrn from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("remotes2")
-# remotes::install_github("huizezhang-sherry/ferrn")
+# install.packages("remotes")
+remotes::install_github("huizezhang-sherry/ferrn")
 ```
 
 ## Usage
@@ -63,7 +63,7 @@ Compare two algorithms via plotting the projection bases on the reduced
 PCA space:
 
 ``` r
-dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
+bind_rows(holes_1d_geo, holes_1d_better) %>%
   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
                    index = tourr::holes(), raw_data = boa5) %>% 
   explore_space_pca(group = method)  +
@@ -79,10 +79,10 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 View the projection bases on its original 5-D space via tour animation:
 
 ``` r
-dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
+bind_rows(holes_1d_geo, holes_1d_better) %>%
   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
                    index = tourr::holes(), raw_data = boa5)%>% 
-  explore_space_tour(theoretical = TRUE, group = method, max_frame = 30)
+  explore_space_tour(theoretical = TRUE, group = method, max_frame = 150)
 ```
 
 <p align="center">
