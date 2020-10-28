@@ -32,8 +32,10 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 
 
     if (length(group_to_flip) == 0){
+      message("there's no flip of the sign")
       basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
     }else{
+      message("signs in all the bases will be fliped in group ", group_to_flip, "\n")
       basis1 <- dt %>% filter(!!group %in% group_to_flip) %>% get_basis_matrix() %>% -.
       basis <- basis1 %>%
         rbind(dt %>% filter(!(!!group) %in% group_to_flip) %>% get_basis_matrix()) %>%
@@ -47,13 +49,18 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
   if (num_col == 1){
     pca <- basis %>% stats::prcomp(scale. = TRUE)
 
-    aug <- dt %>% filter(!!group %in% group_to_flip) %>%
-      dplyr::add_row(dt %>% filter(!(!!group) %in% group_to_flip)) %>%
+    if (exists("group_to_flip")){
+      dt_flip <- dt %>% filter(!!group %in% group_to_flip) %>%
+        dplyr::add_row(dt %>% filter(!(!!group) %in% group_to_flip))
+    }else{
+      dt_flip <-  dt
+    }
+
+    v <- suppressMessages(pca$x %>% as_tibble(.name_repair = "minimal"))
+
+    aug <- dt_flip %>%
       bind_random(n = 1000) %>%
-      bind_cols(pca$x %>% as_tibble(.name_repair = "minimal")) %>%
-      group_by(!!tries,  !!info) %>%
-      mutate(animate_id = dplyr::cur_group_id()) %>%
-      ungroup()
+      bind_cols(v)
 
   } else if(num_col == 2){
     message("Ferrn will perform PCA separately on each dimension")
@@ -61,16 +68,13 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
     pca2 <- stats::prcomp(basis[,(num_row + 1):(2*num_row)], scale. = TRUE)
     pca <- list(pca1, pca2)
 
-    v1 <- -pca1$x %>% as_tibble(.name_repair = "minimal")
-    v2 <- -pca2$x %>% as_tibble(.name_repair = "minimal")
+    v1 <- suppressMessages(-pca1$x %>% as_tibble(.name_repair = "minimal"))
+    v2 <- suppressMessages(-pca2$x %>% as_tibble(.name_repair = "minimal"))
     colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2*num_row)))
 
     aug <- dt %>% bind_random(n = 1000) %>%
       bind_cols(v1) %>%
-      bind_cols(v2) %>%
-      group_by(!!tries, !!info) %>%
-      mutate(animate_id = dplyr::cur_group_id()) %>%
-      ungroup()
+      bind_cols(v2)
 
   } else{
     stop("ferrn can only handle 1d or 2d bases!")
