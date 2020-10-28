@@ -91,8 +91,8 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the development version of ferrn from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("remotes2")</span>
-<span class="co"># remotes::install_github("huizezhang-sherry/ferrn")</span></pre></div>
+<span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"huizezhang-sherry/ferrn"</span><span class="op">)</span></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -123,7 +123,7 @@
 <p><img src="reference/figures/README-trace-plot-1.png" width="100%"></p>
 <p>Compare two algorithms via plotting the projection bases on the reduced PCA space:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
                    index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/explore_space_pca.html">explore_space_pca</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span><span class="op">)</span>  <span class="op">+</span>
@@ -135,10 +135,10 @@
 <p><img src="reference/figures/README-pca-plot-1.png" width="100%"></p>
 <p>View the projection bases on its original 5-D space via tour animation:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
                    index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span><span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/explore_space_tour.html">explore_space_tour</a></span><span class="op">(</span>theoretical <span class="op">=</span> <span class="cn">TRUE</span>, group <span class="op">=</span> <span class="va">method</span>, max_frame <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="reference/explore_space_tour.html">explore_space_tour</a></span><span class="op">(</span>theoretical <span class="op">=</span> <span class="cn">TRUE</span>, group <span class="op">=</span> <span class="va">method</span>, max_frame <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></pre></div>
 <p align="center">
 <img src="reference/figures/anim.gif"></p>
 </div>
