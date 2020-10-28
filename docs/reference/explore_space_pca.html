@@ -8,6 +8,13 @@
 
 <title>Plot the PCA projection of the projection bases space — explore_space_pca • ferrn</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -39,6 +46,7 @@
 <meta property="og:description" content="The set of functions returns a primary ggplot object
 that plots the data object in a space reduced by PCA.
 compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
+<meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -167,8 +175,7 @@ that plots the data object in a space reduced by PCA.
  <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>5</span>),
                   <span class='kw'>index</span> <span class='kw'>=</span> <span class='kw pkg'>tourr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span>(), <span class='kw'>raw_data</span> <span class='kw'>=</span> <span class='no'>boa5</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'>explore_space_pca</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)  +
- <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"cherry"</span>) +
- <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)</div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></pre>
+ <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"cherry"</span>)</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be fliped in group search_geodesic</span></div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

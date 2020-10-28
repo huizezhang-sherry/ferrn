@@ -8,6 +8,13 @@
 
 <title>Plot the grand tour animation of the projection bases space — explore_space_tour • ferrn</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -37,6 +44,7 @@
 
 <meta property="og:title" content="Plot the grand tour animation of the projection bases space — explore_space_tour" />
 <meta property="og:description" content="Plot the grand tour animation of the projection bases space" />
+<meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,7 +132,14 @@
     <p>Plot the grand tour animation of the projection bases space</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_space_tour</span>(<span class='no'>dt</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>info</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>botanical_palettes</span>$<span class='no'>banksia</span>)</pre>
+    <pre class="usage"><span class='fu'>explore_space_tour</span>(
+  <span class='no'>dt</span>,
+  <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>theoretical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>method</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>botanical_palettes</span>$<span class='no'>cherry</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,12 +149,24 @@
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
     </tr>
     <tr>
+      <th>group</th>
+      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
+    </tr>
+    <tr>
+      <th>theoretical</th>
+      <td><p>Boolean, if the theoretical bases have been inlcuded in the data object</p></td>
+    </tr>
+    <tr>
       <th>color</th>
       <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
     </tr>
     <tr>
       <th>palette</th>
       <td><p>The color palette to use</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional argument passed to <code><a href='https://rdrr.io/pkg/tourr/man/display_xy.html'>tourr::animate_xy()</a></code></p></td>
     </tr>
     </table>
 
@@ -151,7 +178,7 @@
 <code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>explore_space_tour</span>(<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; <span class='message'>Using half_range 0.56</span></div><div class='img'><img src='explore_space_tour-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>explore_space_tour</span>(<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be fliped in group search_geodesic</span></div><div class='output co'>#&gt; <span class='message'>Using half_range 0.58</span></div><div class='img'><img src='explore_space_tour-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
