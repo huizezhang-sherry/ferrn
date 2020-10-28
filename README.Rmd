@@ -11,7 +11,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%", 
+  message = FALSE
 )
 ```
 
@@ -29,21 +30,17 @@ You can install the development version of ferrn from [GitHub](https://github.co
 
 ```{r}
 # install.packages("remotes2")
-#remotes::install_github("huizezhang-sherry/ferrn")
+# remotes::install_github("huizezhang-sherry/ferrn")
 ```
 
 
 ## Usage
 
-```{r example}
-library(ferrn)
-library(dplyr)
-```
-
-
 The best projection basis found by the projection pursuit algorithm can be extracted via 
 
 ```{r get-best}
+library(ferrn)
+library(dplyr)
 holes_1d_better %>% get_best()
 holes_1d_better %>% get_best() %>% pull(basis) %>% .[[1]]
 holes_1d_better %>% get_best() %>% pull(index_val)
@@ -80,7 +77,7 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
   explore_space_tour(theoretical = TRUE, group = method, max_frame = 30)
 ```
 
-```{r echo = FALSE, message = FALSE}
+```{r echo = FALSE}
 # library(purrr)
 # set.seed(1)
 # sphere <- geozoo::sphere.hollow(p = 5, n = 1000)$point

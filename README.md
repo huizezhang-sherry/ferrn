@@ -21,28 +21,17 @@ You can install the development version of ferrn from
 
 ``` r
 # install.packages("remotes2")
-#remotes::install_github("huizezhang-sherry/ferrn")
+# remotes::install_github("huizezhang-sherry/ferrn")
 ```
 
 ## Usage
-
-``` r
-library(ferrn)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-```
 
 The best projection basis found by the projection pursuit algorithm can
 be extracted via
 
 ``` r
+library(ferrn)
+library(dplyr)
 holes_1d_better %>% get_best()
 #> # A tibble: 1 x 8
 #>   basis             index_val tries info           loop method       alpha    id
@@ -79,7 +68,6 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
                    index = tourr::holes(), raw_data = boa5) %>% 
   explore_space_pca(group = method)  +
   scale_color_botanical(palette = "cherry")
-#> signs in all the bases will be fliped in group search_geodesic
 #> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
 #> Using compatibility `.name_repair`.
 #> This warning is displayed once every 8 hours.
@@ -98,5 +86,5 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 ```
 
 <p align="center">
-<img src="man/figures/animation.gif">
+<img src="man/figures/anim.gif">
 </p>
