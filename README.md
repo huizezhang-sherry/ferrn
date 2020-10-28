@@ -33,10 +33,10 @@ be extracted via
 library(ferrn)
 library(dplyr)
 holes_1d_better %>% get_best()
-#> # A tibble: 1 x 8
+#> [90m# A tibble: 1 x 8[39m
 #>   basis             index_val tries info           loop method       alpha    id
-#>   <list>                <dbl> <dbl> <chr>         <dbl> <chr>        <dbl> <int>
-#> 1 <dbl[,1] [5 × 1]>     0.914     5 interpolation     8 search_bett…    NA    71
+#>   [3m[90m<list>[39m[23m                [3m[90m<dbl>[39m[23m [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m         [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m        [3m[90m<dbl>[39m[23m [3m[90m<int>[39m[23m
+#> [90m1[39m [90m<dbl[,1] [5 × 1]>[39m     0.914     5 interpolation     8 search_bett…    [31mNA[39m    71
 holes_1d_better %>% get_best() %>% pull(basis) %>% .[[1]]
 #>               [,1]
 #> [1,] -0.0004034938
@@ -70,8 +70,8 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
   scale_color_botanical(palette = "cherry")
 #> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
 #> Using compatibility `.name_repair`.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_warnings()` to see where this warning was generated.
+#> [90mThis warning is displayed once every 8 hours.[39m
+#> [90mCall `lifecycle::last_warnings()` to see where this warning was generated.[39m
 ```
 
 <img src="man/figures/README-pca-plot-1.png" width="100%" />
@@ -86,5 +86,7 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 ```
 
 <p align="center">
+
 <img src="man/figures/anim.gif">
+
 </p>
