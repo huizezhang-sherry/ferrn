@@ -6,23 +6,31 @@
 \usage{
 explore_space_tour(
   dt,
+  group = NULL,
   theoretical = FALSE,
   color = method,
-  palette = botanical_palettes$cherry
+  palette = botanical_palettes$cherry,
+  ...
 )
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+
+\item{theoretical}{Boolean, if the theoretical bases have been inlcuded in the data object}
+
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
 \item{palette}{The color palette to use}
+
+\item{...}{Additional argument passed to \code{tourr::animate_xy()}}
 }
 \description{
 Plot the grand tour animation of the projection bases space
 }
 \examples{
-explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
+explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
 }
 \seealso{
 Other plot: 

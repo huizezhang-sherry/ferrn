@@ -113,8 +113,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {2
 #'  bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
 #'                   index = tourr::holes(), raw_data = boa5) %>%
 #'  explore_space_pca(group = method)  +
-#'  scale_color_botanical(palette = "cherry") +
-#'  ggplot2::theme(legend.position = "bottom")
+#'  scale_color_botanical(palette = "cherry")
 #'@import ggplot2
 #'@importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr pull row_number
 #'@importFrom rlang "!!"
@@ -157,11 +156,12 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
+#'@param theoretical Boolean, if the theoretical bases have been inlcuded in the data object
 #'@param color A variable from the object that the diagnostic plot should be colored by
 #'@param palette The color palette to use
 #'@param ... Additional argument passed to \code{tourr::animate_xy()}
 #'@examples
-#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
+#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
 #' @family plot
 #' @export
 explore_space_tour <- function(dt, group = NULL, theoretical = FALSE, color = method, palette = botanical_palettes$cherry, ...){

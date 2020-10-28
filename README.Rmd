@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -19,22 +21,109 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/huizezhang-sherry/ferrn/branch/master/graph/badge.svg)](https://codecov.io/gh/huizezhang-sherry/ferrn?branch=master)
 <!-- badges: end -->
 
-The goal of ferrn is to Facilitate the Exploration of touRR optimisatioN, thus ferrn.
+Given a data object collected from a (guided) tour, ferrn provides handy tools for extracting key components and produces diagnostic plots. 
 
 ## Installation
 
 You can install the development version of ferrn from [GitHub](https://github.com/) with:
 
 ```{r}
-# install.packages("devtools")
-#devtools::install_github("huizezhang-sherry/ferrn")
+# install.packages("remotes2")
+#remotes::install_github("huizezhang-sherry/ferrn")
 ```
-## Example
 
-This is a basic example which shows you how to solve a common problem:
+
+## Usage
 
 ```{r example}
-#library(ferrn)
-## basic example code
+library(ferrn)
+library(dplyr)
 ```
 
+
+The best projection basis found by the projection pursuit algorithm can be extracted via 
+
+```{r get-best}
+holes_1d_better %>% get_best()
+holes_1d_better %>% get_best() %>% pull(basis) %>% .[[1]]
+holes_1d_better %>% get_best() %>% pull(index_val)
+```
+
+
+Trace plot for viewing the optimisation progression with botanical palette:
+
+```{r trace-plot}
+holes_1d_better %>% 
+  explore_trace_interp() + 
+  scale_color_botanical(palette = "fern")
+```
+
+Compare two algorithms via plotting the projection bases on the reduced PCA space:
+
+
+```{r pca-plot}
+dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
+  bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
+                   index = tourr::holes(), raw_data = boa5) %>% 
+  explore_space_pca(group = method)  +
+  scale_color_botanical(palette = "cherry")
+
+```
+
+
+View the projection bases on its original 5-D space via tour animation:
+
+```{r tour-anim, eval = FALSE}
+dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
+  bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
+                   index = tourr::holes(), raw_data = boa5)%>% 
+  explore_space_tour(theoretical = TRUE, group = method, max_frame = 30)
+```
+
+```{r echo = FALSE, message = FALSE}
+# library(purrr)
+# set.seed(1)
+# sphere <- geozoo::sphere.hollow(p = 5, n = 1000)$point
+# path1 <- holes_1d_better$basis %>%
+#   flatten_dbl() %>% matrix(ncol = 5, byrow = TRUE)
+# path2 <- holes_1d_geo$basis %>%
+#   flatten_dbl() %>% matrix(ncol = 5, byrow = TRUE) %>% -.
+# theoretical <- matrix(c(0, 1, 0, 0, 0), nrow = 1, byrow = TRUE)
+# start <- get_start(holes_1d_better) %>% pull(basis) %>% .[[1]] %>% matrix(nrow = 1)
+# dt <- rbind(sphere, path1, path2, theoretical, start, -start)
+# colnames(dt) <- c(map_chr(1:5, ~paste0("x", .x)))
+# pal <- c("#D3D3D3",c("#524340",  #orchre
+#                      "#B4B754",  # green
+#                      "#F3B422" # yellow
+# ))
+# color <- c(rep(pal[1], nrow(sphere)),
+#            rep(pal[2], nrow(path1)),
+#            rep(pal[3], nrow(path2)),
+#            rep(pal[4], 1), # theoretical
+#            pal[2], # for start
+#            pal[3] # for start
+# )
+# cex <- c(rep(1, nrow(sphere)),
+#          rep(3, nrow(path1)),
+#          rep(3, nrow(path2)),
+#          10, # theoretical
+#          rep(5, 2) # for start
+# )
+# library(tourr)
+# set.seed(123)
+# anim <- render_gif(
+#   dt,
+#   tour_path = grand_tour(),
+#   gif_file = here::here("man", "figures", "anim.gif"),
+#   display = display_xy(col=color,cex = cex, axes = "bottomleft"),
+#   rescale = FALSE,
+#   frames = 150,
+# 
+# )
+
+```
+
+
+<p align="center">
+  <img src="man/figures/anim.gif">
+</p>
