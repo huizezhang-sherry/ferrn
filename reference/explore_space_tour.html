@@ -135,7 +135,12 @@
     <p>Plot the grand tour animation of the projection bases space</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='va'>dt</span>, color <span class='op'>=</span> <span class='va'>info</span>, palette <span class='op'>=</span> <span class='va'>botanical_palettes</span><span class='op'>$</span><span class='va'>banksia</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>explore_space_tour</span><span class='op'>(</span>
+  <span class='va'>dt</span>,
+  theoretical <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  color <span class='op'>=</span> <span class='va'>method</span>,
+  palette <span class='op'>=</span> <span class='va'>botanical_palettes</span><span class='op'>$</span><span class='va'>cherry</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,7 +168,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Using half_range 0.56</span></div><div class='img'><img src='explore_space_tour-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in flip_sign(., group = !!group): object 'basis' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
