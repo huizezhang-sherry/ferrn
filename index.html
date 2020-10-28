@@ -92,24 +92,15 @@
 <p>You can install the development version of ferrn from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># install.packages("remotes2")</span>
-<span class="co">#remotes::install_github("huizezhang-sherry/ferrn")</span></pre></div>
+<span class="co"># remotes::install_github("huizezhang-sherry/ferrn")</span></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
+<p>The best projection basis found by the projection pursuit algorithm can be extracted via</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/huizezhang-sherry/ferrn">ferrn</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span></pre></div>
-<p>The best projection basis found by the projection pursuit algorithm can be extracted via</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">holes_1d_better</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/get_best.html">get_best</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 8</span>
 <span class="co">#&gt;   basis             index_val tries info           loop method       alpha    id</span>
@@ -125,32 +116,31 @@
 <span class="va">holes_1d_better</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/get_best.html">get_best</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">index_val</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.914266</span></pre></div>
 <p>Trace plot for viewing the optimisation progression with botanical palette:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">holes_1d_better</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/explore_trace_interp.html">explore_trace_interp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="reference/scale_color_botanical.html">scale_color_botanical</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"fern"</span><span class="op">)</span></pre></div>
 <p><img src="reference/figures/README-trace-plot-1.png" width="100%"></p>
 <p>Compare two algorithms via plotting the projection bases on the reduced PCA space:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
                    index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/explore_space_pca.html">explore_space_pca</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span><span class="op">)</span>  <span class="op">+</span>
   <span class="fu"><a href="reference/scale_color_botanical.html">scale_color_botanical</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"cherry"</span><span class="op">)</span>
-<span class="co">#&gt; signs in all the bases will be fliped in group search_geodesic</span>
 <span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span>
 <span class="co">#&gt; Using compatibility `.name_repair`.</span>
 <span class="co">#&gt; This warning is displayed once every 8 hours.</span>
 <span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span></pre></div>
 <p><img src="reference/figures/README-pca-plot-1.png" width="100%"></p>
 <p>View the projection bases on its original 5-D space via tour animation:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
                    index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span><span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/explore_space_tour.html">explore_space_tour</a></span><span class="op">(</span>theoretical <span class="op">=</span> <span class="cn">TRUE</span>, group <span class="op">=</span> <span class="va">method</span>, max_frame <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></pre></div>
 <p align="center">
-<img src="reference/figures/animation.gif"></p>
+<img src="reference/figures/anim.gif"></p>
 </div>
 </div>
   </div>
