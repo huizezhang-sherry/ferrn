@@ -38,7 +38,8 @@ explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
     ggplot(aes(x = !!iter, y = !!sym("index_val"), col = as.factor(!!col)))  +
     geom_line() +
     geom_point() +
-    ylab("index value")
+    ylab("index value") +
+    theme(legend.position = "none")
 
   if (!is.null(group)){
     p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1) +

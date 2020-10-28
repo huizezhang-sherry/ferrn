@@ -1,3 +1,47 @@
+#' Flip the sign of a group of bases
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @examples
+#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% flip_sign(group = method)
+#' @export
+flip_sign <- function(dt, group = NULL){
+  group <- enexpr(group)
+
+  if (!is.null(group)){
+    group_name <- dt %>% get_best(group = !!group) %>% pull(!!group)
+    num_method <- group_name %>% length()
+    max_bases <- dt %>% get_best(group = !!group) %>% pull(basis)
+    max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
+    extract <- function(matrix, pos) matrix[pos %% nrow(matrix), (pos %/% nrow(matrix)) + 1]
+    max_sign <- mapply(extract, max_bases, max_id) %>% sign()
+    group_to_flip <- group_name[max_sign < 0]
+    group_to_flip <- group_to_flip[group_to_flip != "theoretical"]
+
+    if (length(group_to_flip) == 0){
+      message("there's no flip of the sign")
+      basis <- dt %>% get_basis_matrix()
+    }else{
+      message("signs in all the bases will be fliped in group ", group_to_flip, "\n")
+      basis1 <- dt %>% filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
+        get_basis_matrix() %>% -.
+      basis <- basis1 %>%
+        rbind(dt %>% filter(!(!!group) %in% group_to_flip | !!group == "theoretical") %>% get_basis_matrix())
+
+      dt_obj <- dt %>% filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
+        dplyr::bind_rows(dt %>% filter(!(!!group) %in% group_to_flip | !!group == "theoretical"))
+    }
+  }else{
+    basis <- basis
+    dt_obj <- dt
+  }
+
+  return(list(basis = basis,
+              flip = !is.null(group),
+              dt = dt_obj))
+}
+
+
 #' Compute PCA for the projection bases
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
@@ -6,7 +50,7 @@
 #'@examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #'@export
-compute_pca <- function(dt, group = NULL, random = TRUE) {
+compute_pca <- function(dt, group = NULL, random = TRUE) {2
 
   if (!"basis" %in% colnames(dt)){
     stop("You need to have a basis column that contains the projection basis!")
@@ -20,61 +64,29 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 
   dt <- dt %>% mutate(row_num = row_number())
 
-  if (!is.null(group)){
-
-    group_name <- dt %>% get_best(group = !!group) %>% pull(!!group)
-    num_method <- group_name %>% length()
-    max_bases <- dt %>% get_best(group = !!group) %>% pull(basis)
-    max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
-    extract <- function(matrix, pos) matrix[pos %% nrow(matrix), (pos %/% nrow(matrix)) + 1]
-    max_sign <- mapply(extract, max_bases, max_id) %>% sign()
-    group_to_flip <- group_name[max_sign < 0]
-
-
-    if (length(group_to_flip) == 0){
-      message("there's no flip of the sign")
-      basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
-    }else{
-      message("signs in all the bases will be fliped in group ", group_to_flip, "\n")
-      basis1 <- dt %>% filter(!!group %in% group_to_flip) %>% get_basis_matrix() %>% -.
-      basis <- basis1 %>%
-        rbind(dt %>% filter(!(!!group) %in% group_to_flip) %>% get_basis_matrix()) %>%
-        bind_random_matrix(n = 1000)
-    }
-  }else{
-    basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(n = 1000)
-  }
+  flip <- flip_sign(dt, group = !!group)
+  basis <- flip$basis
 
   # Compute PCA
   if (num_col == 1){
-    pca <- basis %>% stats::prcomp(scale. = TRUE)
-
-    if (exists("group_to_flip")){
-      dt_flip <- dt %>% filter(!!group %in% group_to_flip) %>%
-        dplyr::add_row(dt %>% filter(!(!!group) %in% group_to_flip))
-    }else{
-      dt_flip <-  dt
-    }
-
+    pca <- basis %>% bind_random_matrix() %>% stats::prcomp(scale. = TRUE)
     v <- suppressMessages(pca$x %>% as_tibble(.name_repair = "minimal"))
-
-    aug <- dt_flip %>%
-      bind_random(n = 1000) %>%
-      bind_cols(v)
+    if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
+    aug <- dt_flip %>% bind_random() %>% bind_cols(v)
 
   } else if(num_col == 2){
     message("Ferrn will perform PCA separately on each dimension")
-    pca1 <- stats::prcomp(basis[,1:num_row], scale. = TRUE)
-    pca2 <- stats::prcomp(basis[,(num_row + 1):(2*num_row)], scale. = TRUE)
+    basis_2d <- basis %>% bind_random_matrix()
+    pca1 <- stats::prcomp(basis_2d[,1:num_row], scale. = TRUE)
+    pca2 <- stats::prcomp(basis_2d[,(num_row + 1):(2*num_row)], scale. = TRUE)
     pca <- list(pca1, pca2)
 
     v1 <- suppressMessages(-pca1$x %>% as_tibble(.name_repair = "minimal"))
     v2 <- suppressMessages(-pca2$x %>% as_tibble(.name_repair = "minimal"))
     colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2*num_row)))
 
-    aug <- dt %>% bind_random(n = 1000) %>%
-      bind_cols(v1) %>%
-      bind_cols(v2)
+    if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
+    aug <- dt_flip %>% bind_random() %>% bind_cols(v1) %>% bind_cols(v2)
 
   } else{
     stop("ferrn can only handle 1d or 2d bases!")
@@ -82,6 +94,9 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 
   return(list(pca_summary = pca, aug = aug))
 }
+
+
+
 
 #' Plot the PCA projection of the projection bases space
 #'
@@ -117,9 +132,10 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   p <- dt %>%
     ggplot(aes(x = PC1, y = PC2)) +
-    geom_point(data = dt %>% dplyr::filter(info != "randomly_generated"), aes(col = !!color)) +
     geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), color = "grey") +
-    theme(aspect.ratio = 1)
+    geom_point(data = dt %>% dplyr::filter(info != "randomly_generated"), aes(col = !!color)) +
+    theme_void() +
+    theme(aspect.ratio = 1, legend.position = "bottom")
 
   if ("theoretical" %in% dt$info){
     p <- p +
@@ -140,20 +156,40 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #' Plot the grand tour animation of the projection bases space
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour
+#'@param group The grouping variable, useful when there are multiple algorithms in the data object
 #'@param color A variable from the object that the diagnostic plot should be colored by
 #'@param palette The color palette to use
+#'@param ... Additional argument passed to \code{tourr::animate_xy()}
 #'@examples
 #'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), color = method)
 #' @family plot
 #' @export
-explore_space_tour <- function(dt, color = info, palette = botanical_palettes$banksia){
+explore_space_tour <- function(dt, group = NULL, theoretical = FALSE, color = method, palette = botanical_palettes$cherry, ...){
+  group <- enexpr(group)
+  color <- enexpr(color)
 
-  color <- rlang::enexpr(color)
-  basis <- get_basis_matrix(dt) %>% bind_random_matrix()
+  # get start
+  dt <- dt %>% dplyr::mutate(row_num = row_number())
+  n_start <- get_start(dt) %>% pull(row_num)
+
+  # see if any flip need to be done
+  flip <- dt %>% flip_sign(group = !!group)
+  basis <- flip$basis %>% bind_random_matrix()
   n_rand <- nrow(basis) - nrow(dt)
-  col <- c(palette[as.factor(dt %>% dplyr::pull(!!color))], rep("#D3D3D3", n_rand))
 
-  tourr::animate_xy(basis, col = col)
+  col <- c(palette[as.factor(dt %>% dplyr::pull(!!color))],
+           rep("#D3D3D3", n_rand))
+  cex <- c(rep(3, nrow(dt)),
+           rep(1, n_rand))
+  cex[n_start] <- 5
+
+  if (theoretical){
+    col[nrow(dt)] <- palette[3]
+    cex[nrow(dt)] <-  10
+  }
+
+
+  tourr::animate_xy(basis, col = col, cex = cex)
 
 
 }

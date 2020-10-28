@@ -43,6 +43,7 @@ reference:
     Other misc functions
   contents:
   - compute_pca
+  - flip_sign
   - relevel_geo
   - relevel_better
 

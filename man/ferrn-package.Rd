@@ -6,6 +6,8 @@
 \alias{ferrn-package}
 \title{ferrn: Facilitate Exploration of touRR optimisatioN}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 What the package does (one paragraph).
 }
 \seealso{
