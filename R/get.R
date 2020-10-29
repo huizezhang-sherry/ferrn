@@ -47,8 +47,8 @@ get_start <- function(dt){
 #' @param  dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @examples
-#' holes_1d_better %>% get_interp()
-#' get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#' holes_1d_better %>% get_interp() %>% head()
+#' get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method) %>% head()
 #' @family get functions
 #' @export
 get_interp <- function(dt, group = NULL){

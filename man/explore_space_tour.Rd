@@ -30,7 +30,7 @@ explore_space_tour(
 Plot the grand tour animation of the projection bases space
 }
 \examples{
-explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+\dontrun{explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)}
 }
 \seealso{
 Other plot: 

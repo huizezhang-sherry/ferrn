@@ -8,7 +8,7 @@
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
 #'@examples
 #'# Compare the trace of interpolated points in two algorithms
-#'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% explore_trace_interp(group = method)
+#'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% explore_trace_interp(group = method) +  scale_color_botanical(palette = "fern")
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@family plot
@@ -42,8 +42,7 @@ explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
     theme(legend.position = "none")
 
   if (!is.null(group)){
-    p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1) +
-      theme(legend.position = "bottom")
+    p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1)
   }
   p
 }
@@ -59,7 +58,7 @@ explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
 #'# Summary plots for search points in two algorithms
 #'proj_1D <- holes_1d_better %>% dplyr::mutate(proj = "1D")
 #'proj_2D <- holes_2d_better_max_tries %>% dplyr::mutate(proj = "2D")
-#'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj)
+#'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj) +  scale_color_botanical(palette = "daisy")
 #'@family plot
 #'@export
 explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, group = NULL){

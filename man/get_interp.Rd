@@ -15,8 +15,8 @@ get_interp(dt, group = NULL)
 Extract interpolated records
 }
 \examples{
-holes_1d_better \%>\% get_interp()
-get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+holes_1d_better \%>\% get_interp() \%>\% head()
+get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method) \%>\% head()
 }
 \seealso{
 Other get functions: 

@@ -21,7 +21,7 @@ Augment this information into the data object allows for evaluating the performa
 }
 \examples{
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-tail(holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = boa5))
+tail(holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = boa5),1)
 }
 \seealso{
 Other bind: 

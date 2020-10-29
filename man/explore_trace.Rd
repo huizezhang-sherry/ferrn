@@ -20,7 +20,7 @@ Trace the index value of search/ interpolation points in guided tour optimisatio
 }
 \examples{
 # Compare the trace of interpolated points in two algorithms
-dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% explore_trace_interp(group = method)
+dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% explore_trace_interp(group = method) +  scale_color_botanical(palette = "fern")
 }
 \seealso{
 Other plot: 

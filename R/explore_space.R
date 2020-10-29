@@ -3,7 +3,7 @@
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @examples
-#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% flip_sign(group = method)
+#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% flip_sign(group = method) %>% str(max = 1)
 #' @export
 flip_sign <- function(dt, group = NULL){
   group <- enexpr(group)
@@ -48,7 +48,7 @@ flip_sign <- function(dt, group = NULL){
 #'@param group The grouping variable, useful when there are multiple algorithms in the data object
 #'@param random Boolean, if the random data from the high dimensional sphere should be bounded
 #'@examples
-#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
+#'dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #'@export
 compute_pca <- function(dt, group = NULL, random = TRUE) {2
 
@@ -122,7 +122,6 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {2
 #'@export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               animate = FALSE){
-  #browser()
   color <- group <- enexpr(group)
 
   if (pca){
@@ -161,7 +160,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #'@param palette The color palette to use
 #'@param ... Additional argument passed to \code{tourr::animate_xy()}
 #'@examples
-#'explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#' \dontrun{explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)}
 #' @family plot
 #' @export
 explore_space_tour <- function(dt, group = NULL, theoretical = FALSE, color = method, palette = botanical_palettes$cherry, ...){

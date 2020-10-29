@@ -15,5 +15,5 @@ flip_sign(dt, group = NULL)
 Flip the sign of a group of bases
 }
 \examples{
-dplyr::bind_rows(holes_1d_geo, holes_1d_better) \%>\% flip_sign(group = method)
+dplyr::bind_rows(holes_1d_geo, holes_1d_better) \%>\% flip_sign(group = method) \%>\% str(max = 1)
 }
