@@ -32,7 +32,7 @@ flip_sign <- function(dt, group = NULL){
         dplyr::bind_rows(dt %>% filter(!(!!group) %in% group_to_flip | !!group == "theoretical"))
     }
   }else{
-    basis <- basis
+    basis <- dt %>% get_basis_matrix()
     dt_obj <- dt
   }
 
@@ -50,8 +50,7 @@ flip_sign <- function(dt, group = NULL){
 #'@examples
 #'dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #'@export
-compute_pca <- function(dt, group = NULL, random = TRUE) {2
-
+compute_pca <- function(dt, group = NULL, random = TRUE) {
   if (!"basis" %in% colnames(dt)){
     stop("You need to have a basis column that contains the projection basis!")
   }
@@ -122,7 +121,11 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {2
 #'@export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               animate = FALSE){
-  color <- group <- enexpr(group)
+  browser()
+  group <- enexpr(group)
+
+  if (is.null(group)) color <- enexpr(color) else color <- group
+
 
   if (pca){
     dt <- compute_pca(dt, group = !!group)$aug
