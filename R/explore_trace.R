@@ -7,37 +7,50 @@
 #'@param color Colored by a particular varaible
 #'@examples
 #'# Compare the trace of interpolated points in two algorithms
-#'holes_1d_better %>% explore_trace_interp() + scale_color_botanical(palette = "fern")
+#'holes_1d_better %>%
+#'  explore_trace_interp() +
+#'  scale_color_botanical(palette = "fern", discrete = FALSE) +
+#'  scale_fill_botanical(palette = "fern", discrete = FALSE)
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@family plot
 #'@export
 #'@rdname explore_trace
-explore_trace_interp <- function(dt, iter = id,  color = tries){
+explore_trace_interp <- function(dt, iter = id,  color = tries, fill = tries){
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
-  iter <- rlang::enexpr(iter)
-  col <- rlang::enexpr(color)
-
+  iter <- enexpr(iter)
+  col <- enexpr(color)
+  fill <- enexpr(fill)
 
   dt_interp <- get_interp(dt)
+  interp_last <- get_interp_last(dt)
+  rect_shade <-interp_last %>%
+    mutate(xmin = id, xmax = lag(id, default = 0))
 
   a <- dt_interp %>%
-    dplyr::summarise(row = dplyr::n(), diff = max(!!iter) - min(!!iter) + 1)
+    dplyr::summarise(row = dplyr::n(),
+                     diff = max(!!iter) - min(!!iter) + 1)
 
   if(!all(a$row == a$diff, TRUE)){
     stop("there is gap(s) in the variable iter!")
   }
 
-
   p <- dt_interp %>%
-    ggplot(aes(x = !!iter, y = !!sym("index_val"), col = as.factor(!!col)))  +
-    geom_line() +
-    geom_point() +
+    ggplot() +
+    geom_rect(data = rect_shade,
+              aes(xmin = xmin, xmax = xmax,
+                  ymin = -Inf, ymax = Inf,
+                  fill = !!fill), alpha = 0.5) +
+    geom_line(aes(x = !!iter, y = index_val)) +
+    geom_point(data = rect_shade,
+               aes(x = !!iter, y = index_val, col = !!col),
+               size = 3, alpha = 2) +
+    theme_bw() +
+    theme(legend.position = "none") +
     ylab("Index value") +
-    xlab("Time") +
-    theme(legend.position = "none")
+    xlab("Time")
 
   p
 }

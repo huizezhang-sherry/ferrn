@@ -79,7 +79,8 @@ get_interp_last <- function(dt, group = NULL){
   dt %>%
     get_interp() %>%
     group_by(tries, !!group) %>%
-    filter(loop == max(loop))
+    filter(loop == max(loop)) %>%
+    ungroup()
 
 }
 

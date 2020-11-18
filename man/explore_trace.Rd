@@ -4,7 +4,7 @@
 \alias{explore_trace_interp}
 \title{Plot the trace the search progression}
 \usage{
-explore_trace_interp(dt, iter = id, color = tries)
+explore_trace_interp(dt, iter = id, color = tries, fill = tries)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -18,7 +18,10 @@ Trace the index value of search/ interpolation points in guided tour optimisatio
 }
 \examples{
 # Compare the trace of interpolated points in two algorithms
-holes_1d_better \%>\% explore_trace_interp() + scale_color_botanical(palette = "fern")
+holes_1d_better \%>\%
+ explore_trace_interp() +
+ scale_color_botanical(palette = "fern", discrete = FALSE) +
+ scale_fill_botanical(palette = "fern", discrete = FALSE)
 }
 \seealso{
 Other plot: 
