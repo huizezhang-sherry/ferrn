@@ -60,6 +60,30 @@ get_interp <- function(dt, group = NULL){
     mutate(id = dplyr::row_number())
 }
 
+#' Extract the end point at each interpolation
+#'
+#' @param  dt A data object from the running the optimisation algorithm in guided tour
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @examples
+#' holes_1d_better %>% get_interp_last()
+#' get_interp_last(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#' @family get functions
+#' @export
+get_interp_last <- function(dt, group = NULL){
+  group <- enexpr(group)
+
+  if (!all(c("tries", "loop") %in% colnames(dt))){
+    stop("The data object must have variables tries and loop")
+  }
+
+  dt %>%
+    get_interp() %>%
+    group_by(tries, !!group) %>%
+    filter(loop == max(loop))
+
+}
+
+
 #' Extract the count in each iteration
 #'
 #'@param dt A data object from the running the optimisation algorithm in guided tour

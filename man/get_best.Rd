@@ -20,6 +20,7 @@ dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% get_best(group = method)
 \seealso{
 Other get functions: 
 \code{\link{get_basis_matrix}()},
+\code{\link{get_interp_last}()},
 \code{\link{get_interp}()},
 \code{\link{get_search_count}()},
 \code{\link{get_start}()}
