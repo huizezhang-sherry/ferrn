@@ -21,6 +21,7 @@ flip_sign <- function(dt, group = NULL){
     if (length(group_to_flip) == 0){
       message("there's no flip of the sign")
       basis <- dt %>% get_basis_matrix()
+      dt_obj <- dt
     }else{
       message("signs in all the bases will be fliped in group ", group_to_flip, "\n")
       basis1 <- dt %>% filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
