@@ -5,28 +5,25 @@
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param iter The iterator on the x-axis
 #'@param color Colored by a particular varaible
-#'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
 #'@examples
 #'# Compare the trace of interpolated points in two algorithms
-#'dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% explore_trace_interp(group = method) +  scale_color_botanical(palette = "fern")
+#'holes_1d_better %>% explore_trace_interp() + scale_color_botanical(palette = "fern")
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@family plot
 #'@export
 #'@rdname explore_trace
-explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
+explore_trace_interp <- function(dt, iter = id,  color = tries){
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
-  group <- rlang::enexpr(group)
   iter <- rlang::enexpr(iter)
   col <- rlang::enexpr(color)
 
 
-  dt_interp <- get_interp(dt, group = !!group)
+  dt_interp <- get_interp(dt)
 
   a <- dt_interp %>%
-    group_by(!!group) %>%
     dplyr::summarise(row = dplyr::n(), diff = max(!!iter) - min(!!iter) + 1)
 
   if(!all(a$row == a$diff, TRUE)){
@@ -38,12 +35,10 @@ explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
     ggplot(aes(x = !!iter, y = !!sym("index_val"), col = as.factor(!!col)))  +
     geom_line() +
     geom_point() +
-    ylab("index value") +
+    ylab("Index value") +
+    xlab("Time") +
     theme(legend.position = "none")
 
-  if (!is.null(group)){
-    p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1)
-  }
   p
 }
 
@@ -52,26 +47,23 @@ explore_trace_interp <- function(dt, iter = id,  color = tries, group = NULL){
 #'@param dt A data object from the running the optimisation algorithm in guided tour
 #'@param iter The iterator on the x-axis
 #'@param color Colored by a particular varaible
-#'@param group The grouping variable, useful when there are multiple algorithms in the data object to plot
 #'@param cutoff The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
 #'@examples
 #'# Summary plots for search points in two algorithms
-#'proj_1D <- holes_1d_better %>% dplyr::mutate(proj = "1D")
-#'proj_2D <- holes_2d_better_max_tries %>% dplyr::mutate(proj = "2D")
-#'dplyr::bind_rows(proj_1D, proj_2D) %>% explore_trace_search(group = proj) +
+#' holes_1d_better %>% explore_trace_search() +
+#'  scale_color_botanical(palette = "fern")
+#' holes_2d_better_max_tries %>% explore_trace_search() +
 #'  scale_color_botanical(palette = "daisy")
 #'@family plot
 #'@export
-explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, group = NULL){
-
+explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15){
   iter <- enexpr(iter)
-  group <- enexpr(group)
   col <- enexpr(color)
 
   search <- dt %>%
-    dplyr::filter(info != "interpolation")
-  search_count <- search %>%
-    get_search_count(group = !!group)
+    filter(info != "interpolation")
+  search_count <- get_search_count(search)
+
 
   largest <- max(eval(rlang::expr(`$`(dt, !!iter))))
   lowest_index_val <- min(dt$index_val)
@@ -81,29 +73,18 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, g
     filter(n >= cutoff)
   search_box <- search %>%
     filter(!!iter %in% `$`(box_id, !!iter))
-  if (!is.null(group))
-    search_box <- search_box %>%
-    filter(!!group %in% `$`(box_id, !!group))
 
   # filter data plotted with point geom
   point_id <- search_count %>%
     filter(n < cutoff)
   search_point <- search %>%
     filter(!!iter %in% `$`(point_id, !!iter))
-  if (!is.null(group))
-    search_point <- search_point %>%
-    filter(!!group %in% `$`(point_id, !!group))
 
   # filter the target points
-  if (!is.null(group)) {
-    search_target <- search %>%
-      dplyr::group_by(!!iter, !!group) %>%
-      dplyr::filter(index_val == max(index_val))
-  } else{
-    search_target <- search %>%
-      dplyr::group_by(!!iter) %>%
-      dplyr::filter(index_val == max(index_val))
-  }
+  search_target <- search %>%
+    group_by(!!iter) %>%
+    filter(index_val == max(index_val))
+
 
   p <- search %>%
     ggplot(aes(x = !!iter, y = index_val, col = as.factor(!!col))) +
@@ -128,12 +109,6 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, g
     theme(legend.position = "none") +
     ylab("Index value") +
     xlab("Iteration number")
-
-  if(!is.null(group)){
-    p <- p + facet_wrap(vars(!!group), labeller = "label_both", ncol = 1) +
-      theme(legend.position = "none")
-  }
-
   p
 
 }
