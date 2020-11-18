@@ -59,3 +59,12 @@ scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, revers
   }
 
 }
+
+#' @export
+scale_fill_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE){
+  if (discrete) {
+    discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
+  }else{
+    scale_fill_gradientn(colors = botanical_pal(palette, ...)(256))
+  }
+}
