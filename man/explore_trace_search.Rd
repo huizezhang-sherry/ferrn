@@ -30,7 +30,8 @@ Plot the count in each iteration
 # Summary plots for search points in two algorithms
 proj_1D <- holes_1d_better \%>\% dplyr::mutate(proj = "1D")
 proj_2D <- holes_2d_better_max_tries \%>\% dplyr::mutate(proj = "2D")
-dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj) +  scale_color_botanical(palette = "daisy")
+dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj) +
+ scale_color_botanical(palette = "daisy")
 }
 \seealso{
 Other plot: 

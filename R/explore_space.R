@@ -121,7 +121,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #'@export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               animate = FALSE){
-  browser()
+  # browser()
   group <- enexpr(group)
 
   if (is.null(group)) color <- enexpr(color) else color <- group
