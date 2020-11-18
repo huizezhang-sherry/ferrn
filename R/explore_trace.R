@@ -76,6 +76,7 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, g
   largest <- max(eval(rlang::expr(`$`(dt, !!iter))))
   lowest_index_val <- min(dt$index_val)
 
+  # filter data plotted with boxplot geom
   box_id <- search_count %>%
     filter(n >= cutoff)
   search_box <- search %>%
@@ -84,6 +85,7 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, g
     search_box <- search_box %>%
     filter(!!group %in% `$`(box_id, !!group))
 
+  # filter data plotted with point geom
   point_id <- search_count %>%
     filter(n < cutoff)
   search_point <- search %>%
@@ -92,25 +94,39 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, g
     search_point <- search_point %>%
     filter(!!group %in% `$`(point_id, !!group))
 
+  # filter the target points
   if (!is.null(group)) {
-    search_line <- search %>%
+    search_target <- search %>%
       dplyr::group_by(!!iter, !!group) %>%
       dplyr::filter(index_val == max(index_val))
   } else{
-    search_line <- search %>%
+    search_target <- search %>%
       dplyr::group_by(!!iter) %>%
       dplyr::filter(index_val == max(index_val))
   }
 
   p <- search %>%
     ggplot(aes(x = !!iter, y = index_val, col = as.factor(!!col))) +
-    geom_boxplot(data = search_box) +
+    # point summary
     geom_point(data = search_point) +
-    geom_line(data = search_line, aes(group = 1)) +
+    # boxplot summary
+    geom_boxplot(data = search_box) +
+    geom_boxplot(data = search_box %>% filter(!!iter == largest),
+                 color = "grey") +
+    # target points
+    geom_point(data = search_target %>% filter(!!iter != largest), aes(group = 1), size = 3) +
+    geom_line(data = search_target %>% filter(!!iter != largest), aes(group = 1)) +
+    geom_point(data = search_target %>% filter(!!iter == largest),
+               col = "grey", size = 3) +
+    # numeric summary box
     geom_label(data = search_count, aes(y = 0.99*lowest_index_val, label = n)) +
+    geom_label(data = search_count %>% filter(!!iter == largest),
+               aes(y = 0.99*lowest_index_val, label = n),
+               col = "grey") +
+    # scale, lab and theme
     scale_x_continuous(breaks = seq(1, largest, 1)) +
     theme(legend.position = "none") +
-    ylab("index value") +
+    ylab("Index value") +
     xlab("Iteration number")
 
   if(!is.null(group)){
