@@ -4,13 +4,7 @@
 \alias{explore_trace_search}
 \title{Plot the count in each iteration}
 \usage{
-explore_trace_search(
-  dt,
-  iter = tries,
-  color = tries,
-  cutoff = 15,
-  group = NULL
-)
+explore_trace_search(dt, iter = tries, color = tries, cutoff = 15)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -20,17 +14,15 @@ explore_trace_search(
 \item{color}{Colored by a particular varaible}
 
 \item{cutoff}{The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}}
-
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object to plot}
 }
 \description{
 Plot the count in each iteration
 }
 \examples{
 # Summary plots for search points in two algorithms
-proj_1D <- holes_1d_better \%>\% dplyr::mutate(proj = "1D")
-proj_2D <- holes_2d_better_max_tries \%>\% dplyr::mutate(proj = "2D")
-dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj) +
+holes_1d_better \%>\% explore_trace_search() +
+ scale_color_botanical(palette = "fern")
+holes_2d_better_max_tries \%>\% explore_trace_search() +
  scale_color_botanical(palette = "daisy")
 }
 \seealso{

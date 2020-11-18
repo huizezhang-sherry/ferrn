@@ -4,7 +4,7 @@
 \alias{explore_trace_interp}
 \title{Plot the trace the search progression}
 \usage{
-explore_trace_interp(dt, iter = id, color = tries, group = NULL)
+explore_trace_interp(dt, iter = id, color = tries)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -12,15 +12,13 @@ explore_trace_interp(dt, iter = id, color = tries, group = NULL)
 \item{iter}{The iterator on the x-axis}
 
 \item{color}{Colored by a particular varaible}
-
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object to plot}
 }
 \description{
 Trace the index value of search/ interpolation points in guided tour optimisation
 }
 \examples{
 # Compare the trace of interpolated points in two algorithms
-dplyr::bind_rows(holes_1d_better, holes_1d_geo) \%>\% explore_trace_interp(group = method) +  scale_color_botanical(palette = "fern")
+holes_1d_better \%>\% explore_trace_interp() + scale_color_botanical(palette = "fern")
 }
 \seealso{
 Other plot: 

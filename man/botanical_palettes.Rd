@@ -16,7 +16,8 @@ Available colors in the palettes
 \seealso{
 Other botan: 
 \code{\link{botanical_pal}()},
-\code{\link{scale_color_botanical}()}
+\code{\link{scale_color_botanical}()},
+\code{\link{scale_fill_botanical}()}
 }
 \concept{botan}
 \keyword{datasets}

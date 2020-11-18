@@ -60,7 +60,14 @@ scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, revers
 
 }
 
-#' @export
+#'scale fill function in compatible with ggplot2 syntax
+#'
+#'@param ... Arguments passed into scale_color_gradientn
+#'@param palette Color palette from the botanical_palette
+#'@param discrete logical, whether use a discrete or continuous color
+#'@param reverse logical, if the color should be reversed
+#'@export
+#'@family botan
 scale_fill_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE){
   if (discrete) {
     discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))

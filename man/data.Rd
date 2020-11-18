@@ -109,9 +109,9 @@ Simulated data using different optimisation algorithms in guided tour.
    ggplot(aes(x = value)) +
    geom_density() +
    facet_wrap(vars(var))
- proj_1D <- holes_1d_better \%>\% dplyr::mutate(proj = "1D")
- proj_2D <- holes_2d_better_max_tries \%>\% dplyr::mutate(proj = "2D")
- dplyr::bind_rows(proj_1D, proj_2D) \%>\% explore_trace_search(group = proj) +
+ holes_1d_better \%>\% explore_trace_search() +
+   scale_color_botanical(palette = "fern")
+ holes_2d_better_max_tries \%>\% explore_trace_search() +
    scale_color_botanical(palette = "daisy")
 }
 \keyword{datasets}

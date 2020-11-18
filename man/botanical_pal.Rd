@@ -17,6 +17,7 @@ Color interpolation
 \seealso{
 Other botan: 
 \code{\link{botanical_palettes}},
-\code{\link{scale_color_botanical}()}
+\code{\link{scale_color_botanical}()},
+\code{\link{scale_fill_botanical}()}
 }
 \concept{botan}
