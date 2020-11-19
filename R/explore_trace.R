@@ -9,8 +9,8 @@
 #'# Compare the trace of interpolated points in two algorithms
 #'holes_1d_better %>%
 #'  explore_trace_interp() +
-#'  scale_color_botanical(palette = "fern", discrete = FALSE) +
-#'  scale_fill_botanical(palette = "fern", discrete = FALSE)
+#'  scale_color_botanical(palette = "fern") +
+#'  scale_fill_botanical(palette = "fern")
 #'@import ggplot2
 #'@importFrom rlang sym "!!"
 #'@family plot
@@ -63,10 +63,13 @@ explore_trace_interp <- function(dt, iter = id,  color = tries, fill = tries){
 #'@param cutoff The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
 #'@examples
 #'# Summary plots for search points in two algorithms
-#' holes_1d_better %>% explore_trace_search() +
-#'  scale_color_botanical(palette = "fern")
-#' holes_2d_better_max_tries %>% explore_trace_search() +
+#' library(patchwork)
+#' p1 <- holes_1d_better %>% explore_trace_search() +
+#'  scale_color_botanical(palette = "fern") +
+#'  xlim(c(1, 9))
+#' p2 <- holes_2d_better_max_tries %>% explore_trace_search() +
 #'  scale_color_botanical(palette = "daisy")
+#'  p1 + p2
 #'@family plot
 #'@export
 explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15){
