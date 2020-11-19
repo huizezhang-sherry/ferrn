@@ -43,7 +43,7 @@
 #'                                            max.tries = 500),
 #'              rescale = FALSE)
 #'
-#'library(tidyverse)
+#' library(tidyverse)
 #' set.seed(1234)
 #' x1 <- rnorm(1000, 0, 1)
 #' x2 <- sample(c(rnorm(500, -3, 1), rnorm(500, 3, 1)), size = 1000)
@@ -61,20 +61,20 @@
 #' boa <- as_tibble(scale(boa))
 #' boa5 <- select(boa, x1, x2, x8: x10)
 #' boa6 <- select(boa, x1, x2, x7: x10)
-#'}
+#' }
 #'
-#'@examples
-#'  library(ggplot2)
-#'  library(tidyr)
-#'  boa %>%
-#'    pivot_longer(cols = x1: x10, names_to = "var", values_to = "value") %>%
-#'    ggplot(aes(x = value)) +
-#'    geom_density() +
-#'    facet_wrap(vars(var))
-#'  holes_1d_better %>% explore_trace_search() +
-#'    scale_color_botanical(palette = "fern")
-#'  holes_2d_better_max_tries %>% explore_trace_search() +
-#'    scale_color_botanical(palette = "daisy")
+#' @examples
+#' library(ggplot2)
+#' library(tidyr)
+#' boa %>%
+#'   pivot_longer(cols = x1:x10, names_to = "var", values_to = "value") %>%
+#'   ggplot(aes(x = value)) +
+#'   geom_density() +
+#'   facet_wrap(vars(var))
+#' holes_1d_better %>% explore_trace_search() +
+#'   scale_color_botanical(palette = "fern")
+#' holes_2d_better_max_tries %>% explore_trace_search() +
+#'   scale_color_botanical(palette = "daisy")
 #' @rdname data
 "holes_1d_geo"
 
@@ -101,4 +101,3 @@
 #' @format
 #' @rdname data
 "boa6"
-

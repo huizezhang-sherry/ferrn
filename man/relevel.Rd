@@ -34,5 +34,4 @@ For \code{search_better} and \code{search_better_random},
 \examples{
 holes_1d_geo \%>\% relevel_geo()
 holes_1d_better \%>\% relevel_better()
-
 }

@@ -14,10 +14,14 @@ test_that("bind_theoretical_single", {
 best_pos <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 best_neg <- matrix(c(0, -1, 0, 0, 0), nrow = 5)
 theo <- tail(holes_1d_better %>%
-               bind_theoretical(best_pos, tourr::holes(), raw_data = boa5) %>%
-               bind_theoretical(best_neg, tourr::holes(), raw_data = boa5), 2)
-row_dim <- theo %>% pull(basis) %>% vapply(nrow, numeric(1))
-col_dim <- theo %>% pull(basis) %>% vapply(ncol, numeric(1))
+  bind_theoretical(best_pos, tourr::holes(), raw_data = boa5) %>%
+  bind_theoretical(best_neg, tourr::holes(), raw_data = boa5), 2)
+row_dim <- theo %>%
+  pull(basis) %>%
+  vapply(nrow, numeric(1))
+col_dim <- theo %>%
+  pull(basis) %>%
+  vapply(ncol, numeric(1))
 
 test_that("bind_theoretical_mult", {
   # basis
@@ -35,7 +39,7 @@ test_that("bind_theoretical_mult", {
 data <- get_basis_matrix(holes_1d_geo)
 
 
-test_that("bind_random_matrix",{
+test_that("bind_random_matrix", {
   expect_true(bind_random_matrix(data) %>% is.matrix())
   expect_equal(bind_random_matrix(data) %>% nrow(), nrow(data) + ncol(data) * 500)
 })

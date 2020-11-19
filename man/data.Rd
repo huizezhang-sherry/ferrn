@@ -102,16 +102,16 @@ The third chunk of the name indicates the seraching method used i.e. \code{geo} 
 Simulated data using different optimisation algorithms in guided tour.
 }
 \examples{
- library(ggplot2)
- library(tidyr)
- boa \%>\%
-   pivot_longer(cols = x1: x10, names_to = "var", values_to = "value") \%>\%
-   ggplot(aes(x = value)) +
-   geom_density() +
-   facet_wrap(vars(var))
- holes_1d_better \%>\% explore_trace_search() +
-   scale_color_botanical(palette = "fern")
- holes_2d_better_max_tries \%>\% explore_trace_search() +
-   scale_color_botanical(palette = "daisy")
+library(ggplot2)
+library(tidyr)
+boa \%>\%
+  pivot_longer(cols = x1:x10, names_to = "var", values_to = "value") \%>\%
+  ggplot(aes(x = value)) +
+  geom_density() +
+  facet_wrap(vars(var))
+holes_1d_better \%>\% explore_trace_search() +
+  scale_color_botanical(palette = "fern")
+holes_2d_better_max_tries \%>\% explore_trace_search() +
+  scale_color_botanical(palette = "daisy")
 }
 \keyword{datasets}
