@@ -47,7 +47,10 @@
 
 
 <meta property="og:title" content="Plot the trace the search progression — explore_trace_interp" />
-<meta property="og:description" content="Trace the index value of search/ interpolation points in guided tour optimisation" />
+<meta property="og:description" content="Trace the index value of search/ interpolation points in guided tour optimisation
+This plot shows the trace of the index value, through
+the search and interpolation between best projections
+for a guided tour optimisation." />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -127,15 +130,20 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot the trace the search progression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_trace.R'><code>R/explore_trace.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_trace.R'><code>R/explore_trace.R</code></a>, <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/myexplore_trace.R'><code>R/myexplore_trace.R</code></a></small>
     <div class="hidden name"><code>explore_trace.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Trace the index value of search/ interpolation points in guided tour optimisation</p>
+<p>This plot shows the trace of the index value, through
+the search and interpolation between best projections
+for a guided tour optimisation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_trace_interp</span><span class='op'>(</span><span class='va'>dt</span>, iter <span class='op'>=</span> <span class='va'>id</span>, color <span class='op'>=</span> <span class='va'>tries</span>, fill <span class='op'>=</span> <span class='va'>tries</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>explore_trace_interp</span><span class='op'>(</span><span class='va'>dt</span>, iter <span class='op'>=</span> <span class='va'>id</span>, color <span class='op'>=</span> <span class='va'>tries</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>explore_trace_interp</span><span class='op'>(</span><span class='va'>dt</span>, iter <span class='op'>=</span> <span class='va'>id</span>, color <span class='op'>=</span> <span class='va'>tries</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,11 +160,19 @@
       <th>color</th>
       <td><p>Colored by a particular varaible</p></td>
     </tr>
+    <tr>
+      <th>group</th>
+      <td><p>The grouping variable, useful when there are multiple algorithms in the data object to plot</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 
+<code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
+<code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
+<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p>
+<p>Other plot: 
 <code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
 <code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
 <code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
@@ -165,9 +181,13 @@
     <pre class="examples"><div class='input'><span class='co'># Compare the trace of interpolated points in two algorithms</span>
 <span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span>
  <span class='fu'>explore_trace_interp</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
- <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span>, discrete <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
- <span class='fu'><a href='scale_fill_botanical.html'>scale_fill_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span>, discrete <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='img'><img src='explore_trace-1.png' alt='' width='700' height='433' /></div></pre>
+ <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='scale_fill_botanical.html'>scale_fill_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: Continuous value supplied to discrete scale</span></div><div class='img'><img src='explore_trace-1.png' alt='' width='700' height='433' /></div><div class='input'> <span class='co'># Compare the trace of interpolated points in two algorithms</span>
+ <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'>explore_trace_interp</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span> <span class='op'>+</span>
+   <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in explore_trace_interp(., group = method): unused argument (group = method)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
