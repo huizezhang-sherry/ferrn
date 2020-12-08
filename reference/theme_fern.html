@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the trace the search progression — explore_trace_interp • ferrn</title>
+<title>A specific theme for trace plots — theme_fern • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Plot the trace the search progression — explore_trace_interp" />
-<meta property="og:description" content="Trace the index value of search/ interpolation points in guided tour optimisation" />
+<meta property="og:title" content="A specific theme for trace plots — theme_fern" />
+<meta property="og:description" content="A specific theme for trace plots" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,61 +126,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the trace the search progression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_trace.R'><code>R/explore_trace.R</code></a></small>
-    <div class="hidden name"><code>explore_trace.Rd</code></div>
+    <h1>A specific theme for trace plots</h1>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/theme.R'><code>R/theme.R</code></a></small>
+    <div class="hidden name"><code>theme_fern.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Trace the index value of search/ interpolation points in guided tour optimisation</p>
+    <p>A specific theme for trace plots</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_trace_interp</span><span class='op'>(</span>
-  <span class='va'>dt</span>,
-  iter <span class='op'>=</span> <span class='va'>id</span>,
-  color <span class='op'>=</span> <span class='va'>tries</span>,
-  cutoff <span class='op'>=</span> <span class='fl'>50</span>,
-  accuracy <span class='op'>=</span> <span class='fl'>0.01</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>theme_fern</span><span class='op'>(</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
-    </tr>
-    <tr>
-      <th>iter</th>
-      <td><p>The iterator on the x-axis</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Colored by a particular varaible</p></td>
-    </tr>
-    <tr>
-      <th>cutoff</th>
-      <td><p>If there are less than cutoff number of points on the interpolation path, all the points will be marked</p></td>
-    </tr>
-    <tr>
-      <th>accuracy</th>
-      <td><p>The accuracy for display index value, recommand either 1e-2 or 12-3</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other plot: 
-<code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
-<code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
-<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Compare the trace of interpolated points in two algorithms</span>
-<span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>explore_trace_interp</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span>, discrete <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='img'><img src='explore_trace-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
