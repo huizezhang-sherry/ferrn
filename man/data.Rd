@@ -13,7 +13,6 @@
 \format{
 The code for simulating each data object is as follows:
 \preformatted{
-options("tourr.verbose" = TRUE)
 set.seed(123456);
 holes_1d_geo <-
   animate_dist(boa5, tour_path = guided_tour(holes(), d = 1,
@@ -106,6 +105,7 @@ library(ggplot2)
 library(tidyr)
 boa \%>\%
   pivot_longer(cols = x1:x10, names_to = "var", values_to = "value") \%>\%
+  mutate(var = forcats::fct_relevel(as.factor(var), paste0("x", 1:10)))\%>\%
   ggplot(aes(x = value)) +
   geom_density() +
   facet_wrap(vars(var))
