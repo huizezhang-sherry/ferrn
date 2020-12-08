@@ -141,11 +141,9 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               animate = FALSE) {
-  # browser()
   group <- enexpr(group)
 
   if (is.null(group)) color <- enexpr(color) else color <- group
-
 
   if (pca) {
     dt <- compute_pca(dt, group = !!group)$aug
@@ -153,8 +151,10 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   p <- dt %>%
     ggplot(aes(x = PC1, y = PC2)) +
-    geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), color = "grey") +
-    geom_point(data = dt %>% dplyr::filter(info != "randomly_generated"), aes(col = !!color)) +
+    geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), size = 0.8, alpha = 0.5, color = "grey") +
+    geom_point(data = dt %>% dplyr::filter(!info %in% c("randomly_generated", "interpolation")), aes(col = !!color), alpha = 0.8) +
+    geom_path(data = get_interp(dt), aes(col = !!color), size = 1.5) +
+    geom_point(data = get_interp(dt), aes(col = !!color), size = 2) +
     theme_void() +
     theme(aspect.ratio = 1, legend.position = "bottom")
 
