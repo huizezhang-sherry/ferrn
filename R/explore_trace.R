@@ -5,29 +5,29 @@
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param iter The iterator on the x-axis
 #' @param color Colored by a particular varaible
+#' @param cutoff If there are less than cutoff number of points on the interpolation path, all the points will be marked
+#' @param accuracy The accuracy for display index value, recommand either 1e-2 or 12-3
 #' @examples
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
 #'   explore_trace_interp() +
-#'   scale_color_botanical(palette = "fern") +
-#'   scale_fill_botanical(palette = "fern")
+#'   scale_color_botanical(palette = "fern", discrete = FALSE)
 #' @import ggplot2
 #' @importFrom rlang sym "!!"
 #' @family plot
 #' @export
 #' @rdname explore_trace
-explore_trace_interp <- function(dt, iter = id, color = tries, fill = tries) {
+explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accuracy = 1e-2) {
 
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
   iter <- enexpr(iter)
   col <- enexpr(color)
-  fill <- enexpr(fill)
 
   dt_interp <- get_interp(dt)
-  interp_last <- get_interp_last(dt)
-  rect_shade <- interp_last %>%
-    mutate(xmin = id, xmax = lag(id, default = 0))
+  interp_last <- dplyr::bind_rows(get_start(dt), get_interp_last(dt))
+  tick_x <- interp_last %>% dplyr::pull(!!iter)
+  tick_y <- interp_last$index_val
 
   a <- dt_interp %>%
     dplyr::summarise(
@@ -40,25 +40,23 @@ explore_trace_interp <- function(dt, iter = id, color = tries, fill = tries) {
   }
 
   p <- dt_interp %>%
-    ggplot() +
-    geom_rect(
-      data = rect_shade,
-      aes(
-        xmin = xmin, xmax = xmax,
-        ymin = -Inf, ymax = Inf,
-        fill = !!fill
-      ), alpha = 0.5
-    ) +
-    geom_line(aes(x = !!iter, y = index_val)) +
-    geom_point(
-      data = rect_shade,
-      aes(x = !!iter, y = index_val, col = !!col),
-      size = 3, alpha = 2
-    ) +
-    theme_bw() +
+    ggplot(aes(x = !!iter, y = index_val)) +
+    geom_line() +
+    geom_point(data = interp_last, aes(col = !!col), size = 3) +
+    geom_vline(data = interp_last, aes(xintercept = !!iter), lty = "dashed", alpha = 0.3) +
+    scale_x_continuous(breaks = tick_x) +
+    scale_y_continuous(breaks = tick_y, labels = scales::label_number(accuracy =accuracy)) +
+    theme_fern() +
     theme(legend.position = "none") +
     ylab("Index value") +
     xlab("Time")
+
+
+  if (nrow(dt_interp) < cutoff){
+    p <- p + geom_point(
+      aes(x = !!iter, y = index_val, col = !!col)
+    )
+  }
 
   p
 }

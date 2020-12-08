@@ -4,7 +4,13 @@
 \alias{explore_trace_interp}
 \title{Plot the trace the search progression}
 \usage{
-explore_trace_interp(dt, iter = id, color = tries, fill = tries)
+explore_trace_interp(
+  dt,
+  iter = id,
+  color = tries,
+  cutoff = 50,
+  accuracy = 0.01
+)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -12,6 +18,10 @@ explore_trace_interp(dt, iter = id, color = tries, fill = tries)
 \item{iter}{The iterator on the x-axis}
 
 \item{color}{Colored by a particular varaible}
+
+\item{cutoff}{If there are less than cutoff number of points on the interpolation path, all the points will be marked}
+
+\item{accuracy}{The accuracy for display index value, recommand either 1e-2 or 12-3}
 }
 \description{
 Trace the index value of search/ interpolation points in guided tour optimisation
@@ -20,8 +30,7 @@ Trace the index value of search/ interpolation points in guided tour optimisatio
 # Compare the trace of interpolated points in two algorithms
 holes_1d_better \%>\%
   explore_trace_interp() +
-  scale_color_botanical(palette = "fern") +
-  scale_fill_botanical(palette = "fern")
+  scale_color_botanical(palette = "fern", discrete = FALSE)
 }
 \seealso{
 Other plot: 

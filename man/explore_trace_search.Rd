@@ -21,12 +21,14 @@ Plot the count in each iteration
 \examples{
 # Summary plots for search points in two algorithms
 library(patchwork)
+library(dplyr)
+library(ggplot2)
 p1 <- holes_1d_better \%>\% explore_trace_search() +
   scale_color_botanical(palette = "fern") +
   xlim(c(1, 9))
 p2 <- holes_2d_better_max_tries \%>\% explore_trace_search() +
   scale_color_botanical(palette = "daisy")
-p1 + p2
+p1 / p2
 }
 \seealso{
 Other plot: 

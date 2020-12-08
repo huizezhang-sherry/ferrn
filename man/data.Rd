@@ -103,6 +103,7 @@ Simulated data using different optimisation algorithms in guided tour.
 \examples{
 library(ggplot2)
 library(tidyr)
+library(dplyr)
 boa \%>\%
   pivot_longer(cols = x1:x10, names_to = "var", values_to = "value") \%>\%
   mutate(var = forcats::fct_relevel(as.factor(var), paste0("x", 1:10)))\%>\%
