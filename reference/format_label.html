@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the PCA projection of the projection bases space — explore_space_pca • ferrn</title>
+<title>Better label formatter to avoid overlapping — format_label • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,8 @@
 
 
 
-<meta property="og:title" content="Plot the PCA projection of the projection bases space — explore_space_pca" />
-<meta property="og:description" content="The set of functions returns a primary ggplot object
-that plots the data object in a space reduced by PCA.
-compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
+<meta property="og:title" content="Better label formatter to avoid overlapping — format_label" />
+<meta property="og:description" content="Better label formatter to avoid overlapping" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -128,59 +126,35 @@ compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the PCA projection of the projection bases space</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_space.R'><code>R/explore_space.R</code></a></small>
-    <div class="hidden name"><code>explore_space_pca.Rd</code></div>
+    <h1>Better label formatter to avoid overlapping</h1>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/theme.R'><code>R/theme.R</code></a></small>
+    <div class="hidden name"><code>format_label.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The set of functions returns a primary ggplot object
-that plots the data object in a space reduced by PCA.
-<code><a href='compute_pca.html'>compute_pca()</a></code> computes the PCA and <code>explore_space_pca()</code> does the plotting.`</p>
+    <p>Better label formatter to avoid overlapping</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_space_pca</span><span class='op'>(</span><span class='va'>dt</span>, pca <span class='op'>=</span> <span class='cn'>TRUE</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, color <span class='op'>=</span> <span class='cn'>NULL</span>, animate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>format_label</span><span class='op'>(</span><span class='va'>labels</span>, <span class='va'>accuracy</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <th>labels</th>
+      <td><p>a numerical vector of labels</p></td>
     </tr>
     <tr>
-      <th>pca</th>
-      <td><p>Boolean, if <code><a href='compute_pca.html'>compute_pca()</a></code> should be performed on the data</p></td>
-    </tr>
-    <tr>
-      <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
-    </tr>
-    <tr>
-      <th>animate</th>
-      <td><p>Boolean, if the plot should be animated</p></td>
+      <th>accuracy</th>
+      <td><p>the accuracy of the label</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other plot: 
-<code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
-<code><a href='explore_trace_interp.html'>explore_trace_interp</a>()</code>,
-<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_geo</span>, <span class='va'>holes_1d_better</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
-    index <span class='op'>=</span> <span class='fu'>tourr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span><span class='op'>(</span><span class='op'>)</span>, raw_data <span class='op'>=</span> <span class='va'>boa5</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>explore_space_pca</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"cherry"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic</span></div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>format_label</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.87</span>, <span class='fl'>0.87</span>, <span class='fl'>0.9</span>, <span class='fl'>0.93</span>, <span class='fl'>0.95</span><span class='op'>)</span>, <span class='fl'>0.01</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.87 0.90 0.93 0.95</div><div class='input'><span class='fu'>format_label</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.87</span>, <span class='fl'>0.87</span>, <span class='fl'>0.9</span>, <span class='fl'>0.93</span>, <span class='fl'>0.95</span>, <span class='fl'>0.96</span>, <span class='fl'>0.96</span><span class='op'>)</span>, <span class='fl'>0.01</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.87 0.90 0.93 0.95 0.96</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
