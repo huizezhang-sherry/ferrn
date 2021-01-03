@@ -4,13 +4,7 @@
 \alias{explore_trace_interp}
 \title{Plot the trace the search progression}
 \usage{
-explore_trace_interp(
-  dt,
-  iter = id,
-  color = tries,
-  cutoff = 50,
-  accuracy = 0.01
-)
+explore_trace_interp(dt, iter = id, color = tries, cutoff = 50, accuracy_x = 5)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -21,7 +15,7 @@ explore_trace_interp(
 
 \item{cutoff}{If there are less than cutoff number of points on the interpolation path, all the points will be marked}
 
-\item{accuracy}{The accuracy for display index value, recommand either 1e-2 or 12-3}
+\item{accuracy_x}{if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label}
 }
 \description{
 Trace the index value of search/ interpolation points in guided tour optimisation

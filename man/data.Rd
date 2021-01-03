@@ -106,7 +106,7 @@ library(tidyr)
 library(dplyr)
 boa \%>\%
   pivot_longer(cols = x1:x10, names_to = "var", values_to = "value") \%>\%
-  mutate(var = forcats::fct_relevel(as.factor(var), paste0("x", 1:10)))\%>\%
+  mutate(var = forcats::fct_relevel(as.factor(var), paste0("x", 1:10))) \%>\%
   ggplot(aes(x = value)) +
   geom_density() +
   facet_wrap(vars(var))

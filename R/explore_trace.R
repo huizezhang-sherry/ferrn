@@ -6,7 +6,7 @@
 #' @param iter The iterator on the x-axis
 #' @param color Colored by a particular varaible
 #' @param cutoff If there are less than cutoff number of points on the interpolation path, all the points will be marked
-#' @param accuracy The accuracy for display index value, recommand either 1e-2 or 12-3
+#' @param accuracy_x if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label
 #' @examples
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
@@ -14,11 +14,11 @@
 #'   scale_color_botanical(palette = "fern", discrete = FALSE)
 #' @import ggplot2
 #' @importFrom rlang sym "!!"
+#' @importFrom scales label_number
 #' @family plot
 #' @export
 #' @rdname explore_trace
-explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accuracy = 1e-2) {
-
+explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accuracy_x = 5) {
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
   iter <- enexpr(iter)
@@ -26,8 +26,8 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
 
   dt_interp <- get_interp(dt)
   interp_last <- dplyr::bind_rows(get_start(dt), get_interp_last(dt))
-  tick_x <- interp_last %>% dplyr::pull(!!iter)
-  tick_y <- interp_last$index_val
+  tick_x <- format_label(interp_last %>% dplyr::pull(!!iter), accuracy = accuracy_x)
+  tick_y <- format_label(interp_last$index_val, accuracy = 0.01)
 
   a <- dt_interp %>%
     dplyr::summarise(
@@ -45,14 +45,14 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
     geom_point(data = interp_last, aes(col = !!col), size = 3) +
     geom_vline(data = interp_last, aes(xintercept = !!iter), lty = "dashed", alpha = 0.3) +
     scale_x_continuous(breaks = tick_x) +
-    scale_y_continuous(breaks = tick_y, labels = scales::label_number(accuracy =accuracy)) +
+    scale_y_continuous(breaks = tick_y, labels = scales::label_number(accuracy = 0.01)) +
     theme_fern() +
     theme(legend.position = "none") +
     ylab("Index value") +
     xlab("Time")
 
-
-  if (nrow(dt_interp) < cutoff){
+  # show intermediate points if not too many
+  if (nrow(dt_interp) < cutoff) {
     p <- p + geom_point(
       aes(x = !!iter, y = index_val, col = !!col)
     )
@@ -128,7 +128,10 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15) {
       col = "grey", size = 3
     ) +
     # numeric summary box
-    geom_label(data = search_count, aes(y = 0.99 * lowest_index_val, label = n)) +
+    geom_label(
+      data = search_count %>% filter(!!iter != largest),
+      aes(y = 0.99 * lowest_index_val, label = n)
+    ) +
     geom_label(
       data = search_count %>% filter(!!iter == largest),
       aes(y = 0.99 * lowest_index_val, label = n),
