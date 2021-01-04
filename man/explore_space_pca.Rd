@@ -4,7 +4,14 @@
 \alias{explore_space_pca}
 \title{Plot the PCA projection of the projection bases space}
 \usage{
-explore_space_pca(dt, pca = TRUE, group = NULL, color = NULL, animate = FALSE)
+explore_space_pca(
+  dt,
+  pca = TRUE,
+  group = NULL,
+  color = NULL,
+  animate = FALSE,
+  theo_size = 15
+)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -16,6 +23,8 @@ explore_space_pca(dt, pca = TRUE, group = NULL, color = NULL, animate = FALSE)
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
 \item{animate}{Boolean, if the plot should be animated}
+
+\item{theo_size}{the size of theoretical point}
 }
 \description{
 The set of functions returns a primary ggplot object

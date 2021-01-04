@@ -126,6 +126,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
 #' @param animate Boolean, if the plot should be animated
+#' @param theo_size the size of theoretical point
+#' @param rand_size the size of random point
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
@@ -140,7 +142,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
-                              animate = FALSE) {
+                              animate = FALSE, theo_size = 25, rand_size = 15) {
   group <- enexpr(group)
 
   if (is.null(group)) color <- enexpr(color) else color <- group
@@ -149,19 +151,34 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
     dt <- compute_pca(dt, group = !!group)$aug
   }
 
+  dt <- dt %>% clean_method()
+
   p <- dt %>%
-    ggplot(aes(x = PC1, y = PC2)) +
-    geom_point(data = dt %>% dplyr::filter(info == "randomly_generated"), size = 0.8, alpha = 0.5, color = "grey") +
-    geom_point(data = dt %>% dplyr::filter(!info %in% c("randomly_generated", "interpolation")), aes(col = !!color), alpha = 0.8) +
+    ggplot(aes(x = PC1, y = PC2, group = !!group)) +
+    # background points
+    geom_point(
+      data = dt %>% dplyr::filter(info == "randomly_generated"),
+      size = rand_size, alpha = 0.05, color = "lightgrey"
+    ) +
+    # interpolation points
     geom_path(data = get_interp(dt), aes(col = !!color), size = 1.5) +
     geom_point(data = get_interp(dt), aes(col = !!color), size = 2) +
+    # start
+    geom_point(data = get_start(dt), aes(col = !!color), size = 5) +
+    # search points
+    geom_point(
+      data = dt %>% dplyr::filter(!info %in% c(
+        "randomly_generated",
+        "interpolation", "theoretical"
+      )),
+      aes(col = !!color), alpha = 0.8
+    ) +
     theme_void() +
     theme(aspect.ratio = 1, legend.position = "bottom")
 
   if ("theoretical" %in% dt$info) {
     p <- p +
-      geom_point(data = dt %>% filter(info == "theoretical"), aes(col = !!color), size = 10) +
-      geom_point(data = get_start(dt), aes(col = !!color), size = 5)
+      geom_text(data = dt %>% filter(info == "theoretical"), label = "*", size = theo_size)
   }
 
   if (animate) {

@@ -3,6 +3,7 @@
 \name{relevel_geo}
 \alias{relevel_geo}
 \alias{relevel_better}
+\alias{clean_method}
 \title{Clean factor levels in the data object}
 \usage{
 relevel_geo(
@@ -12,9 +13,11 @@ relevel_geo(
 )
 
 relevel_better(dt, order = c("random_search", "new_basis", "interpolation"))
+
+clean_method(dt)
 }
 \arguments{
-\item{dt}{The data object to relevel}
+\item{dt}{a data object}
 
 \item{order}{A vector that allows you to customise the order of info}
 }
