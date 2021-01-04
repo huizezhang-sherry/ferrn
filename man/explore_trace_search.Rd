@@ -4,7 +4,14 @@
 \alias{explore_trace_search}
 \title{Plot the count in each iteration}
 \usage{
-explore_trace_search(dt, iter = tries, color = tries, cutoff = 15)
+explore_trace_search(
+  dt,
+  iter = tries,
+  color = tries,
+  cutoff = 15,
+  extend_lower = 0.95,
+  ...
+)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -14,6 +21,10 @@ explore_trace_search(dt, iter = tries, color = tries, cutoff = 15)
 \item{color}{Colored by a particular varaible}
 
 \item{cutoff}{The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}}
+
+\item{extend_lower}{a percentage to extend the lower ylim for better display of the count}
+
+\item{...}{arguments passed into geom_label_repel() for better display of the count in each iteration}
 }
 \description{
 Plot the count in each iteration

@@ -67,6 +67,9 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
 #' @param iter The iterator on the x-axis
 #' @param color Colored by a particular varaible
 #' @param cutoff The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
+#' @param extend_lower a percentage to extend the lower ylim for better display of the count
+#' @param ... arguments passed into geom_label_repel() for better display of the count in each iteration
+#' @importFrom ggrepel geom_label_repel
 #' @examples
 #' # Summary plots for search points in two algorithms
 #' library(patchwork)
@@ -80,7 +83,7 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
 #' p1 / p2
 #' @family plot
 #' @export
-explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15) {
+explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, extend_lower = 0.95, ...) {
   iter <- enexpr(iter)
   col <- enexpr(color)
 
@@ -128,17 +131,18 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15) {
       col = "grey", size = 3
     ) +
     # numeric summary box
-    geom_label(
+    geom_label_repel(
       data = search_count %>% filter(!!iter != largest),
-      aes(y = 0.99 * lowest_index_val, label = n)
+      aes(y = 0.99 * lowest_index_val, label = n), direction = "y", nudge_y = -0.1, ...
     ) +
-    geom_label(
+    geom_label_repel(
       data = search_count %>% filter(!!iter == largest),
       aes(y = 0.99 * lowest_index_val, label = n),
-      col = "grey"
+      col = "grey", direction = "y", ...
     ) +
     # scale, lab and theme
     scale_x_continuous(breaks = seq(1, largest, 1)) +
+    ylim(extend_lower * lowest_index_val, get_best(dt) %>% pull(index_val))+
     theme(legend.position = "none") +
     ylab("Index value") +
     xlab("Iteration number")
