@@ -139,7 +139,14 @@ that plots the data object in a space reduced by PCA.
 <code><a href='compute_pca.html'>compute_pca()</a></code> computes the PCA and <code>explore_space_pca()</code> does the plotting.`</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_space_pca</span><span class='op'>(</span><span class='va'>dt</span>, pca <span class='op'>=</span> <span class='cn'>TRUE</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, color <span class='op'>=</span> <span class='cn'>NULL</span>, animate <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>explore_space_pca</span><span class='op'>(</span>
+  <span class='va'>dt</span>,
+  pca <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  color <span class='op'>=</span> <span class='cn'>NULL</span>,
+  animate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  theo_size <span class='op'>=</span> <span class='fl'>15</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,6 +170,10 @@ that plots the data object in a space reduced by PCA.
     <tr>
       <th>animate</th>
       <td><p>Boolean, if the plot should be animated</p></td>
+    </tr>
+    <tr>
+      <th>theo_size</th>
+      <td><p>the size of theoretical point</p></td>
     </tr>
     </table>
 
