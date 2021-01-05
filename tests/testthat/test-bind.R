@@ -7,7 +7,6 @@ test_that("bind_theoretical_single", {
   expect_equal(theo %>% pull(basis) %>% .[[1]] %>% ncol(), 1)
   expect_true(theo %>% pull(index_val) %>% is.numeric())
   expect_match(theo %>% pull(info), "theoretical")
-  expect_match(theo %>% pull(method), "theoretical")
 })
 
 
@@ -33,7 +32,6 @@ test_that("bind_theoretical_mult", {
   # other columns
   expect_true(theo %>% pull(index_val) %>% is.numeric())
   expect_match(theo %>% pull(info), "theoretical")
-  expect_match(theo %>% pull(method), "theoretical")
 })
 
 data <- get_basis_matrix(holes_1d_geo)
