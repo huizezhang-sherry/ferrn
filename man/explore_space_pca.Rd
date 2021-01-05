@@ -10,7 +10,8 @@ explore_space_pca(
   group = NULL,
   color = NULL,
   animate = FALSE,
-  theo_size = 15
+  theo_size = 25,
+  rand_size = 15
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ explore_space_pca(
 \item{animate}{Boolean, if the plot should be animated}
 
 \item{theo_size}{the size of theoretical point}
+
+\item{rand_size}{the size of random point}
 }
 \description{
 The set of functions returns a primary ggplot object
@@ -41,8 +44,8 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) \%>\%
 }
 \seealso{
 Other plot: 
-\code{\link{explore_space_tour}()},
 \code{\link{explore_trace_interp}()},
-\code{\link{explore_trace_search}()}
+\code{\link{explore_trace_search}()},
+\code{\link{prep_space_tour}()}
 }
 \concept{plot}

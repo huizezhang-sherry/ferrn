@@ -203,8 +203,11 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
 #' }
 #' @family plot
+#' @rdname explore_space_tour
 #' @export
-explore_space_tour <- function(dt, group = NULL, theoretical = FALSE, color = method, palette = botanical_palettes$cherry, ...) {
+prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
+                               color = method, rand_size = 9, point_size = 1.5, theo_size = 10,
+                               palette = botanical_palettes$cherry, ...) {
   group <- enexpr(group)
   color <- enexpr(color)
 
@@ -214,25 +217,57 @@ explore_space_tour <- function(dt, group = NULL, theoretical = FALSE, color = me
 
   # see if any flip need to be done
   flip <- dt %>% flip_sign(group = !!group)
-  basis <- flip$basis %>% bind_random_matrix()
+  basis <- flip$basis %>% bind_random_matrix(front = TRUE)
   n_rand <- nrow(basis) - nrow(dt)
 
+  edges_dt <- flip$dt %>%
+    mutate(id = row_number()) %>%
+    filter(info == "interpolation") %>%
+    group_by(method) %>%
+    mutate(id2 = dplyr::lead(id, defualt = NA)) %>%
+    ungroup() %>%
+    filter(!is.na(id2))
+
+  edges <- edges_dt %>%
+    dplyr::select(id, id2) %>%
+    mutate(id = id + n_rand, id2 = id2 + n_rand) %>%
+    as.matrix()
+
+  edges_col <-palette[as.factor(edges_dt %>% dplyr::pull(!!color))]
+
   col <- c(
-    palette[as.factor(dt %>% dplyr::pull(!!color))],
-    rep("#D3D3D3", n_rand)
+    rep("#D3D3D3", n_rand),
+    palette[as.factor(dt %>% dplyr::pull(!!color))]
+
   )
   cex <- c(
-    rep(3, nrow(dt)),
-    rep(1, n_rand)
+    rep(rand_size, n_rand),
+    rep(point_size, nrow(dt))
   )
   cex[n_start] <- 5
 
   if (theoretical) {
-    col[nrow(dt)] <- palette[3]
-    cex[nrow(dt)] <- 10
+    col[nrow(dt)] <- "black"
+    cex[nrow(dt)] <- theo_size
   }
 
+  return(list(basis = basis,
+              col = col,
+              cex = cex,
+              edges = edges,
+              edges_col = edges_col))
 
-  tourr::animate_xy(basis, col = col, cex = cex)
 }
 globalVariables(c("PC1", "PC2", "info"))
+
+
+#' @rdname explore_space_tour
+#' @export
+explore_space_tour <- function(...){
+  prep <- prep_space_tour(...)
+
+  tourr::animate_xy(prep$basis, col = prep$col, cex = prep$cex, edges = prep$edges, edges.col = prep$edges_col)
+
+}
+
+

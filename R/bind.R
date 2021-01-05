@@ -26,7 +26,7 @@ bind_theoretical <- function(dt, matrix, index, raw_data) {
     tries = NA,
     info = as.factor("theoretical"),
     loop = NA,
-    method = as.factor("theoretical"),
+    method = NA,
     alpha = NA,
     id = 0
   )
@@ -83,18 +83,27 @@ bind_random <- function(dt, n = 500) {
 #'
 #' @param basis A basis matrix returned by \code{get_basis_matrix()}
 #' @param n Number of random points to generate in each dimension
+#' @param front if the random matrix should be bound before or after the data basis
 #' @examples
 #' data <- get_basis_matrix(holes_1d_geo)
 #' bind_random_matrix(data) %>% tail(5)
 #' @return matrix
 #' @family bind
 #' @export
-bind_random_matrix <- function(basis, n = 500) {
+bind_random_matrix <- function(basis, n = 500, front = FALSE) {
   p <- ncol(basis)
   n_geozoo <- p * n
   set.seed(1)
   sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points
   colnames(sphere_basis) <- colnames(basis)
 
-  basis %>% rbind(sphere_basis)
+
+  if (front){
+    out <- sphere_basis %>% rbind(basis)
+  }else{
+    out <- basis %>% rbind(sphere_basis)
+  }
+
+  return(out)
 }
+

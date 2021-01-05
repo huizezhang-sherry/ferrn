@@ -44,7 +44,7 @@ p1 / p2
 \seealso{
 Other plot: 
 \code{\link{explore_space_pca}()},
-\code{\link{explore_space_tour}()},
-\code{\link{explore_trace_interp}()}
+\code{\link{explore_trace_interp}()},
+\code{\link{prep_space_tour}()}
 }
 \concept{plot}
