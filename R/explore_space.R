@@ -139,13 +139,42 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr pull row_number
 #' @importFrom rlang "!!"
 #' @importFrom tibble as_tibble
+#' @importFrom stringr str_detect
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
-                              theo_size = 25, ..., animate = FALSE) {
-  group <- enexpr(group)
+                              cir_alpha = 0.5, cir_fill = "grey92", cir_color = "white",
+                              cent_size = 1, cent_alpha = 1, cent_color = "black",
+                              start_size = 5, start_alpha = 1,
+                              anchor_size = 3, anchor_alpha = 1,
+                              search_size = 0.5, search_alpha = 0.5,
+                              interp_size = 1.5, interrupt_size = 0.5,
+                              anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1,
+                              theo_size = 25, theo_label = "*", animate = FALSE) {
 
+  group <- enexpr(group)
   if (is.null(group)) color <- enexpr(color) else color <- group
+
+  args <- rlang::fn_fmls()
+
+  get_arg <- function(args, prefix) args[names(args) %>% stringr::str_detect(prefix)]
+  fix_prefix <- function(args, new_prefix) paste0(new_prefix, stringr::str_extract(names(args), "\\_(.*)"))
+
+  tidy_arg <- function(arg, prefix, new_prefix) {
+    obj <- get_arg(arg, prefix)
+    names(obj) <- obj %>% fix_prefix(new_prefix)
+    return(obj)
+  }
+
+  circle <- get_arg(args, "cir")
+  center <- get_arg(args, "cent")
+  start <- tidy_arg(args, "start", "pnt")
+  anchor <- tidy_arg(args, "anchor", "pnt")
+  search <- tidy_arg(args, "search", "pnt")
+  interp <- tidy_arg(args, "interp", "path")
+  interrupt <- tidy_arg(args, "interrupt", "path")
+  anno <- get_arg(args, "anno")
+  theo <- get_arg(args, "theo")
 
   if (pca) {
     dt <- compute_pca(dt, group = !!group)$aug
@@ -156,31 +185,36 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   p <- dt %>%
     ggplot() +
     # set up
-    draw_circle(dt = estimate_circle(dt)) +
-    draw_center(dt = get_center(dt)) +
+    do.call(draw_circle, c(list(dt = estimate_circle(dt)), circle)) +
+    do.call(draw_center, c(list(dt = get_center(dt)), center)) +
     # add points
-    draw_points(dt = get_start(dt), pnt_size = 5, pnt_color = !!color) +
-    draw_points(dt = get_anchor(dt), pnt_size = 3, pnt_color = !!color) +
-    draw_points(dt = get_search(dt), pnt_alpha = 0.5, pnt_color = !!color) +
+    do.call(draw_points, c(list(dt = get_start(dt), pnt_color = color), start)) +
+    do.call(draw_points, c(list(dt = get_anchor(dt), pnt_color = color), anchor)) +
+    do.call(draw_points, c(list(dt = get_search(dt), pnt_color = color), search)) +
     # add path
-    draw_path(
-      dt = get_interrupt(dt),
-      path_group = !!sym("tries"), path_color = !!color, path_size = 0.5,
-      linetype = "dashed"
-    ) +
-    draw_path(
-      dt = get_interp(dt, group = !!group),
-      path_group = !!group, path_color = !!color, path_alpha = !!sym("id")
-    ) +
+    do.call(draw_path, c(
+      list(
+        dt = get_interp(dt, group = !!group),
+        path_color = color, path_group = group, path_alpha = sym("id")
+      ),
+      interp
+    )) +
+    do.call(draw_path, c(
+      list(
+        dt = get_interrupt(dt),
+        path_color = color, path_group = sym("tries"), linetype = "dashed"
+      ),
+      interrupt
+    )) +
     scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     # add annotation
-    draw_anno(dt = get_start(dt)) +
+    do.call(draw_anno, c(list(dt = get_start(dt)), anno)) +
     # theme
     theme_void() +
     theme(aspect.ratio = 1, legend.position = "bottom", legend.title = element_blank())
 
   if ("theoretical" %in% dt$info) {
-    p <- p + draw_theo(dt = get_theo(dt))
+    p <- p + do.call(draw_theo, c(list(dt = get_theo(dt)), theo))
   }
 
   if (animate) {
