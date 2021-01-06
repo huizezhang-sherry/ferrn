@@ -98,12 +98,11 @@ bind_random_matrix <- function(basis, n = 500, front = FALSE) {
   colnames(sphere_basis) <- colnames(basis)
 
 
-  if (front){
+  if (front) {
     out <- sphere_basis %>% rbind(basis)
-  }else{
+  } else {
     out <- basis %>% rbind(sphere_basis)
   }
 
   return(out)
 }
-

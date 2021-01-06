@@ -142,7 +142,7 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, e
     ) +
     # scale, lab and theme
     scale_x_continuous(breaks = seq(1, largest, 1)) +
-    ylim(extend_lower * lowest_index_val, get_best(dt) %>% pull(index_val))+
+    ylim(extend_lower * lowest_index_val, get_best(dt) %>% pull(index_val)) +
     theme(legend.position = "none") +
     ylab("Index value") +
     xlab("Iteration number")

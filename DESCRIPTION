@@ -26,7 +26,8 @@ Imports:
     geozoo,
     tourr,
     stringr,
-    ggrepel
+    ggrepel,
+    ggforce
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)

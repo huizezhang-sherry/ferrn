@@ -82,6 +82,57 @@ get_interp_last <- function(dt, group = NULL) {
     ungroup()
 }
 
+#' Extract the anchor points on the geodesic path
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @export
+get_anchor <- function(dt) {
+  dt %>%
+    filter(!!sym("info") %in% c("new_basis", "best_line_search"))
+}
+
+#' @export
+get_search <- function(dt) {
+  dt %>%
+    mutate(select = stringr::str_detect(!!sym("info"), "search")) %>%
+    filter(select) %>%
+    dplyr::select(-select)
+}
+
+#' @export
+get_center <- function(dt) {
+  start <- dt %>%
+    get_start()
+
+  start %>%
+    mutate(PC1 = sum(PC1) / nrow(start), PC2 = sum(PC2) / nrow(start)) %>%
+    filter(row_number() == 1)
+}
+
+#' @export
+get_theo <- function(dt) {
+  dt %>% filter(info == "theoretical")
+}
+
+#' @export
+get_interrupt <- function(dt) {
+  dt <- dt %>% filter(method == "simulated_annealing")
+
+  anchor <- dt %>% get_anchor()
+  interp_last <- dt %>% get_interp_last()
+
+  interp_anchor <- dplyr::bind_rows(anchor, interp_last)
+
+  problem_tries <- interp_anchor %>%
+    dplyr::select(info, index_val, tries) %>%
+    tidyr::pivot_wider(names_from = info, values_from = index_val) %>%
+    mutate(match = ifelse(abs(round(new_basis, 3) - round(interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
+    filter(match) %>%
+    pull(tries)
+
+  interp_anchor %>%
+    dplyr::arrange(tries) %>%
+    filter(tries %in% problem_tries)
+}
 
 #' Extract the count in each iteration
 #'
@@ -98,7 +149,7 @@ get_search_count <- function(dt, iter = tries, group = NULL) {
   iter <- enexpr(iter)
 
   dt_search <- dt %>%
-    filter(!!sym("info") != "interpolation") %>%
+    get_search() %>%
     group_by(!!iter)
 
   if (!is.null(group)) dt_search <- dt_search %>% group_by(!!iter, !!group)

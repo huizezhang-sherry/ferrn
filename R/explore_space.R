@@ -142,7 +142,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
-                              animate = FALSE, theo_size = 25, rand_size = 15) {
+                              theo_size = 25, ..., animate = FALSE) {
   group <- enexpr(group)
 
   if (is.null(group)) color <- enexpr(color) else color <- group
@@ -154,31 +154,33 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   dt <- dt %>% clean_method()
 
   p <- dt %>%
-    ggplot(aes(x = PC1, y = PC2, group = !!group)) +
-    # background points
-    geom_point(
-      data = dt %>% dplyr::filter(info == "randomly_generated"),
-      size = rand_size, alpha = 0.05, color = "lightgrey"
+    ggplot() +
+    # set up
+    draw_circle(dt = estimate_circle(dt)) +
+    draw_center(dt = get_center(dt)) +
+    # add points
+    draw_points(dt = get_start(dt), pnt_size = 5, pnt_color = !!color) +
+    draw_points(dt = get_anchor(dt), pnt_size = 3, pnt_color = !!color) +
+    draw_points(dt = get_search(dt), pnt_alpha = 0.5, pnt_color = !!color) +
+    # add path
+    draw_path(
+      dt = get_interrupt(dt),
+      path_group = !!sym("tries"), path_color = !!color, path_size = 0.5,
+      linetype = "dashed"
     ) +
-    # interpolation points
-    geom_path(data = get_interp(dt), aes(col = !!color), size = 1.5) +
-    geom_point(data = get_interp(dt), aes(col = !!color), size = 2) +
-    # start
-    geom_point(data = get_start(dt), aes(col = !!color), size = 5) +
-    # search points
-    geom_point(
-      data = dt %>% dplyr::filter(!info %in% c(
-        "randomly_generated",
-        "interpolation", "theoretical"
-      )),
-      aes(col = !!color), alpha = 0.8
+    draw_path(
+      dt = get_interp(dt, group = !!group),
+      path_group = !!group, path_color = !!color, path_alpha = !!sym("id")
     ) +
+    scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+    # add annotation
+    draw_anno(dt = get_start(dt)) +
+    # theme
     theme_void() +
-    theme(aspect.ratio = 1, legend.position = "bottom")
+    theme(aspect.ratio = 1, legend.position = "bottom", legend.title = element_blank())
 
   if ("theoretical" %in% dt$info) {
-    p <- p +
-      geom_text(data = dt %>% filter(info == "theoretical"), label = "*", size = theo_size)
+    p <- p + draw_theo(dt = get_theo(dt))
   }
 
   if (animate) {
@@ -206,8 +208,8 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #' @rdname explore_space_tour
 #' @export
 prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
-                               color = method, rand_size = 9, point_size = 1.5, theo_size = 10,
-                               palette = botanical_palettes$cherry, ...) {
+                            color = method, rand_size = 9, point_size = 1.5, theo_size = 10,
+                            palette = botanical_palettes$cherry, ...) {
   group <- enexpr(group)
   color <- enexpr(color)
 
@@ -233,12 +235,11 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
     mutate(id = id + n_rand, id2 = id2 + n_rand) %>%
     as.matrix()
 
-  edges_col <-palette[as.factor(edges_dt %>% dplyr::pull(!!color))]
+  edges_col <- palette[as.factor(edges_dt %>% dplyr::pull(!!color))]
 
   col <- c(
     rep("#D3D3D3", n_rand),
     palette[as.factor(dt %>% dplyr::pull(!!color))]
-
   )
   cex <- c(
     rep(rand_size, n_rand),
@@ -251,23 +252,21 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
     cex[nrow(dt)] <- theo_size
   }
 
-  return(list(basis = basis,
-              col = col,
-              cex = cex,
-              edges = edges,
-              edges_col = edges_col))
-
+  return(list(
+    basis = basis,
+    col = col,
+    cex = cex,
+    edges = edges,
+    edges_col = edges_col
+  ))
 }
 globalVariables(c("PC1", "PC2", "info"))
 
 
 #' @rdname explore_space_tour
 #' @export
-explore_space_tour <- function(...){
+explore_space_tour <- function(...) {
   prep <- prep_space_tour(...)
 
   tourr::animate_xy(prep$basis, col = prep$col, cex = prep$cex, edges = prep$edges, edges.col = prep$edges_col)
-
 }
-
-
