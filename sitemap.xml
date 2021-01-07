@@ -25,6 +25,27 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/data.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_anno.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_center.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_circle.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_path.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_points.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_theo.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/estimate_circle.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/explore_space_pca.html</loc>
   </url>
   <url>
@@ -46,10 +67,16 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/format_label.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_anchor.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_basis_matrix.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_best.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_center.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interp.html</loc>
@@ -58,10 +85,19 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interp_last.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interrupt.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_search.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_search_count.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_start.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_theo.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/pipe.html</loc>

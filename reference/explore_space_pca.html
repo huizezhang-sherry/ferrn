@@ -144,9 +144,26 @@ that plots the data object in a space reduced by PCA.
   pca <span class='op'>=</span> <span class='cn'>TRUE</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
-  animate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cir_alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
+  cir_fill <span class='op'>=</span> <span class='st'>"grey92"</span>,
+  cir_color <span class='op'>=</span> <span class='st'>"white"</span>,
+  cent_size <span class='op'>=</span> <span class='fl'>1</span>,
+  cent_alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  cent_color <span class='op'>=</span> <span class='st'>"black"</span>,
+  start_size <span class='op'>=</span> <span class='fl'>5</span>,
+  start_alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  anchor_size <span class='op'>=</span> <span class='fl'>3</span>,
+  anchor_alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  search_size <span class='op'>=</span> <span class='fl'>0.5</span>,
+  search_alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
+  interp_size <span class='op'>=</span> <span class='fl'>1.5</span>,
+  interrupt_size <span class='op'>=</span> <span class='fl'>0.5</span>,
+  anno_color <span class='op'>=</span> <span class='st'>"black"</span>,
+  anno_lty <span class='op'>=</span> <span class='st'>"dashed"</span>,
+  anno_alpha <span class='op'>=</span> <span class='fl'>0.1</span>,
   theo_size <span class='op'>=</span> <span class='fl'>25</span>,
-  rand_size <span class='op'>=</span> <span class='fl'>15</span>
+  theo_label <span class='op'>=</span> <span class='st'>"*"</span>,
+  animate <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,16 +186,84 @@ that plots the data object in a space reduced by PCA.
       <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
     </tr>
     <tr>
-      <th>animate</th>
-      <td><p>Boolean, if the plot should be animated</p></td>
+      <th>cir_alpha</th>
+      <td><p>an argument passed to <code><a href='draw_circle.html'>draw_circle()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>cir_fill</th>
+      <td><p>an argument passed to <code><a href='draw_circle.html'>draw_circle()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>cir_color</th>
+      <td><p>an argument passed to <code><a href='draw_circle.html'>draw_circle()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>cent_size</th>
+      <td><p>an argument passed to <code><a href='draw_center.html'>draw_center()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>cent_alpha</th>
+      <td><p>an argument passed to <code><a href='draw_center.html'>draw_center()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>cent_color</th>
+      <td><p>an argument passed to <code><a href='draw_center.html'>draw_center()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>start_size</th>
+      <td><p>an argument passed to <code><a href='draw_points.html'>draw_points()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>start_alpha</th>
+      <td><p>an argument passed to <code><a href='draw_points.html'>draw_points()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>anchor_size</th>
+      <td><p>an argument passed to <code><a href='draw_points.html'>draw_points()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>anchor_alpha</th>
+      <td><p>an argument passed to <code><a href='draw_points.html'>draw_points()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>search_size</th>
+      <td><p>an argument passed to <code><a href='draw_points.html'>draw_points()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>search_alpha</th>
+      <td><p>an argument passed to <code><a href='draw_points.html'>draw_points()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>interp_size</th>
+      <td><p>an argument passed to <code><a href='draw_path.html'>draw_path()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>interrupt_size</th>
+      <td><p>an argument passed to <code><a href='draw_path.html'>draw_path()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>anno_color</th>
+      <td><p>an argument passed to <code><a href='draw_anno.html'>draw_anno()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>anno_lty</th>
+      <td><p>an argument passed to <code><a href='draw_anno.html'>draw_anno()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>anno_alpha</th>
+      <td><p>an argument passed to <code><a href='draw_anno.html'>draw_anno()</a></code></p></td>
     </tr>
     <tr>
       <th>theo_size</th>
-      <td><p>the size of theoretical point</p></td>
+      <td><p>an argument passed to <code><a href='draw_theo.html'>draw_theo()</a></code></p></td>
     </tr>
     <tr>
-      <th>rand_size</th>
-      <td><p>the size of random point</p></td>
+      <th>theo_label</th>
+      <td><p>an argument passed to <code><a href='draw_theo.html'>draw_theo()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>animate</th>
+      <td><p>Boolean, if the plot should be animated</p></td>
     </tr>
     </table>
 
