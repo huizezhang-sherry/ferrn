@@ -64,7 +64,7 @@ relevel_better <- function(dt, order = c("random_search", "new_basis", "interpol
 #' @export
 #' @rdname relevel
 clean_method <- function(dt) {
-  dt %>% dplyr::mutate(method = ifelse(method %in% c(
+  dt %>% dplyr::mutate(method = ifelse(.data$method %in% c(
     "search_better",
     "search_better_random"
   ),

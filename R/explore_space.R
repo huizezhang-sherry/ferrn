@@ -125,9 +125,26 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @param pca Boolean, if \code{compute_pca()} should be performed on the data
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
+#' @param cir_alpha an argument passed to \code{draw_circle()}
+#' @param cir_fill an argument passed to \code{draw_circle()}
+#' @param cir_color an argument passed to \code{draw_circle()}
+#' @param cent_size an argument passed to \code{draw_center()}
+#' @param cent_alpha an argument passed to \code{draw_center()}
+#' @param cent_color an argument passed to \code{draw_center()}
+#' @param start_size an argument passed to \code{draw_points()}
+#' @param start_alpha an argument passed to \code{draw_points()}
+#' @param anchor_size an argument passed to \code{draw_points()}
+#' @param anchor_alpha an argument passed to \code{draw_points()}
+#' @param search_size an argument passed to \code{draw_points()}
+#' @param search_alpha an argument passed to \code{draw_points()}
+#' @param interp_size an argument passed to \code{draw_path()}
+#' @param interrupt_size an argument passed to \code{draw_path()}
+#' @param anno_color an argument passed to \code{draw_anno()}
+#' @param anno_lty  an argument passed to \code{draw_anno()}
+#' @param anno_alpha  an argument passed to \code{draw_anno()}
+#' @param theo_size  an argument passed to \code{draw_theo()}
+#' @param theo_label  an argument passed to \code{draw_theo()}
 #' @param animate Boolean, if the plot should be animated
-#' @param theo_size the size of theoretical point
-#' @param rand_size the size of random point
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
@@ -159,7 +176,6 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   get_arg <- function(args, prefix) args[names(args) %>% stringr::str_detect(prefix)]
   fix_prefix <- function(args, new_prefix) paste0(new_prefix, stringr::str_extract(names(args), "\\_(.*)"))
-
   tidy_arg <- function(arg, prefix, new_prefix) {
     obj <- get_arg(arg, prefix)
     names(obj) <- obj %>% fix_prefix(new_prefix)
@@ -232,6 +248,9 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param theoretical Boolean, if the theoretical bases have been inlcuded in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
+#' @param rand_size random point size
+#' @param point_size other point size
+#' @param theo_size theoretical point size
 #' @param palette The color palette to use
 #' @param ... Additional argument passed to \code{tourr::animate_xy()}
 #' @examples

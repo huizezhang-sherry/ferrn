@@ -77,62 +77,117 @@ get_interp_last <- function(dt, group = NULL) {
 
   dt %>%
     get_interp() %>%
-    group_by(tries, !!group) %>%
-    filter(loop == max(loop)) %>%
+    group_by(.data$tries, !!group) %>%
+    filter(.data$loop == max(.data$loop)) %>%
     ungroup()
 }
 
 #' Extract the anchor points on the geodesic path
+#'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @examples
+#' holes_1d_better %>% get_anchor()
+#' holes_1d_geo %>% get_anchor()
+#' @family get functions
 #' @export
 get_anchor <- function(dt) {
   dt %>%
-    filter(!!sym("info") %in% c("new_basis", "best_line_search"))
+    filter(.data$info %in% c("new_basis", "best_line_search"))
 }
 
+
+#' Extract search points during the optimisation
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @examples
+#' holes_1d_better %>% get_search()
+#' holes_1d_geo %>% get_search()
+#' @family get functions
 #' @export
 get_search <- function(dt) {
   dt %>%
     mutate(select = stringr::str_detect(!!sym("info"), "search")) %>%
-    filter(select) %>%
-    dplyr::select(-select)
+    filter(.data$select) %>%
+    dplyr::select(-.data$select)
 }
 
+#' Extract the center point of the random circle from the starting points
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param pca Boolean, if \code{compute_pca()} should be performed on the data
+#' @param ... other argument passed to \code{compute_pca()}
+#' @examples
+#' dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_center(pca = TRUE, group = method)
+#' @family get functions
 #' @export
-get_center <- function(dt) {
-  start <- dt %>%
-    get_start()
+get_center <- function(dt, pca = FALSE, ...) {
+
+  if (pca){
+    dt <- dt %>% compute_pca(...)
+    dt <- dt$aug
+  }
+  start <- dt %>% get_start()
 
   start %>%
     mutate(PC1 = sum(PC1) / nrow(start), PC2 = sum(PC2) / nrow(start)) %>%
-    filter(row_number() == 1)
+    filter(row_number() == 1) %>%
+    dplyr::select(PC1, PC2) %>%
+    dplyr::rename(x0 = PC1, y0 = PC2)
 }
 
+#' Extract the theoretical best basis, if applicable
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @examples
+#' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
+#' holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5) %>% get_theo()
+#' @family get functions
 #' @export
 get_theo <- function(dt) {
   dt %>% filter(info == "theoretical")
 }
 
+#' Extract the end point of the interpolation and the target point in the iteration when an interruption happens
+#'
+#' The optimiser can find better basis on the interpolation path, an interruption is
+#' implemented to stop further interpolation from the highest point to the target point.
+#' This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @examples
+#'holes_1d_better %>% get_interrupt()
+#'holes_1d_geo %>% get_interrupt()
+#' @family get functions
 #' @export
 get_interrupt <- function(dt) {
-  dt <- dt %>% filter(method == "simulated_annealing")
 
-  anchor <- dt %>% get_anchor()
-  interp_last <- dt %>% get_interp_last()
+  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
 
-  interp_anchor <- dplyr::bind_rows(anchor, interp_last)
+    dt <- dt %>% filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
 
-  problem_tries <- interp_anchor %>%
-    dplyr::select(info, index_val, tries) %>%
-    tidyr::pivot_wider(names_from = info, values_from = index_val) %>%
-    mutate(match = ifelse(abs(round(new_basis, 3) - round(interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
-    filter(match) %>%
-    pull(tries)
+    anchor <- dt %>% get_anchor()
+    interp_last <- dt %>% get_interp_last()
 
-  interp_anchor %>%
-    dplyr::arrange(tries) %>%
-    filter(tries %in% problem_tries)
+    interp_anchor <- dplyr::bind_rows(anchor, interp_last)
+
+    problem_tries <- interp_anchor %>%
+      dplyr::select(info, index_val, tries) %>%
+      tidyr::pivot_wider(names_from = info, values_from = index_val) %>%
+      mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
+      filter(match) %>%
+      pull(tries)
+
+    interp_anchor %>%
+      dplyr::arrange(tries) %>%
+      filter(tries %in% problem_tries)
+  } else{
+    message("interrupt is only implemented in simulated annealing methods")
+    return(NULL)
+  }
+
 }
+
+
 
 #' Extract the count in each iteration
 #'
