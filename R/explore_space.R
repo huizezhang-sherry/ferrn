@@ -172,7 +172,9 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   group <- enexpr(group)
   if (is.null(group)) color <- enexpr(color) else color <- group
 
-  args <- rlang::fn_fmls()
+  supplied <- as.list(match.call())
+  fmls <- rlang::fn_fmls()
+  args <- modifyList(fmls, supplied)
 
   get_arg <- function(args, prefix) args[names(args) %>% stringr::str_detect(prefix)]
   fix_prefix <- function(args, new_prefix) paste0(new_prefix, stringr::str_extract(names(args), "\\_(.*)"))
