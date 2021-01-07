@@ -9,9 +9,26 @@ explore_space_pca(
   pca = TRUE,
   group = NULL,
   color = NULL,
-  animate = FALSE,
+  cir_alpha = 0.5,
+  cir_fill = "grey92",
+  cir_color = "white",
+  cent_size = 1,
+  cent_alpha = 1,
+  cent_color = "black",
+  start_size = 5,
+  start_alpha = 1,
+  anchor_size = 3,
+  anchor_alpha = 1,
+  search_size = 0.5,
+  search_alpha = 0.5,
+  interp_size = 1.5,
+  interrupt_size = 0.5,
+  anno_color = "black",
+  anno_lty = "dashed",
+  anno_alpha = 0.1,
   theo_size = 25,
-  rand_size = 15
+  theo_label = "*",
+  animate = FALSE
 )
 }
 \arguments{
@@ -23,11 +40,45 @@ explore_space_pca(
 
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
+\item{cir_alpha}{an argument passed to \code{draw_circle()}}
+
+\item{cir_fill}{an argument passed to \code{draw_circle()}}
+
+\item{cir_color}{an argument passed to \code{draw_circle()}}
+
+\item{cent_size}{an argument passed to \code{draw_center()}}
+
+\item{cent_alpha}{an argument passed to \code{draw_center()}}
+
+\item{cent_color}{an argument passed to \code{draw_center()}}
+
+\item{start_size}{an argument passed to \code{draw_points()}}
+
+\item{start_alpha}{an argument passed to \code{draw_points()}}
+
+\item{anchor_size}{an argument passed to \code{draw_points()}}
+
+\item{anchor_alpha}{an argument passed to \code{draw_points()}}
+
+\item{search_size}{an argument passed to \code{draw_points()}}
+
+\item{search_alpha}{an argument passed to \code{draw_points()}}
+
+\item{interp_size}{an argument passed to \code{draw_path()}}
+
+\item{interrupt_size}{an argument passed to \code{draw_path()}}
+
+\item{anno_color}{an argument passed to \code{draw_anno()}}
+
+\item{anno_lty}{an argument passed to \code{draw_anno()}}
+
+\item{anno_alpha}{an argument passed to \code{draw_anno()}}
+
+\item{theo_size}{an argument passed to \code{draw_theo()}}
+
+\item{theo_label}{an argument passed to \code{draw_theo()}}
+
 \item{animate}{Boolean, if the plot should be animated}
-
-\item{theo_size}{the size of theoretical point}
-
-\item{rand_size}{the size of random point}
 }
 \description{
 The set of functions returns a primary ggplot object

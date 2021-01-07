@@ -17,10 +17,15 @@ head(get_basis_matrix(holes_1d_better), 5)
 }
 \seealso{
 Other get functions: 
+\code{\link{get_anchor}()},
 \code{\link{get_best}()},
+\code{\link{get_center}()},
 \code{\link{get_interp_last}()},
 \code{\link{get_interp}()},
+\code{\link{get_interrupt}()},
 \code{\link{get_search_count}()},
-\code{\link{get_start}()}
+\code{\link{get_search}()},
+\code{\link{get_start}()},
+\code{\link{get_theo}()}
 }
 \concept{get functions}

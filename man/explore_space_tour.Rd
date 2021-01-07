@@ -28,6 +28,12 @@ explore_space_tour(...)
 
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
+\item{rand_size}{random point size}
+
+\item{point_size}{other point size}
+
+\item{theo_size}{theoretical point size}
+
 \item{palette}{The color palette to use}
 
 \item{...}{Additional argument passed to \code{tourr::animate_xy()}}

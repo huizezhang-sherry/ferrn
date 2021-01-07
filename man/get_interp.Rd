@@ -22,10 +22,15 @@ get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method) \%>\
 }
 \seealso{
 Other get functions: 
+\code{\link{get_anchor}()},
 \code{\link{get_basis_matrix}()},
 \code{\link{get_best}()},
+\code{\link{get_center}()},
 \code{\link{get_interp_last}()},
+\code{\link{get_interrupt}()},
 \code{\link{get_search_count}()},
-\code{\link{get_start}()}
+\code{\link{get_search}()},
+\code{\link{get_start}()},
+\code{\link{get_theo}()}
 }
 \concept{get functions}
