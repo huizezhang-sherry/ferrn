@@ -34,15 +34,15 @@ add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black") 
   )
 }
 
-#' A ggproto for drawing points
+#' A ggproto for drawing start points
 #'
 #' This is  a wrapper function used by \code{explore_space_pca()} and
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param pnt_size the point size
-#' @param pnt_alpha an alpha value for the transparency of the point
-#' @param pnt_color the color of the points
+#' @param start_size the point size
+#' @param start_alpha an alpha value for the transparency of the point
+#' @param start_color the color of the points
 #' @family draw functions
 add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL) {
   color <- enexpr(start_color)
@@ -54,6 +54,16 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL) {
   )
 }
 
+#' A ggproto for drawing anchor points
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param anchor_size the point size
+#' @param anchor_alpha an alpha value for the transparency of the point
+#' @param anchor_color the color of the points
+#' @family draw functions
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL) {
   color <- enexpr(anchor_color)
 
@@ -64,6 +74,16 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
   )
 }
 
+#' A ggproto for drawing search points
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param search_size the point size
+#' @param search_alpha an alpha value for the transparency of the point
+#' @param search_color the color of the points
+#' @family draw functions
 add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = NULL) {
   color <- enexpr(search_color)
 
@@ -74,16 +94,16 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = N
   )
 }
 
-#' A ggproto for drawing the path
+#' A ggproto for drawing interpolation path
 #'
 #' This is  a wrapper function used by \code{explore_space_pca()} and
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param path_size the size of the path
-#' @param path_alpha an alpha value for the transparency of the path
-#' @param path_color the color of the path
-#' @param path_group a group variable for path connection
+#' @param interp_size the size of the path
+#' @param interp_alpha an alpha value for the transparency of the path
+#' @param interp_color the color of the path
+#' @param interp_group a group variable for path connection
 #' @param ... other argument passed to \code{draw_path()}
 #' @family draw functions
 add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
@@ -99,6 +119,19 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
   )
 }
 
+#' A ggproto for annotating the interrupted path
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param interrupt_size the size of the path
+#' @param interrupt_alpha an alpha value for the transparency of the path
+#' @param interrupt_color the color of the path
+#' @param interrupt_group a group variable for path connection
+#' @param interrupt_linetype the linetype for annotating the interrupted path
+#' @param ... other argument passed to \code{draw_path()}
+#' @family draw functions
 add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
                      interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
   alpha <- enexpr(interrupt_alpha)

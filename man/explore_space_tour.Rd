@@ -9,7 +9,7 @@ prep_space_tour(
   dt,
   group = NULL,
   theoretical = FALSE,
-  color = method,
+  color = sym("method"),
   rand_size = 9,
   point_size = 1.5,
   theo_size = 10,

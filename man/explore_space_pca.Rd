@@ -40,43 +40,43 @@ explore_space_pca(
 
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
-\item{cir_alpha}{an argument passed to \code{draw_circle()}}
+\item{cir_alpha}{an argument passed to \code{add_circle()}}
 
-\item{cir_fill}{an argument passed to \code{draw_circle()}}
+\item{cir_fill}{an argument passed to \code{add_circle()}}
 
-\item{cir_color}{an argument passed to \code{draw_circle()}}
+\item{cir_color}{an argument passed to \code{add_circle()}}
 
-\item{cent_size}{an argument passed to \code{draw_center()}}
+\item{cent_size}{an argument passed to \code{add_center()}}
 
-\item{cent_alpha}{an argument passed to \code{draw_center()}}
+\item{cent_alpha}{an argument passed to \code{add_center()}}
 
-\item{cent_color}{an argument passed to \code{draw_center()}}
+\item{cent_color}{an argument passed to \code{add_center()}}
 
-\item{start_size}{an argument passed to \code{draw_points()}}
+\item{start_size}{an argument passed to \code{add_start()}}
 
-\item{start_alpha}{an argument passed to \code{draw_points()}}
+\item{start_alpha}{an argument passed to \code{add_start()}}
 
-\item{anchor_size}{an argument passed to \code{draw_points()}}
+\item{anchor_size}{an argument passed to \code{add_anchor()}}
 
-\item{anchor_alpha}{an argument passed to \code{draw_points()}}
+\item{anchor_alpha}{an argument passed to \code{add_anchor()}}
 
-\item{search_size}{an argument passed to \code{draw_points()}}
+\item{search_size}{an argument passed to \code{add_search()}}
 
-\item{search_alpha}{an argument passed to \code{draw_points()}}
+\item{search_alpha}{an argument passed to \code{add_search()}}
 
-\item{interp_size}{an argument passed to \code{draw_path()}}
+\item{interp_size}{an argument passed to \code{add_interp()}}
 
-\item{interrupt_size}{an argument passed to \code{draw_path()}}
+\item{interrupt_size}{an argument passed to \code{add_interrupt()}}
 
-\item{anno_color}{an argument passed to \code{draw_anno()}}
+\item{anno_color}{an argument passed to \code{add_anno()}}
 
-\item{anno_lty}{an argument passed to \code{draw_anno()}}
+\item{anno_lty}{an argument passed to \code{add_anno()}}
 
-\item{anno_alpha}{an argument passed to \code{draw_anno()}}
+\item{anno_alpha}{an argument passed to \code{add_anno()}}
 
-\item{theo_size}{an argument passed to \code{draw_theo()}}
+\item{theo_size}{an argument passed to \code{add_theo()}}
 
-\item{theo_label}{an argument passed to \code{draw_theo()}}
+\item{theo_label}{an argument passed to \code{add_theo()}}
 
 \item{animate}{Boolean, if the plot should be animated}
 }

@@ -27,6 +27,7 @@ Other get functions:
 \code{\link{get_interrupt}()},
 \code{\link{get_search_count}()},
 \code{\link{get_search}()},
+\code{\link{get_space_param}()},
 \code{\link{get_start}()}
 }
 \concept{get functions}

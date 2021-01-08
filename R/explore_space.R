@@ -125,25 +125,25 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @param pca Boolean, if \code{compute_pca()} should be performed on the data
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
-#' @param cir_alpha an argument passed to \code{draw_circle()}
-#' @param cir_fill an argument passed to \code{draw_circle()}
-#' @param cir_color an argument passed to \code{draw_circle()}
-#' @param cent_size an argument passed to \code{draw_center()}
-#' @param cent_alpha an argument passed to \code{draw_center()}
-#' @param cent_color an argument passed to \code{draw_center()}
-#' @param start_size an argument passed to \code{draw_points()}
-#' @param start_alpha an argument passed to \code{draw_points()}
-#' @param anchor_size an argument passed to \code{draw_points()}
-#' @param anchor_alpha an argument passed to \code{draw_points()}
-#' @param search_size an argument passed to \code{draw_points()}
-#' @param search_alpha an argument passed to \code{draw_points()}
-#' @param interp_size an argument passed to \code{draw_path()}
-#' @param interrupt_size an argument passed to \code{draw_path()}
-#' @param anno_color an argument passed to \code{draw_anno()}
-#' @param anno_lty  an argument passed to \code{draw_anno()}
-#' @param anno_alpha  an argument passed to \code{draw_anno()}
-#' @param theo_size  an argument passed to \code{draw_theo()}
-#' @param theo_label  an argument passed to \code{draw_theo()}
+#' @param cir_alpha an argument passed to \code{add_circle()}
+#' @param cir_fill an argument passed to \code{add_circle()}
+#' @param cir_color an argument passed to \code{add_circle()}
+#' @param cent_size an argument passed to \code{add_center()}
+#' @param cent_alpha an argument passed to \code{add_center()}
+#' @param cent_color an argument passed to \code{add_center()}
+#' @param start_size an argument passed to \code{add_start()}
+#' @param start_alpha an argument passed to \code{add_start()}
+#' @param anchor_size an argument passed to \code{add_anchor()}
+#' @param anchor_alpha an argument passed to \code{add_anchor()}
+#' @param search_size an argument passed to \code{add_search()}
+#' @param search_alpha an argument passed to \code{add_search()}
+#' @param interp_size an argument passed to \code{add_interp()}
+#' @param interrupt_size an argument passed to \code{add_interrupt()}
+#' @param anno_color an argument passed to \code{add_anno()}
+#' @param anno_lty  an argument passed to \code{add_anno()}
+#' @param anno_alpha  an argument passed to \code{add_anno()}
+#' @param theo_size  an argument passed to \code{add_theo()}
+#' @param theo_label  an argument passed to \code{add_theo()}
 #' @param animate Boolean, if the plot should be animated
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
@@ -182,8 +182,6 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
     # set up
     add_space(dt = get_space_param(dt), cir_alpha = cir_alpha, cir_fill = cir_fill, cir_color = cir_color) +
     add_center(dt = get_center(dt), cent_size = cent_size, cent_alpha = cent_alpha, cent_color = cent_color) +
-    # add annotation
-    add_anno(dt = get_start(dt), anno_color = anno_color, anno_lty = anno_lty, anno_alpha = anno_alpha) +
     # add points
     add_start(dt = get_start(dt), start_size = start_size, start_alpha = start_alpha, start_color = !!color) +
     add_anchor(dt = get_anchor(dt), anchor_size = anchor_size, anchor_alpha = anchor_alpha, anchor_color = !!color) +
@@ -191,8 +189,10 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
     # add path
     add_interp(dt = get_interp(dt, group = !!group),
                interp_size = interp_size, interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group) +
+    # add annotation
     add_interrupt(dt = get_interrupt(dt),
                   interrupt_size = interrupt_size, interrupt_color = !!color, interrupt_group = !!sym("tries")) +
+    add_anno(dt = get_start(dt), anno_color = anno_color, anno_lty = anno_lty, anno_alpha = anno_alpha) +
     # theme
     scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     theme_void() +
@@ -231,14 +231,14 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 #' @rdname explore_space_tour
 #' @export
 prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
-                            color = method, rand_size = 9, point_size = 1.5, theo_size = 10,
+                            color = sym("method"), rand_size = 9, point_size = 1.5, theo_size = 10,
                             palette = botanical_palettes$cherry, ...) {
   group <- enexpr(group)
   color <- enexpr(color)
 
   # get start
   dt <- dt %>% dplyr::mutate(row_num = row_number())
-  n_start <- get_start(dt) %>% pull(row_num)
+  n_start <- get_start(dt) %>% pull(.data$row_num)
 
   # see if any flip need to be done
   flip <- dt %>% flip_sign(group = !!group)
@@ -248,14 +248,14 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
   edges_dt <- flip$dt %>%
     mutate(id = row_number()) %>%
     filter(info == "interpolation") %>%
-    group_by(method) %>%
+    group_by(.data$method) %>%
     mutate(id2 = dplyr::lead(id, defualt = NA)) %>%
     ungroup() %>%
-    filter(!is.na(id2))
+    filter(!is.na(.data$id2))
 
   edges <- edges_dt %>%
-    dplyr::select(id, id2) %>%
-    mutate(id = id + n_rand, id2 = id2 + n_rand) %>%
+    dplyr::select(id, .data$id2) %>%
+    mutate(id = id + n_rand, id2 = .data$id2 + n_rand) %>%
     as.matrix()
 
   edges_col <- palette[as.factor(edges_dt %>% dplyr::pull(!!color))]
