@@ -172,67 +172,35 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   group <- enexpr(group)
   if (is.null(group)) color <- enexpr(color) else color <- group
 
-  supplied <- as.list(match.call())
-  fmls <- rlang::fn_fmls()
-  args <- modifyList(fmls, supplied)
-
-  get_arg <- function(args, prefix) args[names(args) %>% stringr::str_detect(prefix)]
-  fix_prefix <- function(args, new_prefix) paste0(new_prefix, stringr::str_extract(names(args), "\\_(.*)"))
-  tidy_arg <- function(arg, prefix, new_prefix) {
-    obj <- get_arg(arg, prefix)
-    names(obj) <- obj %>% fix_prefix(new_prefix)
-    return(obj)
-  }
-
-  circle <- get_arg(args, "cir")
-  center <- get_arg(args, "cent")
-  start <- tidy_arg(args, "start", "pnt")
-  anchor <- tidy_arg(args, "anchor", "pnt")
-  search <- tidy_arg(args, "search", "pnt")
-  interp <- tidy_arg(args, "interp", "path")
-  interrupt <- tidy_arg(args, "interrupt", "path")
-  anno <- get_arg(args, "anno")
-  theo <- get_arg(args, "theo")
-
   if (pca) {
     dt <- compute_pca(dt, group = !!group)$aug
   }
 
   dt <- dt %>% clean_method()
 
-  p <- dt %>%
-    ggplot() +
+  p <- ggplot() +
     # set up
-    do.call(draw_circle, c(list(dt = estimate_circle(dt)), circle)) +
-    do.call(draw_center, c(list(dt = get_center(dt)), center)) +
-    # add points
-    do.call(draw_points, c(list(dt = get_start(dt), pnt_color = color), start)) +
-    do.call(draw_points, c(list(dt = get_anchor(dt), pnt_color = color), anchor)) +
-    do.call(draw_points, c(list(dt = get_search(dt), pnt_color = color), search)) +
-    # add path
-    do.call(draw_path, c(
-      list(
-        dt = get_interp(dt, group = !!group),
-        path_color = color, path_group = group, path_alpha = sym("id")
-      ),
-      interp
-    )) +
-    do.call(draw_path, c(
-      list(
-        dt = get_interrupt(dt),
-        path_color = color, path_group = sym("tries"), linetype = "dashed"
-      ),
-      interrupt
-    )) +
-    scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+    add_space(dt = get_space_param(dt), cir_alpha = cir_alpha, cir_fill = cir_fill, cir_color = cir_color) +
+    add_center(dt = get_center(dt), cent_size = cent_size, cent_alpha = cent_alpha, cent_color = cent_color) +
     # add annotation
-    do.call(draw_anno, c(list(dt = get_start(dt)), anno)) +
+    add_anno(dt = get_start(dt), anno_color = anno_color, anno_lty = anno_lty, anno_alpha = anno_alpha) +
+    # add points
+    add_start(dt = get_start(dt), start_size = start_size, start_alpha = start_alpha, start_color = !!color) +
+    add_anchor(dt = get_anchor(dt), anchor_size = anchor_size, anchor_alpha = anchor_alpha, anchor_color = !!color) +
+    add_search(dt = get_search(dt), search_size = search_size, search_alpha = search_alpha, search_color = !!color) +
+    # add path
+    add_interp(dt = get_interp(dt, group = !!group),
+               interp_size = interp_size, interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group) +
+    add_interrupt(dt = get_interrupt(dt),
+                  interrupt_size = interrupt_size, interrupt_color = !!color, interrupt_group = !!sym("tries")) +
     # theme
+    scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     theme_void() +
     theme(aspect.ratio = 1, legend.position = "bottom", legend.title = element_blank())
 
   if ("theoretical" %in% dt$info) {
-    p <- p + do.call(draw_theo, c(list(dt = get_theo(dt)), theo))
+    p <- p +
+      add_theo(dt = get_theo(dt), theo_size = theo_size, theo_label = theo_label)
   }
 
   if (animate) {

@@ -135,6 +135,32 @@ get_center <- function(dt, pca = FALSE, ...) {
     dplyr::rename(x0 = PC1, y0 = PC2)
 }
 
+
+#' Estimate the radius of the background circle based on the randomly generated points
+#'
+#' The space of projected bases is a circle when reduced to 2D. A radius is estimated using
+#' the largest distance from the bases in the data object to the center point.
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @importFrom rlang .data
+#' @family get functions
+get_space_param <- function(dt) {
+  center <- dt %>% get_center()
+  x0 <- center$x0
+  y0 <- center$y0
+
+  r <- dt %>%
+    dplyr::mutate(dist = sqrt((PC1 - x0)^2 + (PC2 - y0)^2)) %>%
+    dplyr::filter(.data$dist == max(.data$dist)) %>%
+    pull(.data$dist)
+
+  tibble::tibble(x0 = x0, y0 = y0, r = r)
+}
+
+
 #' Extract the theoretical best basis, if applicable
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
