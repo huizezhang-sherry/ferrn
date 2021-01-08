@@ -38,6 +38,7 @@ Other draw functions:
 \code{\link{add_anchor}()},
 \code{\link{add_anno}()},
 \code{\link{add_center}()},
+\code{\link{add_finish}()},
 \code{\link{add_interp}()},
 \code{\link{add_search}()},
 \code{\link{add_space}()},

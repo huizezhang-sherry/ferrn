@@ -165,6 +165,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               start_size = 5, start_alpha = 1,
                               anchor_size = 3, anchor_alpha = 1,
                               search_size = 0.5, search_alpha = 0.5,
+                              finish_size = 3, finish_alpha = 1,
                               interp_size = 1.5, interrupt_size = 0.5,
                               anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1,
                               theo_size = 25, theo_label = "*", animate = FALSE) {
@@ -186,6 +187,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
     add_start(dt = get_start(dt), start_size = start_size, start_alpha = start_alpha, start_color = !!color) +
     add_anchor(dt = get_anchor(dt), anchor_size = anchor_size, anchor_alpha = anchor_alpha, anchor_color = !!color) +
     add_search(dt = get_search(dt), search_size = search_size, search_alpha = search_alpha, search_color = !!color) +
+    add_finish(dt = get_interrupt_finish(dt), finish_size = finish_size, finish_alpha = finish_alpha, finish_color = !!color) +
     # add path
     add_interp(dt = get_interp(dt, group = !!group),
                interp_size = interp_size, interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group) +

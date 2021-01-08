@@ -65,6 +65,7 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL) {
 #' @param anchor_color the color of the points
 #' @family draw functions
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL) {
+  #alpha <- enexpr(anchor_alpha)
   color <- enexpr(anchor_color)
 
   geom_point(
@@ -91,6 +92,26 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = N
     data = dt,
     aes(x = PC1, y = PC2, color = !!color),
     size = search_size, alpha = search_alpha
+  )
+}
+
+#' A ggproto for drawing finish points
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param finish_size the point size
+#' @param finish_alpha an alpha value for the transparency of the point
+#' @param finish_color the color of the points
+#' @family draw functions
+add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL) {
+  color <- enexpr(finish_color)
+
+  geom_point(
+    data = dt,
+    aes(x = PC1, y = PC2, color = !!color),
+    size = finish_size, alpha = finish_alpha
   )
 }
 

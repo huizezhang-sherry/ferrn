@@ -21,6 +21,8 @@ explore_space_pca(
   anchor_alpha = 1,
   search_size = 0.5,
   search_alpha = 0.5,
+  finish_size = 3,
+  finish_alpha = 1,
   interp_size = 1.5,
   interrupt_size = 0.5,
   anno_color = "black",
@@ -57,8 +59,6 @@ explore_space_pca(
 \item{start_alpha}{an argument passed to \code{add_start()}}
 
 \item{anchor_size}{an argument passed to \code{add_anchor()}}
-
-\item{anchor_alpha}{an argument passed to \code{add_anchor()}}
 
 \item{search_size}{an argument passed to \code{add_search()}}
 
