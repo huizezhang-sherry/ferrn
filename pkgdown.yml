@@ -2,7 +2,7 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-01-07T04:14Z
+last_built: 2021-01-08T06:02Z
 urls:
   reference: https://huizezhang-sherry.github.io/ferrn//reference
   article: https://huizezhang-sherry.github.io/ferrn//articles
