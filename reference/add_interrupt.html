@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract all the bases as a matrix — get_basis_matrix • ferrn</title>
+<title>A ggproto for annotating the interrupted path — add_interrupt • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Extract all the bases as a matrix — get_basis_matrix" />
-<meta property="og:description" content="Extract all the bases as a matrix" />
+<meta property="og:title" content="A ggproto for annotating the interrupted path — add_interrupt" />
+<meta property="og:description" content="This is  a wrapper function used by explore_space_pca() and
+should be be called directly by the user" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,16 +127,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract all the bases as a matrix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/get.R'><code>R/get.R</code></a></small>
-    <div class="hidden name"><code>get_basis_matrix.Rd</code></div>
+    <h1>A ggproto for annotating the interrupted path</h1>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/draw.R'><code>R/draw.R</code></a></small>
+    <div class="hidden name"><code>add_interrupt.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract all the bases as a matrix</p>
+    <p>This is  a wrapper function used by <code><a href='explore_space_pca.html'>explore_space_pca()</a></code> and
+should be be called directly by the user</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_basis_matrix</span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>add_interrupt</span><span class='op'>(</span>
+  <span class='va'>dt</span>,
+  interrupt_size <span class='op'>=</span> <span class='fl'>1.5</span>,
+  interrupt_alpha <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interrupt_color <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interrupt_group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interrupt_linetype <span class='op'>=</span> <span class='st'>"dashed"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,31 +154,44 @@
       <th>dt</th>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
     </tr>
+    <tr>
+      <th>interrupt_size</th>
+      <td><p>the size of the path</p></td>
+    </tr>
+    <tr>
+      <th>interrupt_alpha</th>
+      <td><p>an alpha value for the transparency of the path</p></td>
+    </tr>
+    <tr>
+      <th>interrupt_color</th>
+      <td><p>the color of the path</p></td>
+    </tr>
+    <tr>
+      <th>interrupt_group</th>
+      <td><p>a group variable for path connection</p></td>
+    </tr>
+    <tr>
+      <th>interrupt_linetype</th>
+      <td><p>the linetype for annotating the interrupted path</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other argument passed to <code>draw_path()</code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other get functions: 
-<code><a href='get_anchor.html'>get_anchor</a>()</code>,
-<code><a href='get_best.html'>get_best</a>()</code>,
-<code><a href='get_center.html'>get_center</a>()</code>,
-<code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
-<code><a href='get_interp.html'>get_interp</a>()</code>,
-<code><a href='get_interrupt.html'>get_interrupt</a>()</code>,
-<code><a href='get_search_count.html'>get_search_count</a>()</code>,
-<code><a href='get_search.html'>get_search</a>()</code>,
-<code><a href='get_space_param.html'>get_space_param</a>()</code>,
-<code><a href='get_start.html'>get_start</a>()</code>,
-<code><a href='get_theo.html'>get_theo</a>()</code></p></div>
+    <div class='dont-index'><p>Other draw functions: 
+<code><a href='add_anchor.html'>add_anchor</a>()</code>,
+<code><a href='add_anno.html'>add_anno</a>()</code>,
+<code><a href='add_center.html'>add_center</a>()</code>,
+<code><a href='add_interp.html'>add_interp</a>()</code>,
+<code><a href='add_search.html'>add_search</a>()</code>,
+<code><a href='add_space.html'>add_space</a>()</code>,
+<code><a href='add_start.html'>add_start</a>()</code>,
+<code><a href='add_theo.html'>add_theo</a>()</code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>get_basis_matrix</span><span class='op'>(</span><span class='va'>holes_1d_better</span><span class='op'>)</span>, <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               V1         V2          V3        V4        V5
-#&gt; [1,]  0.34100587 -0.1129065 -0.14519958 0.0357833 0.9211969
-#&gt; [2,]  0.47021229  0.2323680  0.49786511 0.3133040 0.6155294
-#&gt; [3,] -0.07081708 -0.3776694 -0.10317006 0.3478981 0.8489250
-#&gt; [4,]  0.23230438 -0.2897560  0.18500055 0.5184984 0.7476699
-#&gt; [5,] -0.10216793  0.4893826 -0.08432954 0.1108271 0.8547937</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

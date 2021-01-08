@@ -4,6 +4,33 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//index.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_anchor.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_anno.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_center.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_interp.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_interrupt.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_search.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_space.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_start.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_theo.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/bind_random.html</loc>
   </url>
   <url>
@@ -23,27 +50,6 @@
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/data.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_anno.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_center.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_circle.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_path.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_points.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/draw_theo.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/estimate_circle.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/explore_space_pca.html</loc>
@@ -92,6 +98,9 @@
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_search_count.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_space_param.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_start.html</loc>
