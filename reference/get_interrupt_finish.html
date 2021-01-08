@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the count in each iteration — get_search_count • ferrn</title>
+<title>Extract the end point of the interpolation on the iteration where interruption happens — get_interrupt_finish • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,10 @@
 
 
 
-<meta property="og:title" content="Extract the count in each iteration — get_search_count" />
-<meta property="og:description" content="Extract the count in each iteration" />
+<meta property="og:title" content="Extract the end point of the interpolation on the iteration where interruption happens — get_interrupt_finish" />
+<meta property="og:description" content="The optimiser can find better basis on the interpolation path, an interruption is
+implemented to stop further interpolation from the highest point to the target point.
+This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function." />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,16 +128,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the count in each iteration</h1>
+    <h1>Extract the end point of the interpolation on the iteration where interruption happens</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/get.R'><code>R/get.R</code></a></small>
-    <div class="hidden name"><code>get_search_count.Rd</code></div>
+    <div class="hidden name"><code>get_interrupt_finish.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract the count in each iteration</p>
+    <p>The optimiser can find better basis on the interpolation path, an interruption is
+implemented to stop further interpolation from the highest point to the target point.
+This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_search_count</span><span class='op'>(</span><span class='va'>dt</span>, iter <span class='op'>=</span> <span class='va'>tries</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_interrupt_finish</span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,14 +147,6 @@
     <tr>
       <th>dt</th>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
-    </tr>
-    <tr>
-      <th>iter</th>
-      <td><p>The variable used to be counted by</p></td>
-    </tr>
-    <tr>
-      <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
     </tr>
     </table>
 
@@ -163,39 +159,21 @@
 <code><a href='get_center.html'>get_center</a>()</code>,
 <code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
 <code><a href='get_interp.html'>get_interp</a>()</code>,
-<code><a href='get_interrupt_finish.html'>get_interrupt_finish</a>()</code>,
 <code><a href='get_interrupt.html'>get_interrupt</a>()</code>,
+<code><a href='get_search_count.html'>get_search_count</a>()</code>,
 <code><a href='get_search.html'>get_search</a>()</code>,
 <code><a href='get_space_param.html'>get_space_param</a>()</code>,
 <code><a href='get_start.html'>get_start</a>()</code>,
 <code><a href='get_theo.html'>get_theo</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_search_count</span><span class='op'>(</span><span class='va'>holes_1d_better</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 2</span><span>
-#&gt;   tries     n
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     2     5
-#&gt; </span><span style='color: #555555;'>2</span><span>     4     6
-#&gt; </span><span style='color: #555555;'>3</span><span>     5     2
-#&gt; </span><span style='color: #555555;'>4</span><span>     6    24</div><div class='input'><span class='fu'>get_search_count</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 13 x 3</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   tries [9]</span><span>
-#&gt;    tries method              n
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span>     2 search_better       5
-#&gt; </span><span style='color: #555555;'> 2</span><span>     4 search_better       6
-#&gt; </span><span style='color: #555555;'> 3</span><span>     5 search_better       2
-#&gt; </span><span style='color: #555555;'> 4</span><span>     6 search_better      24
-#&gt; </span><span style='color: #555555;'> 5</span><span>     2 search_geodesic    11
-#&gt; </span><span style='color: #555555;'> 6</span><span>     3 search_geodesic    11
-#&gt; </span><span style='color: #555555;'> 7</span><span>     4 search_geodesic    11
-#&gt; </span><span style='color: #555555;'> 8</span><span>     5 search_geodesic    11
-#&gt; </span><span style='color: #555555;'> 9</span><span>     6 search_geodesic    11
-#&gt; </span><span style='color: #555555;'>10</span><span>     7 search_geodesic    11
-#&gt; </span><span style='color: #555555;'>11</span><span>     8 search_geodesic    11
-#&gt; </span><span style='color: #555555;'>12</span><span>     9 search_geodesic    22
-#&gt; </span><span style='color: #555555;'>13</span><span>    10 search_geodesic   264</div></span></pre>
+    <pre class="examples"><div class='input'><span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span> <span class='fu'>get_interrupt_finish</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 8</span><span>
+#&gt;   basis             index_val info          method       alpha tries  loop    id
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.866 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     4     7    31
+#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.914 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     5     6    37</div><div class='input'><span class='va'>holes_1d_geo</span> <span class='op'>%&gt;%</span> <span class='fu'>get_interrupt_finish</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>interrupt is only implemented in simulated annealing methods</span></div><div class='output co'>#&gt; NULL</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

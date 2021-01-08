@@ -13,6 +13,9 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_center.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_finish.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_interp.html</loc>
   </url>
   <url>
@@ -92,6 +95,9 @@
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interrupt.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interrupt_finish.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_search.html</loc>

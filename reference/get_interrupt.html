@@ -159,6 +159,7 @@ This discrepancy is highlighted in the PCA plot. You should not use geodesic sea
 <code><a href='get_center.html'>get_center</a>()</code>,
 <code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
 <code><a href='get_interp.html'>get_interp</a>()</code>,
+<code><a href='get_interrupt_finish.html'>get_interrupt_finish</a>()</code>,
 <code><a href='get_search_count.html'>get_search_count</a>()</code>,
 <code><a href='get_search.html'>get_search</a>()</code>,
 <code><a href='get_space_param.html'>get_space_param</a>()</code>,
@@ -170,9 +171,9 @@ This discrepancy is highlighted in the PCA plot. You should not use geodesic sea
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 8</span><span>
 #&gt;   basis             index_val info         method        alpha tries  loop    id
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.813 new_basis    search_bett…  0.49      4     7    39
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.813 new_basis    search_bett…  0.49      4     7     4
 #&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.866 interpolati… search_bett… </span><span style='color: #BB0000;'>NA</span><span>         4     7    31
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.904 new_basis    search_bett…  0.485     5     3    49
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.904 new_basis    search_bett…  0.485     5     3     5
 #&gt; </span><span style='color: #555555;'>4</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.914 interpolati… search_bett… </span><span style='color: #BB0000;'>NA</span><span>         5     6    37</div><div class='input'><span class='va'>holes_1d_geo</span> <span class='op'>%&gt;%</span> <span class='fu'>get_interrupt</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>interrupt is only implemented in simulated annealing methods</span></div><div class='output co'>#&gt; NULL</div></span></pre>
   </div>
