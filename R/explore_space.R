@@ -137,6 +137,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @param anchor_alpha an argument passed to \code{add_anchor()}
 #' @param search_size an argument passed to \code{add_search()}
 #' @param search_alpha an argument passed to \code{add_search()}
+#' @param finish_size an argument passed to \code{add_search()}
+#' @param finish_alpha an argument passed to \code{add_search()}
 #' @param interp_size an argument passed to \code{add_interp()}
 #' @param interrupt_size an argument passed to \code{add_interrupt()}
 #' @param anno_color an argument passed to \code{add_anno()}

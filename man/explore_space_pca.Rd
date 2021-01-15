@@ -60,9 +60,15 @@ explore_space_pca(
 
 \item{anchor_size}{an argument passed to \code{add_anchor()}}
 
+\item{anchor_alpha}{an argument passed to \code{add_anchor()}}
+
 \item{search_size}{an argument passed to \code{add_search()}}
 
 \item{search_alpha}{an argument passed to \code{add_search()}}
+
+\item{finish_size}{an argument passed to \code{add_search()}}
+
+\item{finish_alpha}{an argument passed to \code{add_search()}}
 
 \item{interp_size}{an argument passed to \code{add_interp()}}
 
