@@ -24,7 +24,7 @@ add_interp(
 
 \item{interp_group}{a group variable for path connection}
 
-\item{...}{other argument passed to \code{draw_path()}}
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

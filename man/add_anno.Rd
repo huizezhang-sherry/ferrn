@@ -14,6 +14,8 @@ add_anno(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...)
 \item{anno_lty}{the linetype of the annotation}
 
 \item{anno_alpha}{an alpha value for the transparency of the annotation}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

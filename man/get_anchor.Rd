@@ -7,8 +7,9 @@
 get_anchor(dt, group = NULL)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object}
+\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 }
 \description{
 Extract the anchor points on the geodesic path

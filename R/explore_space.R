@@ -30,10 +30,10 @@ flip_sign <- function(dt, group = NULL) {
       dt_obj <- dt
     } else {
       message("signs in all the bases will be flipped in group ", group_to_flip, "\n")
-      basis1 <- dt %>%
+      basis0 <- dt %>%
         filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
-        get_basis_matrix() %>%
-        -.
+        get_basis_matrix()
+      basis1 <- -basis0
       basis <- basis1 %>%
         rbind(dt %>% filter(!(!!group) %in% group_to_flip | !!group == "theoretical") %>% get_basis_matrix())
 
@@ -143,7 +143,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   if (is.null(group)) color <- enexpr(color) else color <- group
 
   if (pca) {
-    dt <- compute_pca(dt, group = !!group)$aug
+    dt <- compute_pca(dt, group = !!group) %>% purrr::pluck("aug")
   }
 
   dt <- dt %>% clean_method()
@@ -176,7 +176,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   if (animate) {
     p <- p + theme(legend.position = "none") +
-      gganimate::transition_states(id) +
+      gganimate::transition_states(!!sym("id")) +
       gganimate::shadow_mark()
   }
 
@@ -218,15 +218,15 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
 
   edges_dt <- flip$dt %>%
     mutate(id = row_number()) %>%
-    filter(info == "interpolation") %>%
+    filter(.data$info == "interpolation") %>%
     group_by(.data$method) %>%
-    mutate(id2 = dplyr::lead(id, defualt = NA)) %>%
+    mutate(id2 = dplyr::lead(.data$id, defualt = NA)) %>%
     ungroup() %>%
     filter(!is.na(.data$id2))
 
   edges <- edges_dt %>%
-    dplyr::select(id, .data$id2) %>%
-    mutate(id = id + n_rand, id2 = .data$id2 + n_rand) %>%
+    dplyr::select(.data$id, .data$id2) %>%
+    mutate(id = .data$id + n_rand, id2 = .data$id2 + n_rand) %>%
     as.matrix()
 
   edges_col <- palette[as.factor(edges_dt %>% dplyr::pull(!!color))]
@@ -254,8 +254,6 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
     edges_col = edges_col
   ))
 }
-globalVariables(c("PC1", "PC2", "info"))
-
 
 #' @rdname explore_space_tour
 #' @export

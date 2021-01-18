@@ -14,6 +14,8 @@ add_finish(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...)
 \item{finish_alpha}{an alpha value for the transparency of the point}
 
 \item{finish_color}{the color of the points}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

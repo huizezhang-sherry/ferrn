@@ -15,15 +15,26 @@ add_space(
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{space_alpha}{an alpha value for the transparency of the circle}
+\item{space_alpha}{an alpha value for the transparency of the space}
 
-\item{space_fill}{the color of the circle filling}
+\item{space_fill}{the color of the space filling}
 
-\item{space_color}{the color of the circle brim}
+\item{space_color}{the color of the space brim}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
 should be be called directly by the user
+}
+\examples{
+library(ggplot2)
+space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
+ggplot() +
+  ferrn:::add_space(space) +
+  ferrn:::add_center(space) +
+  theme_void() +
+  theme(aspect.ratio = 1)
 }
 \seealso{
 Other draw functions: 

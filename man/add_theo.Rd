@@ -12,6 +12,8 @@ add_theo(dt, theo_label = "*", theo_size = 25, ...)
 \item{theo_label}{the symbol used for labelling the theoretical basis}
 
 \item{theo_size}{the size of the label}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

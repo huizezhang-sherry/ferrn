@@ -14,10 +14,21 @@ add_center(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", ...)
 \item{cent_alpha}{an alpha value for the transparency of the center point}
 
 \item{cent_color}{the color of the center}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
 should be be called directly by the user
+}
+\examples{
+library(ggplot2)
+space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
+ggplot() +
+  ferrn:::add_space(space) +
+  ferrn:::add_center(space) +
+  theme_void() +
+  theme(aspect.ratio = 1)
 }
 \seealso{
 Other draw functions: 

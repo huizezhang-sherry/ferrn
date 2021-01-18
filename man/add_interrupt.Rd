@@ -27,7 +27,7 @@ add_interrupt(
 
 \item{interrupt_linetype}{the linetype for annotating the interrupted path}
 
-\item{...}{other argument passed to \code{draw_path()}}
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

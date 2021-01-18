@@ -14,10 +14,30 @@ add_start(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...)
 \item{start_alpha}{an alpha value for the transparency of the point}
 
 \item{start_color}{the color of the points}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
 should be be called directly by the user
+}
+\examples{
+library(ggplot2)
+library(ferrn)
+# construct the space and start df for plotting
+space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
+start <- holes_1d_geo \%>\%
+  compute_pca() \%>\%
+  purrr::pluck("aug") \%>\%
+  clean_method() \%>\%
+  get_start()
+start
+ggplot() +
+  ferrn:::add_space(dt = space) +
+  ferrn:::add_center(dt = space) +
+  ferrn:::add_start(dt = start, start_color = method) +
+  theme_void() +
+  theme(aspect.ratio = 1)
 }
 \seealso{
 Other draw functions: 

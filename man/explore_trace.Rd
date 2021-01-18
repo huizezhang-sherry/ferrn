@@ -4,7 +4,13 @@
 \alias{explore_trace_interp}
 \title{Plot the trace the search progression}
 \usage{
-explore_trace_interp(dt, iter = id, color = tries, cutoff = 50, accuracy_x = 5)
+explore_trace_interp(
+  dt,
+  iter = sym("id"),
+  color = sym("tries"),
+  cutoff = 50,
+  accuracy_x = 5
+)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

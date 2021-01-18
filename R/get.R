@@ -13,8 +13,8 @@ get_best <- function(dt, group = NULL) {
   res <- dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
-    dplyr::filter(index_val == max(index_val)) %>%
-    dplyr::distinct(index_val, .keep_all = TRUE) %>%
+    dplyr::filter(.data$index_val == max(.data$index_val)) %>%
+    dplyr::distinct(.data$index_val, .keep_all = TRUE) %>%
     dplyr::bind_rows(dt %>% dplyr::filter(!!sym("info") == "theoretical"))
 
   # if (!is.null(var)){
@@ -86,7 +86,7 @@ get_interp_last <- function(dt, group = NULL) {
 #' Extract the anchor points on the geodesic path
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' #' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#'@param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @examples
 #' holes_1d_better %>% get_anchor()
 #' holes_1d_geo %>% get_anchor()
@@ -136,10 +136,10 @@ get_center <- function(dt, pca = FALSE, ...) {
   start <- dt %>% get_start()
 
   start %>%
-    mutate(PC1 = sum(PC1) / nrow(start), PC2 = sum(PC2) / nrow(start)) %>%
+    mutate(PC1 = sum(.data$PC1) / nrow(start), PC2 = sum(.data$PC2) / nrow(start)) %>%
     filter(row_number() == 1) %>%
-    dplyr::select(PC1, PC2) %>%
-    dplyr::rename(x0 = PC1, y0 = PC2)
+    dplyr::select(.data$PC1, .data$PC2) %>%
+    dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
 }
 
 
@@ -160,7 +160,7 @@ get_space_param <- function(dt) {
   y0 <- center$y0
 
   r <- dt %>%
-    dplyr::mutate(dist = sqrt((PC1 - x0)^2 + (PC2 - y0)^2)) %>%
+    dplyr::mutate(dist = sqrt((.data$PC1 - x0)^2 + (.data$PC2 - y0)^2)) %>%
     dplyr::filter(.data$dist == max(.data$dist)) %>%
     pull(.data$dist)
 
@@ -177,7 +177,7 @@ get_space_param <- function(dt) {
 #' @family get functions
 #' @export
 get_theo <- function(dt) {
-  dt %>% filter(info == "theoretical")
+  dt %>% filter(.data$info == "theoretical")
 }
 
 #' Extract the end point of the interpolation and the target point in the iteration when an interruption happens
@@ -204,15 +204,15 @@ get_interrupt <- function(dt) {
     interp_anchor <- dplyr::bind_rows(anchor, interp_last)
 
     problem_tries <- interp_anchor %>%
-      dplyr::select(info, index_val, tries) %>%
-      tidyr::pivot_wider(names_from = info, values_from = index_val) %>%
+      dplyr::select(.data$info, .data$index_val, .data$tries) %>%
+      tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
       mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
       filter(match) %>%
-      pull(tries)
+      pull(.data$tries)
 
     interp_anchor %>%
-      dplyr::arrange(tries) %>%
-      filter(tries %in% problem_tries)
+      dplyr::arrange(.data$tries) %>%
+      filter(.data$tries %in% problem_tries)
   } else{
     message("interrupt is only implemented in simulated annealing methods")
     return(NULL)
@@ -242,13 +242,13 @@ get_interrupt_finish <- function(dt){
   interp_anchor <- dplyr::bind_rows(anchor, interp_last)
 
   problem_tries <- interp_anchor %>%
-    dplyr::select(info, index_val, tries) %>%
-    tidyr::pivot_wider(names_from = info, values_from = index_val) %>%
+    dplyr::select(.data$info, .data$index_val, .data$tries) %>%
+    tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
     mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
     filter(match) %>%
-    pull(tries)
+    pull(.data$tries)
 
-  interp_last %>% filter(tries %in% problem_tries)
+  interp_last %>% filter(.data$tries %in% problem_tries)
 
   } else{
     message("interrupt is only implemented in simulated annealing methods")
@@ -268,7 +268,7 @@ get_interrupt_finish <- function(dt){
 #' get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
 #' @family get functions
 #' @export
-get_search_count <- function(dt, iter = tries, group = NULL) {
+get_search_count <- function(dt, iter = NULL, group = NULL) {
   group <- enexpr(group)
   iter <- enexpr(iter)
 
@@ -307,5 +307,3 @@ get_basis_matrix <- function(dt) {
   basis
 }
 
-
-globalVariables(c("id"))

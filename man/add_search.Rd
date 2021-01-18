@@ -14,6 +14,8 @@ add_search(dt, search_size = 0.5, search_alpha = 1, search_color = NULL, ...)
 \item{search_alpha}{an alpha value for the transparency of the point}
 
 \item{search_color}{the color of the points}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

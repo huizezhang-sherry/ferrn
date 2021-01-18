@@ -18,11 +18,9 @@
 #' @family plot
 #' @export
 #' @rdname explore_trace
-explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accuracy_x = 5) {
+explore_trace_interp <- function(dt, iter = sym("id"), color = sym("tries"), cutoff = 50, accuracy_x = 5) {
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
-  iter <- enexpr(iter)
-  col <- enexpr(color)
 
   dt_interp <- get_interp(dt)
   interp_last <- dplyr::bind_rows(get_start(dt), get_interp_last(dt))
@@ -40,9 +38,9 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
   }
 
   p <- dt_interp %>%
-    ggplot(aes(x = !!iter, y = index_val)) +
+    ggplot(aes(x = !!iter, y = .data$index_val)) +
     geom_line() +
-    geom_point(data = interp_last, aes(col = !!col), size = 3) +
+    geom_point(data = interp_last, aes(col = !!color), size = 3) +
     geom_vline(data = interp_last, aes(xintercept = !!iter), lty = "dashed", alpha = 0.3) +
     scale_x_continuous(breaks = tick_x) +
     scale_y_continuous(breaks = tick_y, labels = scales::label_number(accuracy = 0.01)) +
@@ -54,7 +52,7 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
   # show intermediate points if not too many
   if (nrow(dt_interp) < cutoff) {
     p <- p + geom_point(
-      aes(x = !!iter, y = index_val, col = !!col)
+      aes(x = !!iter, y = .data$index_val, col = !!color)
     )
   }
 
@@ -83,13 +81,11 @@ explore_trace_interp <- function(dt, iter = id, color = tries, cutoff = 50, accu
 #' p1 / p2
 #' @family plot
 #' @export
-explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, extend_lower = 0.95, ...) {
-  iter <- enexpr(iter)
-  col <- enexpr(color)
+explore_trace_search <- function(dt, iter = sym("tries"), color = sym("tries"), cutoff = 15, extend_lower = 0.95, ...) {
 
   search <- dt %>%
-    filter(info != "interpolation")
-  search_count <- get_search_count(search)
+    filter(.data$info != "interpolation")
+  search_count <- get_search_count(search, iter = !!iter)
 
 
   largest <- max(eval(rlang::expr(`$`(dt, !!iter))))
@@ -97,24 +93,24 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, e
 
   # filter data plotted with boxplot geom
   box_id <- search_count %>%
-    filter(n >= cutoff)
+    filter(.data$n >= cutoff)
   search_box <- search %>%
     filter(!!iter %in% `$`(box_id, !!iter))
 
   # filter data plotted with point geom
   point_id <- search_count %>%
-    filter(n < cutoff)
+    filter(.data$n < cutoff)
   search_point <- search %>%
     filter(!!iter %in% `$`(point_id, !!iter))
 
   # filter the target points
   search_target <- search %>%
     group_by(!!iter) %>%
-    filter(index_val == max(index_val))
+    filter(.data$index_val == max(.data$index_val))
 
 
   p <- search %>%
-    ggplot(aes(x = !!iter, y = index_val, col = as.factor(!!col))) +
+    ggplot(aes(x = !!iter, y = .data$index_val, col = as.factor(!!color))) +
     # point summary
     geom_point(data = search_point) +
     # boxplot summary
@@ -133,19 +129,18 @@ explore_trace_search <- function(dt, iter = tries, color = tries, cutoff = 15, e
     # numeric summary box
     geom_label_repel(
       data = search_count %>% filter(!!iter != largest),
-      aes(y = 0.99 * lowest_index_val, label = n), direction = "y", nudge_y = -0.1, ...
+      aes(y = 0.99 * lowest_index_val, label = .data$n), direction = "y", nudge_y = -0.1, ...
     ) +
     geom_label_repel(
       data = search_count %>% filter(!!iter == largest),
-      aes(y = 0.99 * lowest_index_val, label = n),
+      aes(y = 0.99 * lowest_index_val, label = .data$n),
       col = "grey", direction = "y", ...
     ) +
     # scale, lab and theme
     scale_x_continuous(breaks = seq(1, largest, 1)) +
-    ylim(extend_lower * lowest_index_val, get_best(dt) %>% pull(index_val)) +
+    ylim(extend_lower * lowest_index_val, get_best(dt) %>% pull(.data$index_val)) +
     theme(legend.position = "none") +
     ylab("Index value") +
     xlab("Iteration number")
   p
 }
-globalVariables(c("id", "tries", "n", "index_val"))

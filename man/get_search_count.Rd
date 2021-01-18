@@ -4,7 +4,7 @@
 \alias{get_search_count}
 \title{Extract the count in each iteration}
 \usage{
-get_search_count(dt, iter = tries, group = NULL)
+get_search_count(dt, iter = NULL, group = NULL)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

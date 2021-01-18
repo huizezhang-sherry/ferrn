@@ -14,6 +14,8 @@ add_anchor(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...)
 \item{anchor_alpha}{an alpha value for the transparency of the point}
 
 \item{anchor_color}{the color of the points}
+
+\item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
