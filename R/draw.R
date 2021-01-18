@@ -4,15 +4,16 @@
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param cir_alpha an alpha value for the transparency of the circle
-#' @param cir_fill the color of the circle filling
-#' @param cir_color the color of the circle brim
+#' @param space_alpha an alpha value for the transparency of the circle
+#' @param space_fill the color of the circle filling
+#' @param space_color the color of the circle brim
 #' @family draw functions
-add_space <- function(dt, cir_alpha = 0.5, cir_fill = "grey92", cir_color = "white") {
+add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color = "white", ...) {
+
   ggforce::geom_circle(
     data = dt,
     aes(x0 = .data$x0, y0 = .data$y0, r = .data$r),
-    alpha = cir_alpha, fill = cir_fill, color = cir_color
+    alpha = space_alpha, fill = space_fill, color = space_color
   )
 }
 
@@ -26,7 +27,7 @@ add_space <- function(dt, cir_alpha = 0.5, cir_fill = "grey92", cir_color = "whi
 #' @param cent_alpha an alpha value for the transparency of the center point
 #' @param cent_color the color of the center
 #' @family draw functions
-add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black") {
+add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
   geom_point(
     data = dt,
     aes(x = .data$x0, y = .data$y0),
@@ -44,7 +45,7 @@ add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black") 
 #' @param start_alpha an alpha value for the transparency of the point
 #' @param start_color the color of the points
 #' @family draw functions
-add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL) {
+add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...) {
   color <- enexpr(start_color)
 
   geom_point(
@@ -64,8 +65,11 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL) {
 #' @param anchor_alpha an alpha value for the transparency of the point
 #' @param anchor_color the color of the points
 #' @family draw functions
-add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL) {
-  #alpha <- enexpr(anchor_alpha)
+add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...) {
+
+  args <- valid_arg("anchor", ...)
+  args_static <- static_args(args)
+  args_dym <- dym_args(args)
   color <- enexpr(anchor_color)
 
   geom_point(
@@ -85,7 +89,7 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
 #' @param search_alpha an alpha value for the transparency of the point
 #' @param search_color the color of the points
 #' @family draw functions
-add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = NULL) {
+add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = NULL, ...) {
   color <- enexpr(search_color)
 
   geom_point(
@@ -105,7 +109,7 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = N
 #' @param finish_alpha an alpha value for the transparency of the point
 #' @param finish_color the color of the points
 #' @family draw functions
-add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL) {
+add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...) {
   color <- enexpr(finish_color)
 
   geom_point(
@@ -136,7 +140,7 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
   geom_path(
     data = dt,
     aes(x = PC1, y = PC2, alpha = !!alpha, group = !!group, color = !!color),
-    size = interp_size, ...
+    size = interp_size
   )
 }
 
@@ -162,7 +166,7 @@ add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
   geom_path(
     data = dt,
     aes(x = PC1, y = PC2, alpha = !!alpha, group = !!group, color = !!color),
-    size = interrupt_size, linetype = interrupt_linetype, ...
+    size = interrupt_size, linetype = interrupt_linetype
   )
 }
 
@@ -178,7 +182,7 @@ add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
 #' @param anno_lty the linetype of the annotation
 #' @param anno_alpha an alpha value for the transparency of the annotation
 #' @family draw functions
-add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1) {
+add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...) {
   geom_line(
     data = dt,
     aes(x = PC1, y = PC2), group = 1,
@@ -195,7 +199,13 @@ add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha =
 #' @param theo_label the symbol used for labelling the theoretical basis
 #' @param theo_size the size of the label
 #' @family draw functions
-add_theo <- function(dt, theo_label = "*", theo_size = 25) {
+add_theo <- function(dt, theo_label = "*", theo_size = 25, ...) {
+
+  args <- valid_arg("theo", ...)
+  args_static <- static_args(args)
+  args_dym <- dym_args(args)
+
+
   geom_text(
     data = dt,
     aes(x = PC1, y = PC2),

@@ -4,16 +4,22 @@
 \alias{add_space}
 \title{A ggproto for drawing circle}
 \usage{
-add_space(dt, cir_alpha = 0.5, cir_fill = "grey92", cir_color = "white")
+add_space(
+  dt,
+  space_alpha = 0.5,
+  space_fill = "grey92",
+  space_color = "white",
+  ...
+)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{cir_alpha}{an alpha value for the transparency of the circle}
+\item{space_alpha}{an alpha value for the transparency of the circle}
 
-\item{cir_fill}{the color of the circle filling}
+\item{space_fill}{the color of the circle filling}
 
-\item{cir_color}{the color of the circle brim}
+\item{space_color}{the color of the circle brim}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

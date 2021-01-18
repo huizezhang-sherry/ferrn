@@ -4,7 +4,7 @@
 \alias{add_finish}
 \title{A ggproto for drawing finish points}
 \usage{
-add_finish(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL)
+add_finish(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

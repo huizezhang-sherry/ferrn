@@ -4,7 +4,7 @@
 \alias{add_center}
 \title{A ggproto for drawing the circle center}
 \usage{
-add_center(dt, cent_size = 1, cent_alpha = 1, cent_color = "black")
+add_center(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

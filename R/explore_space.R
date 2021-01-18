@@ -67,14 +67,10 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
     stop("You need to have a basis column that contains the projection basis!")
   }
 
-  group <- enexpr(group)
-  info <- sym("info")
-  tries <- sym("tries")
-  loop <- sym("loop")
-
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
+  group <- enexpr(group)
   dt <- dt %>% mutate(row_num = row_number())
 
   flip <- flip_sign(dt, group = !!group)
@@ -125,27 +121,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @param pca Boolean, if \code{compute_pca()} should be performed on the data
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
-#' @param cir_alpha an argument passed to \code{add_circle()}
-#' @param cir_fill an argument passed to \code{add_circle()}
-#' @param cir_color an argument passed to \code{add_circle()}
-#' @param cent_size an argument passed to \code{add_center()}
-#' @param cent_alpha an argument passed to \code{add_center()}
-#' @param cent_color an argument passed to \code{add_center()}
-#' @param start_size an argument passed to \code{add_start()}
-#' @param start_alpha an argument passed to \code{add_start()}
-#' @param anchor_size an argument passed to \code{add_anchor()}
-#' @param anchor_alpha an argument passed to \code{add_anchor()}
-#' @param search_size an argument passed to \code{add_search()}
-#' @param search_alpha an argument passed to \code{add_search()}
-#' @param finish_size an argument passed to \code{add_search()}
-#' @param finish_alpha an argument passed to \code{add_search()}
-#' @param interp_size an argument passed to \code{add_interp()}
-#' @param interrupt_size an argument passed to \code{add_interrupt()}
-#' @param anno_color an argument passed to \code{add_anno()}
-#' @param anno_lty  an argument passed to \code{add_anno()}
-#' @param anno_alpha  an argument passed to \code{add_anno()}
-#' @param theo_size  an argument passed to \code{add_theo()}
-#' @param theo_label  an argument passed to \code{add_theo()}
+#' @param ... different argument passed to \code{add_*()}
 #' @param animate Boolean, if the plot should be animated
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
@@ -162,16 +138,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
-                              cir_alpha = 0.5, cir_fill = "grey92", cir_color = "white",
-                              cent_size = 1, cent_alpha = 1, cent_color = "black",
-                              start_size = 5, start_alpha = 1,
-                              anchor_size = 3, anchor_alpha = 1,
-                              search_size = 0.5, search_alpha = 0.5,
-                              finish_size = 3, finish_alpha = 1,
-                              interp_size = 1.5, interrupt_size = 0.5,
-                              anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1,
-                              theo_size = 25, theo_label = "*", animate = FALSE) {
-
+                              ..., animate = FALSE) {
   group <- enexpr(group)
   if (is.null(group)) color <- enexpr(color) else color <- group
 
@@ -183,20 +150,20 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   p <- ggplot() +
     # set up
-    add_space(dt = get_space_param(dt), cir_alpha = cir_alpha, cir_fill = cir_fill, cir_color = cir_color) +
-    add_center(dt = get_center(dt), cent_size = cent_size, cent_alpha = cent_alpha, cent_color = cent_color) +
+    add_space(dt = get_space_param(dt), ...) +
+    add_center(dt = get_center(dt), ...) +
     # add points
-    add_start(dt = get_start(dt), start_size = start_size, start_alpha = start_alpha, start_color = !!color) +
-    add_anchor(dt = get_anchor(dt), anchor_size = anchor_size, anchor_alpha = anchor_alpha, anchor_color = !!color) +
-    add_search(dt = get_search(dt), search_size = search_size, search_alpha = search_alpha, search_color = !!color) +
-    add_finish(dt = get_interrupt_finish(dt), finish_size = finish_size, finish_alpha = finish_alpha, finish_color = !!color) +
+    add_start(dt = get_start(dt), start_color = !!color, ...) +
+    add_anchor(dt = get_anchor(dt), anchor_color = !!color, ...) +
+    add_search(dt = get_search(dt), search_color = !!color, ...) +
+    add_finish(dt = get_interrupt_finish(dt), finish_color = !!color, ...) +
     # add path
     add_interp(dt = get_interp(dt, group = !!group),
-               interp_size = interp_size, interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group) +
+               interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
     # add annotation
     add_interrupt(dt = get_interrupt(dt),
-                  interrupt_size = interrupt_size, interrupt_color = !!color, interrupt_group = !!sym("tries")) +
-    add_anno(dt = get_start(dt), anno_color = anno_color, anno_lty = anno_lty, anno_alpha = anno_alpha) +
+                  interrupt_color = !!color, interrupt_group = !!sym("tries"), ...) +
+    add_anno(dt = get_start(dt), ...) +
     # theme
     scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     theme_void() +
@@ -204,7 +171,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   if ("theoretical" %in% dt$info) {
     p <- p +
-      add_theo(dt = get_theo(dt), theo_size = theo_size, theo_label = theo_label)
+      add_theo(dt = get_theo(dt), ...)
   }
 
   if (animate) {

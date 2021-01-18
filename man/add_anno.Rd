@@ -4,7 +4,7 @@
 \alias{add_anno}
 \title{A ggproto for annotating the symmetry of the starting points}
 \usage{
-add_anno(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1)
+add_anno(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

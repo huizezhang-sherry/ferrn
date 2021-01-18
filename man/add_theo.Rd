@@ -4,7 +4,7 @@
 \alias{add_theo}
 \title{A ggproto for drawing the theoretical basis, if applicable}
 \usage{
-add_theo(dt, theo_label = "*", theo_size = 25)
+add_theo(dt, theo_label = "*", theo_size = 25, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

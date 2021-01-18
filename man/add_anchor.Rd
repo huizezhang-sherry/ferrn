@@ -4,7 +4,7 @@
 \alias{add_anchor}
 \title{A ggproto for drawing anchor points}
 \usage{
-add_anchor(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL)
+add_anchor(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

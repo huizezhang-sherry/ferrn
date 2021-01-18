@@ -9,27 +9,7 @@ explore_space_pca(
   pca = TRUE,
   group = NULL,
   color = NULL,
-  cir_alpha = 0.5,
-  cir_fill = "grey92",
-  cir_color = "white",
-  cent_size = 1,
-  cent_alpha = 1,
-  cent_color = "black",
-  start_size = 5,
-  start_alpha = 1,
-  anchor_size = 3,
-  anchor_alpha = 1,
-  search_size = 0.5,
-  search_alpha = 0.5,
-  finish_size = 3,
-  finish_alpha = 1,
-  interp_size = 1.5,
-  interrupt_size = 0.5,
-  anno_color = "black",
-  anno_lty = "dashed",
-  anno_alpha = 0.1,
-  theo_size = 25,
-  theo_label = "*",
+  ...,
   animate = FALSE
 )
 }
@@ -42,47 +22,7 @@ explore_space_pca(
 
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
-\item{cir_alpha}{an argument passed to \code{add_circle()}}
-
-\item{cir_fill}{an argument passed to \code{add_circle()}}
-
-\item{cir_color}{an argument passed to \code{add_circle()}}
-
-\item{cent_size}{an argument passed to \code{add_center()}}
-
-\item{cent_alpha}{an argument passed to \code{add_center()}}
-
-\item{cent_color}{an argument passed to \code{add_center()}}
-
-\item{start_size}{an argument passed to \code{add_start()}}
-
-\item{start_alpha}{an argument passed to \code{add_start()}}
-
-\item{anchor_size}{an argument passed to \code{add_anchor()}}
-
-\item{anchor_alpha}{an argument passed to \code{add_anchor()}}
-
-\item{search_size}{an argument passed to \code{add_search()}}
-
-\item{search_alpha}{an argument passed to \code{add_search()}}
-
-\item{finish_size}{an argument passed to \code{add_search()}}
-
-\item{finish_alpha}{an argument passed to \code{add_search()}}
-
-\item{interp_size}{an argument passed to \code{add_interp()}}
-
-\item{interrupt_size}{an argument passed to \code{add_interrupt()}}
-
-\item{anno_color}{an argument passed to \code{add_anno()}}
-
-\item{anno_lty}{an argument passed to \code{add_anno()}}
-
-\item{anno_alpha}{an argument passed to \code{add_anno()}}
-
-\item{theo_size}{an argument passed to \code{add_theo()}}
-
-\item{theo_label}{an argument passed to \code{add_theo()}}
+\item{...}{different argument passed to \code{add_*()}}
 
 \item{animate}{Boolean, if the plot should be animated}
 }

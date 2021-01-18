@@ -4,7 +4,7 @@
 \alias{add_start}
 \title{A ggproto for drawing start points}
 \usage{
-add_start(dt, start_size = 5, start_alpha = 1, start_color = NULL)
+add_start(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
