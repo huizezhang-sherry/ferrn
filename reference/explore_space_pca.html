@@ -144,27 +144,7 @@ that plots the data object in a space reduced by PCA.
   pca <span class='op'>=</span> <span class='cn'>TRUE</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
-  cir_alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
-  cir_fill <span class='op'>=</span> <span class='st'>"grey92"</span>,
-  cir_color <span class='op'>=</span> <span class='st'>"white"</span>,
-  cent_size <span class='op'>=</span> <span class='fl'>1</span>,
-  cent_alpha <span class='op'>=</span> <span class='fl'>1</span>,
-  cent_color <span class='op'>=</span> <span class='st'>"black"</span>,
-  start_size <span class='op'>=</span> <span class='fl'>5</span>,
-  start_alpha <span class='op'>=</span> <span class='fl'>1</span>,
-  anchor_size <span class='op'>=</span> <span class='fl'>3</span>,
-  anchor_alpha <span class='op'>=</span> <span class='fl'>1</span>,
-  search_size <span class='op'>=</span> <span class='fl'>0.5</span>,
-  search_alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
-  finish_size <span class='op'>=</span> <span class='fl'>3</span>,
-  finish_alpha <span class='op'>=</span> <span class='fl'>1</span>,
-  interp_size <span class='op'>=</span> <span class='fl'>1.5</span>,
-  interrupt_size <span class='op'>=</span> <span class='fl'>0.5</span>,
-  anno_color <span class='op'>=</span> <span class='st'>"black"</span>,
-  anno_lty <span class='op'>=</span> <span class='st'>"dashed"</span>,
-  anno_alpha <span class='op'>=</span> <span class='fl'>0.1</span>,
-  theo_size <span class='op'>=</span> <span class='fl'>25</span>,
-  theo_label <span class='op'>=</span> <span class='st'>"*"</span>,
+  <span class='va'>...</span>,
   animate <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -188,88 +168,8 @@ that plots the data object in a space reduced by PCA.
       <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
     </tr>
     <tr>
-      <th>cir_alpha</th>
-      <td><p>an argument passed to <code>add_circle()</code></p></td>
-    </tr>
-    <tr>
-      <th>cir_fill</th>
-      <td><p>an argument passed to <code>add_circle()</code></p></td>
-    </tr>
-    <tr>
-      <th>cir_color</th>
-      <td><p>an argument passed to <code>add_circle()</code></p></td>
-    </tr>
-    <tr>
-      <th>cent_size</th>
-      <td><p>an argument passed to <code><a href='add_center.html'>add_center()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>cent_alpha</th>
-      <td><p>an argument passed to <code><a href='add_center.html'>add_center()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>cent_color</th>
-      <td><p>an argument passed to <code><a href='add_center.html'>add_center()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>start_size</th>
-      <td><p>an argument passed to <code><a href='add_start.html'>add_start()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>start_alpha</th>
-      <td><p>an argument passed to <code><a href='add_start.html'>add_start()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>anchor_size</th>
-      <td><p>an argument passed to <code><a href='add_anchor.html'>add_anchor()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>anchor_alpha</th>
-      <td><p>an argument passed to <code><a href='add_anchor.html'>add_anchor()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>search_size</th>
-      <td><p>an argument passed to <code><a href='add_search.html'>add_search()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>search_alpha</th>
-      <td><p>an argument passed to <code><a href='add_search.html'>add_search()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>finish_size</th>
-      <td><p>an argument passed to <code><a href='add_search.html'>add_search()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>finish_alpha</th>
-      <td><p>an argument passed to <code><a href='add_search.html'>add_search()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>interp_size</th>
-      <td><p>an argument passed to <code><a href='add_interp.html'>add_interp()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>interrupt_size</th>
-      <td><p>an argument passed to <code><a href='add_interrupt.html'>add_interrupt()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>anno_color</th>
-      <td><p>an argument passed to <code><a href='add_anno.html'>add_anno()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>anno_lty</th>
-      <td><p>an argument passed to <code><a href='add_anno.html'>add_anno()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>anno_alpha</th>
-      <td><p>an argument passed to <code><a href='add_anno.html'>add_anno()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>theo_size</th>
-      <td><p>an argument passed to <code><a href='add_theo.html'>add_theo()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>theo_label</th>
-      <td><p>an argument passed to <code><a href='add_theo.html'>add_theo()</a></code></p></td>
+      <th>...</th>
+      <td><p>different argument passed to <code>add_*()</code></p></td>
     </tr>
     <tr>
       <th>animate</th>
@@ -291,7 +191,7 @@ that plots the data object in a space reduced by PCA.
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>explore_space_pca</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"cherry"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic</span></div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic</span></div><div class='output co'>#&gt; <span class='error'>Error in valid_arg("anchor", ...): could not find function "valid_arg"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
