@@ -22,6 +22,7 @@ Other get functions:
 \code{\link{get_anchor}()},
 \code{\link{get_basis_matrix}()},
 \code{\link{get_center}()},
+\code{\link{get_dir_search_transformed}()},
 \code{\link{get_interp_last}()},
 \code{\link{get_interp}()},
 \code{\link{get_interrupt_finish}()},

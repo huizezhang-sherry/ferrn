@@ -118,6 +118,49 @@ get_search <- function(dt) {
     dplyr::select(-.data$select)
 }
 
+#' Extract directional search points during the optimisation
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param ratio a buffer value to allow directional search points being distinguishable from the anchor points
+#' @examples
+#' holes_1d_geo %>% compute_pca() %>% purrr::pluck("aug") %>% get_dir_search_transformed()
+#' @family get functions
+#' @export
+get_dir_search_transformed <- function(dt, ratio = 3){
+
+  # check only valid for search_geodesic or pseudo-derivative
+  if (!"PC1" %in% colnames(dt)){
+    message("get_dir_search_transformed() needs to be used on data projected by compute_pca()")
+    return(NULL)
+  }
+  dt <- dt %>% filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
+
+  if (nrow(dt) == 0){
+    message("get_dir_search_transformed() is only applicable to geodesic search/ pseudo deriavtive")
+    NULL
+  }
+
+  # compute the anchor points
+  anchor <- dt %>% get_anchor() %>%
+    dplyr::rename(anchor_x = .data$PC1, anchor_y = .data$PC2) %>%
+    dplyr::select(.data$tries, .data$loop, .data$anchor_x, .data$anchor_y) %>%
+    dplyr::mutate(anchor_x = dplyr::lag(.data$anchor_x, default = NA),
+                  anchor_y = dplyr::lag(.data$anchor_y, default = NA))
+
+  # compute the buffer
+  dir_search <- dt %>% filter(.data$info %in% c("direction_search", "best_direction_search"))
+
+  dir_search %>%
+    dplyr::left_join(anchor, by = c("tries", "loop")) %>%
+    dplyr::mutate(trans_x = ifelse(.data$PC1 - .data$anchor_x < 0,
+                                   .data$PC1 - abs(.data$PC1 - .data$anchor_x) * ratio,
+                                   .data$PC1 + abs(.data$PC1 - .data$anchor_x) * ratio),
+                  trans_y = ifelse(.data$PC2 - .data$anchor_y < 0,
+                                   .data$PC2 - abs(.data$PC2 - .data$anchor_y) * ratio,
+                                   .data$PC2 + abs(.data$PC2 - .data$anchor_y) * ratio))
+}
+
+
 #' Extract the center point of the random circle from the starting points
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour

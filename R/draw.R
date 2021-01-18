@@ -133,6 +133,28 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = N
   )
 }
 
+#' A ggproto for drawing directional search points
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param dir_size the point size
+#' @param dir_alpha an alpha value for the transparency of the point
+#' @param dir_color the color of the points
+#' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @family draw functions
+add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...){
+  color <- enexpr(dir_color)
+
+  geom_point(
+    data = dt,
+    aes(x = .data$trans_x, y = .data$trans_y, color = !!color),
+    size = dir_size, alpha = dir_alpha
+  )
+}
+
+
 #' A ggproto for drawing finish points
 #'
 #' This is  a wrapper function used by \code{explore_space_pca()} and
