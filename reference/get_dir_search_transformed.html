@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the record with the largest index value — get_best • ferrn</title>
+<title>Extract directional search points during the optimisation — get_dir_search_transformed • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Extract the record with the largest index value — get_best" />
-<meta property="og:description" content="Extract the record with the largest index value" />
+<meta property="og:title" content="Extract directional search points during the optimisation — get_dir_search_transformed" />
+<meta property="og:description" content="Extract directional search points during the optimisation" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,16 +126,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the record with the largest index value</h1>
+    <h1>Extract directional search points during the optimisation</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/get.R'><code>R/get.R</code></a></small>
-    <div class="hidden name"><code>get_best.Rd</code></div>
+    <div class="hidden name"><code>get_dir_search_transformed.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract the record with the largest index value</p>
+    <p>Extract directional search points during the optimisation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_best</span><span class='op'>(</span><span class='va'>dt</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_dir_search_transformed</span><span class='op'>(</span><span class='va'>dt</span>, ratio <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,8 +145,8 @@
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
     </tr>
     <tr>
-      <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
+      <th>ratio</th>
+      <td><p>a buffer value to allow directional search points being distinguishable from the anchor points</p></td>
     </tr>
     </table>
 
@@ -155,8 +155,8 @@
     <div class='dont-index'><p>Other get functions: 
 <code><a href='get_anchor.html'>get_anchor</a>()</code>,
 <code><a href='get_basis_matrix.html'>get_basis_matrix</a>()</code>,
+<code><a href='get_best.html'>get_best</a>()</code>,
 <code><a href='get_center.html'>get_center</a>()</code>,
-<code><a href='get_dir_search_transformed.html'>get_dir_search_transformed</a>()</code>,
 <code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
 <code><a href='get_interp.html'>get_interp</a>()</code>,
 <code><a href='get_interrupt_finish.html'>get_interrupt_finish</a>()</code>,
@@ -168,13 +168,22 @@
 <code><a href='get_theo.html'>get_theo</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_best</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 8</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   method [2]</span><span>
-#&gt;   basis            index_val info         method         alpha tries  loop    id
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.914 interpolati… search_better     </span><span style='color: #BB0000;'>NA</span><span>     5     6    55
-#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.932 interpolati… search_geodes…    </span><span style='color: #BB0000;'>NA</span><span>     9     2   144</div></span></pre>
+    <pre class="examples"><div class='input'><span class='va'>holes_1d_geo</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='compute_pca.html'>compute_pca</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/pluck.html'>pluck</a></span><span class='op'>(</span><span class='st'>"aug"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_dir_search_transformed</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 330 x 18</span><span>
+#&gt;    basis index_val info  method alpha tries  loop    id row_num   PC1    PC2
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     2       2 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.725</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     3       3 -</span><span style='color: #BB0000;'>1.78</span><span> -</span><span style='color: #BB0000;'>0.696</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     4       4 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.702</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     5       5 -</span><span style='color: #BB0000;'>1.78</span><span> -</span><span style='color: #BB0000;'>0.720</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     6       6 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.690</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     7       7 -</span><span style='color: #BB0000;'>1.78</span><span> -</span><span style='color: #BB0000;'>0.732</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     8       8 -</span><span style='color: #BB0000;'>1.78</span><span> -</span><span style='color: #BB0000;'>0.718</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1     9       9 -</span><span style='color: #BB0000;'>1.80</span><span> -</span><span style='color: #BB0000;'>0.704</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 best… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1    10      10 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.730</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… searc…    </span><span style='color: #BB0000;'>NA</span><span>     2     1    11      11 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.692</span><span>
+#&gt; </span><span style='color: #555555;'># … with 320 more rows, and 7 more variables: PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   anchor_x </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, anchor_y </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, trans_x </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, trans_y </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

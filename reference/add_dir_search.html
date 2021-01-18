@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A ggproto for drawing search points — add_search • ferrn</title>
+<title>A ggproto for drawing directional search points — add_dir_search • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="A ggproto for drawing search points — add_search" />
+<meta property="og:title" content="A ggproto for drawing directional search points — add_dir_search" />
 <meta property="og:description" content="This is  a wrapper function used by explore_space_pca() and
 should be be called directly by the user" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
@@ -127,9 +127,9 @@ should be be called directly by the user" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A ggproto for drawing search points</h1>
+    <h1>A ggproto for drawing directional search points</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/draw.R'><code>R/draw.R</code></a></small>
-    <div class="hidden name"><code>add_search.Rd</code></div>
+    <div class="hidden name"><code>add_dir_search.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -137,7 +137,7 @@ should be be called directly by the user" />
 should be be called directly by the user</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_search</span><span class='op'>(</span><span class='va'>dt</span>, search_size <span class='op'>=</span> <span class='fl'>0.5</span>, search_alpha <span class='op'>=</span> <span class='fl'>1</span>, search_color <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>add_dir_search</span><span class='op'>(</span><span class='va'>dt</span>, dir_size <span class='op'>=</span> <span class='fl'>0.5</span>, dir_alpha <span class='op'>=</span> <span class='fl'>1</span>, dir_color <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,15 +147,15 @@ should be be called directly by the user</p>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
     </tr>
     <tr>
-      <th>search_size</th>
+      <th>dir_size</th>
       <td><p>the point size</p></td>
     </tr>
     <tr>
-      <th>search_alpha</th>
+      <th>dir_alpha</th>
       <td><p>an alpha value for the transparency of the point</p></td>
     </tr>
     <tr>
-      <th>search_color</th>
+      <th>dir_color</th>
       <td><p>the color of the points</p></td>
     </tr>
     <tr>
@@ -170,10 +170,10 @@ should be be called directly by the user</p>
 <code><a href='add_anchor.html'>add_anchor</a>()</code>,
 <code><a href='add_anno.html'>add_anno</a>()</code>,
 <code><a href='add_center.html'>add_center</a>()</code>,
-<code><a href='add_dir_search.html'>add_dir_search</a>()</code>,
 <code><a href='add_finish.html'>add_finish</a>()</code>,
 <code><a href='add_interp.html'>add_interp</a>()</code>,
 <code><a href='add_interrupt.html'>add_interrupt</a>()</code>,
+<code><a href='add_search.html'>add_search</a>()</code>,
 <code><a href='add_space.html'>add_space</a>()</code>,
 <code><a href='add_start.html'>add_start</a>()</code>,
 <code><a href='add_theo.html'>add_theo</a>()</code></p></div>
