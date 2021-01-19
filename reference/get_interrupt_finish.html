@@ -139,7 +139,7 @@ implemented to stop further interpolation from the highest point to the target p
 This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_interrupt_finish</span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_interrupt_finish</span><span class='op'>(</span><span class='va'>dt</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,6 +147,10 @@ This discrepancy is highlighted in the PCA plot. You should not use geodesic sea
     <tr>
       <th>dt</th>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+    </tr>
+    <tr>
+      <th>group</th>
+      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
     </tr>
     </table>
 

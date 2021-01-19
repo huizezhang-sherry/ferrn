@@ -209,46 +209,14 @@ that plots the data object in a space reduced by PCA.
 #&gt;     group = !!group), interp_alpha = !!sym("id"), interp_color = !!color, 
 #&gt;     interp_group = !!group, ...) + add_interrupt(dt = get_interrupt(dt, 
 #&gt;     group = !!group), interrupt_color = !!color, interrupt_group = !!sym("tries"), 
-#&gt;     ...) + add_anno(dt = get_start(dt), ...) + scale_alpha_continuous(range = c(0.3, 
-#&gt;     1), guide = "none") + theme_void() + theme(aspect.ratio = 1, 
-#&gt;     legend.position = "bottom", legend.title = element_blank())</div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='output co'>#&gt; Called from: get_interrupt(dt, group = !!group)
-#&gt; debug: group &lt;- enexpr(group)
-#&gt; debug: if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", 
-#&gt;     "search_better_random"))) {
-#&gt;     dt &lt;- dt %&gt;% filter(dt$method %in% c("simulated_annealing", 
-#&gt;         "search_better", "search_better_random"))
-#&gt;     anchor &lt;- dt %&gt;% get_anchor()
-#&gt;     interp_last &lt;- dt %&gt;% get_interp_last(group = !!group)
-#&gt;     interp_anchor &lt;- dplyr::bind_rows(anchor, interp_last)
-#&gt;     problem_tries &lt;- interp_anchor %&gt;% dplyr::group_by(!!group) %&gt;% 
-#&gt;         dplyr::select(.data$info, .data$index_val, .data$tries) %&gt;% 
-#&gt;         tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %&gt;% 
-#&gt;         mutate(match = ifelse(abs(round(.data$new_basis, 3) - 
-#&gt;             round(.data$interpolation, 3)) &gt; 0.01, TRUE, FALSE)) %&gt;% 
-#&gt;         filter(match) %&gt;% pull(.data$tries)
-#&gt;     interp_anchor %&gt;% dplyr::arrange(.data$tries) %&gt;% filter(.data$tries %in% 
-#&gt;         problem_tries)
-#&gt; } else {
-#&gt;     message("interrupt is only implemented in simulated annealing methods")
-#&gt;     return(NULL)
-#&gt; }
-#&gt; debug: dt &lt;- dt %&gt;% filter(dt$method %in% c("simulated_annealing", "search_better", 
-#&gt;     "search_better_random"))
-#&gt; debug: anchor &lt;- dt %&gt;% get_anchor()
-#&gt; debug: interp_last &lt;- dt %&gt;% get_interp_last(group = !!group)
-#&gt; debug: interp_anchor &lt;- dplyr::bind_rows(anchor, interp_last)
-#&gt; debug: problem_tries &lt;- interp_anchor %&gt;% dplyr::group_by(!!group) %&gt;% 
-#&gt;     dplyr::select(.data$info, .data$index_val, .data$tries) %&gt;% 
-#&gt;     tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %&gt;% 
-#&gt;     mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 
-#&gt;         3)) &gt; 0.01, TRUE, FALSE)) %&gt;% filter(match) %&gt;% pull(.data$tries)</div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='output co'>#&gt; debug: interp_anchor %&gt;% dplyr::arrange(.data$tries) %&gt;% filter(.data$tries %in% 
-#&gt;     problem_tries)
-#&gt; debug: if ("theoretical" %in% dt$info) {
+#&gt;     ...) + add_anno(dt = get_start(dt), ...) + ggplot2::scale_alpha_continuous(range = c(0.3, 
+#&gt;     1), guide = "none") + ggplot2::theme_void() + ggplot2::theme(aspect.ratio = 1, 
+#&gt;     legend.position = "bottom", legend.title = ggplot2::element_blank())</div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='output co'>#&gt; debug: if ("theoretical" %in% dt$info) {
 #&gt;     p &lt;- p + add_theo(dt = get_theo(dt), ...)
 #&gt; }
 #&gt; debug: p &lt;- p + add_theo(dt = get_theo(dt), ...)
 #&gt; debug: if (animate) {
-#&gt;     p &lt;- p + theme(legend.position = "none") + gganimate::transition_states(!!sym("id")) + 
+#&gt;     p &lt;- p + ggplot2::theme(legend.position = "none") + gganimate::transition_states(!!sym("id")) + 
 #&gt;         gganimate::shadow_mark()
 #&gt; }
 #&gt; debug: p</div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></pre>
