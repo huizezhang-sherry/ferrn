@@ -59,14 +59,14 @@ bind_random <- function(dt, n = 500) {
   set.seed(1)
   n_geozoo <- p * n
   suppressWarnings(sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points %>%
-    as_tibble() %>%
-    dplyr::nest_by(id = row_number()) %>%
-    ungroup() %>%
-    mutate(basis = purrr::map(.data$data, fix_matrix)) %>%
+    tibble::as_tibble() %>%
+    dplyr::nest_by(id = dplyr::row_number()) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(basis = purrr::map(.data$data, fix_matrix)) %>%
     dplyr::select(.data$basis))
 
   sphere_points <- sphere_basis %>%
-    mutate(
+    dplyr::mutate(
       index_val = NA,
       tries = NA,
       info = as.factor("randomly_generated"),

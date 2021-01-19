@@ -1,3 +1,4 @@
+library(dplyr)
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 theo <- tail(holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5), 1)
 test_that("bind_theoretical_single", {

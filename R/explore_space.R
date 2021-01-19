@@ -13,11 +13,11 @@ flip_sign <- function(dt, group = NULL) {
   if (!is.null(group)) {
     group_name <- dt %>%
       get_best(group = !!group) %>%
-      pull(!!group)
+      dplyr::pull(!!group)
     num_method <- group_name %>% length()
     max_bases <- dt %>%
       get_best(group = !!group) %>%
-      pull(basis)
+      dplyr::pull(basis)
     max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
     extract <- function(matrix, pos) matrix[pos %% nrow(matrix), (pos %/% nrow(matrix)) + 1]
     max_sign <- mapply(extract, max_bases, max_id) %>% sign()
@@ -31,15 +31,15 @@ flip_sign <- function(dt, group = NULL) {
     } else {
       message("signs in all the bases will be flipped in group ", group_to_flip, "\n")
       basis0 <- dt %>%
-        filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
+        dplyr::filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
         get_basis_matrix()
       basis1 <- -basis0
       basis <- basis1 %>%
-        rbind(dt %>% filter(!(!!group) %in% group_to_flip | !!group == "theoretical") %>% get_basis_matrix())
+        rbind(dt %>% dplyr::filter(!(!!group) %in% group_to_flip | !!group == "theoretical") %>% get_basis_matrix())
 
       dt_obj <- dt %>%
-        filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
-        dplyr::bind_rows(dt %>% filter(!(!!group) %in% group_to_flip | !!group == "theoretical"))
+        dplyr::filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
+        dplyr::bind_rows(dt %>% dplyr::filter(!(!!group) %in% group_to_flip | !!group == "theoretical"))
     }
   } else {
     basis <- dt %>% get_basis_matrix()
@@ -71,7 +71,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
   num_row <- nrow(dt$basis[[1]])
 
   group <- enexpr(group)
-  dt <- dt %>% mutate(row_num = row_number())
+  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
 
   flip <- flip_sign(dt, group = !!group)
   basis <- flip$basis
@@ -81,11 +81,11 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
     pca <- basis %>%
       bind_random_matrix() %>%
       stats::prcomp(scale. = TRUE)
-    v <- suppressMessages(pca$x %>% as_tibble(.name_repair = "minimal"))
+    v <- suppressMessages(pca$x %>% tibble::as_tibble(.name_repair = "minimal"))
     if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
     aug <- dt_flip %>%
       bind_random() %>%
-      bind_cols(v)
+      dplyr::bind_cols(v)
   } else if (num_col == 2) {
     message("Ferrn will perform PCA separately on each dimension")
     basis_2d <- basis %>% bind_random_matrix()
@@ -93,15 +93,15 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
     pca2 <- stats::prcomp(basis_2d[, (num_row + 1):(2 * num_row)], scale. = TRUE)
     pca <- list(pca1, pca2)
 
-    v1 <- suppressMessages(-pca1$x %>% as_tibble(.name_repair = "minimal"))
-    v2 <- suppressMessages(-pca2$x %>% as_tibble(.name_repair = "minimal"))
+    v1 <- suppressMessages(-pca1$x %>% tibble::as_tibble(.name_repair = "minimal"))
+    v2 <- suppressMessages(-pca2$x %>% tibble::as_tibble(.name_repair = "minimal"))
     colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2 * num_row)))
 
     if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
     aug <- dt_flip %>%
       bind_random() %>%
-      bind_cols(v1) %>%
-      bind_cols(v2)
+      dplyr::bind_cols(v1) %>%
+      dplyr::bind_cols(v2)
   } else {
     stop("ferrn can only handle 1d or 2d bases!")
   }
@@ -130,11 +130,6 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #'   ) %>%
 #'   explore_space_pca(group = method) +
 #'   scale_color_botanical(palette = "cherry")
-#' @import ggplot2
-#' @importFrom dplyr filter bind_cols group_by mutate ungroup  sym enexpr pull row_number
-#' @importFrom rlang "!!"
-#' @importFrom tibble as_tibble
-#' @importFrom stringr str_detect
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
@@ -168,9 +163,9 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                   interrupt_color = !!color, interrupt_group = !!sym("tries"), ...) +
     add_anno(dt = get_start(dt), ...) +
     # theme
-    scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
-    theme_void() +
-    theme(aspect.ratio = 1, legend.position = "bottom", legend.title = element_blank())
+    ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+    ggplot2::theme_void() +
+    ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
 
   if ("theoretical" %in% dt$info) {
     p <- p +
@@ -178,7 +173,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   }
 
   if (animate) {
-    p <- p + theme(legend.position = "none") +
+    p <- p + ggplot2::theme(legend.position = "none") +
       gganimate::transition_states(!!sym("id")) +
       gganimate::shadow_mark()
   }
@@ -211,8 +206,8 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
   color <- enexpr(color)
 
   # get start
-  dt <- dt %>% dplyr::mutate(row_num = row_number())
-  n_start <- get_start(dt) %>% pull(.data$row_num)
+  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
+  n_start <- get_start(dt) %>% dplyr::pull(.data$row_num)
 
   # see if any flip need to be done
   flip <- dt %>% flip_sign(group = !!group)
@@ -220,16 +215,16 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
   n_rand <- nrow(basis) - nrow(dt)
 
   edges_dt <- flip$dt %>%
-    mutate(id = row_number()) %>%
-    filter(.data$info == "interpolation") %>%
-    group_by(.data$method) %>%
-    mutate(id2 = dplyr::lead(.data$id, defualt = NA)) %>%
-    ungroup() %>%
-    filter(!is.na(.data$id2))
+    dplyr::mutate(id = dplyr::row_number()) %>%
+    dplyr::filter(.data$info == "interpolation") %>%
+    dplyr::group_by(.data$method) %>%
+    dplyr::mutate(id2 = dplyr::lead(.data$id, defualt = NA)) %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(!is.na(.data$id2))
 
   edges <- edges_dt %>%
     dplyr::select(.data$id, .data$id2) %>%
-    mutate(id = .data$id + n_rand, id2 = .data$id2 + n_rand) %>%
+    dplyr::mutate(id = .data$id + n_rand, id2 = .data$id2 + n_rand) %>%
     as.matrix()
 
   edges_col <- palette[as.factor(edges_dt %>% dplyr::pull(!!color))]

@@ -46,9 +46,9 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
 add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
-  geom_point(
+  ggplot2::geom_point(
     data = dt,
-    aes(x = .data$x0, y = .data$y0),
+    ggplot2::aes(x = .data$x0, y = .data$y0),
     size = cent_size, alpha = cent_alpha, color = cent_color
   )
 }
@@ -84,9 +84,9 @@ add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", 
 add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...) {
   color <- enexpr(start_color)
 
-  geom_point(
+  ggplot2::geom_point(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
     size = start_size, alpha = start_alpha
   )
 }
@@ -105,9 +105,9 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...) {
 
   color <- enexpr(anchor_color)
-  geom_point(
+  ggplot2::geom_point(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
     size = anchor_size, alpha = anchor_alpha
   )
 }
@@ -126,9 +126,9 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
 add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = NULL, ...) {
   color <- enexpr(search_color)
 
-  geom_point(
+  ggplot2::geom_point(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
     size = search_size, alpha = search_alpha
   )
 }
@@ -147,9 +147,9 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = N
 add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...){
   color <- enexpr(dir_color)
 
-  geom_point(
+  ggplot2::geom_point(
     data = dt,
-    aes(x = .data$trans_x, y = .data$trans_y, color = !!color),
+    ggplot2::aes(x = .data$trans_x, y = .data$trans_y, color = !!color),
     size = dir_size, alpha = dir_alpha
   )
 }
@@ -169,9 +169,9 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, 
 add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...) {
   color <- enexpr(finish_color)
 
-  geom_point(
+  ggplot2::geom_point(
     data = dt,
-    aes(x =.data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x =.data$PC1, y = .data$PC2, color = !!color),
     size = finish_size, alpha = finish_alpha
   )
 }
@@ -194,9 +194,9 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
   group <- enexpr(interp_group)
   color <- enexpr(interp_color)
 
-  geom_path(
+  ggplot2::geom_path(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2, alpha = !!alpha, group = !!group, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, alpha = !!alpha, group = !!group, color = !!color),
     size = interp_size
   )
 }
@@ -220,9 +220,9 @@ add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
   group <- enexpr(interrupt_group)
   color <- enexpr(interrupt_color)
 
-  geom_path(
+  ggplot2::geom_path(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2, alpha = !!alpha, group = !!group, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, alpha = !!alpha, group = !!group, color = !!color),
     size = interrupt_size, linetype = interrupt_linetype
   )
 }
@@ -241,9 +241,9 @@ add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...) {
-  geom_line(
+  ggplot2::geom_line(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2), group = 1,
+    ggplot2::aes(x = .data$PC1, y = .data$PC2), group = 1,
     color = anno_color, linetype = anno_lty, alpha = anno_alpha
   )
 }
@@ -260,9 +260,9 @@ add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha =
 #' @family draw functions
 add_theo <- function(dt, theo_label = "*", theo_size = 25, ...) {
 
-  geom_text(
+  ggplot2::geom_text(
     data = dt,
-    aes(x = .data$PC1, y = .data$PC2),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2),
     label = theo_label, size = theo_size
   )
 }

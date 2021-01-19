@@ -4,10 +4,12 @@
 \alias{get_interrupt}
 \title{Extract the end point of the interpolation and the target point in the iteration when an interruption happens}
 \usage{
-get_interrupt(dt)
+get_interrupt(dt, group = NULL)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
+
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 }
 \description{
 The optimiser can find better basis on the interpolation path, an interruption is

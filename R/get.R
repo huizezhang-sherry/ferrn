@@ -54,9 +54,9 @@ get_start <- function(dt) {
 get_interp <- function(dt, group = NULL) {
   group <- enexpr(group)
   dt %>%
-    filter(!!sym("info") == "interpolation") %>%
-    group_by(!!group) %>%
-    mutate(id = dplyr::row_number())
+    dplyr::filter(!!sym("info") == "interpolation") %>%
+    dplyr::group_by(!!group) %>%
+    dplyr::mutate(id = dplyr::row_number())
 }
 
 #' Extract the end point at each interpolation
@@ -78,15 +78,15 @@ get_interp_last <- function(dt, group = NULL) {
 
   dt %>%
     get_interp() %>%
-    group_by(.data$tries, !!group) %>%
-    filter(.data$loop == max(.data$loop)) %>%
-    ungroup()
+    dplyr::group_by(.data$tries, !!group) %>%
+    dplyr::filter(.data$loop == max(.data$loop)) %>%
+    dplyr::ungroup()
 }
 
 #' Extract the anchor points on the geodesic path
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#'@param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @examples
 #' holes_1d_better %>% get_anchor()
 #' holes_1d_geo %>% get_anchor()
@@ -97,9 +97,9 @@ get_anchor <- function(dt, group = NULL) {
   group <- enexpr(group)
 
   dt %>%
-    filter(.data$info %in% c("new_basis", "best_line_search")) %>%
-    group_by(!!group) %>%
-    mutate(id = dplyr::row_number())
+    dplyr::filter(.data$info %in% c("new_basis", "best_line_search")) %>%
+    dplyr::group_by(!!group) %>%
+    dplyr::mutate(id = dplyr::row_number())
 }
 
 
@@ -113,8 +113,8 @@ get_anchor <- function(dt, group = NULL) {
 #' @export
 get_search <- function(dt) {
   dt %>%
-    mutate(select = stringr::str_detect(!!sym("info"), "search")) %>%
-    filter(.data$select) %>%
+    dplyr::mutate(select = stringr::str_detect(!!sym("info"), "search")) %>%
+    dplyr::filter(.data$select) %>%
     dplyr::select(-.data$select)
 }
 
@@ -133,7 +133,7 @@ get_dir_search_transformed <- function(dt, ratio = 3){
     message("get_dir_search_transformed() needs to be used on data projected by compute_pca()")
     return(NULL)
   }
-  dt <- dt %>% filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
+  dt <- dt %>% dplyr::filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
 
   if (nrow(dt) == 0){
     message("get_dir_search_transformed() is only applicable to geodesic search/ pseudo deriavtive")
@@ -148,7 +148,7 @@ get_dir_search_transformed <- function(dt, ratio = 3){
                   anchor_y = dplyr::lag(.data$anchor_y, default = NA))
 
   # compute the buffer
-  dir_search <- dt %>% filter(.data$info %in% c("direction_search", "best_direction_search"))
+  dir_search <- dt %>% dplyr::filter(.data$info %in% c("direction_search", "best_direction_search"))
 
   dir_search %>%
     dplyr::left_join(anchor, by = c("tries", "loop")) %>%
@@ -179,8 +179,8 @@ get_center <- function(dt, pca = FALSE, ...) {
   start <- dt %>% get_start()
 
   start %>%
-    mutate(PC1 = sum(.data$PC1) / nrow(start), PC2 = sum(.data$PC2) / nrow(start)) %>%
-    filter(row_number() == 1) %>%
+    dplyr::mutate(PC1 = sum(.data$PC1) / nrow(start), PC2 = sum(.data$PC2) / nrow(start)) %>%
+    dplyr::filter(dplyr::row_number() == 1) %>%
     dplyr::select(.data$PC1, .data$PC2) %>%
     dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
 }
@@ -205,7 +205,7 @@ get_space_param <- function(dt) {
   r <- dt %>%
     dplyr::mutate(dist = sqrt((.data$PC1 - x0)^2 + (.data$PC2 - y0)^2)) %>%
     dplyr::filter(.data$dist == max(.data$dist)) %>%
-    pull(.data$dist)
+    dplyr::pull(.data$dist)
 
   tibble::tibble(x0 = x0, y0 = y0, r = r)
 }
@@ -220,7 +220,7 @@ get_space_param <- function(dt) {
 #' @family get functions
 #' @export
 get_theo <- function(dt) {
-  dt %>% filter(.data$info == "theoretical")
+  dt %>% dplyr::filter(.data$info == "theoretical")
 }
 
 #' Extract the end point of the interpolation and the target point in the iteration when an interruption happens
@@ -230,6 +230,7 @@ get_theo <- function(dt) {
 #' This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @examples
 #'holes_1d_better %>% get_interrupt()
 #'holes_1d_geo %>% get_interrupt()
@@ -237,12 +238,11 @@ get_theo <- function(dt) {
 #' @export
 get_interrupt <- function(dt, group = NULL) {
 
-  browser()
 
   group <- enexpr(group)
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
 
-    dt <- dt %>% filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
+    dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
 
     anchor <- dt %>% get_anchor()
     interp_last <- dt %>% get_interp_last(group = !!group)
@@ -253,13 +253,13 @@ get_interrupt <- function(dt, group = NULL) {
       dplyr::group_by(!!group) %>%
       dplyr::select(.data$info, .data$index_val, .data$tries) %>%
       tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
-      mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
-      filter(match) %>%
-      pull(.data$tries)
+      dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
+      dplyr::filter(match) %>%
+      dplyr::pull(.data$tries)
 
     interp_anchor %>%
       dplyr::arrange(.data$tries) %>%
-      filter(.data$tries %in% problem_tries)
+      dplyr::filter(.data$tries %in% problem_tries)
   } else{
     message("interrupt is only implemented in simulated annealing methods")
     return(NULL)
@@ -274,6 +274,7 @@ get_interrupt <- function(dt, group = NULL) {
 #' This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @examples
 #'holes_1d_better %>% get_interrupt_finish()
 #'holes_1d_geo %>% get_interrupt_finish()
@@ -284,7 +285,7 @@ get_interrupt_finish <- function(dt, group = NULL){
   group <- enexpr(group)
 
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
-  dt <- dt %>% filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
+  dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
     dplyr::group_by(!!group)
   anchor <- dt %>% get_anchor(group = !!group)
   interp_last <- dt %>% get_interp_last(group = !!group)
@@ -295,11 +296,11 @@ get_interrupt_finish <- function(dt, group = NULL){
     dplyr::group_by(!!group) %>%
     dplyr::select(.data$info, .data$index_val, .data$tries) %>%
     tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
-    mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
-    filter(match) %>%
-    pull(.data$tries)
+    dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
+    dplyr::filter(match) %>%
+    dplyr::pull(.data$tries)
 
-  interp_last %>% filter(.data$tries %in% problem_tries)
+  interp_last %>% dplyr::filter(.data$tries %in% problem_tries)
 
   } else{
     message("interrupt is only implemented in simulated annealing methods")
@@ -325,9 +326,9 @@ get_search_count <- function(dt, iter = NULL, group = NULL) {
 
   dt_search <- dt %>%
     get_search() %>%
-    group_by(!!iter)
+    dplyr::group_by(!!iter)
 
-  if (!is.null(group)) dt_search <- dt_search %>% group_by(!!iter, !!group)
+  if (!is.null(group)) dt_search <- dt_search %>% dplyr::group_by(!!iter, !!group)
 
   dt_count <- dt_search %>%
     dplyr::summarise(n = dplyr::n())

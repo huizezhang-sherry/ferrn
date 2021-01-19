@@ -33,7 +33,7 @@ relevel_geo <- function(dt, order = c(
     stop("use relevel_geo only when the searching method is search_geodesic!")
   }
 
-  dt %>% mutate(info = forcats::fct_relevel(.data$info, order))
+  dt %>% dplyr::mutate(info = forcats::fct_relevel(.data$info, order))
 }
 
 #' @export
@@ -55,7 +55,7 @@ relevel_better <- function(dt, order = c("random_search", "new_basis", "interpol
     stop("All the order level must present in the data!")
   }
 
-  dt %>% mutate(info = forcats::fct_relevel(.data$info, order))
+  dt %>% dplyr::mutate(info = forcats::fct_relevel(.data$info, order))
 }
 
 

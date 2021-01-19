@@ -32,7 +32,6 @@ botanical_palettes <- list(
 #'
 #' @param palette Color palette from the botanical_palette
 #' @param reverse logical, if the color should be reversed
-#' @importFrom grDevices colorRampPalette
 #' @export
 #' @family botan
 botanical_pal <- function(palette = "fern", reverse = FALSE) {
@@ -41,7 +40,7 @@ botanical_pal <- function(palette = "fern", reverse = FALSE) {
   if (reverse) {
     pal <- rev(pal)
   }
-  return(colorRampPalette(pal))
+  return(grDevices::colorRampPalette(pal))
 }
 
 #' Scale color function in compatible with ggplot2 syntax
