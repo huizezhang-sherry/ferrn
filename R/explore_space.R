@@ -139,6 +139,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' @export
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
+
+  browser()
   group <- enexpr(group)
   if (is.null(group)) color <- enexpr(color) else color <- group
 
@@ -157,12 +159,12 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
     add_anchor(dt = get_anchor(dt), anchor_color = !!color, ...) +
     add_search(dt = get_search(dt), search_color = !!color, ...) +
     add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = !!color, ...) +
-    add_finish(dt = get_interrupt_finish(dt), finish_color = !!color, ...) +
+    add_finish(dt = get_interrupt_finish(dt, group = !!group), finish_color = !!color, ...) +
     # add path
     add_interp(dt = get_interp(dt, group = !!group),
                interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
     # add annotation
-    add_interrupt(dt = get_interrupt(dt),
+    add_interrupt(dt = get_interrupt(dt, group = !!group),
                   interrupt_color = !!color, interrupt_group = !!sym("tries"), ...) +
     add_anno(dt = get_start(dt), ...) +
     # theme

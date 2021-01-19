@@ -235,18 +235,22 @@ get_theo <- function(dt) {
 #'holes_1d_geo %>% get_interrupt()
 #' @family get functions
 #' @export
-get_interrupt <- function(dt) {
+get_interrupt <- function(dt, group = NULL) {
 
+  browser()
+
+  group <- enexpr(group)
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
 
     dt <- dt %>% filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
 
     anchor <- dt %>% get_anchor()
-    interp_last <- dt %>% get_interp_last()
+    interp_last <- dt %>% get_interp_last(group = !!group)
 
     interp_anchor <- dplyr::bind_rows(anchor, interp_last)
 
     problem_tries <- interp_anchor %>%
+      dplyr::group_by(!!group) %>%
       dplyr::select(.data$info, .data$index_val, .data$tries) %>%
       tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
       mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
@@ -275,16 +279,20 @@ get_interrupt <- function(dt) {
 #'holes_1d_geo %>% get_interrupt_finish()
 #' @family get functions
 #' @export
-get_interrupt_finish <- function(dt){
+get_interrupt_finish <- function(dt, group = NULL){
+
+  group <- enexpr(group)
 
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
-  dt <- dt %>% filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
-  anchor <- dt %>% get_anchor()
-  interp_last <- dt %>% get_interp_last()
+  dt <- dt %>% filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
+    dplyr::group_by(!!group)
+  anchor <- dt %>% get_anchor(group = !!group)
+  interp_last <- dt %>% get_interp_last(group = !!group)
 
   interp_anchor <- dplyr::bind_rows(anchor, interp_last)
 
   problem_tries <- interp_anchor %>%
+    dplyr::group_by(!!group) %>%
     dplyr::select(.data$info, .data$index_val, .data$tries) %>%
     tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
     mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
