@@ -85,7 +85,7 @@ explore_trace_search <- function(dt, iter = sym("tries"), color = sym("tries"), 
   search_count <- get_search_count(search, iter = !!iter)
 
 
-  largest <- max(eval(rlang::expr(`$`(dt, !!iter))))
+  largest <- max(eval(dplyr::expr(`$`(dt, !!iter))))
   lowest_index_val <- min(dt$index_val)
 
   # filter data plotted with boxplot geom
@@ -107,7 +107,7 @@ explore_trace_search <- function(dt, iter = sym("tries"), color = sym("tries"), 
 
 
   p <- search %>%
-    ggplot2::ggplot(aes(x = !!iter, y = .data$index_val, col = as.factor(!!color))) +
+    ggplot2::ggplot(ggplot2::aes(x = !!iter, y = .data$index_val, col = as.factor(!!color))) +
     # point summary
     ggplot2::geom_point(data = search_point) +
     # boxplot summary
@@ -117,8 +117,8 @@ explore_trace_search <- function(dt, iter = sym("tries"), color = sym("tries"), 
       color = "grey"
     ) +
     # target points
-    ggplot2::geom_point(data = search_target %>% dplyr::filter(!!iter != largest), aes(group = 1), size = 3) +
-    ggplot2::geom_line(data = search_target %>% dplyr::filter(!!iter != largest), aes(group = 1)) +
+    ggplot2::geom_point(data = search_target %>% dplyr::filter(!!iter != largest), ggplot2::aes(group = 1), size = 3) +
+    ggplot2::geom_line(data = search_target %>% dplyr::filter(!!iter != largest), ggplot2::aes(group = 1)) +
     ggplot2::geom_point(
       data = search_target %>% dplyr::filter(!!iter == largest),
       col = "grey", size = 3
@@ -126,11 +126,11 @@ explore_trace_search <- function(dt, iter = sym("tries"), color = sym("tries"), 
     # numeric summary box
     ggrepel::geom_label_repel(
       data = search_count %>% dplyr::filter(!!iter != largest),
-      aes(y = 0.99 * lowest_index_val, label = .data$n), direction = "y", nudge_y = -0.1, ...
+      ggplot2::aes(y = 0.99 * lowest_index_val, label = .data$n), direction = "y", nudge_y = -0.1, ...
     ) +
     ggrepel::geom_label_repel(
       data = search_count %>% dplyr::filter(!!iter == largest),
-      aes(y = 0.99 * lowest_index_val, label = .data$n),
+      ggplot2::aes(y = 0.99 * lowest_index_val, label = .data$n),
       col = "grey", direction = "y", ...
     ) +
     # scale, lab and theme

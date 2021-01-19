@@ -21,7 +21,7 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 
   ggforce::geom_circle(
     data = dt,
-    aes(x0 = .data$x0, y0 = .data$y0, r = .data$r),
+    ggplot2::aes(x0 = .data$x0, y0 = .data$y0, r = .data$r),
     alpha = space_alpha, fill = space_fill, color = space_color
   )
 }
@@ -82,7 +82,7 @@ add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", 
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
 add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...) {
-  color <- enexpr(start_color)
+  color <- dplyr::enexpr(start_color)
 
   ggplot2::geom_point(
     data = dt,
@@ -104,7 +104,7 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
 #' @family draw functions
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...) {
 
-  color <- enexpr(anchor_color)
+  color <- dplyr::enexpr(anchor_color)
   ggplot2::geom_point(
     data = dt,
     ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
@@ -124,7 +124,7 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = NULL, ...) {
-  color <- enexpr(search_color)
+  color <- dplyr::enexpr(search_color)
 
   ggplot2::geom_point(
     data = dt,
@@ -145,7 +145,7 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = N
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...){
-  color <- enexpr(dir_color)
+  color <- dplyr::enexpr(dir_color)
 
   ggplot2::geom_point(
     data = dt,
@@ -167,7 +167,7 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, 
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...) {
-  color <- enexpr(finish_color)
+  color <- dplyr::enexpr(finish_color)
 
   ggplot2::geom_point(
     data = dt,
@@ -190,9 +190,9 @@ add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = N
 #' @family draw functions
 add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
                       interp_color = NULL, interp_group = NULL,...) {
-  alpha <- enexpr(interp_alpha)
-  group <- enexpr(interp_group)
-  color <- enexpr(interp_color)
+  alpha <- dplyr::enexpr(interp_alpha)
+  group <- dplyr::enexpr(interp_group)
+  color <- dplyr::enexpr(interp_color)
 
   ggplot2::geom_path(
     data = dt,
@@ -216,9 +216,9 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' @family draw functions
 add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
                      interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
-  alpha <- enexpr(interrupt_alpha)
-  group <- enexpr(interrupt_group)
-  color <- enexpr(interrupt_color)
+  alpha <- dplyr::enexpr(interrupt_alpha)
+  group <- dplyr::enexpr(interrupt_group)
+  color <- dplyr::enexpr(interrupt_color)
 
   ggplot2::geom_path(
     data = dt,

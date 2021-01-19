@@ -7,8 +7,8 @@
 #' @family get functions
 #' @export
 get_best <- function(dt, group = NULL) {
-  group <- rlang::enexpr(group)
-  var <- rlang::enexprs(var)
+  group <- dplyr::enexpr(group)
+  var <- dplyr::enexprs(var)
 
   res <- dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
@@ -52,7 +52,7 @@ get_start <- function(dt) {
 #' @family get functions
 #' @export
 get_interp <- function(dt, group = NULL) {
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
   dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
@@ -70,7 +70,7 @@ get_interp <- function(dt, group = NULL) {
 #' @export
 get_interp_last <- function(dt, group = NULL) {
 
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
 
   if (!all(c("tries", "loop") %in% colnames(dt))) {
     stop("The data object must have variables tries and loop")
@@ -94,7 +94,7 @@ get_interp_last <- function(dt, group = NULL) {
 #' @export
 get_anchor <- function(dt, group = NULL) {
 
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
 
   dt %>%
     dplyr::filter(.data$info %in% c("new_basis", "best_line_search")) %>%
@@ -239,7 +239,7 @@ get_theo <- function(dt) {
 get_interrupt <- function(dt, group = NULL) {
 
 
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
 
     dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
@@ -282,7 +282,7 @@ get_interrupt <- function(dt, group = NULL) {
 #' @export
 get_interrupt_finish <- function(dt, group = NULL){
 
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
 
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
   dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
@@ -321,8 +321,8 @@ get_interrupt_finish <- function(dt, group = NULL){
 #' @family get functions
 #' @export
 get_search_count <- function(dt, iter = NULL, group = NULL) {
-  group <- enexpr(group)
-  iter <- enexpr(iter)
+  group <- dplyr::enexpr(group)
+  iter <- dplyr::enexpr(iter)
 
   dt_search <- dt %>%
     get_search() %>%

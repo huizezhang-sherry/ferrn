@@ -8,7 +8,7 @@
 #'   str(max = 1)
 #' @export
 flip_sign <- function(dt, group = NULL) {
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
 
   if (!is.null(group)) {
     group_name <- dt %>%
@@ -70,7 +70,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
   num_col <- ncol(dt$basis[[1]])
   num_row <- nrow(dt$basis[[1]])
 
-  group <- enexpr(group)
+  group <- dplyr::enexpr(group)
   dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
 
   flip <- flip_sign(dt, group = !!group)
@@ -135,9 +135,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
 
-  browser()
-  group <- enexpr(group)
-  if (is.null(group)) color <- enexpr(color) else color <- group
+  group <- dplyr::enexpr(group)
+  if (is.null(group)) color <- dplyr::enexpr(color) else color <- group
 
   if (pca) {
     dt <- compute_pca(dt, group = !!group) %>% purrr::pluck("aug")
@@ -145,7 +144,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 
   dt <- dt %>% clean_method()
 
-  p <- ggplot() +
+  p <- ggplot2::ggplot() +
     # set up
     add_space(dt = get_space_param(dt), ...) +
     add_center(dt = get_center(dt), ...) +
@@ -202,8 +201,8 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
 prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
                             color = sym("method"), rand_size = 9, point_size = 1.5, theo_size = 10,
                             palette = botanical_palettes$cherry, ...) {
-  group <- enexpr(group)
-  color <- enexpr(color)
+  group <- dplyr::enexpr(group)
+  color <- dplyr::enexpr(color)
 
   # get start
   dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())

@@ -1,10 +1,11 @@
 #' A specific theme for trace plots
+#' @importFrom ggplot2 %+replace%
 #' @export
 theme_fern <- function() {
-  theme_bw() %+replace%
-    theme(
-      panel.grid.major = element_line(),
-      panel.grid.minor = element_blank(),
+  ggplot2::theme_bw() %+replace%
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_line(),
+      panel.grid.minor = ggplot2::element_blank(),
     )
 }
 

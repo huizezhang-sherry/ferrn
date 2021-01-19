@@ -53,9 +53,9 @@ botanical_pal <- function(palette = "fern", reverse = FALSE) {
 #' @family botan
 scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE) {
   if (discrete) {
-    discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
+    ggplot2::discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
   } else {
-    scale_color_gradientn(colors = botanical_pal(palette, ...)(256))
+    ggplot2::scale_color_gradientn(colors = botanical_pal(palette, ...)(256))
   }
 }
 
@@ -69,8 +69,8 @@ scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, revers
 #' @family botan
 scale_fill_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE) {
   if (discrete) {
-    discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
+    ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
   } else {
-    scale_fill_gradientn(colors = botanical_pal(palette, ...)(256))
+    ggplot2::scale_fill_gradientn(colors = botanical_pal(palette, ...)(256))
   }
 }
