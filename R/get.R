@@ -122,6 +122,7 @@ get_search <- function(dt) {
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param ratio a buffer value to allow directional search points being distinguishable from the anchor points
+#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' holes_1d_geo %>% compute_pca() %>% purrr::pluck("aug") %>% get_dir_search_transformed()
 #' @family get functions
@@ -173,7 +174,7 @@ get_dir_search_transformed <- function(dt, ratio = 3, ...){
 #' @param ... other argument passed to \code{compute_pca()}
 #' @importFrom rlang .data
 #' @family get functions
-get_space_param <- function(dt, pca = FALSE, ..) {
+get_space_param <- function(dt, pca = FALSE, ...) {
 
 
   # get center
@@ -210,8 +211,16 @@ get_space_param <- function(dt, pca = FALSE, ..) {
 #' @family get functions
 #' @export
 get_theo <- function(dt) {
-  dt %>% dplyr::filter(.data$info == "theoretical") %>%
-    select(.data$PC1, .data$PC2)
+  theo <- dt %>% dplyr::filter(.data$info == "theoretical")
+
+  if ("PC1" %in% colnames(theo)){
+    out <- theo %>%
+      dplyr::select(.data$PC1, .data$PC2)
+  } else{
+    out <- theo
+  }
+
+  out
 }
 
 #' Extract the end point of the interpolation and the target point in the iteration when an interruption happens
@@ -222,6 +231,8 @@ get_theo <- function(dt) {
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @param precision The precision for the interruption
+#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #'holes_1d_better %>% get_interrupt()
 #'holes_1d_geo %>% get_interrupt()
@@ -265,6 +276,8 @@ get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @param precision The precision for the interruption
+#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #'holes_1d_better %>% get_interrupt_finish()
 #'holes_1d_geo %>% get_interrupt_finish()
@@ -307,6 +320,7 @@ get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...){
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param iter The variable used to be counted by
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' get_search_count(holes_1d_better)
 #' get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)

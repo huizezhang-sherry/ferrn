@@ -4,7 +4,7 @@
 \alias{get_space_param}
 \title{Estimate the radius of the background circle based on the randomly generated points}
 \usage{
-get_space_param(dt, pca = FALSE, ..)
+get_space_param(dt, pca = FALSE, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

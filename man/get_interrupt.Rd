@@ -10,6 +10,10 @@ get_interrupt(dt, group = NULL, precision = 0.01, ...)
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+
+\item{precision}{The precision for the interruption}
+
+\item{...}{other argument passed to \code{compute_pca()}}
 }
 \description{
 The optimiser can find better basis on the interpolation path, an interruption is

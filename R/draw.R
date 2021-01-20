@@ -7,13 +7,15 @@
 #' @param space_alpha an alpha value for the transparency of the space
 #' @param space_fill the color of the space filling
 #' @param space_color the color of the space brim
+#' @param cent_size  the size of the center point
+#' @param cent_alpha an alpha value for the transparency of the space
+#' @param cent_color the color of the space center
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @examples
 #' library(ggplot2)
 #' space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
 #' ggplot() +
 #'   ferrn:::add_space(space) +
-#'   ferrn:::add_center(space) +
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
@@ -55,7 +57,6 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #' start
 #' ggplot() +
 #'   ferrn:::add_space(dt = space) +
-#'   ferrn:::add_center(dt = space) +
 #'   ferrn:::add_start(dt = start, start_color = method) +
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)

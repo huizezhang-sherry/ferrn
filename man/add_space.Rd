@@ -24,6 +24,12 @@ add_space(
 
 \item{space_color}{the color of the space brim}
 
+\item{cent_size}{the size of the center point}
+
+\item{cent_alpha}{an alpha value for the transparency of the space}
+
+\item{cent_color}{the color of the space center}
+
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
 \description{
@@ -35,7 +41,6 @@ library(ggplot2)
 space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
 ggplot() +
   ferrn:::add_space(space) +
-  ferrn:::add_center(space) +
   theme_void() +
   theme(aspect.ratio = 1)
 }
