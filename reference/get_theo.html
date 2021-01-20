@@ -152,7 +152,6 @@
 <code><a href='get_anchor.html'>get_anchor</a>()</code>,
 <code><a href='get_basis_matrix.html'>get_basis_matrix</a>()</code>,
 <code><a href='get_best.html'>get_best</a>()</code>,
-<code><a href='get_center.html'>get_center</a>()</code>,
 <code><a href='get_dir_search_transformed.html'>get_dir_search_transformed</a>()</code>,
 <code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
 <code><a href='get_interp.html'>get_interp</a>()</code>,
@@ -166,10 +165,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>best</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 <span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span><span class='op'>(</span><span class='va'>best</span>, <span class='fu'>tourr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span><span class='op'>(</span><span class='op'>)</span>, raw_data <span class='op'>=</span> <span class='va'>boa5</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_theo</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 8</span><span>
-#&gt;   basis             index_val info        method alpha tries  loop    id
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.931 theoretical </span><span style='color: #BB0000;'>NA</span><span>        </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>     0</div></span></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error: Column `PC1` not found in `.data`</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

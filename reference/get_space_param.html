@@ -137,7 +137,7 @@ the largest distance from the bases in the data object to the center point." />
 the largest distance from the bases in the data object to the center point.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_space_param</span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_space_param</span><span class='op'>(</span><span class='va'>dt</span>, pca <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>..</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,6 +145,14 @@ the largest distance from the bases in the data object to the center point.</p>
     <tr>
       <th>dt</th>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+    </tr>
+    <tr>
+      <th>pca</th>
+      <td><p>Boolean, if <code><a href='compute_pca.html'>compute_pca()</a></code> should be performed on the data</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other argument passed to <code><a href='compute_pca.html'>compute_pca()</a></code></p></td>
     </tr>
     </table>
 
@@ -158,7 +166,6 @@ should be be called directly by the user</p>
 <code><a href='get_anchor.html'>get_anchor</a>()</code>,
 <code><a href='get_basis_matrix.html'>get_basis_matrix</a>()</code>,
 <code><a href='get_best.html'>get_best</a>()</code>,
-<code><a href='get_center.html'>get_center</a>()</code>,
 <code><a href='get_dir_search_transformed.html'>get_dir_search_transformed</a>()</code>,
 <code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
 <code><a href='get_interp.html'>get_interp</a>()</code>,
