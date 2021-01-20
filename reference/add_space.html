@@ -168,6 +168,18 @@ should be be called directly by the user</p>
       <td><p>the color of the space brim</p></td>
     </tr>
     <tr>
+      <th>cent_size</th>
+      <td><p>the size of the center point</p></td>
+    </tr>
+    <tr>
+      <th>cent_alpha</th>
+      <td><p>an alpha value for the transparency of the space</p></td>
+    </tr>
+    <tr>
+      <th>cent_color</th>
+      <td><p>the color of the space center</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>other aesthetics inherent from <code><a href='explore_space_pca.html'>explore_space_pca()</a></code></p></td>
     </tr>
@@ -191,10 +203,9 @@ should be be called directly by the user</p>
 <span class='va'>space</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='fl'>0</span>, y0 <span class='op'>=</span> <span class='fl'>0</span>, r <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>ferrn</span><span class='fu'>:::</span><span class='fu'>add_space</span><span class='op'>(</span><span class='va'>space</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>ferrn</span><span class='fu'>:::</span><span class='fu'>add_center</span><span class='op'>(</span><span class='va'>space</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_void</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>aspect.ratio <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in get(name, envir = asNamespace(pkg), inherits = FALSE): object 'add_center' not found</span></div></pre>
+</div><div class='img'><img src='add_space-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
