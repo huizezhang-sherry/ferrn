@@ -4,10 +4,14 @@
 \alias{get_space_param}
 \title{Estimate the radius of the background circle based on the randomly generated points}
 \usage{
-get_space_param(dt)
+get_space_param(dt, pca = FALSE, ..)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
+
+\item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
+
+\item{...}{other argument passed to \code{compute_pca()}}
 }
 \description{
 The space of projected bases is a circle when reduced to 2D. A radius is estimated using
@@ -22,7 +26,6 @@ Other get functions:
 \code{\link{get_anchor}()},
 \code{\link{get_basis_matrix}()},
 \code{\link{get_best}()},
-\code{\link{get_center}()},
 \code{\link{get_dir_search_transformed}()},
 \code{\link{get_interp_last}()},
 \code{\link{get_interp}()},

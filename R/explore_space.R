@@ -136,7 +136,7 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
 
   group <- dplyr::enexpr(group)
-  if (is.null(group)) color <- dplyr::enexpr(color) else color <- group
+  if (!is.null(dplyr::enexpr(color))) color <- dplyr::enexpr(color) else color <- group
 
   if (pca) {
     dt <- compute_pca(dt, group = !!group) %>% purrr::pluck("aug")
@@ -147,19 +147,18 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
   p <- ggplot2::ggplot() +
     # set up
     add_space(dt = get_space_param(dt), ...) +
-    add_center(dt = get_center(dt), ...) +
     # add points
     add_start(dt = get_start(dt), start_color = !!color, ...) +
     add_anchor(dt = get_anchor(dt), anchor_color = !!color, ...) +
     add_search(dt = get_search(dt), search_color = !!color, ...) +
     add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = !!color, ...) +
-    add_finish(dt = get_interrupt_finish(dt, group = !!group), finish_color = !!color, ...) +
+    add_finish(dt = get_interrupt_finish(dt, group = !!group, ...), finish_color = !!color, ...) +
     # add path
     add_interp(dt = get_interp(dt, group = !!group),
                interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
     # add annotation
-    add_interrupt(dt = get_interrupt(dt, group = !!group),
-                  interrupt_color = !!color, interrupt_group = !!sym("tries"), ...) +
+    add_interrupt(dt = get_interrupt(dt, group = !!group, ...),
+                  interrupt_color = !!color, interrupt_group = interaction(!!sym("tries"), !!group), ...) +
     add_anno(dt = get_start(dt), ...) +
     # theme
     ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +

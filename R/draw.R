@@ -17,40 +17,19 @@
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
-add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color = "white", ...) {
+add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color = "white",
+                      cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
 
+  list(ggplot2::geom_point(
+    data = dt,
+    ggplot2::aes(x = .data$x0, y = .data$y0),
+    size = cent_size, alpha = cent_alpha, color = cent_color
+  ),
   ggforce::geom_circle(
     data = dt,
     ggplot2::aes(x0 = .data$x0, y0 = .data$y0, r = .data$r),
     alpha = space_alpha, fill = space_fill, color = space_color
-  )
-}
-
-#' A ggproto for drawing the circle center
-#'
-#' This is  a wrapper function used by \code{explore_space_pca()} and
-#' should be be called directly by the user
-#'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param cent_size the center point size
-#' @param cent_alpha an alpha value for the transparency of the center point
-#' @param cent_color the color of the center
-#' @param ... other aesthetics inherent from \code{explore_space_pca()}
-#' @examples
-#' library(ggplot2)
-#' space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
-#' ggplot() +
-#'   ferrn:::add_space(space) +
-#'   ferrn:::add_center(space) +
-#'   theme_void() +
-#'   theme(aspect.ratio = 1)
-#' @family draw functions
-add_center <- function(dt, cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
-  ggplot2::geom_point(
-    data = dt,
-    ggplot2::aes(x = .data$x0, y = .data$y0),
-    size = cent_size, alpha = cent_alpha, color = cent_color
-  )
+  ))
 }
 
 #' A ggproto for drawing start points
@@ -123,7 +102,7 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
 #' @param search_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
-add_search <- function(dt, search_size = 0.5, search_alpha = 1, search_color = NULL, ...) {
+add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color = NULL, ...) {
   color <- dplyr::enexpr(search_color)
 
   ggplot2::geom_point(
@@ -214,8 +193,9 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' @param interrupt_linetype the linetype for annotating the interrupted path
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
-add_interrupt <- function(dt, interrupt_size = 1.5, interrupt_alpha = NULL,
+add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
                      interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
+
   alpha <- dplyr::enexpr(interrupt_alpha)
   group <- dplyr::enexpr(interrupt_group)
   color <- dplyr::enexpr(interrupt_color)

@@ -4,7 +4,7 @@
 \alias{add_search}
 \title{A ggproto for drawing search points}
 \usage{
-add_search(dt, search_size = 0.5, search_alpha = 1, search_color = NULL, ...)
+add_search(dt, search_size = 1, search_alpha = 0.5, search_color = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -25,7 +25,6 @@ should be be called directly by the user
 Other draw functions: 
 \code{\link{add_anchor}()},
 \code{\link{add_anno}()},
-\code{\link{add_center}()},
 \code{\link{add_dir_search}()},
 \code{\link{add_finish}()},
 \code{\link{add_interp}()},

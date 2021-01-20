@@ -4,7 +4,7 @@
 \alias{get_dir_search_transformed}
 \title{Extract directional search points during the optimisation}
 \usage{
-get_dir_search_transformed(dt, ratio = 3)
+get_dir_search_transformed(dt, ratio = 3, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -22,7 +22,6 @@ Other get functions:
 \code{\link{get_anchor}()},
 \code{\link{get_basis_matrix}()},
 \code{\link{get_best}()},
-\code{\link{get_center}()},
 \code{\link{get_interp_last}()},
 \code{\link{get_interp}()},
 \code{\link{get_interrupt_finish}()},

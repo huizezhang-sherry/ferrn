@@ -9,6 +9,9 @@ add_space(
   space_alpha = 0.5,
   space_fill = "grey92",
   space_color = "white",
+  cent_size = 1,
+  cent_alpha = 1,
+  cent_color = "black",
   ...
 )
 }
@@ -40,7 +43,6 @@ ggplot() +
 Other draw functions: 
 \code{\link{add_anchor}()},
 \code{\link{add_anno}()},
-\code{\link{add_center}()},
 \code{\link{add_dir_search}()},
 \code{\link{add_finish}()},
 \code{\link{add_interp}()},

@@ -126,7 +126,7 @@ get_search <- function(dt) {
 #' holes_1d_geo %>% compute_pca() %>% purrr::pluck("aug") %>% get_dir_search_transformed()
 #' @family get functions
 #' @export
-get_dir_search_transformed <- function(dt, ratio = 3){
+get_dir_search_transformed <- function(dt, ratio = 3, ...){
 
   # check only valid for search_geodesic or pseudo-derivative
   if (!"PC1" %in% colnames(dt)){
@@ -160,32 +160,6 @@ get_dir_search_transformed <- function(dt, ratio = 3){
                                    .data$PC2 + abs(.data$PC2 - .data$anchor_y) * ratio))
 }
 
-
-#' Extract the center point of the random circle from the starting points
-#'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param pca Boolean, if \code{compute_pca()} should be performed on the data
-#' @param ... other argument passed to \code{compute_pca()}
-#' @examples
-#' dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_center(pca = TRUE, group = method)
-#' @family get functions
-#' @export
-get_center <- function(dt, pca = FALSE, ...) {
-
-  if (pca){
-    dt <- dt %>% compute_pca(...)
-    dt <- dt$aug
-  }
-  start <- dt %>% get_start()
-
-  start %>%
-    dplyr::mutate(PC1 = sum(.data$PC1) / nrow(start), PC2 = sum(.data$PC2) / nrow(start)) %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::select(.data$PC1, .data$PC2) %>%
-    dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
-}
-
-
 #' Estimate the radius of the background circle based on the randomly generated points
 #'
 #' The space of projected bases is a circle when reduced to 2D. A radius is estimated using
@@ -195,10 +169,26 @@ get_center <- function(dt, pca = FALSE, ...) {
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param pca Boolean, if \code{compute_pca()} should be performed on the data
+#' @param ... other argument passed to \code{compute_pca()}
 #' @importFrom rlang .data
 #' @family get functions
-get_space_param <- function(dt) {
-  center <- dt %>% get_center()
+get_space_param <- function(dt, pca = FALSE, ..) {
+
+
+  # get center
+  if (pca){
+    dt <- dt %>% compute_pca(...)
+    dt <- dt$aug
+  }
+  start <- dt %>% get_start()
+
+  center <- start %>%
+    dplyr::mutate(PC1 = sum(.data$PC1) / nrow(start), PC2 = sum(.data$PC2) / nrow(start)) %>%
+    dplyr::filter(dplyr::row_number() == 1) %>%
+    dplyr::select(.data$PC1, .data$PC2) %>%
+    dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
+
   x0 <- center$x0
   y0 <- center$y0
 
@@ -220,7 +210,8 @@ get_space_param <- function(dt) {
 #' @family get functions
 #' @export
 get_theo <- function(dt) {
-  dt %>% dplyr::filter(.data$info == "theoretical")
+  dt %>% dplyr::filter(.data$info == "theoretical") %>%
+    select(.data$PC1, .data$PC2)
 }
 
 #' Extract the end point of the interpolation and the target point in the iteration when an interruption happens
@@ -236,8 +227,7 @@ get_theo <- function(dt) {
 #'holes_1d_geo %>% get_interrupt()
 #' @family get functions
 #' @export
-get_interrupt <- function(dt, group = NULL) {
-
+get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
 
   group <- dplyr::enexpr(group)
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
@@ -253,13 +243,13 @@ get_interrupt <- function(dt, group = NULL) {
       dplyr::group_by(!!group) %>%
       dplyr::select(.data$info, .data$index_val, .data$tries) %>%
       tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
-      dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
+      dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
       dplyr::filter(match) %>%
-      dplyr::pull(.data$tries)
+      dplyr::mutate(id = paste0(!!group, .data$tries))
 
     interp_anchor %>%
-      dplyr::arrange(.data$tries) %>%
-      dplyr::filter(.data$tries %in% problem_tries)
+      dplyr::mutate(id = paste0(!!group, .data$tries)) %>%
+      dplyr::filter(.data$id %in% problem_tries$id)
   } else{
     message("interrupt is only implemented in simulated annealing methods")
     return(NULL)
@@ -280,7 +270,7 @@ get_interrupt <- function(dt, group = NULL) {
 #'holes_1d_geo %>% get_interrupt_finish()
 #' @family get functions
 #' @export
-get_interrupt_finish <- function(dt, group = NULL){
+get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...){
 
   group <- dplyr::enexpr(group)
 
@@ -296,11 +286,13 @@ get_interrupt_finish <- function(dt, group = NULL){
     dplyr::group_by(!!group) %>%
     dplyr::select(.data$info, .data$index_val, .data$tries) %>%
     tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
-    dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > 0.01, TRUE, FALSE)) %>%
-    dplyr::filter(match) %>%
-    dplyr::pull(.data$tries)
+    dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
+    dplyr::filter(match)%>%
+    dplyr::mutate(id = paste0(!!group, .data$tries))
 
-  interp_last %>% dplyr::filter(.data$tries %in% problem_tries)
+  interp_last %>%
+    dplyr::mutate(id = paste0(!!group, .data$tries)) %>%
+    dplyr::filter(.data$id %in% problem_tries$id)
 
   } else{
     message("interrupt is only implemented in simulated annealing methods")
@@ -320,7 +312,7 @@ get_interrupt_finish <- function(dt, group = NULL){
 #' get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
 #' @family get functions
 #' @export
-get_search_count <- function(dt, iter = NULL, group = NULL) {
+get_search_count <- function(dt, iter = NULL, group = NULL, ...) {
   group <- dplyr::enexpr(group)
   iter <- dplyr::enexpr(iter)
 

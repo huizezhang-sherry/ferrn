@@ -4,7 +4,7 @@
 \alias{get_interrupt_finish}
 \title{Extract the end point of the interpolation on the iteration where interruption happens}
 \usage{
-get_interrupt_finish(dt, group = NULL)
+get_interrupt_finish(dt, group = NULL, precision = 0.01, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -25,7 +25,6 @@ Other get functions:
 \code{\link{get_anchor}()},
 \code{\link{get_basis_matrix}()},
 \code{\link{get_best}()},
-\code{\link{get_center}()},
 \code{\link{get_dir_search_transformed}()},
 \code{\link{get_interp_last}()},
 \code{\link{get_interp}()},
