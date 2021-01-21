@@ -141,6 +141,7 @@ that plots the data object in a space reduced by PCA.
 
     <pre class="usage"><span class='fu'>explore_space_pca</span><span class='op'>(</span>
   <span class='va'>dt</span>,
+  details <span class='op'>=</span> <span class='cn'>TRUE</span>,
   pca <span class='op'>=</span> <span class='cn'>TRUE</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -154,6 +155,10 @@ that plots the data object in a space reduced by PCA.
     <tr>
       <th>dt</th>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+    </tr>
+    <tr>
+      <th>details</th>
+      <td><p>if all the compoenents of the optimisers should be shown. With <code>details = FALSE</code> only the start, end and interpolation path will be shown</p></td>
     </tr>
     <tr>
       <th>pca</th>
