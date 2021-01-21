@@ -19,6 +19,7 @@
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
+#' @export
 add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color = "white",
                       cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
 
@@ -61,6 +62,7 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
+#' @export
 add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...) {
   color <- dplyr::enexpr(start_color)
 
@@ -83,6 +85,7 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
 #' @param end_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...){
 
   color <- dplyr::enexpr(end_color)
@@ -108,6 +111,7 @@ add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...){
 #' @param anchor_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...) {
 
   color <- dplyr::enexpr(anchor_color)
@@ -129,6 +133,7 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
 #' @param search_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color = NULL, ...) {
   color <- dplyr::enexpr(search_color)
 
@@ -150,6 +155,7 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color =
 #' @param dir_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...){
   color <- dplyr::enexpr(dir_color)
 
@@ -172,6 +178,7 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, 
 #' @param finish_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...) {
   color <- dplyr::enexpr(finish_color)
 
@@ -194,6 +201,7 @@ add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = N
 #' @param interp_group a group variable for path connection
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
                       interp_color = NULL, interp_group = NULL,...) {
   alpha <- dplyr::enexpr(interp_alpha)
@@ -220,6 +228,7 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' @param interrupt_linetype the linetype for annotating the interrupted path
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
                      interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
 
@@ -247,6 +256,7 @@ add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
 #' @param anno_alpha an alpha value for the transparency of the annotation
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...) {
   ggplot2::geom_line(
     data = dt,
@@ -265,6 +275,7 @@ add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha =
 #' @param theo_size the size of the label
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
+#' @export
 add_theo <- function(dt, theo_label = "*", theo_size = 25, ...) {
 
   ggplot2::geom_text(
