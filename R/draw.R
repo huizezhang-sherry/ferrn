@@ -71,6 +71,32 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
   )
 }
 
+
+#' A ggproto for drawing start points
+#'
+#' This is  a wrapper function used by \code{explore_space_pca()} and
+#' should be be called directly by the user
+#'
+#' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param end_size the point size
+#' @param end_alpha an alpha value for the transparency of the point
+#' @param end_color the color of the points
+#' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @family draw functions
+add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...){
+
+  color <- dplyr::enexpr(end_color)
+  ggplot2::geom_point(
+    data = dt,
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    size = end_size, alpha = end_alpha
+  )
+}
+
+
+
+
+
 #' A ggproto for drawing anchor points
 #'
 #' This is  a wrapper function used by \code{explore_space_pca()} and

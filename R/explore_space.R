@@ -118,6 +118,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #' that plots the data object in a space reduced by PCA.
 #' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
 #' @param dt A data object from the running the optimisation algorithm in guided tour
+#' @param details if all the compoenents of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown
 #' @param pca Boolean, if \code{compute_pca()} should be performed on the data
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
@@ -132,7 +133,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
 #'   scale_color_botanical(palette = "cherry")
 #' @family plot
 #' @export
-explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
+explore_space_pca <- function(dt, details = TRUE, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
 
   group <- dplyr::enexpr(group)
@@ -149,21 +150,26 @@ explore_space_pca <- function(dt, pca = TRUE, group = NULL, color = NULL,
     add_space(dt = get_space_param(dt), ...) +
     # add points
     add_start(dt = get_start(dt), start_color = !!color, ...) +
-    add_anchor(dt = get_anchor(dt), anchor_color = !!color, ...) +
-    add_search(dt = get_search(dt), search_color = !!color, ...) +
-    add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = !!color, ...) +
-    add_finish(dt = get_interrupt_finish(dt, group = !!group, ...), finish_color = !!color, ...) +
+    add_end(dt = get_best(dt, group = !!group, ...), end_color = !!color, ...)  +
     # add path
     add_interp(dt = get_interp(dt, group = !!group),
                interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
-    # add annotation
-    add_interrupt(dt = get_interrupt(dt, group = !!group, ...),
-                  interrupt_color = !!color, interrupt_group = interaction(!!sym("tries"), !!group), ...) +
-    add_anno(dt = get_start(dt), ...) +
     # theme
     ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     ggplot2::theme_void() +
     ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
+
+  if (details){
+    p <- p + add_anchor(dt = get_anchor(dt), anchor_color = !!color, ...) +
+      add_search(dt = get_search(dt), search_color = !!color, ...) +
+      add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = !!color, ...) +
+      add_finish(dt = get_interrupt_finish(dt, group = !!group, ...), finish_color = !!color, ...) +
+      # add annotation
+      add_interrupt(dt = get_interrupt(dt, group = !!group, ...),
+                    interrupt_color = !!color, interrupt_group = interaction(!!sym("tries"), !!group), ...) +
+      add_anno(dt = get_start(dt), ...)
+  }
+
 
   if ("theoretical" %in% dt$info) {
     p <- p +

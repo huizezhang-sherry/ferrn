@@ -2,13 +2,13 @@
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
 #' @family get functions
 #' @export
-get_best <- function(dt, group = NULL) {
+get_best <- function(dt, group = NULL, ...) {
   group <- dplyr::enexpr(group)
-  var <- dplyr::enexprs(var)
 
   res <- dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
@@ -16,13 +16,6 @@ get_best <- function(dt, group = NULL) {
     dplyr::filter(.data$index_val == max(.data$index_val)) %>%
     dplyr::distinct(.data$index_val, .keep_all = TRUE) %>%
     dplyr::bind_rows(dt %>% dplyr::filter(!!sym("info") == "theoretical"))
-
-  # if (!is.null(var)){
-  #   if(!(!!var %in% colnames(dt))){
-  #     stop("var needs to be one of the variables in the data object!")
-  #   }
-  #   res <- res %>% dplyr::select(!!var)
-  # }
 
   res
 }

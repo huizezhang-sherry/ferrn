@@ -6,6 +6,7 @@
 \usage{
 explore_space_pca(
   dt,
+  details = TRUE,
   pca = TRUE,
   group = NULL,
   color = NULL,
@@ -15,6 +16,8 @@ explore_space_pca(
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
+
+\item{details}{if all the compoenents of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown}
 
 \item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
 
