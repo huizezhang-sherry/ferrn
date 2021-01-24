@@ -6,8 +6,9 @@
 \usage{
 explore_trace_interp(
   dt,
-  iter = sym("id"),
-  color = sym("tries"),
+  iter = NULL,
+  color = NULL,
+  group = NULL,
   cutoff = 50,
   accuracy_x = 5
 )
@@ -19,6 +20,8 @@ explore_trace_interp(
 
 \item{color}{Colored by a particular varaible}
 
+\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+
 \item{cutoff}{If there are less than cutoff number of points on the interpolation path, all the points will be marked}
 
 \item{accuracy_x}{if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label}
@@ -29,7 +32,7 @@ Trace the index value of search/ interpolation points in guided tour optimisatio
 \examples{
 # Compare the trace of interpolated points in two algorithms
 holes_1d_better \%>\%
-  explore_trace_interp() +
+  explore_trace_interp(iter = id, color = tries) +
   scale_color_botanical(palette = "fern", discrete = FALSE)
 }
 \seealso{

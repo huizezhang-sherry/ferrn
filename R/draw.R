@@ -58,7 +58,7 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #' start
 #' ggplot() +
 #'   ferrn:::add_space(dt = space) +
-#'   ferrn:::add_start(dt = start, start_color = method) +
+#'   ferrn:::add_start(dt = start, start_color = info) +
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions

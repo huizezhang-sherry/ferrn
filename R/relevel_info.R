@@ -64,11 +64,10 @@ relevel_better <- function(dt, order = c("random_search", "new_basis", "interpol
 #' @export
 #' @rdname relevel
 clean_method <- function(dt) {
-  dt %>% dplyr::mutate(method = ifelse(.data$method %in% c(
-    "search_better",
-    "search_better_random"
-  ),
-  "simulated_annealing",
-  "pseudo_derivative"
-  ))
+  dt %>%
+    dplyr::mutate(method = dplyr::case_when(
+      .data$method %in% c("search_better", "search_better_random") ~ "simulated_annealing",
+      .data$method == "search_geodesic" ~ "pseudo_derivative",
+      TRUE ~ NA_character_
+    ))
 }

@@ -4,7 +4,7 @@
 \alias{compute_pca}
 \title{Compute PCA for the projection bases}
 \usage{
-compute_pca(dt, group = NULL, random = TRUE)
+compute_pca(dt, group = NULL, random = TRUE, flip = TRUE, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -12,6 +12,10 @@ compute_pca(dt, group = NULL, random = TRUE)
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
 \item{random}{Boolean, if the random data from the high dimensional sphere should be bounded}
+
+\item{flip}{boolean, if the sign flipping need to be computed}
+
+\item{...}{other arguments passed}
 }
 \description{
 Compute PCA for the projection bases

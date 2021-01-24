@@ -4,12 +4,14 @@
 \alias{flip_sign}
 \title{Flip the sign of a group of bases}
 \usage{
-flip_sign(dt, group = NULL)
+flip_sign(dt, group = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+
+\item{...}{other arguments passed}
 }
 \description{
 Flip the sign of a group of bases

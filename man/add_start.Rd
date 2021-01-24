@@ -34,7 +34,7 @@ start <- holes_1d_geo \%>\%
 start
 ggplot() +
   ferrn:::add_space(dt = space) +
-  ferrn:::add_start(dt = start, start_color = method) +
+  ferrn:::add_start(dt = start, start_color = info) +
   theme_void() +
   theme(aspect.ratio = 1)
 }

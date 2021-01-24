@@ -8,14 +8,14 @@
 #' @family get functions
 #' @export
 get_best <- function(dt, group = NULL, ...) {
+
   group <- dplyr::enexpr(group)
 
   res <- dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
     dplyr::filter(.data$index_val == max(.data$index_val)) %>%
-    dplyr::distinct(.data$index_val, .keep_all = TRUE) %>%
-    dplyr::bind_rows(dt %>% dplyr::filter(!!sym("info") == "theoretical"))
+    dplyr::distinct(.data$index_val, .keep_all = TRUE)
 
   res
 }
@@ -70,7 +70,7 @@ get_interp_last <- function(dt, group = NULL) {
   }
 
   dt %>%
-    get_interp() %>%
+    get_interp(group = !!group) %>%
     dplyr::group_by(.data$tries, !!group) %>%
     dplyr::filter(.data$loop == max(.data$loop)) %>%
     dplyr::ungroup()
@@ -106,9 +106,7 @@ get_anchor <- function(dt, group = NULL) {
 #' @export
 get_search <- function(dt) {
   dt %>%
-    dplyr::mutate(select = stringr::str_detect(!!sym("info"), "search")) %>%
-    dplyr::filter(.data$select) %>%
-    dplyr::select(-.data$select)
+    dplyr::filter(stringr::str_detect(!!sym("info"), "search"))
 }
 
 #' Extract directional search points during the optimisation

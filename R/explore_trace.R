@@ -5,23 +5,34 @@
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param iter The iterator on the x-axis
 #' @param color Colored by a particular varaible
+#' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param cutoff If there are less than cutoff number of points on the interpolation path, all the points will be marked
 #' @param accuracy_x if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label
 #' @examples
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
-#'   explore_trace_interp() +
+#'   explore_trace_interp(iter = id, color = tries) +
 #'   scale_color_botanical(palette = "fern", discrete = FALSE)
 #' @importFrom rlang sym "!!"
 #' @family plot
 #' @export
 #' @rdname explore_trace
-explore_trace_interp <- function(dt, iter = sym("id"), color = sym("tries"), cutoff = 50, accuracy_x = 5) {
+explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL,  cutoff = 50, accuracy_x = 5) {
+
   # check there is a column called info, there is a value called interpolation
   # check other variables as well
 
-  dt_interp <- get_interp(dt)
-  interp_last <- dplyr::bind_rows(get_start(dt), get_interp_last(dt))
+  iter <- dplyr::enexpr(iter)
+  color <- dplyr::enexpr(color)
+  group <- dplyr::enexpr(group)
+
+  if ("search_geodesic" %in% dt$method) {
+    dt <- dt %>% clean_method()
+  }
+
+
+  dt_interp <- get_interp(dt, group = !!group)
+  interp_last <- dplyr::bind_rows(get_start(dt), get_interp_last(dt, group = !!group))
   tick_x <- format_label(interp_last %>% dplyr::pull(!!iter), accuracy = accuracy_x)
   tick_y <- format_label(interp_last$index_val, accuracy = 0.01)
 
@@ -36,7 +47,7 @@ explore_trace_interp <- function(dt, iter = sym("id"), color = sym("tries"), cut
   }
 
   p <- dt_interp %>%
-    ggplot2::ggplot(ggplot2::aes(x = !!iter, y = .data$index_val)) +
+    ggplot2::ggplot(ggplot2::aes(x = !!iter, y = .data$index_val, group = !!group)) +
     ggplot2::geom_line() +
     ggplot2::geom_point(data = interp_last, ggplot2::aes(col = !!color), size = 3) +
     ggplot2::geom_vline(data = interp_last, ggplot2::aes(xintercept = !!iter), lty = "dashed", alpha = 0.3) +

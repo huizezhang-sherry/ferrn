@@ -2,12 +2,13 @@
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
+#' @param ... other arguments passed
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   flip_sign(group = method) %>%
 #'   str(max = 1)
 #' @export
-flip_sign <- function(dt, group = NULL) {
+flip_sign <- function(dt, group = NULL, ...) {
   group <- dplyr::enexpr(group)
 
   if (!is.null(group)) {
@@ -59,10 +60,13 @@ flip_sign <- function(dt, group = NULL) {
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param random Boolean, if the random data from the high dimensional sphere should be bounded
+#' @param flip boolean, if the sign flipping need to be computed
+#' @param ... other arguments passed
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #' @export
-compute_pca <- function(dt, group = NULL, random = TRUE) {
+compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
+
   if (!"basis" %in% colnames(dt)) {
     stop("You need to have a basis column that contains the projection basis!")
   }
@@ -73,8 +77,14 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
   group <- dplyr::enexpr(group)
   dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
 
-  flip <- flip_sign(dt, group = !!group)
-  basis <- flip$basis
+  if (flip){
+    flip <- flip_sign(dt, group = !!group)
+    basis <- flip$basis
+  }else{
+    flip <- list(basis = dt %>% get_basis_matrix(),
+                 flip = FALSE)
+    basis <- flip$basis
+  }
 
   # Compute PCA
   if (num_col == 1) {
@@ -86,6 +96,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
     aug <- dt_flip %>%
       bind_random() %>%
       dplyr::bind_cols(v)
+
+    aug <- aug %>% clean_method()
   } else if (num_col == 2) {
     message("Ferrn will perform PCA separately on each dimension")
     basis_2d <- basis %>% bind_random_matrix()
@@ -102,6 +114,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE) {
       bind_random() %>%
       dplyr::bind_cols(v1) %>%
       dplyr::bind_cols(v2)
+
+    aug <- aug %>% clean_method()
   } else {
     stop("ferrn can only handle 1d or 2d bases!")
   }
@@ -140,10 +154,8 @@ explore_space_pca <- function(dt, details = TRUE, pca = TRUE, group = NULL, colo
   if (!is.null(dplyr::enexpr(color))) color <- dplyr::enexpr(color) else color <- group
 
   if (pca) {
-    dt <- compute_pca(dt, group = !!group) %>% purrr::pluck("aug")
+    dt <- compute_pca(dt, group = !!group, ...) %>% purrr::pluck("aug")
   }
-
-  dt <- dt %>% clean_method()
 
   p <- ggplot2::ggplot() +
     # set up
