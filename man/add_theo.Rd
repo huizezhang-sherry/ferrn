@@ -4,7 +4,7 @@
 \alias{add_theo}
 \title{A ggproto for drawing the theoretical basis, if applicable}
 \usage{
-add_theo(dt, theo_label = "*", theo_size = 25, ...)
+add_theo(dt, theo_label = "*", theo_size = 25, theo_alpha = 0.8, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -12,6 +12,8 @@ add_theo(dt, theo_label = "*", theo_size = 25, ...)
 \item{theo_label}{the symbol used for labelling the theoretical basis}
 
 \item{theo_size}{the size of the label}
+
+\item{theo_alpha}{the transparency of the label}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

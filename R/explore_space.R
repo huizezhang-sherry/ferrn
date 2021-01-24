@@ -9,6 +9,7 @@
 #'   str(max = 1)
 #' @export
 flip_sign <- function(dt, group = NULL, ...) {
+
   group <- dplyr::enexpr(group)
 
   if (!is.null(group)) {
@@ -30,7 +31,7 @@ flip_sign <- function(dt, group = NULL, ...) {
       basis <- dt %>% get_basis_matrix()
       dt_obj <- dt
     } else {
-      message("signs in all the bases will be flipped in group ", group_to_flip, "\n")
+      paste("signs in all the bases will be flipped in group", group_to_flip)
       basis0 <- dt %>%
         dplyr::filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
         get_basis_matrix()
