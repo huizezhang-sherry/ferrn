@@ -8,11 +8,12 @@
 prep_space_tour(
   dt,
   group = NULL,
-  theoretical = FALSE,
   color = sym("method"),
   rand_size = 1,
   point_size = 1.5,
-  theo_size = 10,
+  end_size = 5,
+  theo_size = 3,
+  theo_shape = 17,
   palette = botanical_palettes$fern,
   ...
 )
@@ -24,15 +25,17 @@ explore_space_tour(...)
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
-\item{theoretical}{Boolean, if the theoretical bases have been inlcuded in the data object}
-
 \item{color}{A variable from the object that the diagnostic plot should be colored by}
 
 \item{rand_size}{random point size}
 
 \item{point_size}{other point size}
 
+\item{end_size}{the size of the ending point}
+
 \item{theo_size}{theoretical point size}
+
+\item{theo_shape}{the numerical value of basic plot shape}
 
 \item{palette}{The color palette to use}
 
@@ -43,7 +46,8 @@ Plot the grand tour animation of the projection bases space
 }
 \examples{
 \dontrun{
-explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
+  group = method, palette = botanical_palettes$fern[c(1,6)])
 }
 }
 \seealso{

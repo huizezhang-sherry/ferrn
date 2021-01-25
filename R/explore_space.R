@@ -31,17 +31,11 @@ flip_sign <- function(dt, group = NULL, ...) {
       basis <- dt %>% get_basis_matrix()
       dt_obj <- dt
     } else {
-      paste("signs in all the bases will be flipped in group", group_to_flip)
-      basis0 <- dt %>%
-        dplyr::filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
-        get_basis_matrix()
-      basis1 <- -basis0
-      basis <- basis1 %>%
-        rbind(dt %>% dplyr::filter(!(!!group) %in% group_to_flip | !!group == "theoretical") %>% get_basis_matrix())
-
-      dt_obj <- dt %>%
-        dplyr::filter(!!group %in% group_to_flip & !!group != "theoretical") %>%
-        dplyr::bind_rows(dt %>% dplyr::filter(!(!!group) %in% group_to_flip | !!group == "theoretical"))
+      message(paste("signs in all the bases will be flipped in group", group_to_flip))
+      basis <- dt %>%
+        dplyr::mutate(basis = ifelse(!!group %in% group_to_flip & !!group != "theoretical",
+                                     purrr::map(basis, ~-.x), basis)) %>% get_basis_matrix()
+      dt_obj <- dt
     }
   } else {
     basis <- dt %>% get_basis_matrix()
@@ -213,34 +207,38 @@ explore_space_pca <- function(dt, details = TRUE, pca = TRUE, group = NULL, colo
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param theoretical Boolean, if the theoretical bases have been inlcuded in the data object
 #' @param color A variable from the object that the diagnostic plot should be colored by
 #' @param rand_size random point size
 #' @param point_size other point size
+#' @param end_size the size of the ending point
 #' @param theo_size theoretical point size
+#' @param theo_shape the numerical value of basic plot shape
 #' @param palette The color palette to use
 #' @param ... Additional argument passed to \code{tourr::animate_xy()}
 #' @examples
 #' \dontrun{
-#' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
+#'   group = method, palette = botanical_palettes$fern[c(1,6)])
 #' }
 #' @family plot
 #' @rdname explore_space_tour
 #' @export
-prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
-                            color = sym("method"), rand_size = 1, point_size = 1.5, theo_size = 10,
+prep_space_tour <- function(dt, group = NULL,
+                            color = sym("method"), rand_size = 1, point_size = 1.5, end_size = 5,
+                            theo_size = 3, theo_shape = 17,
                             palette = botanical_palettes$fern, ...) {
+
   group <- dplyr::enexpr(group)
   color <- dplyr::enexpr(color)
 
   # get start
-  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
-  n_start <- get_start(dt) %>% dplyr::pull(.data$row_num)
+  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number()) %>% clean_method()
 
   # see if any flip need to be done
   flip <- dt %>% flip_sign(group = !!group)
   basis <- flip$basis %>% bind_random_matrix(front = TRUE)
   n_rand <- nrow(basis) - nrow(dt)
+  n_end <- get_best(flip$dt, group = !!group) %>% dplyr::pull(.data$row_num) + n_rand
 
   edges_dt <- flip$dt %>%
     dplyr::mutate(id = dplyr::row_number()) %>%
@@ -265,17 +263,23 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
     rep(rand_size, n_rand),
     rep(point_size, nrow(dt))
   )
-  cex[n_start] <- 5
+  cex[n_end] <- end_size
 
-  if (theoretical) {
-    col[nrow(dt)] <- "black"
-    cex[nrow(dt)] <- theo_size
+  pch <- rep(20, nrow(basis))
+
+  if ("theoretical" %in% dt$info) {
+    theo_row_num <- dt %>% dplyr::filter(.data$info == "theoretical") %>% dplyr::pull(.data$row_num)
+
+    col[theo_row_num + n_rand] <- "black"
+    cex[theo_row_num + n_rand] <- theo_size
+    pch[theo_row_num + n_rand] <- theo_shape
   }
 
   return(list(
     basis = basis,
     col = col,
     cex = cex,
+    pch = pch,
     edges = edges,
     edges_col = edges_col
   ))
@@ -286,5 +290,7 @@ prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
 explore_space_tour <- function(...) {
   prep <- prep_space_tour(...)
 
-  tourr::animate_xy(prep$basis, col = prep$col, cex = prep$cex, edges = prep$edges, edges.col = prep$edges_col)
+  tourr::animate_xy(prep$basis, col = prep$col, cex = prep$cex, pch = prep$pch,
+                    edges = prep$edges, edges.col = prep$edges_col,
+                    axes = "bottomleft")
 }
