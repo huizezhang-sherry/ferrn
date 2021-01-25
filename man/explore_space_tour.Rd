@@ -10,10 +10,10 @@ prep_space_tour(
   group = NULL,
   theoretical = FALSE,
   color = sym("method"),
-  rand_size = 9,
+  rand_size = 1,
   point_size = 1.5,
   theo_size = 10,
-  palette = botanical_palettes$cherry,
+  palette = botanical_palettes$fern,
   ...
 )
 

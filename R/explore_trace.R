@@ -13,7 +13,7 @@
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
 #'   explore_trace_interp(iter = id, color = tries) +
-#'   scale_color_botanical(palette = "fern", discrete = FALSE)
+#' scale_color_botanical(palette = "fern", discrete = FALSE)
 #' @importFrom rlang sym "!!"
 #' @family plot
 #' @export
@@ -38,11 +38,19 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL,  c
   tick_x <- format_label(interp_last %>% dplyr::pull(!!iter), accuracy = accuracy_x)
   tick_y <- format_label(interp_last$index_val, accuracy = accuracy_y)
 
-  a <- dt_interp %>% group_by(group = !!group) %>%
-    dplyr::summarise(
-      row = dplyr::n(),
-      diff = max(!!iter) - min(!!iter) + 1
-    )
+  if (is.null(group)){
+    a <- dt_interp %>%
+      dplyr::summarise(
+        row = dplyr::n(),
+        diff = max(!!iter) - min(!!iter) + 1
+      )
+  } else{
+    a <- dt_interp %>% dplyr::group_by(group = !!group) %>%
+      dplyr::summarise(
+        row = dplyr::n(),
+        diff = max(!!iter) - min(!!iter) + 1
+      )
+  }
 
   if (!all(a$row == a$diff, TRUE)) {
     stop("there is gap(s) in the variable iter!")

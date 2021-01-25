@@ -188,8 +188,7 @@ explore_space_pca <- function(dt, details = TRUE, pca = TRUE, group = NULL, colo
       # set up
       add_space(dt = get_space_param(dt), ...) +
       # add points
-      add_start(dt = get_start(dt) %>% dplyr::select(-id), start_color = !!color, ...) +
-      #add_end(dt = get_best(dt, group = !!group, ...) %>% dplyr::select(-id), end_color = !!color, ...)  +
+      add_start(dt = get_start(dt) %>% dplyr::select(-!!sym("id")), start_color = !!color, ...) +
       # add path
       add_interp(dt = get_interp(dt, group = !!group),
                  interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
