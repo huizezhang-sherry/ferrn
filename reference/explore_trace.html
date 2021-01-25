@@ -141,7 +141,8 @@
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   cutoff <span class='op'>=</span> <span class='fl'>50</span>,
-  accuracy_x <span class='op'>=</span> <span class='fl'>5</span>
+  accuracy_x <span class='op'>=</span> <span class='fl'>5</span>,
+  accuracy_y <span class='op'>=</span> <span class='fl'>0.01</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -170,6 +171,10 @@
     <tr>
       <th>accuracy_x</th>
       <td><p>if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label</p></td>
+    </tr>
+    <tr>
+      <th>accuracy_y</th>
+      <td><p>the precision of y-axis label</p></td>
     </tr>
     </table>
 
