@@ -49,7 +49,8 @@ get_interp <- function(dt, group = NULL) {
   dt %>%
     dplyr::filter(!!sym("info") == "interpolation") %>%
     dplyr::group_by(!!group) %>%
-    dplyr::mutate(id = dplyr::row_number())
+    dplyr::mutate(id = dplyr::row_number()) %>%
+    dplyr::ungroup()
 }
 
 #' Extract the end point at each interpolation

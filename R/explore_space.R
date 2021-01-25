@@ -183,17 +183,29 @@ explore_space_pca <- function(dt, details = TRUE, pca = TRUE, group = NULL, colo
       add_anno(dt = get_start(dt), ...)
   }
 
+  if (animate) {
+    p <- ggplot2::ggplot() +
+      # set up
+      add_space(dt = get_space_param(dt), ...) +
+      # add points
+      add_start(dt = get_start(dt) %>% dplyr::select(-id), start_color = !!color, ...) +
+      #add_end(dt = get_best(dt, group = !!group, ...) %>% dplyr::select(-id), end_color = !!color, ...)  +
+      # add path
+      add_interp(dt = get_interp(dt, group = !!group),
+                 interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
+      # theme
+      ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+      ggplot2::theme_void() +
+      ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank()) +
+      gganimate::transition_reveal(along = !!sym("id"))
+
+  }
 
   if ("theoretical" %in% dt$info) {
     p <- p +
       add_theo(dt = get_theo(dt), ...)
   }
 
-  if (animate) {
-    p <- p + ggplot2::theme(legend.position = "none") +
-      gganimate::transition_states(!!sym("id")) +
-      gganimate::shadow_mark()
-  }
 
   p
 }
@@ -217,8 +229,8 @@ explore_space_pca <- function(dt, details = TRUE, pca = TRUE, group = NULL, colo
 #' @rdname explore_space_tour
 #' @export
 prep_space_tour <- function(dt, group = NULL, theoretical = FALSE,
-                            color = sym("method"), rand_size = 9, point_size = 1.5, theo_size = 10,
-                            palette = botanical_palettes$cherry, ...) {
+                            color = sym("method"), rand_size = 1, point_size = 1.5, theo_size = 10,
+                            palette = botanical_palettes$fern, ...) {
   group <- dplyr::enexpr(group)
   color <- dplyr::enexpr(color)
 

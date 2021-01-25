@@ -10,7 +10,8 @@ test_that("get_start", {
 
 test_that("get_interp", {
   expect_match(get_interp(holes_1d_better) %>% pull(info) %>% unique(), "interpolation")
-  expect_equal(bind_rows(holes_1d_better, holes_1d_geo) %>% get_interp(group = method) %>% count() %>% nrow(), 2)
+  expect_equal(bind_rows(holes_1d_better, holes_1d_geo) %>% get_interp(group = method) %>%
+                 group_by(method) %>% count() %>% nrow(), 2)
 })
 
 test_that("get_basis_matrix", {

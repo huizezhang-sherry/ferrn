@@ -38,7 +38,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL,  c
   tick_x <- format_label(interp_last %>% dplyr::pull(!!iter), accuracy = accuracy_x)
   tick_y <- format_label(interp_last$index_val, accuracy = accuracy_y)
 
-  a <- dt_interp %>%
+  a <- dt_interp %>% group_by(group = !!group) %>%
     dplyr::summarise(
       row = dplyr::n(),
       diff = max(!!iter) - min(!!iter) + 1
