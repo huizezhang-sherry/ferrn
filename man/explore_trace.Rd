@@ -10,7 +10,8 @@ explore_trace_interp(
   color = NULL,
   group = NULL,
   cutoff = 50,
-  accuracy_x = 5
+  accuracy_x = 5,
+  accuracy_y = 0.01
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ explore_trace_interp(
 \item{cutoff}{If there are less than cutoff number of points on the interpolation path, all the points will be marked}
 
 \item{accuracy_x}{if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label}
+
+\item{accuracy_y}{the precision of y-axis label}
 }
 \description{
 Trace the index value of search/ interpolation points in guided tour optimisation
