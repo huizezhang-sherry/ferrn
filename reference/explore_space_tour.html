@@ -138,11 +138,12 @@
     <pre class="usage"><span class='fu'>prep_space_tour</span><span class='op'>(</span>
   <span class='va'>dt</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  theoretical <span class='op'>=</span> <span class='cn'>FALSE</span>,
   color <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/tidyeval.html'>sym</a></span><span class='op'>(</span><span class='st'>"method"</span><span class='op'>)</span>,
   rand_size <span class='op'>=</span> <span class='fl'>1</span>,
   point_size <span class='op'>=</span> <span class='fl'>1.5</span>,
-  theo_size <span class='op'>=</span> <span class='fl'>10</span>,
+  end_size <span class='op'>=</span> <span class='fl'>5</span>,
+  theo_size <span class='op'>=</span> <span class='fl'>3</span>,
+  theo_shape <span class='op'>=</span> <span class='fl'>17</span>,
   palette <span class='op'>=</span> <span class='va'>botanical_palettes</span><span class='op'>$</span><span class='va'>fern</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -161,10 +162,6 @@
       <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
     </tr>
     <tr>
-      <th>theoretical</th>
-      <td><p>Boolean, if the theoretical bases have been inlcuded in the data object</p></td>
-    </tr>
-    <tr>
       <th>color</th>
       <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
     </tr>
@@ -177,8 +174,16 @@
       <td><p>other point size</p></td>
     </tr>
     <tr>
+      <th>end_size</th>
+      <td><p>the size of the ending point</p></td>
+    </tr>
+    <tr>
       <th>theo_size</th>
       <td><p>theoretical point size</p></td>
+    </tr>
+    <tr>
+      <th>theo_shape</th>
+      <td><p>the numerical value of basic plot shape</p></td>
     </tr>
     <tr>
       <th>palette</th>
@@ -199,7 +204,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span>
+<span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>,
+  group <span class='op'>=</span> <span class='va'>method</span>, palette <span class='op'>=</span> <span class='va'>botanical_palettes</span><span class='op'>$</span><span class='va'>fern</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>
