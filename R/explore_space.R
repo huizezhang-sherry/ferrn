@@ -21,7 +21,7 @@ flip_sign <- function(dt, group = NULL, ...) {
       get_best(group = !!group) %>%
       dplyr::pull(basis)
     max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
-    extract <- function(matrix, pos) matrix[pos %% nrow(matrix), (pos %/% nrow(matrix)) + 1]
+    extract <- function(matrix, pos) matrix[(pos-1) %% nrow(matrix) + 1, ((pos-1) %/% nrow(matrix)) + 1]
     max_sign <- mapply(extract, max_bases, max_id) %>% sign()
     group_to_flip <- group_name[max_sign < 0]
     group_to_flip <- group_to_flip[group_to_flip != "theoretical"]
