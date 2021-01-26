@@ -68,6 +68,7 @@ clean_method <- function(dt) {
     dplyr::mutate(method = dplyr::case_when(
       .data$method %in% c("search_better", "search_better_random") ~ "simulated_annealing",
       .data$method == "search_geodesic" ~ "pseudo_derivative",
+      .data$method == "search_polish" ~ "polish",
       TRUE ~ NA_character_
     ))
 }
