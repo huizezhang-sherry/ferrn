@@ -4,12 +4,10 @@
 \alias{get_space_param}
 \title{Estimate the radius of the background circle based on the randomly generated points}
 \usage{
-get_space_param(dt, pca = FALSE, ...)
+get_space_param(dt, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
-
-\item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
 
 \item{...}{other argument passed to \code{compute_pca()}}
 }

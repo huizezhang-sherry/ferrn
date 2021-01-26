@@ -162,24 +162,25 @@ get_dir_search_transformed <- function(dt, ratio = 3, ...){
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param pca Boolean, if \code{compute_pca()} should be performed on the data
 #' @param ... other argument passed to \code{compute_pca()}
 #' @importFrom rlang .data
 #' @family get functions
-get_space_param <- function(dt, pca = FALSE, ...) {
+#' @export
+get_space_param <- function(dt,...) {
 
+    basis <- dt[1, ] %>% dplyr::pull(basis)
+    n_row = nrow(basis[[1]])
+    n_col = ncol(basis[[1]])
 
-  # get center
-  if (pca){
-    dt <- dt %>% compute_pca(...)
-    dt <- dt$aug
-  }
-  start <- dt %>% get_start()
+    dt <- dt %>%
+      dplyr::select(-dplyr::contains("PC")) %>%
+      dplyr::filter(.data$info != "randomly_generated") %>%
+      dplyr::add_row(basis = list(matrix(rep(0, n_row * n_col), nrow = n_row, ncol = n_col)),
+                     info = "origin") %>%
+      compute_pca(...) %>%
+      purrr::pluck("aug")
 
-  center <- start %>%
-    dplyr::mutate(PC1 = sum(.data$PC1) / nrow(start), PC2 = sum(.data$PC2) / nrow(start)) %>%
-    dplyr::filter(dplyr::row_number() == 1) %>%
-    dplyr::select(.data$PC1, .data$PC2) %>%
+  center <- dt %>% dplyr::filter(.data$info == "origin") %>%
     dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
 
   x0 <- center$x0
