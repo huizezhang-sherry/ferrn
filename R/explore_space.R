@@ -7,6 +7,7 @@
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   flip_sign(group = method) %>%
 #'   str(max = 1)
+#' @rdname explore_space_pca
 #' @export
 flip_sign <- function(dt, group = NULL, ...) {
   if (!rlang::quo_is_null(dplyr::enquo(group))) {
@@ -58,6 +59,7 @@ flip_sign <- function(dt, group = NULL, ...) {
 #' @param ... other arguments passed
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
+#' @rdname explore_space_pca
 #' @export
 compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
   if (!"basis" %in% colnames(dt)) {
@@ -141,6 +143,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #'   explore_space_pca(group = method, details = TRUE) +
 #'   scale_color_discrete_botanical(palette = "fern")
 #' @family plot
+#' @rdname explore_space_pca
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {

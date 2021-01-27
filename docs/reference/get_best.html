@@ -132,7 +132,7 @@
     <p>Extract the record with the largest index value</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_best</span>(<span class='no'>dt</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_best</span>(<span class='no'>dt</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,23 +145,35 @@
       <th>group</th>
       <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other argument passed to <code><a href='compute_pca.html'>compute_pca()</a></code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other get functions: 
+<code><a href='get_anchor.html'>get_anchor</a>()</code>,
 <code><a href='get_basis_matrix.html'>get_basis_matrix</a>()</code>,
+<code><a href='get_dir_search_transformed.html'>get_dir_search_transformed</a>()</code>,
+<code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
 <code><a href='get_interp.html'>get_interp</a>()</code>,
+<code><a href='get_interrupt_finish.html'>get_interrupt_finish</a>()</code>,
+<code><a href='get_interrupt.html'>get_interrupt</a>()</code>,
 <code><a href='get_search_count.html'>get_search_count</a>()</code>,
-<code><a href='get_start.html'>get_start</a>()</code></p></div>
+<code><a href='get_search.html'>get_search</a>()</code>,
+<code><a href='get_space_param.html'>get_space_param</a>()</code>,
+<code><a href='get_start.html'>get_start</a>()</code>,
+<code><a href='get_theo.html'>get_theo</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>) <span class='kw'>%&gt;%</span> <span class='fu'>get_best</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 8</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   method [2]</span><span>
-#&gt;   basis            index_val tries info          loop method         alpha    id
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.914     5 interpolati…     8 search_better     </span><span style='color: #BB0000;'>NA</span><span>    71
-#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.933    10 interpolati…     2 search_geodes…    </span><span style='color: #BB0000;'>NA</span><span>   167</div></span></pre>
+#&gt;   basis            index_val info         method         alpha tries  loop    id
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.914 interpolati… search_better     </span><span style='color: #BB0000;'>NA</span><span>     5     6    55
+#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.932 interpolati… search_geodes…    </span><span style='color: #BB0000;'>NA</span><span>     9     2   144</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

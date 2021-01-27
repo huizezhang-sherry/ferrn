@@ -132,7 +132,7 @@
     <p>Compute PCA for the projection bases</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compute_pca</span>(<span class='no'>dt</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>compute_pca</span>(<span class='no'>dt</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>flip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,37 +149,45 @@
       <th>random</th>
       <td><p>Boolean, if the random data from the high dimensional sphere should be bounded</p></td>
     </tr>
+    <tr>
+      <th>flip</th>
+      <td><p>boolean, if the sign flipping need to be computed</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments passed</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_geo</span>, <span class='no'>holes_1d_better</span>) <span class='kw'>%&gt;%</span> <span class='fu'>compute_pca</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be fliped in group search_geodesic</span></div><div class='output co'>#&gt; $pca_summary
+    <pre class="examples"><div class='input'><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_geo</span>, <span class='no'>holes_1d_better</span>) <span class='kw'>%&gt;%</span> <span class='fu'>compute_pca</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic </span></div><div class='output co'>#&gt; $pca_summary
 #&gt; Standard deviations (1, .., p=5):
-#&gt; [1] 1.0501864 1.0129987 0.9889807 0.9834329 0.9621430
+#&gt; [1] 1.0422652 1.0156862 0.9891546 0.9851991 0.9659300
 #&gt; 
 #&gt; Rotation (n x k) = (5 x 5):
-#&gt;           PC1        PC2        PC3          PC4          PC5
-#&gt; V1  0.5041807 -0.2095168  0.6886414 -0.007532009 -0.477096276
-#&gt; V2 -0.3544755  0.4866347  0.4086786  0.685879074 -0.009245372
-#&gt; V3 -0.4824954 -0.3339068  0.5682789 -0.344827686  0.462447265
-#&gt; V4  0.0186580 -0.7506203 -0.1464148  0.631178550  0.128052355
-#&gt; V5  0.6220925  0.2106295  0.1199028  0.110547141  0.736232835
+#&gt;           PC1        PC2        PC3        PC4         PC5
+#&gt; V1  0.5519691 -0.1961065  0.5944625 0.10779747 -0.54024668
+#&gt; V2 -0.3658798  0.5052715  0.1696970 0.72896372 -0.22504985
+#&gt; V3 -0.4422308 -0.4151056  0.6624928 0.04648432  0.43710616
+#&gt; V4  0.1147173 -0.6607185 -0.4045595 0.62076143  0.03574785
+#&gt; V5  0.5939141  0.3120598  0.1235001 0.26360206  0.68201641
 #&gt; 
 #&gt; $aug
-#&gt; <span style='color: #555555;'># A tibble: 3,026 x 14</span><span>
-#&gt;    basis index_val tries info   loop method alpha    id row_num   PC1    PC2
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     1 new_…     1 searc…   0.5     1       1 -</span><span style='color: #BB0000;'>1.85</span><span> -</span><span style='color: #BB0000;'>0.371</span><span>
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       2       2 -</span><span style='color: #BB0000;'>1.86</span><span> -</span><span style='color: #BB0000;'>0.382</span><span>
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       3       3 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.360</span><span>
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       4       4 -</span><span style='color: #BB0000;'>1.85</span><span> -</span><span style='color: #BB0000;'>0.360</span><span>
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       5       5 -</span><span style='color: #BB0000;'>1.85</span><span> -</span><span style='color: #BB0000;'>0.383</span><span>
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       6       6 -</span><span style='color: #BB0000;'>1.85</span><span> -</span><span style='color: #BB0000;'>0.350</span><span>
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       7       7 -</span><span style='color: #BB0000;'>1.85</span><span> -</span><span style='color: #BB0000;'>0.393</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       8       8 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.380</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 dire…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>       9       9 -</span><span style='color: #BB0000;'>1.86</span><span> -</span><span style='color: #BB0000;'>0.362</span><span>
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749     2 best…     1 searc…  </span><span style='color: #BB0000;'>NA</span><span>      10      10 -</span><span style='color: #BB0000;'>1.86</span><span> -</span><span style='color: #BB0000;'>0.390</span><span>
-#&gt; </span><span style='color: #555555;'># … with 3,016 more rows, and 3 more variables: PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; <span style='color: #555555;'># A tibble: 2,987 x 14</span><span>
+#&gt;    basis index_val info  method alpha tries  loop    id row_num   PC1    PC2
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 new_… pseud…   0.5     1     1     1       1 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.635</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     2       2 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.646</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     3       3 -</span><span style='color: #BB0000;'>1.83</span><span> -</span><span style='color: #BB0000;'>0.624</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     4       4 -</span><span style='color: #BB0000;'>1.83</span><span> -</span><span style='color: #BB0000;'>0.625</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     5       5 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.645</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     6       6 -</span><span style='color: #BB0000;'>1.83</span><span> -</span><span style='color: #BB0000;'>0.614</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     7       7 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.655</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     8       8 -</span><span style='color: #BB0000;'>1.83</span><span> -</span><span style='color: #BB0000;'>0.645</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     9       9 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.625</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 best… pseud…  </span><span style='color: #BB0000;'>NA</span><span>       2     1    10      10 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.653</span><span>
+#&gt; </span><span style='color: #555555;'># … with 2,977 more rows, and 3 more variables: PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

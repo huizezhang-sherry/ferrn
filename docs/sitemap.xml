@@ -4,6 +4,39 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//index.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_anchor.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_anno.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_dir_search.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_end.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_finish.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_interp.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_interrupt.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_search.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_space.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_start.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/add_theo.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/bind_random.html</loc>
   </url>
   <url>
@@ -17,9 +50,6 @@
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/botanical_palettes.html</loc>
-  </url>
-  <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/compute_pca.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/data.html</loc>
@@ -40,7 +70,10 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/ferrn-package.html</loc>
   </url>
   <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/flip_sign.html</loc>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/format_label.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_anchor.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_basis_matrix.html</loc>
@@ -49,13 +82,34 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_best.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_dir_search_transformed.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interp.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interp_last.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interrupt.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_interrupt_finish.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_search.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_search_count.html</loc>
   </url>
   <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_space_param.html</loc>
+  </url>
+  <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_start.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/get_theo.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/pipe.html</loc>
@@ -64,6 +118,18 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/relevel.html</loc>
   </url>
   <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_color_botanical.html</loc>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_color_continuous_botanical.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_color_discrete_botanical.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_fill_continuous_botanical.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_fill_discrete_botanical.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/theme_fern.html</loc>
   </url>
 </urlset>

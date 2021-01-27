@@ -40,8 +40,8 @@ holes_1d_better \%>\%
 }
 \seealso{
 Other plot: 
-\code{\link{explore_space_pca}()},
 \code{\link{explore_trace_search}()},
+\code{\link{flip_sign}()},
 \code{\link{prep_space_tour}()}
 }
 \concept{plot}

@@ -134,10 +134,11 @@
 
     <pre class="usage"><span class='fu'>explore_trace_search</span>(
   <span class='no'>dt</span>,
-  <span class='kw'>iter</span> <span class='kw'>=</span> <span class='no'>tries</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>tries</span>,
+  <span class='kw'>iter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>15</span>,
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>extend_lower</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -160,23 +161,32 @@
       <td><p>The cutoff number of observations for switching between point geom to boxplot geom in <code>explore_trace_search()</code></p></td>
     </tr>
     <tr>
-      <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object to plot</p></td>
+      <th>extend_lower</th>
+      <td><p>a percentage to extend the lower ylim for better display of the count</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments passed into geom_label_repel() for better display of the count in each iteration</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 
-<code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
-<code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
-<code><a href='explore_trace.html'>explore_trace_interp</a>()</code></p></div>
+<code><a href='explore_trace.html'>explore_trace_interp</a>()</code>,
+<code><a href='flip_sign.html'>flip_sign</a>()</code>,
+<code><a href='explore_space_tour.html'>prep_space_tour</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Summary plots for search points in two algorithms</span>
-<span class='no'>proj_1D</span> <span class='kw'>&lt;-</span> <span class='no'>holes_1d_better</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>proj</span> <span class='kw'>=</span> <span class='st'>"1D"</span>)
-<span class='no'>proj_2D</span> <span class='kw'>&lt;-</span> <span class='no'>holes_2d_better_max_tries</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>proj</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)
-<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>proj_1D</span>, <span class='no'>proj_2D</span>) <span class='kw'>%&gt;%</span> <span class='fu'>explore_trace_search</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>proj</span>) +  <span class='fu'><a href='scale_color_botanical.html'>scale_color_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"daisy"</span>)</div><div class='img'><img src='explore_trace_search-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>patchwork</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='no'>p1</span> <span class='kw'>&lt;-</span> <span class='no'>holes_1d_better</span> <span class='kw'>%&gt;%</span> <span class='fu'>explore_trace_search</span>() +
+  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"fern"</span>) +
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>9</span>))</div><div class='output co'>#&gt; <span class='message'>map tries to the x-axis</span></div><div class='output co'>#&gt; <span class='message'>map tries to color</span></div><div class='output co'>#&gt; <span class='message'>Scale for 'x' is already present. Adding another scale for 'x', which will</span>
+#&gt; <span class='message'>replace the existing scale.</span></div><div class='input'><span class='no'>p2</span> <span class='kw'>&lt;-</span> <span class='no'>holes_2d_better_max_tries</span> <span class='kw'>%&gt;%</span> <span class='fu'>explore_trace_search</span>() +
+  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"daisy"</span>)</div><div class='output co'>#&gt; <span class='message'>map tries to the x-axis</span></div><div class='output co'>#&gt; <span class='message'>map tries to color</span></div><div class='input'><span class='no'>p1</span> / <span class='no'>p2</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Continuous x aesthetic -- did you forget aes(group=...)?</span></div><div class='img'><img src='explore_trace_search-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

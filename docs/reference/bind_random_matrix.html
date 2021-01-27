@@ -132,7 +132,7 @@
     <p>Bind random bases in the projection bases space as a matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bind_random_matrix</span>(<span class='no'>basis</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>500</span>)</pre>
+    <pre class="usage"><span class='fu'>bind_random_matrix</span>(<span class='no'>basis</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>front</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,6 +144,10 @@
     <tr>
       <th>n</th>
       <td><p>Number of random points to generate in each dimension</p></td>
+    </tr>
+    <tr>
+      <th>front</th>
+      <td><p>if the random matrix should be bound before or after the data basis</p></td>
     </tr>
     </table>
 
@@ -159,11 +163,11 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_basis_matrix.html'>get_basis_matrix</a></span>(<span class='no'>holes_1d_geo</span>)
 <span class='fu'>bind_random_matrix</span>(<span class='no'>data</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span>(<span class='fl'>5</span>)</div><div class='output co'>#&gt;                  V1           V2         V3        V4         V5
-#&gt; [2927,] -0.11500792  0.108791393 -0.2119039 0.6421904  0.7194622
-#&gt; [2928,] -0.64030197  0.470754738  0.3598407 0.2095701  0.4415862
-#&gt; [2929,]  0.08192813 -0.400575298  0.2188422 0.2890079 -0.8375021
-#&gt; [2930,] -0.77069449 -0.002085302  0.2361071 0.5335136  0.2562077
-#&gt; [2931,] -0.53992262  0.069524169  0.4387449 0.1042930 -0.7073018</div></pre>
+#&gt; [2904,] -0.11500792  0.108791393 -0.2119039 0.6421904  0.7194622
+#&gt; [2905,] -0.64030197  0.470754738  0.3598407 0.2095701  0.4415862
+#&gt; [2906,]  0.08192813 -0.400575298  0.2188422 0.2890079 -0.8375021
+#&gt; [2907,] -0.77069449 -0.002085302  0.2361071 0.5335136  0.2562077
+#&gt; [2908,] -0.53992262  0.069524169  0.4387449 0.1042930 -0.7073018</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

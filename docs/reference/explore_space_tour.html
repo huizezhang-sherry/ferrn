@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the grand tour animation of the projection bases space — explore_space_tour • ferrn</title>
+<title>Plot the grand tour animation of the projection bases space — prep_space_tour • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,7 +42,7 @@
 
 
 
-<meta property="og:title" content="Plot the grand tour animation of the projection bases space — explore_space_tour" />
+<meta property="og:title" content="Plot the grand tour animation of the projection bases space — prep_space_tour" />
 <meta property="og:description" content="Plot the grand tour animation of the projection bases space" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,14 +132,20 @@
     <p>Plot the grand tour animation of the projection bases space</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_space_tour</span>(
+    <pre class="usage"><span class='fu'>prep_space_tour</span>(
   <span class='no'>dt</span>,
   <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>theoretical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>method</span>,
-  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>botanical_palettes</span>$<span class='no'>cherry</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>rand_size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>point_size</span> <span class='kw'>=</span> <span class='fl'>1.5</span>,
+  <span class='kw'>end_size</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>theo_size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>theo_shape</span> <span class='kw'>=</span> <span class='fl'>17</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>botanical_palettes</span>$<span class='no'>fern</span>,
   <span class='no'>...</span>
-)</pre>
+)
+
+<span class='fu'>explore_space_tour</span>(<span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,12 +159,28 @@
       <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
     </tr>
     <tr>
-      <th>theoretical</th>
-      <td><p>Boolean, if the theoretical bases have been inlcuded in the data object</p></td>
-    </tr>
-    <tr>
       <th>color</th>
       <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
+    </tr>
+    <tr>
+      <th>rand_size</th>
+      <td><p>random point size</p></td>
+    </tr>
+    <tr>
+      <th>point_size</th>
+      <td><p>other point size</p></td>
+    </tr>
+    <tr>
+      <th>end_size</th>
+      <td><p>the size of the ending point</p></td>
+    </tr>
+    <tr>
+      <th>theo_size</th>
+      <td><p>theoretical point size</p></td>
+    </tr>
+    <tr>
+      <th>theo_shape</th>
+      <td><p>the numerical value of basic plot shape</p></td>
     </tr>
     <tr>
       <th>palette</th>
@@ -173,12 +195,16 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 
-<code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
 <code><a href='explore_trace.html'>explore_trace_interp</a>()</code>,
-<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
+<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code>,
+<code><a href='flip_sign.html'>flip_sign</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'>explore_space_tour</span>(<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>explore_space_tour</span>(<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>),
+  <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='no'>botanical_palettes</span>$<span class='no'>fern</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>6</span>)]
+)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

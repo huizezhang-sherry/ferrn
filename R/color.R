@@ -85,3 +85,15 @@ scale_fill_discrete_botanical <- function(palette = "fern", reverse = FALSE) {
   ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
 
 }
+
+#' A specific theme for trace plots
+#' @importFrom ggplot2 %+replace%
+#' @export
+theme_fern <- function() {
+  ggplot2::theme_bw() %+replace%
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_line(),
+      panel.grid.minor = ggplot2::element_blank(),
+    )
+}
+

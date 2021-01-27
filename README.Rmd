@@ -52,7 +52,7 @@ Trace plot for viewing the optimisation progression with botanical palette:
 ```{r trace-plot}
 holes_1d_better %>% 
   explore_trace_interp() + 
-  scale_color_botanical(palette = "fern")
+  scale_color_continuous_botanical()
 ```
 
 Compare two algorithms via plotting the projection bases on the reduced PCA space:
@@ -62,9 +62,8 @@ Compare two algorithms via plotting the projection bases on the reduced PCA spac
 bind_rows(holes_1d_geo, holes_1d_better) %>%
   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
                    index = tourr::holes(), raw_data = boa5) %>% 
-  explore_space_pca(group = method)  +
-  scale_color_botanical(palette = "cherry")
-
+  explore_space_pca(group = method, details = TRUE)  +
+  scale_color_discrete_botanical()
 ```
 
 
@@ -74,53 +73,10 @@ View the projection bases on its original 5-D space via tour animation:
 bind_rows(holes_1d_geo, holes_1d_better) %>%
   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
                    index = tourr::holes(), raw_data = boa5)%>% 
-  explore_space_tour(theoretical = TRUE, group = method, max_frame = 150)
+  explore_space_tour(group = method, palette = botanical_palettes$fern[c(1, 6)],
+                     max_frames = 150)
 ```
-
-```{r echo = FALSE}
-# library(purrr)
-# set.seed(1)
-# sphere <- geozoo::sphere.hollow(p = 5, n = 1000)$point
-# path1 <- holes_1d_better$basis %>%
-#   flatten_dbl() %>% matrix(ncol = 5, byrow = TRUE)
-# path2 <- holes_1d_geo$basis %>%
-#   flatten_dbl() %>% matrix(ncol = 5, byrow = TRUE) %>% -.
-# theoretical <- matrix(c(0, 1, 0, 0, 0), nrow = 1, byrow = TRUE)
-# start <- get_start(holes_1d_better) %>% pull(basis) %>% .[[1]] %>% matrix(nrow = 1)
-# dt <- rbind(sphere, path1, path2, theoretical, start, -start)
-# colnames(dt) <- c(map_chr(1:5, ~paste0("x", .x)))
-# pal <- c("#D3D3D3",c("#524340",  #orchre
-#                      "#B4B754",  # green
-#                      "#F3B422" # yellow
-# ))
-# color <- c(rep(pal[1], nrow(sphere)),
-#            rep(pal[2], nrow(path1)),
-#            rep(pal[3], nrow(path2)),
-#            rep(pal[4], 1), # theoretical
-#            pal[2], # for start
-#            pal[3] # for start
-# )
-# cex <- c(rep(1, nrow(sphere)),
-#          rep(3, nrow(path1)),
-#          rep(3, nrow(path2)),
-#          10, # theoretical
-#          rep(5, 2) # for start
-# )
-# library(tourr)
-# set.seed(123)
-# anim <- render_gif(
-#   dt,
-#   tour_path = grand_tour(),
-#   gif_file = here::here("man", "figures", "anim.gif"),
-#   display = display_xy(col=color,cex = cex, axes = "bottomleft"),
-#   rescale = FALSE,
-#   frames = 150,
-# 
-# )
-
-```
-
 
 <p align="center">
-  <img src="man/figures/anim.gif">
+  <img src="man/figures/tour.gif">
 </p>

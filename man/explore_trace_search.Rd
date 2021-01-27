@@ -43,8 +43,8 @@ p1 / p2
 }
 \seealso{
 Other plot: 
-\code{\link{explore_space_pca}()},
 \code{\link{explore_trace_interp}()},
+\code{\link{flip_sign}()},
 \code{\link{prep_space_tour}()}
 }
 \concept{plot}

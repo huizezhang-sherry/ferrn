@@ -53,8 +53,8 @@ explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
 }
 \seealso{
 Other plot: 
-\code{\link{explore_space_pca}()},
 \code{\link{explore_trace_interp}()},
-\code{\link{explore_trace_search}()}
+\code{\link{explore_trace_search}()},
+\code{\link{flip_sign}()}
 }
 \concept{plot}
