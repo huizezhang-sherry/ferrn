@@ -39,7 +39,7 @@ Other draw functions:
 \code{\link{add_anno}()},
 \code{\link{add_dir_search}()},
 \code{\link{add_end}()},
-\code{\link{add_finish}()},
+\code{\link{add_interp_last}()},
 \code{\link{add_interp}()},
 \code{\link{add_search}()},
 \code{\link{add_space}()},

@@ -22,10 +22,9 @@ holes_1d_geo \%>\% get_anchor()
 Other get functions: 
 \code{\link{get_basis_matrix}()},
 \code{\link{get_best}()},
-\code{\link{get_dir_search_transformed}()},
+\code{\link{get_dir_search}()},
 \code{\link{get_interp_last}()},
 \code{\link{get_interp}()},
-\code{\link{get_interrupt_finish}()},
 \code{\link{get_interrupt}()},
 \code{\link{get_search_count}()},
 \code{\link{get_search}()},

@@ -112,14 +112,14 @@ get_search <- function(dt) {
 #' holes_1d_geo %>%
 #'   compute_pca() %>%
 #'   purrr::pluck("aug") %>%
-#'   get_dir_search_transformed()
+#'   get_dir_search()
 #' @family get functions
 #' @export
-get_dir_search_transformed <- function(dt, ratio = 3, ...) {
+get_dir_search <- function(dt, ratio = 3, ...) {
 
   # check only valid for search_geodesic or pseudo-derivative
   if (!"PC1" %in% colnames(dt)) {
-    message("get_dir_search_transformed() needs to be used on data projected by compute_pca()")
+    message("get_dir_search() needs to be used on data projected by compute_pca()")
     return(NULL)
   }
   dt <- dt %>% dplyr::filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
@@ -142,11 +142,11 @@ get_dir_search_transformed <- function(dt, ratio = 3, ...) {
   dir_search %>%
     dplyr::left_join(anchor, by = c("tries", "loop")) %>%
     dplyr::mutate(
-      trans_x = ifelse(.data$PC1 - .data$anchor_x < 0,
+      PC1 = ifelse(.data$PC1 - .data$anchor_x < 0,
         .data$PC1 - abs(.data$PC1 - .data$anchor_x) * ratio,
         .data$PC1 + abs(.data$PC1 - .data$anchor_x) * ratio
       ),
-      trans_y = ifelse(.data$PC2 - .data$anchor_y < 0,
+      PC2 = ifelse(.data$PC2 - .data$anchor_y < 0,
         .data$PC2 - abs(.data$PC2 - .data$anchor_y) * ratio,
         .data$PC2 + abs(.data$PC2 - .data$anchor_y) * ratio
       )
@@ -235,7 +235,7 @@ get_theo <- function(dt) {
 #' holes_1d_geo %>% get_interrupt()
 #' @family get functions
 #' @export
-get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
+get_interrupt <- function(dt, group = NULL, precision = 0.001, ...) {
 
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
     dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
@@ -262,50 +262,6 @@ get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
     return(NULL)
   }
 }
-
-#' Extract the end point of the interpolation on the iteration where interruption happens
-#'
-#' The optimiser can find better basis on the interpolation path, an interruption is
-#' implemented to stop further interpolation from the highest point to the target point.
-#' This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.
-#'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param precision The precision for the interruption
-#' @param ... other argument passed to \code{compute_pca()}
-#' @examples
-#' holes_1d_better %>% get_interrupt_finish()
-#' holes_1d_geo %>% get_interrupt_finish()
-#' @family get functions
-#' @export
-get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...) {
-
-  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
-    dt <- dt %>%
-      dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
-      dplyr::group_by({{ group }})
-    anchor <- dt %>% get_anchor(group = {{ group }})
-    interp_last <- dt %>% get_interp_last(group = {{ group }})
-
-    interp_anchor <- dplyr::bind_rows(anchor, interp_last)
-
-    problem_tries <- interp_anchor %>%
-      dplyr::group_by({{ group }}) %>%
-      dplyr::select(.data$info, .data$index_val, .data$tries) %>%
-      tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
-      dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
-      dplyr::filter(match) %>%
-      dplyr::mutate(id = paste0({{ group }}, .data$tries))
-
-    interp_last %>%
-      dplyr::mutate(id = paste0({{ group }}, .data$tries)) %>%
-      dplyr::filter(.data$id %in% problem_tries$id)
-  } else {
-    message("interrupt is only implemented in simulated annealing methods")
-    return(NULL)
-  }
-}
-
 
 
 #' Extract the count in each iteration

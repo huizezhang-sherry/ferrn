@@ -141,7 +141,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #'     index = tourr::holes(), raw_data = boa5
 #'   ) %>%
 #'   explore_space_pca(group = method, details = TRUE) +
-#'   scale_color_discrete_botanical(palette = "fern")
+#'   scale_color_discrete_botanical()
 #' @family plot
 #' @rdname explore_space_pca
 #' @export
@@ -167,19 +167,22 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 
   # more components when details = TRUE
   if (details) {
-    p <- p + add_anchor(dt = get_anchor(dt), anchor_color = {{ color }}, ...) +
-      add_search(dt = get_search(dt), search_color = {{ color }}, ...) +
-      add_finish(dt = get_interrupt_finish(dt, group = {{ group }}, ...), finish_color = {{ color }}, ...) +
+    # anchor points and last interpolation points
+    p <- p +
+      add_anchor(dt = get_anchor(dt), anchor_color = {{ color }}, ...) +
+      add_interp_last(dt = get_interp_last(dt, group = {{ group }}, ...), interp_last_color = {{ color }}, ...) +
       # add annotation
       add_interrupt(
         dt = get_interrupt(dt, group = {{ group }}, ...),
         interrupt_color = {{ color }}, interrupt_group = interaction(.data[["tries"]], {{ group }}), ...
       )
-  }
 
-  # a separate ggproto for directional search points in pseudo derivative search
-  if (!is.null(get_dir_search_transformed(dt))){
-    p <- p + add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = {{ color }}, ...)
+    # search points
+    p <- p +
+      add_search(dt = get_search(dt), search_color = {{ color }}, ...)
+    if (!is.null(get_dir_search(dt))){
+      p <- p + add_dir_search(dt = get_dir_search(dt, ...), dir_color = {{ color }}, ...)
+    }
   }
 
   # annotate the symmetry of start points

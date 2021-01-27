@@ -4,7 +4,7 @@
 \alias{add_anchor}
 \title{A ggproto for drawing anchor points}
 \usage{
-add_anchor(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...)
+add_anchor(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -26,7 +26,7 @@ Other draw functions:
 \code{\link{add_anno}()},
 \code{\link{add_dir_search}()},
 \code{\link{add_end}()},
-\code{\link{add_finish}()},
+\code{\link{add_interp_last}()},
 \code{\link{add_interp}()},
 \code{\link{add_interrupt}()},
 \code{\link{add_search}()},

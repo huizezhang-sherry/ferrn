@@ -109,7 +109,7 @@ add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...) {
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
-add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...) {
+add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = NULL, ...) {
   ggplot2::geom_point(
     data = dt,
     ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ anchor_color }}),
@@ -152,7 +152,7 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color =
 add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...) {
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$trans_x, y = .data$trans_y, color = {{ dir_color }}),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ dir_color }}),
     size = dir_size, alpha = dir_alpha
   )
 }
@@ -164,17 +164,17 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, 
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param finish_size the point size
-#' @param finish_alpha an alpha value for the transparency of the point
-#' @param finish_color the color of the points
+#' @param interp_last_size the point size
+#' @param interp_last_alpha an alpha value for the transparency of the point
+#' @param interp_last_color the color of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
-add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...) {
+add_interp_last <- function(dt, interp_last_size = 3, interp_last_alpha = 1, interp_last_color = NULL, ...) {
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ finish_color }}),
-    size = finish_size, alpha = finish_alpha
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ interp_last_color }}),
+    size = interp_last_size, alpha = interp_last_alpha
   )
 }
 
