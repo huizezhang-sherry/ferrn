@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A customised color palette based on australian botanicals — botanical_palettes • ferrn</title>
+<title>Discrete scale color function — scale_color_discrete_botanical • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="A customised color palette based on australian botanicals — botanical_palettes" />
-<meta property="og:description" content="Available colors in the palettes" />
+<meta property="og:title" content="Discrete scale color function — scale_color_discrete_botanical" />
+<meta property="og:description" content="Discrete scale color function" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,27 +126,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A customised color palette based on australian botanicals</h1>
+    <h1>Discrete scale color function</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/color.R'><code>R/color.R</code></a></small>
-    <div class="hidden name"><code>botanical_palettes.Rd</code></div>
+    <div class="hidden name"><code>scale_color_discrete_botanical.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Available colors in the palettes</p>
+    <p>Discrete scale color function</p>
     </div>
 
-    <pre class="usage"><span class='va'>botanical_palettes</span></pre>
+    <pre class="usage"><span class='fu'>scale_color_discrete_botanical</span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>palette</th>
+      <td><p>Color palette from the botanical_palette</p></td>
+    </tr>
+    <tr>
+      <th>reverse</th>
+      <td><p>logical, if the color should be reversed</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>list</code> of length 5.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other botan: 
+<code><a href='botanical_palettes.html'>botanical_palettes</a></code>,
 <code><a href='botanical_pal.html'>botanical_pal</a>()</code>,
 <code><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a>()</code>,
-<code><a href='scale_color_discrete_botanical.html'>scale_color_discrete_botanical</a>()</code>,
 <code><a href='scale_fill_continuous_botanical.html'>scale_fill_continuous_botanical</a>()</code>,
 <code><a href='scale_fill_discrete_botanical.html'>scale_fill_discrete_botanical</a>()</code></p></div>
 

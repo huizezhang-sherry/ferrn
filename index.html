@@ -119,7 +119,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">holes_1d_better</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/explore_trace_interp.html">explore_trace_interp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/scale_color_botanical.html">scale_color_botanical</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"fern"</span><span class="op">)</span></code></pre></div>
+  <span class="fu">scale_color_botanical</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"fern"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-trace-plot-1.png" width="100%"></p>
 <p>Compare two algorithms via plotting the projection bases on the reduced PCA space:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -127,7 +127,7 @@
   <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
                    index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/explore_space_pca.html">explore_space_pca</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span><span class="op">)</span>  <span class="op">+</span>
-  <span class="fu"><a href="reference/scale_color_botanical.html">scale_color_botanical</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"cherry"</span><span class="op">)</span>
+  <span class="fu">scale_color_botanical</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"cherry"</span><span class="op">)</span>
 <span class="co">#&gt; Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span>
 <span class="co">#&gt; Using compatibility `.name_repair`.</span>
 <span class="co">#&gt; This warning is displayed once every 8 hours.</span>

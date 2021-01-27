@@ -124,10 +124,16 @@
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/relevel.html</loc>
   </url>
   <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_color_botanical.html</loc>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_color_continuous_botanical.html</loc>
   </url>
   <url>
-    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_fill_botanical.html</loc>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_color_discrete_botanical.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_fill_continuous_botanical.html</loc>
+  </url>
+  <url>
+    <loc>https://huizezhang-sherry.github.io/ferrn//reference/scale_fill_discrete_botanical.html</loc>
   </url>
   <url>
     <loc>https://huizezhang-sherry.github.io/ferrn//reference/theme_fern.html</loc>
