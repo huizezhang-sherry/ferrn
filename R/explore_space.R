@@ -139,43 +139,48 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #'     index = tourr::holes(), raw_data = boa5
 #'   ) %>%
 #'   explore_space_pca(group = method, details = TRUE) +
-#'   scale_color_discrete_botanical(palette = "cherry")
+#'   scale_color_discrete_botanical(palette = "fern")
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
+
   if (rlang::quo_is_null(dplyr::enquo(color))) color <- dplyr::enexpr(group)
 
   if (pca) dt <- compute_pca(dt, group = {{ group }}, ...) %>% purrr::pluck("aug")
 
+  # set up the simplified version
   p <- ggplot2::ggplot() +
-    # set up
     add_space(dt = get_space_param(dt), ...) +
-    # add points
     add_start(dt = get_start(dt), start_color = {{ color }}, ...) +
     add_end(dt = get_best(dt, group = {{ group }}, ...), end_color = {{ color }}, ...) +
-    # add path
     add_interp(
       dt = get_interp(dt, group = {{ group }}),
       interp_alpha = .data[["id"]], interp_color = {{ color }}, interp_group = {{ group }}, ...
     ) +
-    # theme
     ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     ggplot2::theme_void() +
     ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
 
+  # more components when details = TRUE
   if (details) {
     p <- p + add_anchor(dt = get_anchor(dt), anchor_color = {{ color }}, ...) +
       add_search(dt = get_search(dt), search_color = {{ color }}, ...) +
-      add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = {{ color }}, ...) +
       add_finish(dt = get_interrupt_finish(dt, group = {{ group }}, ...), finish_color = {{ color }}, ...) +
       # add annotation
       add_interrupt(
         dt = get_interrupt(dt, group = {{ group }}, ...),
         interrupt_color = {{ color }}, interrupt_group = interaction(.data[["tries"]], {{ group }}), ...
-      ) +
-      add_anno(dt = get_start(dt), ...)
+      )
   }
+
+  # a separate ggproto for directional search points in pseudo derivative search
+  if (!is.null(get_dir_search_transformed(dt))){
+    p <- p + add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = {{ color }}, ...)
+  }
+
+  # annotate the symmetry of start points
+  if (nrow(get_start(dt)) > 1) p <- p + add_anno(dt = get_start(dt), ...)
 
   if (animate) {
     p <- ggplot2::ggplot() +
@@ -195,11 +200,8 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
       gganimate::transition_reveal(along = .data[["id"]])
   }
 
-  if ("theoretical" %in% dt$info) {
-    p <- p +
-      add_theo(dt = get_theo(dt), ...)
-  }
-
+  # add theoretical if applicable
+  if ("theoretical" %in% dt$info) p <- p + add_theo(dt = get_theo(dt), ...)
 
   p
 }

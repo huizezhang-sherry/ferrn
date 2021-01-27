@@ -85,7 +85,8 @@ get_anchor <- function(dt, group = NULL) {
   dt %>%
     dplyr::filter(.data$info %in% c("new_basis", "best_line_search")) %>%
     dplyr::group_by({{ group }}) %>%
-    dplyr::mutate(id = dplyr::row_number())
+    dplyr::mutate(id = dplyr::row_number()) %>%
+    dplyr::ungroup()
 }
 
 
@@ -123,10 +124,7 @@ get_dir_search_transformed <- function(dt, ratio = 3, ...) {
   }
   dt <- dt %>% dplyr::filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
 
-  if (nrow(dt) == 0) {
-    message("get_dir_search_transformed() is only applicable to geodesic search/ pseudo deriavtive")
-    NULL
-  }
+  if (nrow(dt) == 0) return(NULL)
 
   # compute the anchor points
   anchor <- dt %>%
@@ -238,6 +236,7 @@ get_theo <- function(dt) {
 #' @family get functions
 #' @export
 get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
+
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
     dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
 
@@ -252,7 +251,8 @@ get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
       tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
       dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
       dplyr::filter(match) %>%
-      dplyr::mutate(id = paste0({{ group }}, .data$tries))
+      dplyr::mutate(id = paste0({{ group }}, .data$tries)) %>%
+      dplyr::ungroup()
 
     interp_anchor %>%
       dplyr::mutate(id = paste0({{ group }}, .data$tries)) %>%
@@ -279,6 +279,7 @@ get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
 #' @family get functions
 #' @export
 get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...) {
+
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
     dt <- dt %>%
       dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
