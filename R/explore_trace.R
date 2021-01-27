@@ -24,12 +24,18 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
   # check other variables as well
 
   if (rlang::quo_is_null(dplyr::enquo(iter))) {
-    message("map `id` to the x-axis")
+    message("map id to the x-axis")
     iter <- dplyr::sym("id")
   }
 
   if (rlang::quo_is_null(dplyr::enquo(color))) {
-    message("map `tries` to color")
+
+    if (!rlang::quo_is_null(dplyr::enquo(group))) {
+      message("map the group variable to color")
+      color <- dplyr::enexpr(group)
+    }
+
+    message("map tries to color")
     color <- dplyr::sym("tries")
   }
 
@@ -104,12 +110,12 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #' @export
 explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, extend_lower = 0.95, ...) {
   if (rlang::quo_is_null(dplyr::enquo(iter))) {
-    message("map `tries` to the x-axis")
+    message("map tries to the x-axis")
     iter <- dplyr::sym("tries")
   }
 
   if (rlang::quo_is_null(dplyr::enquo(color))) {
-    message("map `tries` to color")
+    message("map tries to color")
     color <- dplyr::sym("tries")
   }
 

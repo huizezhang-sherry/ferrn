@@ -230,7 +230,7 @@ prep_space_tour <- function(dt, group = NULL,
                             theo_size = 3, theo_shape = 17,
                             palette = botanical_palettes$fern, ...) {
   if (rlang::quo_is_null(dplyr::enquo(color))) {
-    message("map `method` to color")
+    message("map method to color")
     color <- dplyr::sym("method")
   }
 
