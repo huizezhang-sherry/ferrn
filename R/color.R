@@ -51,7 +51,7 @@ botanical_pal <- function(palette = "fern", reverse = FALSE) {
 #' @param reverse logical, if the color should be reversed
 #' @export
 #' @family botan
-scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE) {
+scale_color_botanical <- function(..., palette = "fern", discrete = FALSE, reverse = FALSE) {
   if (discrete) {
     ggplot2::discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
   } else {
@@ -67,7 +67,7 @@ scale_color_botanical <- function(..., palette = "fern", discrete = TRUE, revers
 #' @param reverse logical, if the color should be reversed
 #' @export
 #' @family botan
-scale_fill_botanical <- function(..., palette = "fern", discrete = TRUE, reverse = FALSE) {
+scale_fill_botanical <- function(..., palette = "fern", discrete = FALSE, reverse = FALSE) {
   if (discrete) {
     ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
   } else {
