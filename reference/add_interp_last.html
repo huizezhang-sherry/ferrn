@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A ggproto for drawing the theoretical basis, if applicable — add_theo • ferrn</title>
+<title>A ggproto for drawing finish points — add_interp_last • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="A ggproto for drawing the theoretical basis, if applicable — add_theo" />
+<meta property="og:title" content="A ggproto for drawing finish points — add_interp_last" />
 <meta property="og:description" content="This is  a wrapper function used by explore_space_pca() and
 should be be called directly by the user" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
@@ -127,9 +127,9 @@ should be be called directly by the user" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A ggproto for drawing the theoretical basis, if applicable</h1>
+    <h1>A ggproto for drawing finish points</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/draw.R'><code>R/draw.R</code></a></small>
-    <div class="hidden name"><code>add_theo.Rd</code></div>
+    <div class="hidden name"><code>add_interp_last.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -137,7 +137,13 @@ should be be called directly by the user" />
 should be be called directly by the user</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_theo</span><span class='op'>(</span><span class='va'>dt</span>, theo_label <span class='op'>=</span> <span class='st'>"*"</span>, theo_size <span class='op'>=</span> <span class='fl'>25</span>, theo_alpha <span class='op'>=</span> <span class='fl'>0.8</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>add_interp_last</span><span class='op'>(</span>
+  <span class='va'>dt</span>,
+  interp_last_size <span class='op'>=</span> <span class='fl'>3</span>,
+  interp_last_alpha <span class='op'>=</span> <span class='fl'>1</span>,
+  interp_last_color <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,16 +153,16 @@ should be be called directly by the user</p>
       <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
     </tr>
     <tr>
-      <th>theo_label</th>
-      <td><p>the symbol used for labelling the theoretical basis</p></td>
+      <th>interp_last_size</th>
+      <td><p>the point size</p></td>
     </tr>
     <tr>
-      <th>theo_size</th>
-      <td><p>the size of the label</p></td>
+      <th>interp_last_alpha</th>
+      <td><p>an alpha value for the transparency of the point</p></td>
     </tr>
     <tr>
-      <th>theo_alpha</th>
-      <td><p>the transparency of the label</p></td>
+      <th>interp_last_color</th>
+      <td><p>the color of the points</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -171,12 +177,12 @@ should be be called directly by the user</p>
 <code><a href='add_anno.html'>add_anno</a>()</code>,
 <code><a href='add_dir_search.html'>add_dir_search</a>()</code>,
 <code><a href='add_end.html'>add_end</a>()</code>,
-<code><a href='add_interp_last.html'>add_interp_last</a>()</code>,
 <code><a href='add_interp.html'>add_interp</a>()</code>,
 <code><a href='add_interrupt.html'>add_interrupt</a>()</code>,
 <code><a href='add_search.html'>add_search</a>()</code>,
 <code><a href='add_space.html'>add_space</a>()</code>,
-<code><a href='add_start.html'>add_start</a>()</code></p></div>
+<code><a href='add_start.html'>add_start</a>()</code>,
+<code><a href='add_theo.html'>add_theo</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
