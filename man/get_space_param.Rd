@@ -9,7 +9,7 @@ get_space_param(dt, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{...}{other argument passed to \code{compute_pca()}}
+\item{...}{arguments passed to \code{compute_pca()}}
 }
 \description{
 The space of projected bases is a circle when reduced to 2D. A radius is estimated using

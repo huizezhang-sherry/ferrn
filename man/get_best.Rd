@@ -4,14 +4,12 @@
 \alias{get_best}
 \title{Extract the record with the largest index value}
 \usage{
-get_best(dt, group = NULL, ...)
+get_best(dt, group = NULL)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
-
-\item{...}{other argument passed to \code{compute_pca()}}
 }
 \description{
 Extract the record with the largest index value

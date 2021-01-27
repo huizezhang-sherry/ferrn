@@ -154,9 +154,9 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 
   # set up the simplified version
   p <- ggplot2::ggplot() +
-    add_space(dt = get_space_param(dt), ...) +
+    add_space(dt = get_space_param(dt, ...), ...) +
     add_start(dt = get_start(dt), start_color = {{ color }}, ...) +
-    add_end(dt = get_best(dt, group = {{ group }}, ...), end_color = {{ color }}, ...) +
+    add_end(dt = get_best(dt, group = {{ group }}), end_color = {{ color }}, ...) +
     add_interp(
       dt = get_interp(dt, group = {{ group }}),
       interp_alpha = .data[["id"]], interp_color = {{ color }}, interp_group = {{ group }}, ...
@@ -170,10 +170,10 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
     # anchor points and last interpolation points
     p <- p +
       add_anchor(dt = get_anchor(dt), anchor_color = {{ color }}, ...) +
-      add_interp_last(dt = get_interp_last(dt, group = {{ group }}, ...), interp_last_color = {{ color }}, ...) +
+      add_interp_last(dt = get_interp_last(dt, group = {{ group }}), interp_last_color = {{ color }}, ...) +
       # add annotation
       add_interrupt(
-        dt = get_interrupt(dt, group = {{ group }}, ...),
+        dt = get_interrupt(dt, group = {{ group }}),
         interrupt_color = {{ color }}, interrupt_group = interaction(.data[["tries"]], {{ group }}), ...
       )
 
@@ -181,12 +181,12 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
     p <- p +
       add_search(dt = get_search(dt), search_color = {{ color }}, ...)
     if (!is.null(get_dir_search(dt))){
-      p <- p + add_dir_search(dt = get_dir_search(dt, ...), dir_color = {{ color }}, ...)
+      p <- p + add_dir_search(dt = get_dir_search(dt), dir_color = {{ color }}, ...)
     }
-  }
 
-  # annotate the symmetry of start points
-  if (nrow(get_start(dt)) > 1) p <- p + add_anno(dt = get_start(dt), ...)
+    # annotate the symmetry of start points
+    if (nrow(get_start(dt)) > 1) p <- p + add_anno(dt = get_start(dt), ...)
+  }
 
   if (animate) {
     p <- ggplot2::ggplot() +

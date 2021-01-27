@@ -4,14 +4,12 @@
 \alias{get_dir_search}
 \title{Extract directional search points during the optimisation}
 \usage{
-get_dir_search(dt, ratio = 3, ...)
+get_dir_search(dt, ratio = 3)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{ratio}{a buffer value to allow directional search points being distinguishable from the anchor points}
-
-\item{...}{other argument passed to \code{compute_pca()}}
 }
 \description{
 Extract directional search points during the optimisation

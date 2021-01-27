@@ -4,7 +4,7 @@
 \alias{get_search_count}
 \title{Extract the count in each iteration}
 \usage{
-get_search_count(dt, iter = NULL, group = NULL, ...)
+get_search_count(dt, iter = NULL, group = NULL)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
@@ -12,8 +12,6 @@ get_search_count(dt, iter = NULL, group = NULL, ...)
 \item{iter}{The variable used to be counted by}
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
-
-\item{...}{other argument passed to \code{compute_pca()}}
 }
 \description{
 Extract the count in each iteration

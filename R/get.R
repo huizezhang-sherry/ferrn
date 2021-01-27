@@ -2,12 +2,11 @@
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
 #' @family get functions
 #' @export
-get_best <- function(dt, group = NULL, ...) {
+get_best <- function(dt, group = NULL) {
   res <- dt %>%
     dplyr::filter(.data[["info"]] == "interpolation") %>%
     dplyr::group_by({{ group }}) %>%
@@ -107,7 +106,6 @@ get_search <- function(dt) {
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param ratio a buffer value to allow directional search points being distinguishable from the anchor points
-#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' holes_1d_geo %>%
 #'   compute_pca() %>%
@@ -115,7 +113,7 @@ get_search <- function(dt) {
 #'   get_dir_search()
 #' @family get functions
 #' @export
-get_dir_search <- function(dt, ratio = 3, ...) {
+get_dir_search <- function(dt, ratio = 3) {
 
   # check only valid for search_geodesic or pseudo-derivative
   if (!"PC1" %in% colnames(dt)) {
@@ -162,7 +160,7 @@ get_dir_search <- function(dt, ratio = 3, ...) {
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param ... other argument passed to \code{compute_pca()}
+#' @param ... arguments passed to \code{compute_pca()}
 #' @importFrom rlang .data
 #' @family get functions
 #' @export
@@ -229,13 +227,12 @@ get_theo <- function(dt) {
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param precision The precision for the interruption
-#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' holes_1d_better %>% get_interrupt()
 #' holes_1d_geo %>% get_interrupt()
 #' @family get functions
 #' @export
-get_interrupt <- function(dt, group = NULL, precision = 0.001, ...) {
+get_interrupt <- function(dt, group = NULL, precision = 0.001) {
 
   if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
     dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
@@ -269,13 +266,12 @@ get_interrupt <- function(dt, group = NULL, precision = 0.001, ...) {
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param iter The variable used to be counted by
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param ... other argument passed to \code{compute_pca()}
 #' @examples
 #' get_search_count(holes_1d_better)
 #' get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
 #' @family get functions
 #' @export
-get_search_count <- function(dt, iter = NULL, group = NULL, ...) {
+get_search_count <- function(dt, iter = NULL, group = NULL) {
   dt_search <- dt %>%
     get_search() %>%
     dplyr::group_by({{ iter }})
