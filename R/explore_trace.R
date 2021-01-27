@@ -13,7 +13,7 @@
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
 #'   explore_trace_interp() +
-#'   scale_color_botanical(palette = "fern", discrete = FALSE)
+#'   scale_color_continuous_botanical(palette = "fern")
 #' @family plot
 #' @export
 #' @rdname explore_trace
@@ -95,10 +95,10 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #' library(dplyr)
 #' library(ggplot2)
 #' p1 <- holes_1d_better %>% explore_trace_search() +
-#'   scale_color_botanical(palette = "fern") +
+#'   scale_color_continuous_botanical(palette = "fern") +
 #'   xlim(c(1, 9))
 #' p2 <- holes_2d_better_max_tries %>% explore_trace_search() +
-#'   scale_color_botanical(palette = "daisy")
+#'   scale_color_continuous_botanical(palette = "daisy")
 #' p1 / p2
 #' @family plot
 #' @export
@@ -148,7 +148,7 @@ explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, ext
 
 
   p <- search %>%
-    ggplot2::ggplot(ggplot2::aes(x = {{ iter }}, y = .data$index_val, col = as.factor({{ color }}))) +
+    ggplot2::ggplot(ggplot2::aes(x = {{ iter }}, y = .data$index_val, col = {{ color }})) +
     # point summary
     ggplot2::geom_point(data = search_point) +
     # boxplot summary

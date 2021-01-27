@@ -139,7 +139,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #'     index = tourr::holes(), raw_data = boa5
 #'   ) %>%
 #'   explore_space_pca(group = method, details = TRUE) +
-#'   scale_color_botanical(palette = "cherry")
+#'   scale_color_discrete_botanical(palette = "cherry")
 #' @family plot
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,

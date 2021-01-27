@@ -14,7 +14,9 @@ Extract the theoretical best basis, if applicable
 }
 \examples{
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = boa5) \%>\% get_theo()
+holes_1d_better \%>\%
+  bind_theoretical(best, tourr::holes(), raw_data = boa5) \%>\%
+  get_theo()
 }
 \seealso{
 Other get functions: 

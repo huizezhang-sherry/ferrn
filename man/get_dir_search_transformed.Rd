@@ -17,7 +17,10 @@ get_dir_search_transformed(dt, ratio = 3, ...)
 Extract directional search points during the optimisation
 }
 \examples{
-holes_1d_geo \%>\% compute_pca() \%>\% purrr::pluck("aug") \%>\% get_dir_search_transformed()
+holes_1d_geo \%>\%
+  compute_pca() \%>\%
+  purrr::pluck("aug") \%>\%
+  get_dir_search_transformed()
 }
 \seealso{
 Other get functions: 

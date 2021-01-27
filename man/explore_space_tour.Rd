@@ -47,7 +47,8 @@ Plot the grand tour animation of the projection bases space
 \examples{
 \dontrun{
 explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
-  group = method, palette = botanical_palettes$fern[c(1,6)])
+  group = method, palette = botanical_palettes$fern[c(1, 6)]
+)
 }
 }
 \seealso{

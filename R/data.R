@@ -72,10 +72,10 @@
 #'   ggplot(aes(x = value)) +
 #'   geom_density() +
 #'   facet_wrap(vars(var))
-#' holes_1d_better %>% explore_trace_search(iter = tries, color = tries) +
-#'   scale_color_botanical(palette = "fern")
+#' holes_1d_better %>% explore_trace_search() +
+#'   scale_color_continuous_botanical(palette = "fern")
 #' holes_2d_better_max_tries %>% explore_trace_search() +
-#'   scale_color_botanical(palette = "daisy")
+#'   scale_color_continuous_botanical(palette = "daisy")
 #' @rdname data
 "holes_1d_geo"
 

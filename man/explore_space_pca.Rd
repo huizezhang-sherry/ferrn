@@ -40,7 +40,7 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) \%>\%
     index = tourr::holes(), raw_data = boa5
   ) \%>\%
   explore_space_pca(group = method, details = TRUE) +
-  scale_color_botanical(palette = "cherry")
+  scale_color_discrete_botanical(palette = "cherry")
 }
 \seealso{
 Other plot: 
