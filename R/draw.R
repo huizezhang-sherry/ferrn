@@ -22,17 +22,18 @@
 #' @export
 add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color = "white",
                       cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
-
-  list(ggplot2::geom_point(
-    data = dt,
-    ggplot2::aes(x = .data$x0, y = .data$y0),
-    size = cent_size, alpha = cent_alpha, color = cent_color
-  ),
-  ggforce::geom_circle(
-    data = dt,
-    ggplot2::aes(x0 = .data$x0, y0 = .data$y0, r = .data$r),
-    alpha = space_alpha, fill = space_fill, color = space_color
-  ))
+  list(
+    ggplot2::geom_point(
+      data = dt,
+      ggplot2::aes(x = .data$x0, y = .data$y0),
+      size = cent_size, alpha = cent_alpha, color = cent_color
+    ),
+    ggforce::geom_circle(
+      data = dt,
+      ggplot2::aes(x0 = .data$x0, y0 = .data$y0, r = .data$r),
+      alpha = space_alpha, fill = space_fill, color = space_color
+    )
+  )
 }
 
 #' A ggproto for drawing start points
@@ -64,11 +65,9 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #' @family draw functions
 #' @export
 add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...) {
-  color <- dplyr::enexpr(start_color)
-
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ start_color }}),
     size = start_size, alpha = start_alpha
   )
 }
@@ -86,12 +85,10 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
-add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...){
-
-  color <- dplyr::enexpr(end_color)
+add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...) {
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ end_color }}),
     size = end_size, alpha = end_alpha
   )
 }
@@ -113,11 +110,9 @@ add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...){
 #' @family draw functions
 #' @export
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NULL, ...) {
-
-  color <- dplyr::enexpr(anchor_color)
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ anchor_color }}),
     size = anchor_size, alpha = anchor_alpha
   )
 }
@@ -135,11 +130,9 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 1, anchor_color = NUL
 #' @family draw functions
 #' @export
 add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color = NULL, ...) {
-  color <- dplyr::enexpr(search_color)
-
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ search_color }}),
     size = search_size, alpha = search_alpha
   )
 }
@@ -156,12 +149,10 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color =
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
-add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...){
-  color <- dplyr::enexpr(dir_color)
-
+add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...) {
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x = .data$trans_x, y = .data$trans_y, color = !!color),
+    ggplot2::aes(x = .data$trans_x, y = .data$trans_y, color = {{ dir_color }}),
     size = dir_size, alpha = dir_alpha
   )
 }
@@ -180,11 +171,9 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, 
 #' @family draw functions
 #' @export
 add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = NULL, ...) {
-  color <- dplyr::enexpr(finish_color)
-
   ggplot2::geom_point(
     data = dt,
-    ggplot2::aes(x =.data$PC1, y = .data$PC2, color = !!color),
+    ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ finish_color }}),
     size = finish_size, alpha = finish_alpha
   )
 }
@@ -203,14 +192,13 @@ add_finish <- function(dt, finish_size = 0.5, finish_alpha = 1, finish_color = N
 #' @family draw functions
 #' @export
 add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
-                      interp_color = NULL, interp_group = NULL,...) {
-  alpha <- dplyr::enexpr(interp_alpha)
-  group <- dplyr::enexpr(interp_group)
-  color <- dplyr::enexpr(interp_color)
-
+                       interp_color = NULL, interp_group = NULL, ...) {
   ggplot2::geom_path(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, alpha = !!alpha, group = !!group, color = !!color),
+    ggplot2::aes(
+      x = .data$PC1, y = .data$PC2,
+      alpha = {{ interp_alpha }}, group = {{ interp_group }}, color = {{ interp_color }}
+    ),
     size = interp_size
   )
 }
@@ -230,15 +218,13 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' @family draw functions
 #' @export
 add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
-                     interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
-
-  alpha <- dplyr::enexpr(interrupt_alpha)
-  group <- dplyr::enexpr(interrupt_group)
-  color <- dplyr::enexpr(interrupt_color)
-
+                          interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
   ggplot2::geom_path(
     data = dt,
-    ggplot2::aes(x = .data$PC1, y = .data$PC2, alpha = !!alpha, group = !!group, color = !!color),
+    ggplot2::aes(
+      x = .data$PC1, y = .data$PC2,
+      alpha = {{ interrupt_alpha }}, group = {{ interrupt_group }}, color = {{ interrupt_color }}
+    ),
     size = interrupt_size, linetype = interrupt_linetype
   )
 }
@@ -278,11 +264,9 @@ add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha =
 #' @family draw functions
 #' @export
 add_theo <- function(dt, theo_label = "*", theo_size = 25, theo_alpha = 0.8, ...) {
-
   ggplot2::geom_text(
     data = dt,
     ggplot2::aes(x = .data$PC1, y = .data$PC2),
     label = theo_label, size = theo_size, alpha = theo_alpha
   )
 }
-

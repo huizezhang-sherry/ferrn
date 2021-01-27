@@ -72,7 +72,7 @@
 #'   ggplot(aes(x = value)) +
 #'   geom_density() +
 #'   facet_wrap(vars(var))
-#' holes_1d_better %>% explore_trace_search() +
+#' holes_1d_better %>% explore_trace_search(iter = tries, color = tries) +
 #'   scale_color_botanical(palette = "fern")
 #' holes_2d_better_max_tries %>% explore_trace_search() +
 #'   scale_color_botanical(palette = "daisy")

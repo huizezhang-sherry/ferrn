@@ -6,8 +6,8 @@
 \usage{
 explore_trace_search(
   dt,
-  iter = sym("tries"),
-  color = sym("tries"),
+  iter = NULL,
+  color = NULL,
   cutoff = 15,
   extend_lower = 0.95,
   ...

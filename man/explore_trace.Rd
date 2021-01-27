@@ -35,7 +35,7 @@ Trace the index value of search/ interpolation points in guided tour optimisatio
 \examples{
 # Compare the trace of interpolated points in two algorithms
 holes_1d_better \%>\%
-  explore_trace_interp(iter = id, color = tries) +
+  explore_trace_interp() +
 scale_color_botanical(palette = "fern", discrete = FALSE)
 }
 \seealso{

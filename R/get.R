@@ -8,12 +8,9 @@
 #' @family get functions
 #' @export
 get_best <- function(dt, group = NULL, ...) {
-
-  group <- dplyr::enexpr(group)
-
   res <- dt %>%
-    dplyr::filter(!!sym("info") == "interpolation") %>%
-    dplyr::group_by(!!group) %>%
+    dplyr::filter(.data[["info"]] == "interpolation") %>%
+    dplyr::group_by({{ group }}) %>%
     dplyr::filter(.data$index_val == max(.data$index_val)) %>%
     dplyr::distinct(.data$index_val, .keep_all = TRUE)
 
@@ -30,7 +27,7 @@ get_best <- function(dt, group = NULL, ...) {
 #' @export
 get_start <- function(dt) {
   dt %>%
-    dplyr::filter(!!sym("id") == 1)
+    dplyr::filter(.data[["id"]] == 1)
 }
 
 #' Extract interpolated records
@@ -45,10 +42,9 @@ get_start <- function(dt) {
 #' @family get functions
 #' @export
 get_interp <- function(dt, group = NULL) {
-  group <- dplyr::enexpr(group)
   dt %>%
-    dplyr::filter(!!sym("info") == "interpolation") %>%
-    dplyr::group_by(!!group) %>%
+    dplyr::filter(.data[["info"]] == "interpolation") %>%
+    dplyr::group_by({{ group }}) %>%
     dplyr::mutate(id = dplyr::row_number()) %>%
     dplyr::ungroup()
 }
@@ -63,7 +59,6 @@ get_interp <- function(dt, group = NULL) {
 #' @family get functions
 #' @export
 get_interp_last <- function(dt, group = NULL) {
-
   group <- dplyr::enexpr(group)
 
   if (!all(c("tries", "loop") %in% colnames(dt))) {
@@ -71,8 +66,8 @@ get_interp_last <- function(dt, group = NULL) {
   }
 
   dt %>%
-    get_interp(group = !!group) %>%
-    dplyr::group_by(.data$tries, !!group) %>%
+    get_interp(group = {{ group }}) %>%
+    dplyr::group_by(.data$tries, {{ group }}) %>%
     dplyr::filter(.data$loop == max(.data$loop)) %>%
     dplyr::ungroup()
 }
@@ -87,12 +82,9 @@ get_interp_last <- function(dt, group = NULL) {
 #' @family get functions
 #' @export
 get_anchor <- function(dt, group = NULL) {
-
-  group <- dplyr::enexpr(group)
-
   dt %>%
     dplyr::filter(.data$info %in% c("new_basis", "best_line_search")) %>%
-    dplyr::group_by(!!group) %>%
+    dplyr::group_by({{ group }}) %>%
     dplyr::mutate(id = dplyr::row_number())
 }
 
@@ -107,7 +99,7 @@ get_anchor <- function(dt, group = NULL) {
 #' @export
 get_search <- function(dt) {
   dt %>%
-    dplyr::filter(stringr::str_detect(!!sym("info"), "search"))
+    dplyr::filter(stringr::str_detect(.data[["info"]], "search"))
 }
 
 #' Extract directional search points during the optimisation
@@ -116,41 +108,51 @@ get_search <- function(dt) {
 #' @param ratio a buffer value to allow directional search points being distinguishable from the anchor points
 #' @param ... other argument passed to \code{compute_pca()}
 #' @examples
-#' holes_1d_geo %>% compute_pca() %>% purrr::pluck("aug") %>% get_dir_search_transformed()
+#' holes_1d_geo %>%
+#'   compute_pca() %>%
+#'   purrr::pluck("aug") %>%
+#'   get_dir_search_transformed()
 #' @family get functions
 #' @export
-get_dir_search_transformed <- function(dt, ratio = 3, ...){
+get_dir_search_transformed <- function(dt, ratio = 3, ...) {
 
   # check only valid for search_geodesic or pseudo-derivative
-  if (!"PC1" %in% colnames(dt)){
+  if (!"PC1" %in% colnames(dt)) {
     message("get_dir_search_transformed() needs to be used on data projected by compute_pca()")
     return(NULL)
   }
   dt <- dt %>% dplyr::filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
 
-  if (nrow(dt) == 0){
+  if (nrow(dt) == 0) {
     message("get_dir_search_transformed() is only applicable to geodesic search/ pseudo deriavtive")
     NULL
   }
 
   # compute the anchor points
-  anchor <- dt %>% get_anchor() %>%
+  anchor <- dt %>%
+    get_anchor() %>%
     dplyr::rename(anchor_x = .data$PC1, anchor_y = .data$PC2) %>%
     dplyr::select(.data$tries, .data$loop, .data$anchor_x, .data$anchor_y) %>%
-    dplyr::mutate(anchor_x = dplyr::lag(.data$anchor_x, default = NA),
-                  anchor_y = dplyr::lag(.data$anchor_y, default = NA))
+    dplyr::mutate(
+      anchor_x = dplyr::lag(.data$anchor_x, default = NA),
+      anchor_y = dplyr::lag(.data$anchor_y, default = NA)
+    )
 
   # compute the buffer
   dir_search <- dt %>% dplyr::filter(.data$info %in% c("direction_search", "best_direction_search"))
 
   dir_search %>%
     dplyr::left_join(anchor, by = c("tries", "loop")) %>%
-    dplyr::mutate(trans_x = ifelse(.data$PC1 - .data$anchor_x < 0,
-                                   .data$PC1 - abs(.data$PC1 - .data$anchor_x) * ratio,
-                                   .data$PC1 + abs(.data$PC1 - .data$anchor_x) * ratio),
-                  trans_y = ifelse(.data$PC2 - .data$anchor_y < 0,
-                                   .data$PC2 - abs(.data$PC2 - .data$anchor_y) * ratio,
-                                   .data$PC2 + abs(.data$PC2 - .data$anchor_y) * ratio))
+    dplyr::mutate(
+      trans_x = ifelse(.data$PC1 - .data$anchor_x < 0,
+        .data$PC1 - abs(.data$PC1 - .data$anchor_x) * ratio,
+        .data$PC1 + abs(.data$PC1 - .data$anchor_x) * ratio
+      ),
+      trans_y = ifelse(.data$PC2 - .data$anchor_y < 0,
+        .data$PC2 - abs(.data$PC2 - .data$anchor_y) * ratio,
+        .data$PC2 + abs(.data$PC2 - .data$anchor_y) * ratio
+      )
+    )
 }
 
 #' Estimate the radius of the background circle based on the randomly generated points
@@ -166,21 +168,23 @@ get_dir_search_transformed <- function(dt, ratio = 3, ...){
 #' @importFrom rlang .data
 #' @family get functions
 #' @export
-get_space_param <- function(dt,...) {
+get_space_param <- function(dt, ...) {
+  basis <- dt[1, ] %>% dplyr::pull(basis)
+  n_row <- nrow(basis[[1]])
+  n_col <- ncol(basis[[1]])
 
-    basis <- dt[1, ] %>% dplyr::pull(basis)
-    n_row = nrow(basis[[1]])
-    n_col = ncol(basis[[1]])
+  dt <- dt %>%
+    dplyr::select(-dplyr::contains("PC")) %>%
+    dplyr::filter(.data$info != "randomly_generated") %>%
+    dplyr::add_row(
+      basis = list(matrix(rep(0, n_row * n_col), nrow = n_row, ncol = n_col)),
+      info = "origin"
+    ) %>%
+    compute_pca(...) %>%
+    purrr::pluck("aug")
 
-    dt <- dt %>%
-      dplyr::select(-dplyr::contains("PC")) %>%
-      dplyr::filter(.data$info != "randomly_generated") %>%
-      dplyr::add_row(basis = list(matrix(rep(0, n_row * n_col), nrow = n_row, ncol = n_col)),
-                     info = "origin") %>%
-      compute_pca(...) %>%
-      purrr::pluck("aug")
-
-  center <- dt %>% dplyr::filter(.data$info == "origin") %>%
+  center <- dt %>%
+    dplyr::filter(.data$info == "origin") %>%
     dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
 
   x0 <- center$x0
@@ -200,16 +204,18 @@ get_space_param <- function(dt,...) {
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-#' holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5) %>% get_theo()
+#' holes_1d_better %>%
+#'   bind_theoretical(best, tourr::holes(), raw_data = boa5) %>%
+#'   get_theo()
 #' @family get functions
 #' @export
 get_theo <- function(dt) {
   theo <- dt %>% dplyr::filter(.data$info == "theoretical")
 
-  if ("PC1" %in% colnames(theo)){
+  if ("PC1" %in% colnames(theo)) {
     out <- theo %>%
       dplyr::select(.data$PC1, .data$PC2)
-  } else{
+  } else {
     out <- theo
   }
 
@@ -227,38 +233,34 @@ get_theo <- function(dt) {
 #' @param precision The precision for the interruption
 #' @param ... other argument passed to \code{compute_pca()}
 #' @examples
-#'holes_1d_better %>% get_interrupt()
-#'holes_1d_geo %>% get_interrupt()
+#' holes_1d_better %>% get_interrupt()
+#' holes_1d_geo %>% get_interrupt()
 #' @family get functions
 #' @export
 get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
-
-  group <- dplyr::enexpr(group)
-  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
-
+  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
     dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
 
     anchor <- dt %>% get_anchor()
-    interp_last <- dt %>% get_interp_last(group = !!group)
+    interp_last <- dt %>% get_interp_last(group = {{ group }})
 
     interp_anchor <- dplyr::bind_rows(anchor, interp_last)
 
     problem_tries <- interp_anchor %>%
-      dplyr::group_by(!!group) %>%
+      dplyr::group_by({{ group }}) %>%
       dplyr::select(.data$info, .data$index_val, .data$tries) %>%
       tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
       dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
       dplyr::filter(match) %>%
-      dplyr::mutate(id = paste0(!!group, .data$tries))
+      dplyr::mutate(id = paste0({{ group }}, .data$tries))
 
     interp_anchor %>%
-      dplyr::mutate(id = paste0(!!group, .data$tries)) %>%
+      dplyr::mutate(id = paste0({{ group }}, .data$tries)) %>%
       dplyr::filter(.data$id %in% problem_tries$id)
-  } else{
+  } else {
     message("interrupt is only implemented in simulated annealing methods")
     return(NULL)
   }
-
 }
 
 #' Extract the end point of the interpolation on the iteration where interruption happens
@@ -272,35 +274,32 @@ get_interrupt <- function(dt, group = NULL, precision = 0.01, ...) {
 #' @param precision The precision for the interruption
 #' @param ... other argument passed to \code{compute_pca()}
 #' @examples
-#'holes_1d_better %>% get_interrupt_finish()
-#'holes_1d_geo %>% get_interrupt_finish()
+#' holes_1d_better %>% get_interrupt_finish()
+#' holes_1d_geo %>% get_interrupt_finish()
 #' @family get functions
 #' @export
-get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...){
+get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...) {
+  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
+    dt <- dt %>%
+      dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
+      dplyr::group_by({{ group }})
+    anchor <- dt %>% get_anchor(group = {{ group }})
+    interp_last <- dt %>% get_interp_last(group = {{ group }})
 
-  group <- dplyr::enexpr(group)
+    interp_anchor <- dplyr::bind_rows(anchor, interp_last)
 
-  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))){
-  dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random")) %>%
-    dplyr::group_by(!!group)
-  anchor <- dt %>% get_anchor(group = !!group)
-  interp_last <- dt %>% get_interp_last(group = !!group)
+    problem_tries <- interp_anchor %>%
+      dplyr::group_by({{ group }}) %>%
+      dplyr::select(.data$info, .data$index_val, .data$tries) %>%
+      tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
+      dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
+      dplyr::filter(match) %>%
+      dplyr::mutate(id = paste0({{ group }}, .data$tries))
 
-  interp_anchor <- dplyr::bind_rows(anchor, interp_last)
-
-  problem_tries <- interp_anchor %>%
-    dplyr::group_by(!!group) %>%
-    dplyr::select(.data$info, .data$index_val, .data$tries) %>%
-    tidyr::pivot_wider(names_from = .data$info, values_from = .data$index_val) %>%
-    dplyr::mutate(match = ifelse(abs(round(.data$new_basis, 3) - round(.data$interpolation, 3)) > precision, TRUE, FALSE)) %>%
-    dplyr::filter(match)%>%
-    dplyr::mutate(id = paste0(!!group, .data$tries))
-
-  interp_last %>%
-    dplyr::mutate(id = paste0(!!group, .data$tries)) %>%
-    dplyr::filter(.data$id %in% problem_tries$id)
-
-  } else{
+    interp_last %>%
+      dplyr::mutate(id = paste0({{ group }}, .data$tries)) %>%
+      dplyr::filter(.data$id %in% problem_tries$id)
+  } else {
     message("interrupt is only implemented in simulated annealing methods")
     return(NULL)
   }
@@ -320,19 +319,16 @@ get_interrupt_finish <- function(dt, group = NULL, precision = 0.01, ...){
 #' @family get functions
 #' @export
 get_search_count <- function(dt, iter = NULL, group = NULL, ...) {
-  group <- dplyr::enexpr(group)
-  iter <- dplyr::enexpr(iter)
-
   dt_search <- dt %>%
     get_search() %>%
-    dplyr::group_by(!!iter)
+    dplyr::group_by({{ iter }})
 
-  if (!is.null(group)) dt_search <- dt_search %>% dplyr::group_by(!!iter, !!group)
+  if (!rlang::quo_is_null(dplyr::enquo(group))) dt_search <- dt_search %>% dplyr::group_by({{ iter }}, {{ group }})
 
   dt_count <- dt_search %>%
     dplyr::summarise(n = dplyr::n())
 
-  if (!is.null(group)) dt_count <- dt_count %>% dplyr::arrange(!!group)
+  if (!rlang::quo_is_null(dplyr::enquo(group))) dt_count <- dt_count %>% dplyr::arrange({{ group }})
 
   dt_count
 }
@@ -357,4 +353,3 @@ get_basis_matrix <- function(dt) {
   colnames(basis) <- paste0("V", 1:(num_row * num_col))
   basis
 }
-

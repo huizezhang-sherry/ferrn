@@ -9,19 +9,16 @@
 #'   str(max = 1)
 #' @export
 flip_sign <- function(dt, group = NULL, ...) {
-
-  group <- dplyr::enexpr(group)
-
-  if (!is.null(group)) {
+  if (!rlang::quo_is_null(dplyr::enquo(group))) {
     group_name <- dt %>%
-      get_best(group = !!group) %>%
-      dplyr::pull(!!group)
+      get_best(group = {{ group }}) %>%
+      dplyr::pull({{ group }})
     num_method <- group_name %>% length()
     max_bases <- dt %>%
-      get_best(group = !!group) %>%
+      get_best(group = {{ group }}) %>%
       dplyr::pull(basis)
     max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
-    extract <- function(matrix, pos) matrix[(pos-1) %% nrow(matrix) + 1, ((pos-1) %/% nrow(matrix)) + 1]
+    extract <- function(matrix, pos) matrix[(pos - 1) %% nrow(matrix) + 1, ((pos - 1) %/% nrow(matrix)) + 1]
     max_sign <- mapply(extract, max_bases, max_id) %>% sign()
     group_to_flip <- group_name[max_sign < 0]
     group_to_flip <- group_to_flip[group_to_flip != "theoretical"]
@@ -33,8 +30,10 @@ flip_sign <- function(dt, group = NULL, ...) {
     } else {
       message(paste("signs in all the bases will be flipped in group", group_to_flip, "\n"))
       basis <- dt %>%
-        dplyr::mutate(basis = ifelse(!!group %in% group_to_flip & !!group != "theoretical",
-                                     purrr::map(basis, ~-.x), basis)) %>% get_basis_matrix()
+        dplyr::mutate(basis = ifelse({{ group }} %in% group_to_flip & {{ group }} != "theoretical",
+          purrr::map(basis, ~ -.x), basis
+        )) %>%
+        get_basis_matrix()
       dt_obj <- dt
     }
   } else {
@@ -44,7 +43,7 @@ flip_sign <- function(dt, group = NULL, ...) {
 
   return(list(
     basis = basis,
-    flip = !is.null(group),
+    flip = !rlang::quo_is_null(dplyr::enquo(group)),
     dt = dt_obj
   ))
 }
@@ -61,7 +60,6 @@ flip_sign <- function(dt, group = NULL, ...) {
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #' @export
 compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
-
   if (!"basis" %in% colnames(dt)) {
     stop("You need to have a basis column that contains the projection basis!")
   }
@@ -72,12 +70,14 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
   group <- dplyr::enexpr(group)
   dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
 
-  if (flip){
-    flip <- flip_sign(dt, group = !!group)
+  if (flip) {
+    flip <- flip_sign(dt, group = {{ group }})
     basis <- flip$basis
-  }else{
-    flip <- list(basis = dt %>% get_basis_matrix(),
-                 flip = FALSE)
+  } else {
+    flip <- list(
+      basis = dt %>% get_basis_matrix(),
+      flip = FALSE
+    )
     basis <- flip$basis
   }
 
@@ -144,36 +144,36 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
+  if (rlang::quo_is_null(dplyr::enquo(color))) color <- dplyr::enexpr(group)
 
-  group <- dplyr::enexpr(group)
-  if (!is.null(dplyr::enexpr(color))) color <- dplyr::enexpr(color) else color <- group
-
-  if (pca) {
-    dt <- compute_pca(dt, group = !!group, ...) %>% purrr::pluck("aug")
-  }
+  if (pca) dt <- compute_pca(dt, group = {{ group }}, ...) %>% purrr::pluck("aug")
 
   p <- ggplot2::ggplot() +
     # set up
     add_space(dt = get_space_param(dt), ...) +
     # add points
-    add_start(dt = get_start(dt), start_color = !!color, ...) +
-    add_end(dt = get_best(dt, group = !!group, ...), end_color = !!color, ...)  +
+    add_start(dt = get_start(dt), start_color = {{ color }}, ...) +
+    add_end(dt = get_best(dt, group = {{ group }}, ...), end_color = {{ color }}, ...) +
     # add path
-    add_interp(dt = get_interp(dt, group = !!group),
-               interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
+    add_interp(
+      dt = get_interp(dt, group = {{ group }}),
+      interp_alpha = .data[["id"]], interp_color = {{ color }}, interp_group = {{ group }}, ...
+    ) +
     # theme
     ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     ggplot2::theme_void() +
     ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
 
-  if (details){
-    p <- p + add_anchor(dt = get_anchor(dt), anchor_color = !!color, ...) +
-      add_search(dt = get_search(dt), search_color = !!color, ...) +
-      add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = !!color, ...) +
-      add_finish(dt = get_interrupt_finish(dt, group = !!group, ...), finish_color = !!color, ...) +
+  if (details) {
+    p <- p + add_anchor(dt = get_anchor(dt), anchor_color = {{ color }}, ...) +
+      add_search(dt = get_search(dt), search_color = {{ color }}, ...) +
+      add_dir_search(dt = get_dir_search_transformed(dt, ...), dir_color = {{ color }}, ...) +
+      add_finish(dt = get_interrupt_finish(dt, group = {{ group }}, ...), finish_color = {{ color }}, ...) +
       # add annotation
-      add_interrupt(dt = get_interrupt(dt, group = !!group, ...),
-                    interrupt_color = !!color, interrupt_group = interaction(!!sym("tries"), !!group), ...) +
+      add_interrupt(
+        dt = get_interrupt(dt, group = {{ group }}, ...),
+        interrupt_color = {{ color }}, interrupt_group = interaction(.data[["tries"]], {{ group }}), ...
+      ) +
       add_anno(dt = get_start(dt), ...)
   }
 
@@ -182,16 +182,17 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
       # set up
       add_space(dt = get_space_param(dt), ...) +
       # add points
-      add_start(dt = get_start(dt) %>% dplyr::select(-!!sym("id")), start_color = !!color, ...) +
+      add_start(dt = get_start(dt) %>% dplyr::select(-.data[["id"]]), start_color = {{ color }}, ...) +
       # add path
-      add_interp(dt = get_interp(dt, group = !!group),
-                 interp_alpha = !!sym("id"), interp_color = !!color, interp_group = !!group, ...) +
+      add_interp(
+        dt = get_interp(dt, group = {{ group }}),
+        interp_alpha = .data[["id"]], interp_color = {{ color }}, interp_group = {{ group }}, ...
+      ) +
       # theme
       ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
       ggplot2::theme_void() +
       ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank()) +
-      gganimate::transition_reveal(along = !!sym("id"))
-
+      gganimate::transition_reveal(along = .data[["id"]])
   }
 
   if ("theoretical" %in% dt$info) {
@@ -218,27 +219,31 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 #' @examples
 #' \dontrun{
 #' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
-#'   group = method, palette = botanical_palettes$fern[c(1,6)])
+#'   group = method, palette = botanical_palettes$fern[c(1, 6)]
+#' )
 #' }
 #' @family plot
 #' @rdname explore_space_tour
 #' @export
 prep_space_tour <- function(dt, group = NULL,
-                            color = sym("method"), rand_size = 1, point_size = 1.5, end_size = 5,
+                            color = NULL, rand_size = 1, point_size = 1.5, end_size = 5,
                             theo_size = 3, theo_shape = 17,
                             palette = botanical_palettes$fern, ...) {
-
-  group <- dplyr::enexpr(group)
-  color <- dplyr::enexpr(color)
+  if (rlang::quo_is_null(dplyr::enquo(color))) {
+    message("map `method` to color")
+    color <- dplyr::sym("method")
+  }
 
   # get start
-  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number()) %>% clean_method()
+  dt <- dt %>%
+    dplyr::mutate(row_num = dplyr::row_number()) %>%
+    clean_method()
 
   # see if any flip need to be done
-  flip <- dt %>% flip_sign(group = !!group)
+  flip <- dt %>% flip_sign(group = {{ group }})
   basis <- flip$basis %>% bind_random_matrix(front = TRUE)
   n_rand <- nrow(basis) - nrow(dt)
-  n_end <- get_best(flip$dt, group = !!group) %>% dplyr::pull(.data$row_num) + n_rand
+  n_end <- get_best(flip$dt, group = {{ group }}) %>% dplyr::pull(.data$row_num) + n_rand
 
   edges_dt <- flip$dt %>%
     dplyr::mutate(id = dplyr::row_number()) %>%
@@ -253,11 +258,11 @@ prep_space_tour <- function(dt, group = NULL,
     dplyr::mutate(id = .data$id + n_rand, id2 = .data$id2 + n_rand) %>%
     as.matrix()
 
-  edges_col <- palette[as.factor(edges_dt %>% dplyr::pull(!!color))]
+  edges_col <- palette[as.factor(edges_dt %>% dplyr::pull({{ color }}))]
 
   col <- c(
     rep("#D3D3D3", n_rand),
-    palette[as.factor(dt %>% dplyr::pull(!!color))]
+    palette[as.factor(dt %>% dplyr::pull({{ color }}))]
   )
   cex <- c(
     rep(rand_size, n_rand),
@@ -268,7 +273,9 @@ prep_space_tour <- function(dt, group = NULL,
   pch <- rep(20, nrow(basis))
 
   if ("theoretical" %in% dt$info) {
-    theo_row_num <- dt %>% dplyr::filter(.data$info == "theoretical") %>% dplyr::pull(.data$row_num)
+    theo_row_num <- dt %>%
+      dplyr::filter(.data$info == "theoretical") %>%
+      dplyr::pull(.data$row_num)
 
     col[theo_row_num + n_rand] <- "black"
     cex[theo_row_num + n_rand] <- theo_size
@@ -290,7 +297,9 @@ prep_space_tour <- function(dt, group = NULL,
 explore_space_tour <- function(...) {
   prep <- prep_space_tour(...)
 
-  tourr::animate_xy(prep$basis, col = prep$col, cex = prep$cex, pch = prep$pch,
-                    edges = prep$edges, edges.col = prep$edges_col,
-                    axes = "bottomleft")
+  tourr::animate_xy(prep$basis,
+    col = prep$col, cex = prep$cex, pch = prep$pch,
+    edges = prep$edges, edges.col = prep$edges_col,
+    axes = "bottomleft"
+  )
 }
