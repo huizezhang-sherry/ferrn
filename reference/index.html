@@ -139,7 +139,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-plotting-functions" class="hasAnchor"><a href="#section-plotting-functions" class="anchor"></a>Plotting Functions</h2>
+          <h2 id="section-main-plotting-functions" class="hasAnchor"><a href="#section-main-plotting-functions" class="anchor"></a>Main plotting functions</h2>
           <p class="section-desc"><p>Main diagnostic plotting functions</p></p>
         </th>
       </tr>
@@ -163,9 +163,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="explore_space_pca.html">explore_space_pca()</a></code> </p>
+          <p><code><a href="explore_space_pca.html">flip_sign()</a></code> <code><a href="explore_space_pca.html">compute_pca()</a></code> <code><a href="explore_space_pca.html">explore_space_pca()</a></code> </p>
         </td>
-        <td><p>Plot the PCA projection of the projection bases space</p></td>
+        <td><p>Flip the sign of a group of bases</p></td>
       </tr><tr>
         
         <td>
@@ -176,7 +176,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-get-functions" class="hasAnchor"><a href="#section-get-functions" class="anchor"></a>Get functions</h2>
+          <h2 id="section-get-components" class="hasAnchor"><a href="#section-get-components" class="anchor"></a>Get components</h2>
           <p class="section-desc"><p>Extracting components from existing data object</p></p>
         </th>
       </tr>
@@ -188,9 +188,15 @@
       <tr>
         
         <td>
-          <p><code><a href="get_start.html">get_start()</a></code> </p>
+          <p><code><a href="get_anchor.html">get_anchor()</a></code> </p>
         </td>
-        <td><p>Extract the starting records</p></td>
+        <td><p>Extract the anchor points on the geodesic path</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_basis_matrix.html">get_basis_matrix()</a></code> </p>
+        </td>
+        <td><p>Extract all the bases as a matrix</p></td>
       </tr><tr>
         
         <td>
@@ -200,9 +206,39 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="get_dir_search_transformed.html">get_dir_search_transformed()</a></code> </p>
+        </td>
+        <td><p>Extract directional search points during the optimisation</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="get_interp.html">get_interp()</a></code> </p>
         </td>
         <td><p>Extract interpolated records</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_interp_last.html">get_interp_last()</a></code> </p>
+        </td>
+        <td><p>Extract the end point at each interpolation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_interrupt.html">get_interrupt()</a></code> </p>
+        </td>
+        <td><p>Extract the end point of the interpolation and the target point in the iteration when an interruption happens</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_interrupt_finish.html">get_interrupt_finish()</a></code> </p>
+        </td>
+        <td><p>Extract the end point of the interpolation on the iteration where interruption happens</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_search.html">get_search()</a></code> </p>
+        </td>
+        <td><p>Extract search points during the optimisation</p></td>
       </tr><tr>
         
         <td>
@@ -212,14 +248,26 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="get_basis_matrix.html">get_basis_matrix()</a></code> </p>
+          <p><code><a href="get_space_param.html">get_space_param()</a></code> </p>
         </td>
-        <td><p>Extract all the bases as a matrix</p></td>
+        <td><p>Estimate the radius of the background circle based on the randomly generated points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_start.html">get_start()</a></code> </p>
+        </td>
+        <td><p>Extract the starting records</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_theo.html">get_theo()</a></code> </p>
+        </td>
+        <td><p>Extract the theoretical best basis, if applicable</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-bind-functions" class="hasAnchor"><a href="#section-bind-functions" class="anchor"></a>Bind functions</h2>
+          <h2 id="section-bind-additionals" class="hasAnchor"><a href="#section-bind-additionals" class="anchor"></a>Bind additionals</h2>
           <p class="section-desc"><p>Bind external data to the existing data object</p></p>
         </th>
       </tr>
@@ -231,12 +279,6 @@
       <tr>
         
         <td>
-          <p><code><a href="bind_theoretical.html">bind_theoretical()</a></code> </p>
-        </td>
-        <td><p>Bind the theoretical best record</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="bind_random.html">bind_random()</a></code> </p>
         </td>
         <td><p>Bind random bases in the projection bases space</p></td>
@@ -246,11 +288,96 @@
           <p><code><a href="bind_random_matrix.html">bind_random_matrix()</a></code> </p>
         </td>
         <td><p>Bind random bases in the projection bases space as a matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bind_theoretical.html">bind_theoretical()</a></code> </p>
+        </td>
+        <td><p>Bind the theoretical best record</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-color-palette" class="hasAnchor"><a href="#section-color-palette" class="anchor"></a>Color palette</h2>
+          <h2 id="section-create-ggprotos" class="hasAnchor"><a href="#section-create-ggprotos" class="anchor"></a>Create ggprotos</h2>
+          <p class="section-desc"><p>ggproto for drawing each component in PCA plot</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="add_anchor.html">add_anchor()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing anchor points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_anno.html">add_anno()</a></code> </p>
+        </td>
+        <td><p>A ggproto for annotating the symmetry of the starting points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_dir_search.html">add_dir_search()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing directional search points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_end.html">add_end()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing start points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_finish.html">add_finish()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing finish points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_interp.html">add_interp()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing interpolation path</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_interrupt.html">add_interrupt()</a></code> </p>
+        </td>
+        <td><p>A ggproto for annotating the interrupted path</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_search.html">add_search()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing search points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_space.html">add_space()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing circle</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_start.html">add_start()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing start points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_theo.html">add_theo()</a></code> </p>
+        </td>
+        <td><p>A ggproto for drawing the theoretical basis, if applicable</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-color-theme" class="hasAnchor"><a href="#section-color-theme" class="anchor"></a>Color &amp; theme</h2>
           <p class="section-desc"><p>An australian botanical color palette</p></p>
         </th>
       </tr>
@@ -271,6 +398,55 @@
           <p><code><a href="botanical_pal.html">botanical_pal()</a></code> </p>
         </td>
         <td><p>Color interpolation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="scale_color_continuous_botanical.html">scale_color_continuous_botanical()</a></code> </p>
+        </td>
+        <td><p>continous scale color function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="scale_color_discrete_botanical.html">scale_color_discrete_botanical()</a></code> </p>
+        </td>
+        <td><p>Discrete scale color function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="scale_fill_continuous_botanical.html">scale_fill_continuous_botanical()</a></code> </p>
+        </td>
+        <td><p>continous scale fill function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="scale_fill_discrete_botanical.html">scale_fill_discrete_botanical()</a></code> </p>
+        </td>
+        <td><p>discrete scale fill function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="theme_fern.html">theme_fern()</a></code> </p>
+        </td>
+        <td><p>A specific theme for trace plots</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-in-built-data" class="hasAnchor"><a href="#section-in-built-data" class="anchor"></a>In-built data</h2>
+          <p class="section-desc"><p>Simulated example data</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="data.html">holes_1d_geo</a></code> <code><a href="data.html">holes_1d_better</a></code> <code><a href="data.html">holes_2d_better</a></code> <code><a href="data.html">holes_2d_better_max_tries</a></code> <code><a href="data.html">boa</a></code> <code><a href="data.html">boa5</a></code> <code><a href="data.html">boa6</a></code> </p>
+        </td>
+        <td><p>Simulated data</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -287,21 +463,15 @@
       <tr>
         
         <td>
-          <p><code><a href="compute_pca.html">compute_pca()</a></code> </p>
+          <p><code><a href="relevel.html">clean_method()</a></code> </p>
         </td>
-        <td><p>Compute PCA for the projection bases</p></td>
+        <td><p>Clean method names</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="flip_sign.html">flip_sign()</a></code> </p>
+          <p><code><a href="format_label.html">format_label()</a></code> </p>
         </td>
-        <td><p>Flip the sign of a group of bases</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="relevel.html">relevel_geo()</a></code> <code><a href="relevel.html">relevel_better()</a></code> <code><a href="relevel.html">clean_method()</a></code> </p>
-        </td>
-        <td><p>Clean factor levels in the data object</p></td>
+        <td><p>Better label formatter to avoid overlapping</p></td>
       </tr>
     </tbody>
     </table>

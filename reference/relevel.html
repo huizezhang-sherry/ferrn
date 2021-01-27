@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Clean factor levels in the data object — relevel_geo • ferrn</title>
+<title>Clean method names — clean_method • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Clean factor levels in the data object — relevel_geo" />
-<meta property="og:description" content="Relevel the info column in the data object to be the step in the optimisation algorithms." />
+<meta property="og:title" content="Clean method names — clean_method" />
+<meta property="og:description" content="Clean method names" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,24 +126,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Clean factor levels in the data object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/relevel_info.R'><code>R/relevel_info.R</code></a></small>
+    <h1>Clean method names</h1>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>relevel.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Relevel the <code>info</code> column in the data object to be the step in the optimisation algorithms.</p>
+    <p>Clean method names</p>
     </div>
 
-    <pre class="usage"><span class='fu'>relevel_geo</span><span class='op'>(</span>
-  <span class='va'>dt</span>,
-  order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"new_basis"</span>, <span class='st'>"direction_search"</span>, <span class='st'>"best_direction_search"</span>,
-    <span class='st'>"best_line_search"</span>, <span class='st'>"interpolation"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>relevel_better</span><span class='op'>(</span><span class='va'>dt</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"random_search"</span>, <span class='st'>"new_basis"</span>, <span class='st'>"interpolation"</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>clean_method</span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>clean_method</span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,54 +144,9 @@
       <th>dt</th>
       <td><p>a data object</p></td>
     </tr>
-    <tr>
-      <th>order</th>
-      <td><p>A vector that allows you to customise the order of info</p></td>
-    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For <code>search_geodesic</code>,</p><ul>
-<li><p>new_basis &lt; direction_search &lt; best_direction_search &lt; best_line_search</p></li>
-</ul>
-
-<p>For <code>search_better</code> and <code>search_better_random</code>,</p>
-<ul>
-<li><p>random_search &lt; new_basis &lt; interpolation</p></li>
-</ul>
-
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>holes_1d_geo</span> <span class='op'>%&gt;%</span> <span class='fu'>relevel_geo</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 408 x 8</span><span>
-#&gt;    basis          index_val info            method       alpha tries  loop    id
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 new_basis       search_geod…   0.5     1     1     1
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     2
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     3
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     4
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     5
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     6
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     7
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     8
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 direction_sear… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     9
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 ×</span><span>…     0.749 best_direction… search_geod…  </span><span style='color: #BB0000;'>NA</span><span>       2     1    10
-#&gt; </span><span style='color: #555555;'># … with 398 more rows</span><span></div><div class='input'><span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span> <span class='fu'>relevel_better</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 79 x 8</span><span>
-#&gt;    basis             index_val info         method       alpha tries  loop    id
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.749 new_basis    search_bett…   0.5     1     1     1
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.730 random_sear… search_bett…   0.5     2     1     2
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.743 random_sear… search_bett…   0.5     2     2     3
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.736 random_sear… search_bett…   0.5     2     3     4
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.747 random_sear… search_bett…   0.5     2     4     5
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.725 random_sear… search_bett…   0.5     2     5     6
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.752 new_basis    search_bett…   0.5     2     6     7
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.749 interpolati… search_bett…  </span><span style='color: #BB0000;'>NA</span><span>       2     1     8
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.750 interpolati… search_bett…  </span><span style='color: #BB0000;'>NA</span><span>       2     2     9
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.751 interpolati… search_bett…  </span><span style='color: #BB0000;'>NA</span><span>       2     3    10
-#&gt; </span><span style='color: #555555;'># … with 69 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
