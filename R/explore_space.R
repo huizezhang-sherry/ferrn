@@ -180,8 +180,8 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
     # search points
     p <- p +
       add_search(dt = get_search(dt), search_color = {{ color }}, ...)
-    if (!is.null(get_dir_search(dt))){
-      p <- p + add_dir_search(dt = get_dir_search(dt), dir_color = {{ color }}, ...)
+    if (!is.null(get_dir_search(dt, ...))){
+      p <- p + add_dir_search(dt = get_dir_search(dt, ...), dir_color = {{ color }}, ...)
     }
 
     # annotate the symmetry of start points

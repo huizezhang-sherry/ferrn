@@ -109,6 +109,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #' @family plot
 #' @export
 explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, extend_lower = 0.95, ...) {
+
   if (rlang::quo_is_null(dplyr::enquo(iter))) {
     message("map tries to the x-axis")
     iter <- dplyr::sym("tries")
@@ -158,7 +159,7 @@ explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, ext
     # point summary
     ggplot2::geom_point(data = search_point) +
     # boxplot summary
-    ggplot2::geom_boxplot(data = search_box) +
+    ggplot2::geom_boxplot(data = search_box, ggplot2::aes(group = {{ iter }})) +
     ggplot2::geom_boxplot(
       data = search_box %>% dplyr::filter({{ iter }} == largest),
       color = "grey"

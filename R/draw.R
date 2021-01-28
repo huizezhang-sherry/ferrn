@@ -149,7 +149,7 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color =
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
-add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...) {
+add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL, ...) {
   ggplot2::geom_point(
     data = dt,
     ggplot2::aes(x = .data$PC1, y = .data$PC2, color = {{ dir_color }}),

@@ -113,7 +113,7 @@ get_search <- function(dt) {
 #'   get_dir_search()
 #' @family get functions
 #' @export
-get_dir_search <- function(dt, ratio = 3) {
+get_dir_search <- function(dt, ratio = 3, ...) {
 
   # check only valid for search_geodesic or pseudo-derivative
   if (!"PC1" %in% colnames(dt)) {
