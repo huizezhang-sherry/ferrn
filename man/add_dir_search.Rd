@@ -4,7 +4,7 @@
 \alias{add_dir_search}
 \title{A ggproto for drawing directional search points}
 \usage{
-add_dir_search(dt, dir_size = 0.5, dir_alpha = 1, dir_color = NULL, ...)
+add_dir_search(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

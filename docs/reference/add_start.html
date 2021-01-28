@@ -168,7 +168,7 @@ should be be called directly by the user</p>
 <code><a href='add_anno.html'>add_anno</a>()</code>,
 <code><a href='add_dir_search.html'>add_dir_search</a>()</code>,
 <code><a href='add_end.html'>add_end</a>()</code>,
-<code><a href='add_finish.html'>add_finish</a>()</code>,
+<code><a href='add_interp_last.html'>add_interp_last</a>()</code>,
 <code><a href='add_interp.html'>add_interp</a>()</code>,
 <code><a href='add_interrupt.html'>add_interrupt</a>()</code>,
 <code><a href='add_search.html'>add_search</a>()</code>,
@@ -181,14 +181,14 @@ should be be called directly by the user</p>
 <span class='co'># construct the space and start df for plotting</span>
 <span class='no'>space</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='kw'>x0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>y0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 <span class='no'>start</span> <span class='kw'>&lt;-</span> <span class='no'>holes_1d_geo</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='compute_pca.html'>compute_pca</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='explore_space_pca.html'>compute_pca</a></span>() <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>purrr</span><span class='kw ns'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/pluck.html'>pluck</a></span>(<span class='st'>"aug"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='relevel.html'>clean_method</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='get_start.html'>get_start</a></span>()
 <span class='no'>start</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 14</span><span>
 #&gt;   basis index_val info  method alpha tries  loop    id row_num   PC1    PC2
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 new_… </span><span style='color: #BB0000;'>NA</span><span>       0.5     1     1     1       1 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.711</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 new_… </span><span style='color: #BB0000;'>NA</span><span>       0.5     1     1     1       1 -</span><span style='color: #BB0000;'>1.79</span><span> -</span><span style='color: #BB0000;'>0.689</span><span>
 #&gt; </span><span style='color: #555555;'># … with 3 more variables: PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>() +
   <span class='kw pkg'>ferrn</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/ferrn/man/add_space.html'>add_space</a></span>(<span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>space</span>) +
   <span class='kw pkg'>ferrn</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/ferrn/man/add_start.html'>add_start</a></span>(<span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>start</span>, <span class='kw'>start_color</span> <span class='kw'>=</span> <span class='no'>info</span>) +

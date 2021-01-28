@@ -4,7 +4,7 @@
 \alias{get_dir_search}
 \title{Extract directional search points during the optimisation}
 \usage{
-get_dir_search(dt, ratio = 3)
+get_dir_search(dt, ratio = 5, ...)
 }
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}

@@ -113,14 +113,14 @@ get_search <- function(dt) {
 #'   get_dir_search()
 #' @family get functions
 #' @export
-get_dir_search <- function(dt, ratio = 3, ...) {
+get_dir_search <- function(dt, ratio = 5, ...) {
 
   # check only valid for search_geodesic or pseudo-derivative
   if (!"PC1" %in% colnames(dt)) {
     message("get_dir_search() needs to be used on data projected by compute_pca()")
     return(NULL)
   }
-  dt <- dt %>% dplyr::filter(.data$method %in% c("pseudo_derivative", "search_geodesic"))
+  dt <- dt %>% dplyr::filter(.data$method %in% c("PD", "search_geodesic"))
 
   if (nrow(dt) == 0) return(NULL)
 
@@ -234,8 +234,8 @@ get_theo <- function(dt) {
 #' @export
 get_interrupt <- function(dt, group = NULL, precision = 0.001) {
 
-  if (any(unique(dt$method) %in% c("simulated_annealing", "search_better", "search_better_random"))) {
-    dt <- dt %>% dplyr::filter(dt$method %in% c("simulated_annealing", "search_better", "search_better_random"))
+  if (any(unique(dt$method) %in% c("SA","SAJO", "search_better", "search_better_random"))) {
+    dt <- dt %>% dplyr::filter(dt$method %in% c("SA", "SAJO" , "search_better", "search_better_random"))
 
     anchor <- dt %>% get_anchor()
     interp_last <- dt %>% get_interp_last(group = {{ group }})
