@@ -2,11 +2,11 @@ Package: ferrn
 Title: Facilitate Exploration of touRR optimisatioN
 Version: 0.0.1
 Authors@R: 
-    person(given = "Sherry",
+    person(given = "H. Sherry",
            family = "Zhang",
            role = c("aut", "cre"),
            email = "huize.zhang@monash.edu")
-Description: A package for extracting key components in the data object collected by the guided tour optimisation, and producing diagnostic plots. 
+Description: Diagnostic plots for guided tour optimisation
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
