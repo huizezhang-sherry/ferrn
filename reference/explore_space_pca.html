@@ -92,7 +92,7 @@ compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ferrn</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -178,7 +178,7 @@ that plots the data object in a space reduced by PCA.
     </tr>
     <tr>
       <th>details</th>
-      <td><p>if all the compoenents of the optimisers should be shown. With <code>details = FALSE</code> only the start, end and interpolation path will be shown</p></td>
+      <td><p>if all the components of the optimisers should be shown. With <code>details = FALSE</code> only the start, end and interpolation path will be shown</p></td>
     </tr>
     <tr>
       <th>pca</th>
@@ -186,7 +186,7 @@ that plots the data object in a space reduced by PCA.
     </tr>
     <tr>
       <th>color</th>
-      <td><p>A variable from the object that the diagnostic plot should be colored by</p></td>
+      <td><p>A variable from the object that the diagnostic plot should be coloured by</p></td>
     </tr>
     <tr>
       <th>animate</th>
@@ -242,7 +242,7 @@ that plots the data object in a space reduced by PCA.
     index <span class='op'>=</span> <span class='fu'>tourr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span><span class='op'>(</span><span class='op'>)</span>, raw_data <span class='op'>=</span> <span class='va'>boa5</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>explore_space_pca</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='scale_color_discrete_botanical.html'>scale_color_discrete_botanical</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_discrete_botanical</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic </span></div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

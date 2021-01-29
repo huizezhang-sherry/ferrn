@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the trace the search progression — explore_trace_interp • ferrn</title>
+<title>A customised colour palette based on Australian botanies — botanical_palettes • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Plot the trace the search progression — explore_trace_interp" />
-<meta property="og:description" content="Trace the index value of search/ interpolation points in guided tour optimisation" />
+<meta property="og:title" content="A customised colour palette based on Australian botanies — botanical_palettes" />
+<meta property="og:description" content="Available colours in the palettes" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -126,71 +126,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the trace the search progression</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_trace.R'><code>R/explore_trace.R</code></a></small>
-    <div class="hidden name"><code>explore_trace.Rd</code></div>
+    <h1>A customised colour palette based on Australian botanies</h1>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/color.R'><code>R/color.R</code></a></small>
+    <div class="hidden name"><code>color.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Trace the index value of search/ interpolation points in guided tour optimisation</p>
+    <p>Available colours in the palettes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>explore_trace_interp</span><span class='op'>(</span>
-  <span class='va'>dt</span>,
-  iter <span class='op'>=</span> <span class='cn'>NULL</span>,
-  color <span class='op'>=</span> <span class='cn'>NULL</span>,
-  group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  cutoff <span class='op'>=</span> <span class='fl'>50</span>,
-  accuracy_x <span class='op'>=</span> <span class='fl'>5</span>,
-  accuracy_y <span class='op'>=</span> <span class='fl'>0.01</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>botanical_palettes</span>
+
+<span class='fu'>botanical_pal</span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <th>palette</th>
+      <td><p>Colour palette from the botanical_palette</p></td>
     </tr>
     <tr>
-      <th>iter</th>
-      <td><p>The iterator on the x-axis</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Coloured by a particular variable</p></td>
-    </tr>
-    <tr>
-      <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
-    </tr>
-    <tr>
-      <th>cutoff</th>
-      <td><p>If there are less than cut-off number of points on the interpolation path, all the points will be marked</p></td>
-    </tr>
-    <tr>
-      <th>accuracy_x</th>
-      <td><p>if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label</p></td>
-    </tr>
-    <tr>
-      <th>accuracy_y</th>
-      <td><p>the precision of y-axis label</p></td>
+      <th>reverse</th>
+      <td><p>logical, if the colour should be reversed</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p>Other plot: 
-<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code>,
-<code><a href='flip_sign.html'>flip_sign</a>()</code>,
-<code><a href='prep_space_tour.html'>prep_space_tour</a>()</code></p></div>
+    <p>An object of class <code>list</code> of length 5.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Compare the trace of interpolated points in two algorithms</span>
-<span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>explore_trace_interp</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>map id to the x-axis</span></div><div class='output co'>#&gt; <span class='message'>map tries to color</span></div><div class='img'><img src='explore_trace-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
