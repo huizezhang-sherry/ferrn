@@ -13,7 +13,7 @@ add_anchor(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = NULL, ...)
 
 \item{anchor_alpha}{an alpha value for the transparency of the point}
 
-\item{anchor_color}{the color of the points}
+\item{anchor_color}{the colour of the points}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

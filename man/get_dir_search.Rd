@@ -10,6 +10,8 @@ get_dir_search(dt, ratio = 5, ...)
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
 \item{ratio}{a buffer value to allow directional search points being distinguishable from the anchor points}
+
+\item{...}{arguments passed to \code{compute_pca()}}
 }
 \description{
 Extract directional search points during the optimisation

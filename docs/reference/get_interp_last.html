@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ferrn</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -101,6 +101,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -163,27 +166,27 @@
 <code><a href='get_theo.html'>get_theo</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>holes_1d_better</span> <span class='kw'>%&gt;%</span> <span class='fu'>get_interp_last</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 8</span><span>
+    <pre class="examples"><div class='input'><span class='no'>holes_1d_better</span> <span class='kw'>%&gt;%</span> <span class='fu'>get_interp_last</span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 8</span><span>
 #&gt;   basis             index_val info          method       alpha tries  loop    id
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.753 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     2     9     9
-#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.798 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     3    15    24
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.866 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     4     7    31
-#&gt; </span><span style='color: #555555;'>4</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.914 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     5     6    37</div><div class='input'><span class='fu'>get_interp_last</span>(<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 12 x 8</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.753 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     2     9     9
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.798 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     3    15    24
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.866 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     4     7    31
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.914 interpolation search_bett…    </span><span style='color: #BB0000;'>NA</span><span>     5     6    37</div><div class='input'><span class='fu'>get_interp_last</span>(<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span>(<span class='no'>holes_1d_better</span>, <span class='no'>holes_1d_geo</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>method</span>)</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 12 x 8</span><span>
 #&gt;    basis            index_val info         method        alpha tries  loop    id
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.753 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     2     9     9
-#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.798 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     3    15    24
-#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.866 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     4     7    31
-#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.914 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     5     6    37
-#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.753 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     2     7     7
-#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.793 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     3    11    18
-#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.805 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     4     7    25
-#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.836 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     5     8    33
-#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.890 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     6     7    40
-#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.917 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     7     5    45
-#&gt; </span><span style='color: #555555;'>11</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.929 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     8     4    49
-#&gt; </span><span style='color: #555555;'>12</span><span> </span><span style='color: #555555;'>&lt;dbl[,1] [5 × 1</span><span>…     0.933 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     9     3    52</div></span></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.753 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     2     9     9
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.798 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     3    15    24
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.866 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     4     7    31
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.914 interpolati… search_better    </span><span style='color: #BB0000;'>NA</span><span>     5     6    37
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.753 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     2     7     7
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.793 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     3    11    18
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.805 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     4     7    25
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.836 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     5     8    33
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.890 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     6     7    40
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.917 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     7     5    45
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.929 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     8     4    49
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.933 interpolati… search_geode…    </span><span style='color: #BB0000;'>NA</span><span>     9     3    52</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

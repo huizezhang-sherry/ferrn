@@ -25,7 +25,7 @@ explore_space_tour(...)
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
-\item{color}{A variable from the object that the diagnostic plot should be colored by}
+\item{color}{A variable from the object that the diagnostic plot should be coloured by}
 
 \item{rand_size}{random point size}
 
@@ -37,7 +37,7 @@ explore_space_tour(...)
 
 \item{theo_shape}{the numerical value of basic plot shape}
 
-\item{palette}{The color palette to use}
+\item{palette}{The colour palette to use}
 
 \item{...}{Additional argument passed to \code{tourr::animate_xy()}}
 }

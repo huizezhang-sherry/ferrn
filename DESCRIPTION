@@ -1,24 +1,22 @@
 Package: ferrn
 Title: Facilitate Exploration of touRR optimisatioN
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person(given = "Sherry",
            family = "Zhang",
            role = c("aut", "cre"),
-           email = "Huize.Zhang@monash.edu")
-Description: What the package does (one paragraph).
+           email = "huize.zhang@monash.edu")
+Description: A package for extracting key components in the data object collected by the guided tour optimisation, and producing diagnostic plots. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/huizezhang-sherry/ferrn
+URL: https://github.com/huizezhang-sherry/ferrn/
 BugReports: https://github.com/huizezhang-sherry/ferrn/issues
 Imports: 
     rlang (>= 0.1.2),
     dplyr,
     magrittr,
-    patchwork,
     scales,
-    forcats,
     gganimate,
     ggplot2,
     tibble,
@@ -36,4 +34,7 @@ Suggests:
     tidyr,
     covr,
     pkgdown,
-    testthat
+    testthat,
+    forcats,
+    patchwork
+Language: en-GB

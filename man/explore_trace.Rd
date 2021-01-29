@@ -19,11 +19,11 @@ explore_trace_interp(
 
 \item{iter}{The iterator on the x-axis}
 
-\item{color}{Colored by a particular varaible}
+\item{color}{Coloured by a particular variable}
 
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
-\item{cutoff}{If there are less than cutoff number of points on the interpolation path, all the points will be marked}
+\item{cutoff}{If there are less than cut-off number of points on the interpolation path, all the points will be marked}
 
 \item{accuracy_x}{if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label}
 

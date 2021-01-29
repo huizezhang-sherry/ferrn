@@ -5,11 +5,11 @@
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param space_alpha an alpha value for the transparency of the space
-#' @param space_fill the color of the space filling
-#' @param space_color the color of the space brim
-#' @param cent_size  the size of the center point
+#' @param space_fill the colour of the space filling
+#' @param space_color the colour of the space brim
+#' @param cent_size  the size of the centre point
 #' @param cent_alpha an alpha value for the transparency of the space
-#' @param cent_color the color of the space center
+#' @param cent_color the colour of the space centre
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @examples
 #' library(ggplot2)
@@ -44,7 +44,7 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param start_size the point size
 #' @param start_alpha an alpha value for the transparency of the point
-#' @param start_color the color of the points
+#' @param start_color the colour of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @examples
 #' library(ggplot2)
@@ -56,7 +56,6 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #'   purrr::pluck("aug") %>%
 #'   clean_method() %>%
 #'   get_start()
-#' start
 #' ggplot() +
 #'   ferrn:::add_space(dt = space) +
 #'   ferrn:::add_start(dt = start, start_color = info) +
@@ -81,7 +80,7 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param end_size the point size
 #' @param end_alpha an alpha value for the transparency of the point
-#' @param end_color the color of the points
+#' @param end_color the colour of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
@@ -105,7 +104,7 @@ add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...) {
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param anchor_size the point size
 #' @param anchor_alpha an alpha value for the transparency of the point
-#' @param anchor_color the color of the points
+#' @param anchor_color the colour of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
@@ -125,7 +124,7 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = N
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param search_size the point size
 #' @param search_alpha an alpha value for the transparency of the point
-#' @param search_color the color of the points
+#' @param search_color the colour of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
@@ -145,7 +144,7 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color =
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param dir_size the point size
 #' @param dir_alpha an alpha value for the transparency of the point
-#' @param dir_color the color of the points
+#' @param dir_color the colour of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
@@ -166,7 +165,7 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param interp_last_size the point size
 #' @param interp_last_alpha an alpha value for the transparency of the point
-#' @param interp_last_color the color of the points
+#' @param interp_last_color the colour of the points
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
 #' @export
@@ -186,7 +185,7 @@ add_interp_last <- function(dt, interp_last_size = 3, interp_last_alpha = 1, int
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param interp_size the size of the path
 #' @param interp_alpha an alpha value for the transparency of the path
-#' @param interp_color the color of the path
+#' @param interp_color the colour of the path
 #' @param interp_group a group variable for path connection
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @family draw functions
@@ -211,7 +210,7 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param interrupt_size the size of the path
 #' @param interrupt_alpha an alpha value for the transparency of the path
-#' @param interrupt_color the color of the path
+#' @param interrupt_color the colour of the path
 #' @param interrupt_group a group variable for path connection
 #' @param interrupt_linetype the linetype for annotating the interrupted path
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
@@ -237,7 +236,7 @@ add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param anno_color the color of the annotation
+#' @param anno_color the colour of the annotation
 #' @param anno_lty the linetype of the annotation
 #' @param anno_alpha an alpha value for the transparency of the annotation
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}

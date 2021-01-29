@@ -31,11 +31,11 @@ explore_space_pca(
 
 \item{flip}{boolean, if the sign flipping need to be computed}
 
-\item{details}{if all the compoenents of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown}
+\item{details}{if all the components of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown}
 
 \item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
 
-\item{color}{A variable from the object that the diagnostic plot should be colored by}
+\item{color}{A variable from the object that the diagnostic plot should be coloured by}
 
 \item{animate}{Boolean, if the plot should be animated}
 }

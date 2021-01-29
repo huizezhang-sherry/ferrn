@@ -129,10 +129,10 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #' that plots the data object in a space reduced by PCA.
 #' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param details if all the compoenents of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown
+#' @param details if all the components of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown
 #' @param pca Boolean, if \code{compute_pca()} should be performed on the data
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param color A variable from the object that the diagnostic plot should be colored by
+#' @param color A variable from the object that the diagnostic plot should be coloured by
 #' @param ... different argument passed to \code{add_*()}
 #' @param animate Boolean, if the plot should be animated
 #' @examples
@@ -216,13 +216,13 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param color A variable from the object that the diagnostic plot should be colored by
+#' @param color A variable from the object that the diagnostic plot should be coloured by
 #' @param rand_size random point size
 #' @param point_size other point size
 #' @param end_size the size of the ending point
 #' @param theo_size theoretical point size
 #' @param theo_shape the numerical value of basic plot shape
-#' @param palette The color palette to use
+#' @param palette The colour palette to use
 #' @param ... Additional argument passed to \code{tourr::animate_xy()}
 #' @examples
 #' \dontrun{

@@ -4,9 +4,9 @@
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param iter The iterator on the x-axis
-#' @param color Colored by a particular varaible
+#' @param color Coloured by a particular variable
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param cutoff If there are less than cutoff number of points on the interpolation path, all the points will be marked
+#' @param cutoff If there are less than cut-off number of points on the interpolation path, all the points will be marked
 #' @param accuracy_x if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label
 #' @param accuracy_y the precision of y-axis label
 #' @examples
@@ -91,9 +91,9 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param iter The iterator on the x-axis
-#' @param color Colored by a particular varaible
-#' @param cutoff The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
-#' @param extend_lower a percentage to extend the lower ylim for better display of the count
+#' @param color Coloured by a particular variable
+#' @param cutoff The cut-off number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
+#' @param extend_lower a percentage to extend along the y-axis for better display of the count
 #' @param ... arguments passed into geom_label_repel() for better display of the count in each iteration
 #' @examples
 #' # Summary plots for search points in two algorithms

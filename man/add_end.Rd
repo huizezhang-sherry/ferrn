@@ -13,7 +13,7 @@ add_end(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...)
 
 \item{end_alpha}{an alpha value for the transparency of the point}
 
-\item{end_color}{the color of the points}
+\item{end_color}{the colour of the points}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

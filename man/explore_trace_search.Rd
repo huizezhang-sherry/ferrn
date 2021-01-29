@@ -18,11 +18,11 @@ explore_trace_search(
 
 \item{iter}{The iterator on the x-axis}
 
-\item{color}{Colored by a particular varaible}
+\item{color}{Coloured by a particular variable}
 
-\item{cutoff}{The cutoff number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}}
+\item{cutoff}{The cut-off number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}}
 
-\item{extend_lower}{a percentage to extend the lower ylim for better display of the count}
+\item{extend_lower}{a percentage to extend along the y-axis for better display of the count}
 
 \item{...}{arguments passed into geom_label_repel() for better display of the count in each iteration}
 }

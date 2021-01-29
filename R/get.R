@@ -106,6 +106,7 @@ get_search <- function(dt) {
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param ratio a buffer value to allow directional search points being distinguishable from the anchor points
+#' @param ... arguments passed to \code{compute_pca()}
 #' @examples
 #' holes_1d_geo %>%
 #'   compute_pca() %>%
@@ -154,7 +155,7 @@ get_dir_search <- function(dt, ratio = 5, ...) {
 #' Estimate the radius of the background circle based on the randomly generated points
 #'
 #' The space of projected bases is a circle when reduced to 2D. A radius is estimated using
-#' the largest distance from the bases in the data object to the center point.
+#' the largest distance from the bases in the data object to the centre point.
 #'
 #' This is  a wrapper function used by \code{explore_space_pca()} and
 #' should be be called directly by the user
@@ -179,12 +180,12 @@ get_space_param <- function(dt, ...) {
     compute_pca(...) %>%
     purrr::pluck("aug")
 
-  center <- dt %>%
+  centre <- dt %>%
     dplyr::filter(.data$info == "origin") %>%
     dplyr::rename(x0 = .data$PC1, y0 = .data$PC2)
 
-  x0 <- center$x0
-  y0 <- center$y0
+  x0 <- centre$x0
+  y0 <- centre$y0
 
   r <- dt %>%
     dplyr::mutate(dist = sqrt((.data$PC1 - x0)^2 + (.data$PC2 - y0)^2)) %>%

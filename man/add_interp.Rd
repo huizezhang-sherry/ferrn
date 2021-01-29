@@ -20,7 +20,7 @@ add_interp(
 
 \item{interp_alpha}{an alpha value for the transparency of the path}
 
-\item{interp_color}{the color of the path}
+\item{interp_color}{the colour of the path}
 
 \item{interp_group}{a group variable for path connection}
 

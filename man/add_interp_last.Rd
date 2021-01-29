@@ -19,7 +19,7 @@ add_interp_last(
 
 \item{interp_last_alpha}{an alpha value for the transparency of the point}
 
-\item{interp_last_color}{the color of the points}
+\item{interp_last_color}{the colour of the points}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

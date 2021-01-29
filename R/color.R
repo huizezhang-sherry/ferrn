@@ -1,6 +1,6 @@
-#' Available colors in the palettes
-#' @title A customised color palette based on australian botanicals
-#' @family botan
+#' Available colours in the palettes
+#' @title A customised colour palette based on Australian botanies
+#' @rdname color
 #' @export
 botanical_palettes <- list(
   # quantitative
@@ -14,11 +14,11 @@ botanical_palettes <- list(
   banksia = c(
     "#4B1E07", # edge red
     "#B46515", # mid red
-    "#4E6D24" # leves
+    "#4E6D24"
   ),
 
   cherry = c(
-    "#524340", # orchre
+    "#524340", # ochre
     "#B4B754", # green
     "#F3B422" # yellow
   ),
@@ -28,12 +28,12 @@ botanical_palettes <- list(
   acacia = c("#A39224", "#CCB113", "#7C8C60", "#4A5529")
 )
 
-#' Color interpolation
+#' Colour interpolation
 #'
-#' @param palette Color palette from the botanical_palette
-#' @param reverse logical, if the color should be reversed
+#' @param palette Colour palette from the botanical_palette
+#' @param reverse logical, if the colour should be reversed
 #' @export
-#' @family botan
+#' @rdname color
 botanical_pal <- function(palette = "fern", reverse = FALSE) {
   pal <- botanical_palettes[[palette]]
 
@@ -43,44 +43,45 @@ botanical_pal <- function(palette = "fern", reverse = FALSE) {
   return(grDevices::colorRampPalette(pal))
 }
 
-#' continous scale color function
+#' continuous scale colour function
 #'
 #' @param ... Arguments passed into scale_color_gradientn
-#' @param palette Color palette from the botanical_palette
-#' @param reverse logical, if the color should be reversed
+#' @param palette Colour palette from the botanical_palette
+#' @param reverse logical, if the colour should be reversed
 #' @export
-#' @family botan
+
+#' @rdname scale
 scale_color_continuous_botanical <- function(..., palette = "fern", reverse = FALSE) {
     ggplot2::scale_color_gradientn(colors = botanical_pal(palette, ...)(256))
 }
 
-#' Discrete scale color function
+#' Discrete scale colour function
 #'
-#' @param palette Color palette from the botanical_palette
-#' @param reverse logical, if the color should be reversed
+#' @param palette Colour palette from the botanical_palette
+#' @param reverse logical, if the colour should be reversed
 #' @export
-#' @family botan
+#' @rdname scale
 scale_color_discrete_botanical <- function(palette = "fern", reverse = FALSE) {
   ggplot2::discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
 }
 
-#' continous scale fill function
+#' continuous scale fill function
 #'
 #' @param ... Arguments passed into scale_color_gradientn
-#' @param palette Color palette from the botanical_palette
-#' @param reverse logical, if the color should be reversed
+#' @param palette Colour palette from the botanical_palette
+#' @param reverse logical, if the colour should be reversed
 #' @export
-#' @family botan
+#' @rdname scale
 scale_fill_continuous_botanical <- function(..., palette = "fern", reverse = FALSE) {
   ggplot2::scale_fill_gradientn(colors = botanical_pal(palette, ...)(256))
 
 }
 
 #' discrete scale fill function
-#' @param palette Color palette from the botanical_palette
-#' @param reverse logical, if the color should be reversed
+#' @param palette Colour palette from the botanical_palette
+#' @param reverse logical, if the colour should be reversed
 #' @export
-#' @family botan
+#' @rdname scale
 scale_fill_discrete_botanical <- function(palette = "fern", reverse = FALSE) {
   ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
 

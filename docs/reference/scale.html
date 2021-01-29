@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the theoretical best basis, if applicable — get_theo • ferrn</title>
+<title>continuous scale colour function — scale_color_continuous_botanical • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,11 @@
 
 
 
-<meta property="og:title" content="Extract the theoretical best basis, if applicable — get_theo" />
-<meta property="og:description" content="Extract the theoretical best basis, if applicable" />
+<meta property="og:title" content="continuous scale colour function — scale_color_continuous_botanical" />
+<meta property="og:description" content="continuous scale colour function
+Discrete scale colour function
+continuous scale fill function
+discrete scale fill function" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -126,56 +129,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the theoretical best basis, if applicable</h1>
-    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/get.R'><code>R/get.R</code></a></small>
-    <div class="hidden name"><code>get_theo.Rd</code></div>
+    <h1>continuous scale colour function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/color.R'><code>R/color.R</code></a></small>
+    <div class="hidden name"><code>scale.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract the theoretical best basis, if applicable</p>
+    <p>continuous scale colour function</p>
+<p>Discrete scale colour function</p>
+<p>continuous scale fill function</p>
+<p>discrete scale fill function</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_theo</span>(<span class='no'>dt</span>)</pre>
+    <pre class="usage"><span class='fu'>scale_color_continuous_botanical</span>(<span class='no'>...</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"fern"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>scale_color_discrete_botanical</span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"fern"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>scale_fill_continuous_botanical</span>(<span class='no'>...</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"fern"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>scale_fill_discrete_botanical</span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"fern"</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <th>...</th>
+      <td><p>Arguments passed into scale_color_gradientn</p></td>
+    </tr>
+    <tr>
+      <th>palette</th>
+      <td><p>Colour palette from the botanical_palette</p></td>
+    </tr>
+    <tr>
+      <th>reverse</th>
+      <td><p>logical, if the colour should be reversed</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other get functions: 
-<code><a href='get_anchor.html'>get_anchor</a>()</code>,
-<code><a href='get_basis_matrix.html'>get_basis_matrix</a>()</code>,
-<code><a href='get_best.html'>get_best</a>()</code>,
-<code><a href='get_dir_search.html'>get_dir_search</a>()</code>,
-<code><a href='get_interp_last.html'>get_interp_last</a>()</code>,
-<code><a href='get_interp.html'>get_interp</a>()</code>,
-<code><a href='get_interrupt.html'>get_interrupt</a>()</code>,
-<code><a href='get_search_count.html'>get_search_count</a>()</code>,
-<code><a href='get_search.html'>get_search</a>()</code>,
-<code><a href='get_space_param.html'>get_space_param</a>()</code>,
-<code><a href='get_start.html'>get_start</a>()</code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>best</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='no'>holes_1d_better</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span>(<span class='no'>best</span>, <span class='kw pkg'>tourr</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span>(), <span class='kw'>raw_data</span> <span class='kw'>=</span> <span class='no'>boa5</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>get_theo</span>()</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 8</span><span>
-#&gt;   basis             index_val info        method alpha tries  loop    id
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1]&gt;</span><span>     0.931 theoretical </span><span style='color: #BB0000;'>NA</span><span>        </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>     0</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

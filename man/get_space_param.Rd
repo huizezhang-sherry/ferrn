@@ -13,7 +13,7 @@ get_space_param(dt, ...)
 }
 \description{
 The space of projected bases is a circle when reduced to 2D. A radius is estimated using
-the largest distance from the bases in the data object to the center point.
+the largest distance from the bases in the data object to the centre point.
 }
 \details{
 This is  a wrapper function used by \code{explore_space_pca()} and

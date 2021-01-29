@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ferrn <a href='https://huizezhang-sherry.github.io/ferrn'><img src='man/figures/logo.png' align="right" height="138.5" /></a>
+# ferrn <a href='https://huizezhang-sherry.github.io/ferrn/'><img src='man/figures/logo.png' align="right" height="138.5" /></a>
 
 <!-- badges: start -->
 
@@ -11,8 +11,9 @@ status](https://github.com/huizezhang-sherry/ferrn/workflows/R-CMD-check/badge.s
 coverage](https://codecov.io/gh/huizezhang-sherry/ferrn/branch/master/graph/badge.svg)](https://codecov.io/gh/huizezhang-sherry/ferrn?branch=master)
 <!-- badges: end -->
 
-Given a data object collected from a (guided) tour, ferrn provides handy
-tools for extracting key components and produces diagnostic plots.
+The **ferrn** package extracts key components in the data object
+collected by the guided tour optimisation, and produces diagnostic
+plots.
 
 ## Installation
 

@@ -38,7 +38,7 @@ bind_theoretical <- function(dt, matrix, index, raw_data) {
 #' Bind random bases in the projection bases space
 #'
 #' Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
-#' Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
+#' Generating random points on the sphere is useful to perceive the data object in the high dimensional space.
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
 #' @param n Number of random points to generate in each dimension

@@ -8,3 +8,5 @@
 ^\.github$
 ^\.travis\.yml$
 ^codecov\.yml$
+^codemeta\.json$
+^cran-comments\.md$

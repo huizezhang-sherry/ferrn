@@ -13,7 +13,7 @@ bind_random(dt, n = 500)
 }
 \description{
 Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
-Generating random points on the sphere is useful to preceive the data object in the high dimensional space.
+Generating random points on the sphere is useful to perceive the data object in the high dimensional space.
 }
 \examples{
 bind_random(holes_1d_better) \%>\% tail(5)

@@ -1,4 +1,4 @@
-#' Better label formatter to avoid overlapping
+#' Better label formatting to avoid overlapping
 #' @param labels a numerical vector of labels
 #' @param accuracy the accuracy of the label
 #' @examples

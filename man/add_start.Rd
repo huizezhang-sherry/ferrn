@@ -13,7 +13,7 @@ add_start(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...)
 
 \item{start_alpha}{an alpha value for the transparency of the point}
 
-\item{start_color}{the color of the points}
+\item{start_color}{the colour of the points}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }
@@ -31,7 +31,6 @@ start <- holes_1d_geo \%>\%
   purrr::pluck("aug") \%>\%
   clean_method() \%>\%
   get_start()
-start
 ggplot() +
   ferrn:::add_space(dt = space) +
   ferrn:::add_start(dt = start, start_color = info) +

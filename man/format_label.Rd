@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{format_label}
 \alias{format_label}
-\title{Better label formatter to avoid overlapping}
+\title{Better label formatting to avoid overlapping}
 \usage{
 format_label(labels, accuracy)
 }
@@ -12,7 +12,7 @@ format_label(labels, accuracy)
 \item{accuracy}{the accuracy of the label}
 }
 \description{
-Better label formatter to avoid overlapping
+Better label formatting to avoid overlapping
 }
 \examples{
 format_label(c(0.87, 0.87, 0.9, 0.93, 0.95), 0.01)

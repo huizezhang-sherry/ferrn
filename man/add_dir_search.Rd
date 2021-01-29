@@ -13,7 +13,7 @@ add_dir_search(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL, ...)
 
 \item{dir_alpha}{an alpha value for the transparency of the point}
 
-\item{dir_color}{the color of the points}
+\item{dir_color}{the colour of the points}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

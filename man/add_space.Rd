@@ -20,15 +20,15 @@ add_space(
 
 \item{space_alpha}{an alpha value for the transparency of the space}
 
-\item{space_fill}{the color of the space filling}
+\item{space_fill}{the colour of the space filling}
 
-\item{space_color}{the color of the space brim}
+\item{space_color}{the colour of the space brim}
 
-\item{cent_size}{the size of the center point}
+\item{cent_size}{the size of the centre point}
 
 \item{cent_alpha}{an alpha value for the transparency of the space}
 
-\item{cent_color}{the color of the space center}
+\item{cent_color}{the colour of the space centre}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

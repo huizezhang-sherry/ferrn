@@ -9,7 +9,7 @@ add_anno(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{anno_color}{the color of the annotation}
+\item{anno_color}{the colour of the annotation}
 
 \item{anno_lty}{the linetype of the annotation}
 

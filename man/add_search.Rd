@@ -13,7 +13,7 @@ add_search(dt, search_size = 0.5, search_alpha = 0.5, search_color = NULL, ...)
 
 \item{search_alpha}{an alpha value for the transparency of the point}
 
-\item{search_color}{the color of the points}
+\item{search_color}{the colour of the points}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
 }

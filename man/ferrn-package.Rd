@@ -8,18 +8,18 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-What the package does (one paragraph).
+A package for extracting key components in the data object collected by the guided tour optimisation, and producing diagnostic plots.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/huizezhang-sherry/ferrn}
+  \item \url{https://github.com/huizezhang-sherry/ferrn/}
   \item Report bugs at \url{https://github.com/huizezhang-sherry/ferrn/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Sherry Zhang \email{Huize.Zhang@monash.edu}
+\strong{Maintainer}: Sherry Zhang \email{huize.zhang@monash.edu}
 
 }
 \keyword{internal}
