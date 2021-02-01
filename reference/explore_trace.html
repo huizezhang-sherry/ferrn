@@ -144,6 +144,8 @@
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   cutoff <span class='op'>=</span> <span class='fl'>50</span>,
+  target_size <span class='op'>=</span> <span class='fl'>3</span>,
+  interp_size <span class='op'>=</span> <span class='fl'>1</span>,
   accuracy_x <span class='op'>=</span> <span class='fl'>5</span>,
   accuracy_y <span class='op'>=</span> <span class='fl'>0.01</span>
 <span class='op'>)</span></pre>
@@ -170,6 +172,14 @@
     <tr>
       <th>cutoff</th>
       <td><p>If there are less than cut-off number of points on the interpolation path, all the points will be marked</p></td>
+    </tr>
+    <tr>
+      <th>target_size</th>
+      <td><p>The size of the target points in the interpolation</p></td>
+    </tr>
+    <tr>
+      <th>interp_size</th>
+      <td><p>The size of the interpolation points</p></td>
     </tr>
     <tr>
       <th>accuracy_x</th>
