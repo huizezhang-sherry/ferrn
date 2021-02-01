@@ -7,6 +7,8 @@
 #' @param color Coloured by a particular variable
 #' @param group The grouping variable, useful when there are multiple algorithms in the data object
 #' @param cutoff If there are less than cut-off number of points on the interpolation path, all the points will be marked
+#' @param target_size The size of the target points in the interpolation
+#' @param interp_size The size of the interpolation points
 #' @param accuracy_x if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label
 #' @param accuracy_y the precision of y-axis label
 #' @examples
@@ -18,6 +20,7 @@
 #' @export
 #' @rdname explore_trace
 explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cutoff = 50,
+                                 target_size = 3, interp_size = 1,
                                  accuracy_x = 5, accuracy_y = 0.01) {
 
   # check there is a column called info, there is a value called interpolation
@@ -68,7 +71,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
   p <- dt_interp %>%
     ggplot2::ggplot(ggplot2::aes(x = {{ iter }}, y = .data$index_val, group = {{ group }})) +
     ggplot2::geom_line() +
-    ggplot2::geom_point(data = interp_last, ggplot2::aes(col = {{ color }}), size = 3) +
+    ggplot2::geom_point(data = interp_last, ggplot2::aes(col = {{ color }}), size = target_size) +
     ggplot2::geom_vline(data = interp_last, ggplot2::aes(xintercept = {{ iter }}), lty = "dashed", alpha = 0.3) +
     ggplot2::scale_x_continuous(breaks = tick_x) +
     ggplot2::scale_y_continuous(breaks = tick_y, labels = scales::label_number(accuracy = accuracy_y)) +
@@ -80,7 +83,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
   # show intermediate points if not too many
   if (nrow(dt_interp) < cutoff) {
     p <- p + ggplot2::geom_point(
-      ggplot2::aes(x = {{ iter }}, y = .data$index_val, col = {{ color }})
+      ggplot2::aes(x = {{ iter }}, y = .data$index_val, col = {{ color }}, size = interp_size)
     )
   }
 

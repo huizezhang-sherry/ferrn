@@ -10,6 +10,8 @@ explore_trace_interp(
   color = NULL,
   group = NULL,
   cutoff = 50,
+  target_size = 3,
+  interp_size = 1,
   accuracy_x = 5,
   accuracy_y = 0.01
 )
@@ -24,6 +26,10 @@ explore_trace_interp(
 \item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
 
 \item{cutoff}{If there are less than cut-off number of points on the interpolation path, all the points will be marked}
+
+\item{target_size}{The size of the target points in the interpolation}
+
+\item{interp_size}{The size of the interpolation points}
 
 \item{accuracy_x}{if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label}
 

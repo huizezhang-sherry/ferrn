@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-A package for extracting key components in the data object collected by the guided tour optimisation, and producing diagnostic plots.
+Implement diagnostic plots for guided tour optimisation.
 }
 \seealso{
 Useful links:
@@ -19,7 +19,15 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Sherry Zhang \email{huize.zhang@monash.edu}
+\strong{Maintainer}: H. Sherry Zhang \email{huize.zhang@monash.edu} (\href{https://orcid.org/0000-0002-7122-1463}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Di Cook \email{dicook@monash.edu} (\href{https://orcid.org/0000-0002-3813-7155}{ORCID}) [contributor]
+  \item Ursula Laa \email{ursula.laa@boku.ac.at} (\href{https://orcid.org/0000-0002-0249-6439}{ORCID}) [contributor]
+  \item Nicolas Langrené \email{nicolas.langrene@csiro.au} (\href{https://orcid.org/0000-0001-7601-4618}{ORCID}) [contributor]
+  \item Patricia Menéndez \email{patricia.menendez@monash.edu} (\href{https://orcid.org/0000-0003-0701-6315}{ORCID}) [contributor]
+}
 
 }
 \keyword{internal}

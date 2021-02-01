@@ -7,20 +7,20 @@
 \alias{scale_fill_discrete_botanical}
 \title{continuous scale colour function}
 \usage{
-scale_color_continuous_botanical(..., palette = "fern", reverse = FALSE)
+scale_color_continuous_botanical(palette = "fern", reverse = FALSE, ...)
 
-scale_color_discrete_botanical(palette = "fern", reverse = FALSE)
+scale_color_discrete_botanical(palette = "fern", reverse = FALSE, ...)
 
-scale_fill_continuous_botanical(..., palette = "fern", reverse = FALSE)
+scale_fill_continuous_botanical(palette = "fern", reverse = FALSE, ...)
 
-scale_fill_discrete_botanical(palette = "fern", reverse = FALSE)
+scale_fill_discrete_botanical(palette = "fern", reverse = FALSE, ...)
 }
 \arguments{
-\item{...}{Arguments passed into scale_color_gradientn}
-
 \item{palette}{Colour palette from the botanical_palette}
 
 \item{reverse}{logical, if the colour should be reversed}
+
+\item{...}{Arguments passed into scale_color_gradientn}
 }
 \description{
 continuous scale colour function

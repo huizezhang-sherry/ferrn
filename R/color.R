@@ -51,8 +51,8 @@ botanical_pal <- function(palette = "fern", reverse = FALSE) {
 #' @export
 
 #' @rdname scale
-scale_color_continuous_botanical <- function(..., palette = "fern", reverse = FALSE) {
-    ggplot2::scale_color_gradientn(colors = botanical_pal(palette, ...)(256))
+scale_color_continuous_botanical <- function(palette = "fern", reverse = FALSE, ...) {
+    ggplot2::scale_color_gradientn(colors = botanical_pal(palette)(256), ...)
 }
 
 #' Discrete scale colour function
@@ -61,8 +61,8 @@ scale_color_continuous_botanical <- function(..., palette = "fern", reverse = FA
 #' @param reverse logical, if the colour should be reversed
 #' @export
 #' @rdname scale
-scale_color_discrete_botanical <- function(palette = "fern", reverse = FALSE) {
-  ggplot2::discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse))
+scale_color_discrete_botanical <- function(palette = "fern", reverse = FALSE, ...) {
+  ggplot2::discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse), ...)
 }
 
 #' continuous scale fill function
@@ -72,8 +72,8 @@ scale_color_discrete_botanical <- function(palette = "fern", reverse = FALSE) {
 #' @param reverse logical, if the colour should be reversed
 #' @export
 #' @rdname scale
-scale_fill_continuous_botanical <- function(..., palette = "fern", reverse = FALSE) {
-  ggplot2::scale_fill_gradientn(colors = botanical_pal(palette, ...)(256))
+scale_fill_continuous_botanical <- function(palette = "fern", reverse = FALSE, ...) {
+  ggplot2::scale_fill_gradientn(colors = botanical_pal(palette, ...)(256), ...)
 
 }
 
@@ -82,8 +82,8 @@ scale_fill_continuous_botanical <- function(..., palette = "fern", reverse = FAL
 #' @param reverse logical, if the colour should be reversed
 #' @export
 #' @rdname scale
-scale_fill_discrete_botanical <- function(palette = "fern", reverse = FALSE) {
-  ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse))
+scale_fill_discrete_botanical <- function(palette = "fern", reverse = FALSE, ...) {
+  ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse), ...)
 
 }
 
