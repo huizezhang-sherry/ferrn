@@ -273,8 +273,9 @@ get_interrupt <- function(dt, group = NULL, precision = 0.001) {
 #' @family get functions
 #' @export
 get_search_count <- function(dt, iter = NULL, group = NULL) {
+
   dt_search <- dt %>%
-    get_search() %>%
+    dplyr::filter(stringr::str_detect(.data[["info"]], "search|new_basis")) %>%
     dplyr::group_by({{ iter }})
 
   if (!rlang::quo_is_null(dplyr::enquo(group))) dt_search <- dt_search %>% dplyr::group_by({{ iter }}, {{ group }})
