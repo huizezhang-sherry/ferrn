@@ -83,7 +83,8 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
   # show intermediate points if not too many
   if (nrow(dt_interp) < cutoff) {
     p <- p + ggplot2::geom_point(
-      ggplot2::aes(x = {{ iter }}, y = .data$index_val, col = {{ color }}, size = interp_size)
+      ggplot2::aes(x = {{ iter }}, y = .data$index_val, col = {{ color }}),
+      size = interp_size
     )
   }
 
