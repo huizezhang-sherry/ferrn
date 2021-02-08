@@ -4,21 +4,22 @@
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param space_alpha an alpha value for the transparency of the space
-#' @param space_fill the colour of the space filling
-#' @param space_color the colour of the space brim
-#' @param cent_size  the size of the centre point
-#' @param cent_alpha an alpha value for the transparency of the space
-#' @param cent_color the colour of the space centre
+#' @param space_alpha numeric; the alpha of the basis space
+#' @param space_fill character; the colour of the space filling
+#' @param space_color character; the colour of the space brim
+#' @param cent_size  numeric; the size of the centre point
+#' @param cent_alpha numeric; an alpha of the centre point
+#' @param cent_color character; the colour of the centre point
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @examples
 #' library(ggplot2)
 #' space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
 #' ggplot() +
-#'   ferrn:::add_space(space) +
+#'   add_space(space) +
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
+#' @return a wrapper for drawing the space in \code{explore_space_pca()}
 #' @export
 add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color = "white",
                       cent_size = 1, cent_alpha = 1, cent_color = "black", ...) {
@@ -42,13 +43,13 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param start_size the point size
-#' @param start_alpha an alpha value for the transparency of the point
-#' @param start_color the colour of the points
+#' @param start_size numeric; the size of start point
+#' @param start_alpha numeric; the alpha of start point
+#' @param start_color the variable to be coloured by
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing start points in \code{explore_space_pca()}
 #' @examples
 #' library(ggplot2)
-#' library(ferrn)
 #' # construct the space and start df for plotting
 #' space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
 #' start <- holes_1d_geo %>%
@@ -57,8 +58,8 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #'   clean_method() %>%
 #'   get_start()
 #' ggplot() +
-#'   ferrn:::add_space(dt = space) +
-#'   ferrn:::add_start(dt = start, start_color = info) +
+#'   add_space(dt = space) +
+#'   add_start(dt = start, start_color = info) +
 #'   theme_void() +
 #'   theme(aspect.ratio = 1)
 #' @family draw functions
@@ -78,10 +79,11 @@ add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, .
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param end_size the point size
-#' @param end_alpha an alpha value for the transparency of the point
-#' @param end_color the colour of the points
+#' @param end_size numeric; the size of the end point
+#' @param end_alpha numeric; the alpha of the end point
+#' @param end_color the variable to be coloured by
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing end points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...) {
@@ -92,20 +94,17 @@ add_end <- function(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...) {
   )
 }
 
-
-
-
-
 #' A ggproto for drawing anchor points
 #'
 #' This is  a wrapper function used by \code{explore_space_pca()} and
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param anchor_size the point size
-#' @param anchor_alpha an alpha value for the transparency of the point
-#' @param anchor_color the colour of the points
+#' @param anchor_size numeric; the size of the anchor points
+#' @param anchor_alpha numeric; the alpha of the anchor points
+#' @param anchor_color the variable to be coloured by
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing anchor points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = NULL, ...) {
@@ -122,10 +121,11 @@ add_anchor <- function(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = N
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param search_size the point size
-#' @param search_alpha an alpha value for the transparency of the point
-#' @param search_color the colour of the points
+#' @param search_size numeric; the size of the search points
+#' @param search_alpha numeric; the alpha of the anchor points
+#' @param search_color the variable to be coloured by
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing search points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color = NULL, ...) {
@@ -142,10 +142,11 @@ add_search <- function(dt, search_size = 0.5, search_alpha = 0.5, search_color =
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param dir_size the point size
-#' @param dir_alpha an alpha value for the transparency of the point
-#' @param dir_color the colour of the points
+#' @param dir_size numeric; the size of the directional search points in pseudo derivative search
+#' @param dir_alpha numeric; the alpha of the directional search points in pseudo derivative search
+#' @param dir_color the variable to be coloured by
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing directional search points (used in pseudo derivative search) with buffer in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL, ...) {
@@ -163,10 +164,11 @@ add_dir_search <- function(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param interp_last_size the point size
-#' @param interp_last_alpha an alpha value for the transparency of the point
-#' @param interp_last_color the colour of the points
+#' @param interp_last_size numeric; the size of the last interpolation points in each iteration
+#' @param interp_last_alpha numeric; the alpha of the last interpolation points in each iteration
+#' @param interp_last_color the variable to be coloured by
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing the last interpolation points of each iteration in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_interp_last <- function(dt, interp_last_size = 3, interp_last_alpha = 1, interp_last_color = NULL, ...) {
@@ -183,11 +185,12 @@ add_interp_last <- function(dt, interp_last_size = 3, interp_last_alpha = 1, int
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param interp_size the size of the path
-#' @param interp_alpha an alpha value for the transparency of the path
-#' @param interp_color the colour of the path
-#' @param interp_group a group variable for path connection
+#' @param interp_size numeric; the size of the interpolation path
+#' @param interp_alpha numeric; the alpha of the interpolation path
+#' @param interp_color the variable to be coloured by
+#' @param interp_group the variable to label different interpolation path
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing the interpolation points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
@@ -208,12 +211,13 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param interrupt_size the size of the path
-#' @param interrupt_alpha an alpha value for the transparency of the path
-#' @param interrupt_color the colour of the path
-#' @param interrupt_group a group variable for path connection
-#' @param interrupt_linetype the linetype for annotating the interrupted path
+#' @param interrupt_size numeric; the size of the interruption path
+#' @param interrupt_alpha numeric; the alpha of the interruption path
+#' @param interrupt_color the variable to be coloured by
+#' @param interrupt_group the variable to label different interruption
+#' @param interrupt_linetype character; the linetype to annotate the interruption
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for annotating the interruption in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
@@ -236,10 +240,11 @@ add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param anno_color the colour of the annotation
-#' @param anno_lty the linetype of the annotation
-#' @param anno_alpha an alpha value for the transparency of the annotation
+#' @param anno_color character; the colour of the annotation line
+#' @param anno_lty character; the linetype of the annotation line
+#' @param anno_alpha numeric; the alpha of the annotation line
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for annotating the symmetry of start points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...) {
@@ -256,10 +261,11 @@ add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha =
 #' should be be called directly by the user
 #'
 #' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param theo_label the symbol used for labelling the theoretical basis
-#' @param theo_size the size of the label
-#' @param theo_alpha the transparency of the label
+#' @param theo_label character; a symbol to label the theoretical point
+#' @param theo_size numeric; the size of the theoretical point
+#' @param theo_alpha numeric; the alpha of the theoretical point
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
+#' @return a wrapper for drawing theoretical points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
 add_theo <- function(dt, theo_label = "*", theo_size = 25, theo_alpha = 0.8, ...) {

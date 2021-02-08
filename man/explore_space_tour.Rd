@@ -21,35 +21,38 @@ prep_space_tour(
 explore_space_tour(...)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in \code{tourr}}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+\item{group}{the variable to label different runs of the optimiser(s)}
 
-\item{color}{A variable from the object that the diagnostic plot should be coloured by}
+\item{color}{the variable to be coloured by}
 
-\item{rand_size}{random point size}
+\item{rand_size}{numeric; the size of random points}
 
-\item{point_size}{other point size}
+\item{point_size}{numeric; the size of points searched by the optimiser(s)}
 
-\item{end_size}{the size of the ending point}
+\item{end_size}{numeric; the size of end points}
 
-\item{theo_size}{theoretical point size}
+\item{theo_size}{numeric; the size of theoretical point(s)}
 
-\item{theo_shape}{the numerical value of basic plot shape}
+\item{theo_shape}{numeric; the shape symbol in the basic plot}
 
-\item{palette}{The colour palette to use}
+\item{palette}{the colour palette to be used}
 
-\item{...}{Additional argument passed to \code{tourr::animate_xy()}}
+\item{...}{other argument passed to \code{tourr::animate_xy()}}
+}
+\value{
+a list containing various components needed for producing the tour plot
+
+a tour animation of the search path in the original high-dimensional basis space
 }
 \description{
 Plot the grand tour animation of the projection bases space
 }
 \examples{
-\dontrun{
 explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
   group = method, palette = botanical_palettes$fern[c(1, 6)]
 )
-}
 }
 \seealso{
 Other plot: 

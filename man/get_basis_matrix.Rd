@@ -7,7 +7,10 @@
 get_basis_matrix(dt)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
+}
+\value{
+a matrix that flattens each basis into a row
 }
 \description{
 Extract all the bases as a matrix

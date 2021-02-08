@@ -7,13 +7,16 @@
 bind_theoretical(dt, matrix, index, raw_data)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{matrix}{The theoretical basis to bind}
+\item{matrix}{a matrix of the theoretical basis}
 
-\item{index}{The index function used to calculate index value}
+\item{index}{the index function used to calculate the index value}
 
-\item{raw_data}{The original data, used to compute the index value for the theoretical best basis}
+\item{raw_data}{a tibble of the original data used to calculate the index value}
+}
+\value{
+a tibble object containing both the searched and theoretical best bases
 }
 \description{
 The theoretical best basis is usually known for a simulated problem.

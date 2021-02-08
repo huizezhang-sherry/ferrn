@@ -17,17 +17,20 @@ add_interrupt(
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{interrupt_size}{the size of the path}
+\item{interrupt_size}{numeric; the size of the interruption path}
 
-\item{interrupt_alpha}{an alpha value for the transparency of the path}
+\item{interrupt_alpha}{numeric; the alpha of the interruption path}
 
-\item{interrupt_color}{the colour of the path}
+\item{interrupt_color}{the variable to be coloured by}
 
-\item{interrupt_group}{a group variable for path connection}
+\item{interrupt_group}{the variable to label different interruption}
 
-\item{interrupt_linetype}{the linetype for annotating the interrupted path}
+\item{interrupt_linetype}{character; the linetype to annotate the interruption}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for annotating the interruption in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

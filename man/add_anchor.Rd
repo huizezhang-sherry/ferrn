@@ -9,13 +9,16 @@ add_anchor(dt, anchor_size = 3, anchor_alpha = 0.5, anchor_color = NULL, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{anchor_size}{the point size}
+\item{anchor_size}{numeric; the size of the anchor points}
 
-\item{anchor_alpha}{an alpha value for the transparency of the point}
+\item{anchor_alpha}{numeric; the alpha of the anchor points}
 
-\item{anchor_color}{the colour of the points}
+\item{anchor_color}{the variable to be coloured by}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing anchor points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

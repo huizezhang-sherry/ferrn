@@ -16,11 +16,20 @@ scale_fill_continuous_botanical(palette = "fern", reverse = FALSE, ...)
 scale_fill_discrete_botanical(palette = "fern", reverse = FALSE, ...)
 }
 \arguments{
-\item{palette}{Colour palette from the botanical_palette}
+\item{palette}{colour palette from the botanical_palette}
 
-\item{reverse}{logical, if the colour should be reversed}
+\item{reverse}{logical; if the colour should be reversed}
 
-\item{...}{Arguments passed into scale_color_gradientn}
+\item{...}{other arguments passed into scale_color_gradientn}
+}
+\value{
+a wrapper for continuous scales in the botanical palette
+
+a wrapper for discrete scales in the botanical palette
+
+a wrapper for continuous fill in the botanical palette
+
+a wrapper for discrete fill in the botanical palette
 }
 \description{
 continuous scale colour function

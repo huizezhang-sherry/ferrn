@@ -21,23 +21,31 @@ explore_space_pca(
 )
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in \code{tourr}}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+\item{group}{the variable to label different runs of the optimiser(s)}
 
-\item{...}{different argument passed to \code{add_*()}}
+\item{...}{other arguments passed to \code{add_*()} functions}
 
-\item{random}{Boolean, if the random data from the high dimensional sphere should be bounded}
+\item{random}{logical; if random bases from the basis space need to be added to the data}
 
-\item{flip}{boolean, if the sign flipping need to be computed}
+\item{flip}{logical; if the sign flipping need to be performed}
 
-\item{details}{if all the components of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown}
+\item{details}{logical; if components other than start, end and interpolation need to be shown}
 
-\item{pca}{Boolean, if \code{compute_pca()} should be performed on the data}
+\item{pca}{logical; if PCA coordinates need to be computed for the data}
 
-\item{color}{A variable from the object that the diagnostic plot should be coloured by}
+\item{color}{the variable to be coloured by}
 
-\item{animate}{Boolean, if the plot should be animated}
+\item{animate}{logical; if the interpolation path needs to be animated}
+}
+\value{
+a list containing 1) all the bases in a matrix format,
+2) whether a flip of sign is performed, and 3) the original dataset supplied
+
+a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate
+
+a ggplot object for diagnosing the optimisers in the PCA-projected basis space
 }
 \description{
 The set of functions returns a primary ggplot object

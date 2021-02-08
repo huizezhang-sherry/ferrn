@@ -7,7 +7,10 @@
 get_theo(dt)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
+}
+\value{
+a tibble object containing the theoretical bases
 }
 \description{
 Extract the theoretical best basis, if applicable

@@ -7,11 +7,14 @@
 get_interrupt(dt, group = NULL, precision = 0.001)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+\item{group}{the variable to label different runs of the optimiser(s)}
 
-\item{precision}{The precision for the interruption}
+\item{precision}{numeric; if the index value of the last interpolating point and the anchor point differ by \code{precision}, an interruption is registered}
+}
+\value{
+a tibble object containing the target and anchor bases for the iteration when an interruption happens
 }
 \description{
 The optimiser can find better basis on the interpolation path, an interruption is

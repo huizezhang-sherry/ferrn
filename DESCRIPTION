@@ -8,7 +8,8 @@ Authors@R: c(
     person("Nicolas", "Langrené", email = "nicolas.langrene@csiro.au", role = "ctb", comment = c(ORCID = "0000-0001-7601-4618")),
     person("Patricia", "Menéndez", email = "patricia.menendez@monash.edu", role = "ctb", comment = c(ORCID = "0000-0003-0701-6315"))
     )
-Description: Implement diagnostic plots for guided tour optimisation.
+Description: `ferrn` serves to produce diagnostic plots for projection pursuit guided tour optimisers . 
+    It also provides functionality for extracting various components in the data objects collected in `tourr`.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

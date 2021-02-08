@@ -9,13 +9,16 @@ add_start(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{start_size}{the point size}
+\item{start_size}{numeric; the size of start point}
 
-\item{start_alpha}{an alpha value for the transparency of the point}
+\item{start_alpha}{numeric; the alpha of start point}
 
-\item{start_color}{the colour of the points}
+\item{start_color}{the variable to be coloured by}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing start points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
@@ -23,7 +26,6 @@ should be be called directly by the user
 }
 \examples{
 library(ggplot2)
-library(ferrn)
 # construct the space and start df for plotting
 space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
 start <- holes_1d_geo \%>\%
@@ -32,8 +34,8 @@ start <- holes_1d_geo \%>\%
   clean_method() \%>\%
   get_start()
 ggplot() +
-  ferrn:::add_space(dt = space) +
-  ferrn:::add_start(dt = start, start_color = info) +
+  add_space(dt = space) +
+  add_start(dt = start, start_color = info) +
   theme_void() +
   theme(aspect.ratio = 1)
 }

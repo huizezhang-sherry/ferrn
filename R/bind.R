@@ -3,14 +3,15 @@
 #' The theoretical best basis is usually known for a simulated problem.
 #' Augment this information into the data object allows for evaluating the performance of optimisation against the theory.
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param matrix The theoretical basis to bind
-#' @param index The index function used to calculate index value
-#' @param raw_data The original data, used to compute the index value for the theoretical best basis
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
+#' @param matrix a matrix of the theoretical basis
+#' @param index the index function used to calculate the index value
+#' @param raw_data a tibble of the original data used to calculate the index value
 #' @examples
 #' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 #' tail(holes_1d_better %>% bind_theoretical(best, tourr::holes(), raw_data = boa5), 1)
 #' @family bind
+#' @return a tibble object containing both the searched and theoretical best bases
 #' @export
 bind_theoretical <- function(dt, matrix, index, raw_data) {
   num_row <- nrow(dt$basis[[1]])
@@ -40,13 +41,15 @@ bind_theoretical <- function(dt, matrix, index, raw_data) {
 #' Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.
 #' Generating random points on the sphere is useful to perceive the data object in the high dimensional space.
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param n Number of random points to generate in each dimension
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
+#' @param n numeric; the number of random bases to generate in each dimension by geozoo
+#' @param seed numeric; a seed for generating reproducible random bases from geozoo
 #' @examples
 #' bind_random(holes_1d_better) %>% tail(5)
 #' @family bind
+#' @return a tibble object containing both the searched and random bases
 #' @export
-bind_random <- function(dt, n = 500) {
+bind_random <- function(dt, n = 500, seed = 1) {
   p <- nrow(dt$basis[[1]]) * ncol(dt$basis[[1]])
   ncol <- nrow(dt$basis[[1]])
 
@@ -56,7 +59,7 @@ bind_random <- function(dt, n = 500) {
     dt
   }
 
-  set.seed(1)
+  set.seed(seed)
   n_geozoo <- p * n
   suppressWarnings(sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points %>%
     tibble::as_tibble() %>%
@@ -81,19 +84,21 @@ bind_random <- function(dt, n = 500) {
 
 #' Bind random bases in the projection bases space as a matrix
 #'
-#' @param basis A basis matrix returned by \code{get_basis_matrix()}
-#' @param n Number of random points to generate in each dimension
-#' @param front if the random matrix should be bound before or after the data basis
+#' @param basis a matrix returned by \code{get_basis_matrix()}
+#' @param n numeric; the number of random bases to generate in each dimension by geozoo
+#' @param front logical; if the random bases should be bound before or after the original bases
+#' @param seed numeric; a seed for generating reproducible random bases from geozoo
 #' @examples
 #' data <- get_basis_matrix(holes_1d_geo)
 #' bind_random_matrix(data) %>% tail(5)
 #' @return matrix
 #' @family bind
+#' @return a matrix containing both the searched and random bases
 #' @export
-bind_random_matrix <- function(basis, n = 500, front = FALSE) {
+bind_random_matrix <- function(basis, n = 500, front = FALSE, seed = 1) {
   p <- ncol(basis)
   n_geozoo <- p * n
-  set.seed(1)
+  set.seed(seed)
   sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points
   colnames(sphere_basis) <- colnames(basis)
 

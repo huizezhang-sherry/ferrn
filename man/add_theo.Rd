@@ -9,13 +9,16 @@ add_theo(dt, theo_label = "*", theo_size = 25, theo_alpha = 0.8, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{theo_label}{the symbol used for labelling the theoretical basis}
+\item{theo_label}{character; a symbol to label the theoretical point}
 
-\item{theo_size}{the size of the label}
+\item{theo_size}{numeric; the size of the theoretical point}
 
-\item{theo_alpha}{the transparency of the label}
+\item{theo_alpha}{numeric; the alpha of the theoretical point}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing theoretical points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

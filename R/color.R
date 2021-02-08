@@ -33,6 +33,7 @@ botanical_palettes <- list(
 #' @param palette Colour palette from the botanical_palette
 #' @param reverse logical, if the colour should be reversed
 #' @export
+#' @return a function for interpolating colour in the botanical palette
 #' @rdname color
 botanical_pal <- function(palette = "fern", reverse = FALSE) {
   pal <- botanical_palettes[[palette]]
@@ -45,11 +46,11 @@ botanical_pal <- function(palette = "fern", reverse = FALSE) {
 
 #' continuous scale colour function
 #'
-#' @param ... Arguments passed into scale_color_gradientn
-#' @param palette Colour palette from the botanical_palette
-#' @param reverse logical, if the colour should be reversed
+#' @param ... other arguments passed into scale_color_gradientn
+#' @param palette the colour palette from the botanical_palette
+#' @param reverse logical; if the colour should be reversed
 #' @export
-
+#' @return a wrapper for continuous scales in the botanical palette
 #' @rdname scale
 scale_color_continuous_botanical <- function(palette = "fern", reverse = FALSE, ...) {
     ggplot2::scale_color_gradientn(colors = botanical_pal(palette)(256), ...)
@@ -57,9 +58,10 @@ scale_color_continuous_botanical <- function(palette = "fern", reverse = FALSE, 
 
 #' Discrete scale colour function
 #'
-#' @param palette Colour palette from the botanical_palette
-#' @param reverse logical, if the colour should be reversed
+#' @param palette the colour palette from the botanical_palette
+#' @param reverse logical; if the colour should be reversed
 #' @export
+#' @return a wrapper for discrete scales in the botanical palette
 #' @rdname scale
 scale_color_discrete_botanical <- function(palette = "fern", reverse = FALSE, ...) {
   ggplot2::discrete_scale("color", "botanical", palette = botanical_pal(palette, reverse), ...)
@@ -67,10 +69,11 @@ scale_color_discrete_botanical <- function(palette = "fern", reverse = FALSE, ..
 
 #' continuous scale fill function
 #'
-#' @param ... Arguments passed into scale_color_gradientn
-#' @param palette Colour palette from the botanical_palette
-#' @param reverse logical, if the colour should be reversed
+#' @param ... other arguments passed into scale_color_gradientn
+#' @param palette colour palette from the botanical_palette
+#' @param reverse logical; if the colour should be reversed
 #' @export
+#' @return a wrapper for continuous fill in the botanical palette
 #' @rdname scale
 scale_fill_continuous_botanical <- function(palette = "fern", reverse = FALSE, ...) {
   ggplot2::scale_fill_gradientn(colors = botanical_pal(palette, ...)(256), ...)
@@ -78,9 +81,10 @@ scale_fill_continuous_botanical <- function(palette = "fern", reverse = FALSE, .
 }
 
 #' discrete scale fill function
-#' @param palette Colour palette from the botanical_palette
-#' @param reverse logical, if the colour should be reversed
+#' @param palette colour palette from the botanical_palette
+#' @param reverse logical; if the colour should be reversed
 #' @export
+#' @return a wrapper for discrete fill in the botanical palette
 #' @rdname scale
 scale_fill_discrete_botanical <- function(palette = "fern", reverse = FALSE, ...) {
   ggplot2::discrete_scale("fill", "botanical", palette = botanical_pal(palette, reverse), ...)
@@ -89,6 +93,7 @@ scale_fill_discrete_botanical <- function(palette = "fern", reverse = FALSE, ...
 
 #' A specific theme for trace plots
 #' @importFrom ggplot2 %+replace%
+#' @return a ggplot2 theme for \code{explore_trace_interp()}
 #' @export
 theme_fern <- function() {
   ggplot2::theme_bw() %+replace%

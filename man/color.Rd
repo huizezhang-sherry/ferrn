@@ -18,6 +18,9 @@ botanical_pal(palette = "fern", reverse = FALSE)
 
 \item{reverse}{logical, if the colour should be reversed}
 }
+\value{
+a function for interpolating colour in the botanical palette
+}
 \description{
 Available colours in the palettes
 }

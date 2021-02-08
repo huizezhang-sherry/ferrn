@@ -7,9 +7,12 @@
 get_space_param(dt, ...)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{...}{arguments passed to \code{compute_pca()}}
+\item{...}{other arguments passed to \code{compute_pca()}}
+}
+\value{
+a tibble object of the centre and radius of the basis space
 }
 \description{
 The space of projected bases is a circle when reduced to 2D. A radius is estimated using

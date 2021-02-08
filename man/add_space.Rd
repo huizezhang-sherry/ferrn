@@ -18,19 +18,22 @@ add_space(
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{space_alpha}{an alpha value for the transparency of the space}
+\item{space_alpha}{numeric; the alpha of the basis space}
 
-\item{space_fill}{the colour of the space filling}
+\item{space_fill}{character; the colour of the space filling}
 
-\item{space_color}{the colour of the space brim}
+\item{space_color}{character; the colour of the space brim}
 
-\item{cent_size}{the size of the centre point}
+\item{cent_size}{numeric; the size of the centre point}
 
-\item{cent_alpha}{an alpha value for the transparency of the space}
+\item{cent_alpha}{numeric; an alpha of the centre point}
 
-\item{cent_color}{the colour of the space centre}
+\item{cent_color}{character; the colour of the centre point}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing the space in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
@@ -40,7 +43,7 @@ should be be called directly by the user
 library(ggplot2)
 space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
 ggplot() +
-  ferrn:::add_space(space) +
+  add_space(space) +
   theme_void() +
   theme(aspect.ratio = 1)
 }

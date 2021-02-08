@@ -4,12 +4,17 @@
 \alias{bind_random}
 \title{Bind random bases in the projection bases space}
 \usage{
-bind_random(dt, n = 500)
+bind_random(dt, n = 500, seed = 1)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{n}{Number of random points to generate in each dimension}
+\item{n}{numeric; the number of random bases to generate in each dimension by geozoo}
+
+\item{seed}{numeric; a seed for generating reproducible random bases from geozoo}
+}
+\value{
+a tibble object containing both the searched and random bases
 }
 \description{
 Given the orthonormality constraint, the projection bases live in a high dimensional hollow sphere.

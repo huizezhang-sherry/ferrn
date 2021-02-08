@@ -1,13 +1,15 @@
 #' Flip the sign of a group of bases
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param ... other arguments passed
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param ... other arguments received from \code{explore_space_pca()}
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   flip_sign(group = method) %>%
 #'   str(max = 1)
 #' @rdname explore_space_pca
+#' @return a list containing 1) all the bases in a matrix format,
+#' 2) whether a flip of sign is performed, and 3) the original dataset supplied
 #' @export
 flip_sign <- function(dt, group = NULL, ...) {
   if (!rlang::quo_is_null(dplyr::enquo(group))) {
@@ -52,14 +54,15 @@ flip_sign <- function(dt, group = NULL, ...) {
 
 #' Compute PCA for the projection bases
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param random Boolean, if the random data from the high dimensional sphere should be bounded
-#' @param flip boolean, if the sign flipping need to be computed
-#' @param ... other arguments passed
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param random logical; if random bases from the basis space need to be added to the data
+#' @param flip logical; if the sign flipping need to be performed
+#' @param ... other arguments received from \code{explore_space_pca()}
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #' @rdname explore_space_pca
+#' @return a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate
 #' @export
 compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
   if (!"basis" %in% colnames(dt)) {
@@ -128,13 +131,13 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #' The set of functions returns a primary ggplot object
 #' that plots the data object in a space reduced by PCA.
 #' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param details if all the components of the optimisers should be shown. With \code{details = FALSE} only the start, end and interpolation path will be shown
-#' @param pca Boolean, if \code{compute_pca()} should be performed on the data
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param color A variable from the object that the diagnostic plot should be coloured by
-#' @param ... different argument passed to \code{add_*()}
-#' @param animate Boolean, if the plot should be animated
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param details logical; if components other than start, end and interpolation need to be shown
+#' @param pca logical; if PCA coordinates need to be computed for the data
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param color the variable to be coloured by
+#' @param ... other arguments passed to \code{add_*()} functions
+#' @param animate logical; if the interpolation path needs to be animated
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
@@ -144,6 +147,7 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #'   scale_color_discrete_botanical()
 #' @family plot
 #' @rdname explore_space_pca
+#' @return a ggplot object for diagnosing the optimisers in the PCA-projected basis space
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
@@ -214,24 +218,23 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 
 #' Plot the grand tour animation of the projection bases space
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param color A variable from the object that the diagnostic plot should be coloured by
-#' @param rand_size random point size
-#' @param point_size other point size
-#' @param end_size the size of the ending point
-#' @param theo_size theoretical point size
-#' @param theo_shape the numerical value of basic plot shape
-#' @param palette The colour palette to use
-#' @param ... Additional argument passed to \code{tourr::animate_xy()}
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param color the variable to be coloured by
+#' @param rand_size numeric; the size of random points
+#' @param point_size numeric; the size of points searched by the optimiser(s)
+#' @param end_size numeric; the size of end points
+#' @param theo_size numeric; the size of theoretical point(s)
+#' @param theo_shape numeric; the shape symbol in the basic plot
+#' @param palette the colour palette to be used
+#' @param ... other argument passed to \code{tourr::animate_xy()}
 #' @examples
-#' \dontrun{
 #' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
 #'   group = method, palette = botanical_palettes$fern[c(1, 6)]
 #' )
-#' }
 #' @family plot
 #' @rdname explore_space_tour
+#' @return a list containing various components needed for producing the tour plot
 #' @export
 prep_space_tour <- function(dt, group = NULL,
                             color = NULL, rand_size = 1, point_size = 1.5, end_size = 5,
@@ -301,6 +304,7 @@ prep_space_tour <- function(dt, group = NULL,
 }
 
 #' @rdname explore_space_tour
+#' @return a tour animation of the search path in the original high-dimensional basis space
 #' @export
 explore_space_tour <- function(...) {
   prep <- prep_space_tour(...)

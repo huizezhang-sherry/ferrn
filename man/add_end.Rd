@@ -9,13 +9,16 @@ add_end(dt, end_size = 5, end_alpha = 1, end_color = NULL, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{end_size}{the point size}
+\item{end_size}{numeric; the size of the end point}
 
-\item{end_alpha}{an alpha value for the transparency of the point}
+\item{end_alpha}{numeric; the alpha of the end point}
 
-\item{end_color}{the colour of the points}
+\item{end_color}{the variable to be coloured by}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing end points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

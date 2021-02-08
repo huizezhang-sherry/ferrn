@@ -9,13 +9,16 @@ add_anno(dt, anno_color = "black", anno_lty = "dashed", anno_alpha = 0.1, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{anno_color}{the colour of the annotation}
+\item{anno_color}{character; the colour of the annotation line}
 
-\item{anno_lty}{the linetype of the annotation}
+\item{anno_lty}{character; the linetype of the annotation line}
 
-\item{anno_alpha}{an alpha value for the transparency of the annotation}
+\item{anno_alpha}{numeric; the alpha of the annotation line}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for annotating the symmetry of start points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

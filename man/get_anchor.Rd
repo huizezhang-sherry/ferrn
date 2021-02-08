@@ -7,9 +7,12 @@
 get_anchor(dt, group = NULL)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+\item{group}{the variable to label different runs of the optimiser(s)}
+}
+\value{
+a tibble object containing the target bases in each iteration
 }
 \description{
 Extract the anchor points on the geodesic path

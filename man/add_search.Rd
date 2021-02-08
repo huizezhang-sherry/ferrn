@@ -9,13 +9,16 @@ add_search(dt, search_size = 0.5, search_alpha = 0.5, search_color = NULL, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{search_size}{the point size}
+\item{search_size}{numeric; the size of the search points}
 
-\item{search_alpha}{an alpha value for the transparency of the point}
+\item{search_alpha}{numeric; the alpha of the anchor points}
 
-\item{search_color}{the colour of the points}
+\item{search_color}{the variable to be coloured by}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing search points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

@@ -7,11 +7,14 @@
 get_search_count(dt, iter = NULL, group = NULL)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{iter}{The variable used to be counted by}
+\item{iter}{the variable to be counted by}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+\item{group}{the variable to label different runs of the optimiser(s)}
+}
+\value{
+a tibble object of the number of searches conducted by the optimiser(s) in each iteration
 }
 \description{
 Extract the count in each iteration

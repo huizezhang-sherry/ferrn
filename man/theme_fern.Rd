@@ -6,6 +6,9 @@
 \usage{
 theme_fern()
 }
+\value{
+a ggplot2 theme for \code{explore_trace_interp()}
+}
 \description{
 A specific theme for trace plots
 }

@@ -8,7 +8,8 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Implement diagnostic plots for guided tour optimisation.
+`ferrn` serves to produce diagnostic plots for projection pursuit guided tour optimisers . 
+    It also provides functionality for extracting various components in the data objects collected in `tourr`.
 }
 \seealso{
 Useful links:

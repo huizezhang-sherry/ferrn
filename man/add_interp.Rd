@@ -16,15 +16,18 @@ add_interp(
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{interp_size}{the size of the path}
+\item{interp_size}{numeric; the size of the interpolation path}
 
-\item{interp_alpha}{an alpha value for the transparency of the path}
+\item{interp_alpha}{numeric; the alpha of the interpolation path}
 
-\item{interp_color}{the colour of the path}
+\item{interp_color}{the variable to be coloured by}
 
-\item{interp_group}{a group variable for path connection}
+\item{interp_group}{the variable to label different interpolation path}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing the interpolation points in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

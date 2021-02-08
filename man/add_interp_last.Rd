@@ -15,13 +15,16 @@ add_interp_last(
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{interp_last_size}{the point size}
+\item{interp_last_size}{numeric; the size of the last interpolation points in each iteration}
 
-\item{interp_last_alpha}{an alpha value for the transparency of the point}
+\item{interp_last_alpha}{numeric; the alpha of the last interpolation points in each iteration}
 
-\item{interp_last_color}{the colour of the points}
+\item{interp_last_color}{the variable to be coloured by}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing the last interpolation points of each iteration in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and

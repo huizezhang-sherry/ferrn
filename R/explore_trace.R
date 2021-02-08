@@ -2,21 +2,22 @@
 #'
 #' Trace the index value of search/ interpolation points in guided tour optimisation
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param iter The iterator on the x-axis
-#' @param color Coloured by a particular variable
-#' @param group The grouping variable, useful when there are multiple algorithms in the data object
-#' @param cutoff If there are less than cut-off number of points on the interpolation path, all the points will be marked
-#' @param target_size The size of the target points in the interpolation
-#' @param interp_size The size of the interpolation points
-#' @param accuracy_x if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label
-#' @param accuracy_y the precision of y-axis label
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param iter the variable to be plotted on the x-axis
+#' @param color the variable to be coloured by
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param cutoff numeric; if the number of interpolating points is smaller than \code{cutoff}, all the interpolation points will be plotted as dots
+#' @param target_size numeric; the size of target points in the interpolation
+#' @param interp_size numeric; the size of interpolation points
+#' @param accuracy_x numeric; If the difference of two neighbour x-labels is smaller than \code{accuracy_x}, only one of them will be displayed. Used for better axis label
+#' @param accuracy_y numeric; the precision of y-axis label
 #' @examples
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
 #'   explore_trace_interp() +
 #'   scale_color_continuous_botanical(palette = "fern")
 #' @family plot
+#' @return a ggplot object for diagnosing how the index value progresses during the interpolation
 #' @export
 #' @rdname explore_trace
 explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cutoff = 50,
@@ -93,12 +94,12 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 
 #' Plot the count in each iteration
 #'
-#' @param dt A data object from the running the optimisation algorithm in guided tour
-#' @param iter The iterator on the x-axis
-#' @param color Coloured by a particular variable
-#' @param cutoff The cut-off number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}
-#' @param extend_lower a percentage to extend along the y-axis for better display of the count
-#' @param ... arguments passed into geom_label_repel() for better display of the count in each iteration
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param iter the variable to be plotted on the x-axis
+#' @param color the variable to be coloured by
+#' @param cutoff numeric; if the number of searches in one iteration is smaller than \code{cutoff}, a point geom, rather than boxplot geom, will be used.
+#' @param extend_lower a numeric for extending the y-axis to display text labels
+#' @param ... arguments passed into geom_label_repel() for displaying text labels
 #' @examples
 #' # Summary plots for search points in two algorithms
 #' library(patchwork)
@@ -111,6 +112,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #'   scale_color_continuous_botanical(palette = "daisy")
 #' p1 / p2
 #' @family plot
+#' @return a ggplot object for diagnosing how many points the optimiser(s) have searched
 #' @export
 explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, extend_lower = 0.95, ...) {
 

@@ -17,23 +17,26 @@ explore_trace_interp(
 )
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in \code{tourr}}
 
-\item{iter}{The iterator on the x-axis}
+\item{iter}{the variable to be plotted on the x-axis}
 
-\item{color}{Coloured by a particular variable}
+\item{color}{the variable to be coloured by}
 
-\item{group}{The grouping variable, useful when there are multiple algorithms in the data object}
+\item{group}{the variable to label different runs of the optimiser(s)}
 
-\item{cutoff}{If there are less than cut-off number of points on the interpolation path, all the points will be marked}
+\item{cutoff}{numeric; if the number of interpolating points is smaller than \code{cutoff}, all the interpolation points will be plotted as dots}
 
-\item{target_size}{The size of the target points in the interpolation}
+\item{target_size}{numeric; the size of target points in the interpolation}
 
-\item{interp_size}{The size of the interpolation points}
+\item{interp_size}{numeric; the size of interpolation points}
 
-\item{accuracy_x}{if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label}
+\item{accuracy_x}{numeric; If the difference of two neighbour x-labels is smaller than \code{accuracy_x}, only one of them will be displayed. Used for better axis label}
 
-\item{accuracy_y}{the precision of y-axis label}
+\item{accuracy_y}{numeric; the precision of y-axis label}
+}
+\value{
+a ggplot object for diagnosing how the index value progresses during the interpolation
 }
 \description{
 Trace the index value of search/ interpolation points in guided tour optimisation

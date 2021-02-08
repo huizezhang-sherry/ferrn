@@ -7,11 +7,14 @@
 get_dir_search(dt, ratio = 5, ...)
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package}
 
-\item{ratio}{a buffer value to allow directional search points being distinguishable from the anchor points}
+\item{ratio}{numeric; a buffer value to deviate directional search points from the anchor points}
 
 \item{...}{arguments passed to \code{compute_pca()}}
+}
+\value{
+a tibble object containing the directional search bases in pseudo derivative search
 }
 \description{
 Extract directional search points during the optimisation

@@ -14,17 +14,20 @@ explore_trace_search(
 )
 }
 \arguments{
-\item{dt}{A data object from the running the optimisation algorithm in guided tour}
+\item{dt}{a data object collected by the projection pursuit guided tour optimisation in \code{tourr}}
 
-\item{iter}{The iterator on the x-axis}
+\item{iter}{the variable to be plotted on the x-axis}
 
-\item{color}{Coloured by a particular variable}
+\item{color}{the variable to be coloured by}
 
-\item{cutoff}{The cut-off number of observations for switching between point geom to boxplot geom in \code{explore_trace_search()}}
+\item{cutoff}{numeric; if the number of searches in one iteration is smaller than \code{cutoff}, a point geom, rather than boxplot geom, will be used.}
 
-\item{extend_lower}{a percentage to extend along the y-axis for better display of the count}
+\item{extend_lower}{a numeric for extending the y-axis to display text labels}
 
-\item{...}{arguments passed into geom_label_repel() for better display of the count in each iteration}
+\item{...}{arguments passed into geom_label_repel() for displaying text labels}
+}
+\value{
+a ggplot object for diagnosing how many points the optimiser(s) have searched
 }
 \description{
 Plot the count in each iteration

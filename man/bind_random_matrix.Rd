@@ -4,17 +4,21 @@
 \alias{bind_random_matrix}
 \title{Bind random bases in the projection bases space as a matrix}
 \usage{
-bind_random_matrix(basis, n = 500, front = FALSE)
+bind_random_matrix(basis, n = 500, front = FALSE, seed = 1)
 }
 \arguments{
-\item{basis}{A basis matrix returned by \code{get_basis_matrix()}}
+\item{basis}{a matrix returned by \code{get_basis_matrix()}}
 
-\item{n}{Number of random points to generate in each dimension}
+\item{n}{numeric; the number of random bases to generate in each dimension by geozoo}
 
-\item{front}{if the random matrix should be bound before or after the data basis}
+\item{front}{logical; if the random bases should be bound before or after the original bases}
+
+\item{seed}{numeric; a seed for generating reproducible random bases from geozoo}
 }
 \value{
 matrix
+
+a matrix containing both the searched and random bases
 }
 \description{
 Bind random bases in the projection bases space as a matrix

@@ -9,13 +9,16 @@ add_dir_search(dt, dir_size = 0.5, dir_alpha = 0.5, dir_color = NULL, ...)
 \arguments{
 \item{dt}{A data object from the running the optimisation algorithm in guided tour}
 
-\item{dir_size}{the point size}
+\item{dir_size}{numeric; the size of the directional search points in pseudo derivative search}
 
-\item{dir_alpha}{an alpha value for the transparency of the point}
+\item{dir_alpha}{numeric; the alpha of the directional search points in pseudo derivative search}
 
-\item{dir_color}{the colour of the points}
+\item{dir_color}{the variable to be coloured by}
 
 \item{...}{other aesthetics inherent from \code{explore_space_pca()}}
+}
+\value{
+a wrapper for drawing directional search points (used in pseudo derivative search) with buffer in \code{explore_space_pca()}
 }
 \description{
 This is  a wrapper function used by \code{explore_space_pca()} and
