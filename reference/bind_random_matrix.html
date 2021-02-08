@@ -138,28 +138,33 @@
     <p>Bind random bases in the projection bases space as a matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bind_random_matrix</span><span class='op'>(</span><span class='va'>basis</span>, n <span class='op'>=</span> <span class='fl'>500</span>, front <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bind_random_matrix</span><span class='op'>(</span><span class='va'>basis</span>, n <span class='op'>=</span> <span class='fl'>500</span>, front <span class='op'>=</span> <span class='cn'>FALSE</span>, seed <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>basis</th>
-      <td><p>A basis matrix returned by <code><a href='get_basis_matrix.html'>get_basis_matrix()</a></code></p></td>
+      <td><p>a matrix returned by <code><a href='get_basis_matrix.html'>get_basis_matrix()</a></code></p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of random points to generate in each dimension</p></td>
+      <td><p>numeric; the number of random bases to generate in each dimension by geozoo</p></td>
     </tr>
     <tr>
       <th>front</th>
-      <td><p>if the random matrix should be bound before or after the data basis</p></td>
+      <td><p>logical; if the random bases should be bound before or after the original bases</p></td>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>numeric; a seed for generating reproducible random bases from geozoo</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>matrix</p>
+<p>a matrix containing both the searched and random bases</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other bind: 

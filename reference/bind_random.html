@@ -140,21 +140,28 @@ Generating random points on the sphere is useful to perceive the data object in 
 Generating random points on the sphere is useful to perceive the data object in the high dimensional space.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bind_random</span><span class='op'>(</span><span class='va'>dt</span>, n <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bind_random</span><span class='op'>(</span><span class='va'>dt</span>, n <span class='op'>=</span> <span class='fl'>500</span>, seed <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <td><p>a data object collected by the projection pursuit guided tour optimisation in the <code>tourr</code> package</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of random points to generate in each dimension</p></td>
+      <td><p>numeric; the number of random bases to generate in each dimension by geozoo</p></td>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>numeric; a seed for generating reproducible random bases from geozoo</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a tibble object containing both the searched and random bases</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other bind: 

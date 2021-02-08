@@ -152,30 +152,33 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <td><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></td>
     </tr>
     <tr>
       <th>iter</th>
-      <td><p>The iterator on the x-axis</p></td>
+      <td><p>the variable to be plotted on the x-axis</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Coloured by a particular variable</p></td>
+      <td><p>the variable to be coloured by</p></td>
     </tr>
     <tr>
       <th>cutoff</th>
-      <td><p>The cut-off number of observations for switching between point geom to boxplot geom in <code>explore_trace_search()</code></p></td>
+      <td><p>numeric; if the number of searches in one iteration is smaller than <code>cutoff</code>, a point geom, rather than boxplot geom, will be used.</p></td>
     </tr>
     <tr>
       <th>extend_lower</th>
-      <td><p>a percentage to extend along the y-axis for better display of the count</p></td>
+      <td><p>a numeric for extending the y-axis to display text labels</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed into geom_label_repel() for better display of the count in each iteration</p></td>
+      <td><p>arguments passed into geom_label_repel() for displaying text labels</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a ggplot object for diagnosing how many points the optimiser(s) have searched</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 

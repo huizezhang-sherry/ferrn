@@ -161,42 +161,48 @@ that plots the data object in a space reduced by PCA.
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <td><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
+      <td><p>the variable to label different runs of the optimiser(s)</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>different argument passed to <code>add_*()</code></p></td>
+      <td><p>other arguments passed to <code>add_*()</code> functions</p></td>
     </tr>
     <tr>
       <th>random</th>
-      <td><p>Boolean, if the random data from the high dimensional sphere should be bounded</p></td>
+      <td><p>logical; if random bases from the basis space need to be added to the data</p></td>
     </tr>
     <tr>
       <th>flip</th>
-      <td><p>boolean, if the sign flipping need to be computed</p></td>
+      <td><p>logical; if the sign flipping need to be performed</p></td>
     </tr>
     <tr>
       <th>details</th>
-      <td><p>if all the components of the optimisers should be shown. With <code>details = FALSE</code> only the start, end and interpolation path will be shown</p></td>
+      <td><p>logical; if components other than start, end and interpolation need to be shown</p></td>
     </tr>
     <tr>
       <th>pca</th>
-      <td><p>Boolean, if <code>compute_pca()</code> should be performed on the data</p></td>
+      <td><p>logical; if PCA coordinates need to be computed for the data</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>A variable from the object that the diagnostic plot should be coloured by</p></td>
+      <td><p>the variable to be coloured by</p></td>
     </tr>
     <tr>
       <th>animate</th>
-      <td><p>Boolean, if the plot should be animated</p></td>
+      <td><p>logical; if the interpolation path needs to be animated</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a list containing 1) all the bases in a matrix format,
+2) whether a flip of sign is performed, and 3) the original dataset supplied</p>
+<p>a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate</p>
+<p>a ggplot object for diagnosing the optimisers in the PCA-projected basis space</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 

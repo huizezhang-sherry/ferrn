@@ -155,42 +155,45 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <td><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></td>
     </tr>
     <tr>
       <th>iter</th>
-      <td><p>The iterator on the x-axis</p></td>
+      <td><p>the variable to be plotted on the x-axis</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>Coloured by a particular variable</p></td>
+      <td><p>the variable to be coloured by</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
+      <td><p>the variable to label different runs of the optimiser(s)</p></td>
     </tr>
     <tr>
       <th>cutoff</th>
-      <td><p>If there are less than cut-off number of points on the interpolation path, all the points will be marked</p></td>
+      <td><p>numeric; if the number of interpolating points is smaller than <code>cutoff</code>, all the interpolation points will be plotted as dots</p></td>
     </tr>
     <tr>
       <th>target_size</th>
-      <td><p>The size of the target points in the interpolation</p></td>
+      <td><p>numeric; the size of target points in the interpolation</p></td>
     </tr>
     <tr>
       <th>interp_size</th>
-      <td><p>The size of the interpolation points</p></td>
+      <td><p>numeric; the size of interpolation points</p></td>
     </tr>
     <tr>
       <th>accuracy_x</th>
-      <td><p>if two x neighbour values are closer than accuracy_x, only one of them will be displayed. Used for better axis label</p></td>
+      <td><p>numeric; If the difference of two neighbour x-labels is smaller than <code>accuracy_x</code>, only one of them will be displayed. Used for better axis label</p></td>
     </tr>
     <tr>
       <th>accuracy_y</th>
-      <td><p>the precision of y-axis label</p></td>
+      <td><p>numeric; the precision of y-axis label</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a ggplot object for diagnosing how the index value progresses during the interpolation</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 

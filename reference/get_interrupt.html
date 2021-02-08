@@ -149,18 +149,21 @@ This discrepancy is highlighted in the PCA plot. You should not use geodesic sea
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <td><p>a data object collected by the projection pursuit guided tour optimisation in the <code>tourr</code> package</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
+      <td><p>the variable to label different runs of the optimiser(s)</p></td>
     </tr>
     <tr>
       <th>precision</th>
-      <td><p>The precision for the interruption</p></td>
+      <td><p>numeric; if the index value of the last interpolating point and the anchor point differ by <code>precision</code>, an interruption is registered</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a tibble object containing the target and anchor bases for the iteration when an interruption happens</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other get functions: 

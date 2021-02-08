@@ -158,46 +158,50 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dt</th>
-      <td><p>A data object from the running the optimisation algorithm in guided tour</p></td>
+      <td><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>The grouping variable, useful when there are multiple algorithms in the data object</p></td>
+      <td><p>the variable to label different runs of the optimiser(s)</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>A variable from the object that the diagnostic plot should be coloured by</p></td>
+      <td><p>the variable to be coloured by</p></td>
     </tr>
     <tr>
       <th>rand_size</th>
-      <td><p>random point size</p></td>
+      <td><p>numeric; the size of random points</p></td>
     </tr>
     <tr>
       <th>point_size</th>
-      <td><p>other point size</p></td>
+      <td><p>numeric; the size of points searched by the optimiser(s)</p></td>
     </tr>
     <tr>
       <th>end_size</th>
-      <td><p>the size of the ending point</p></td>
+      <td><p>numeric; the size of end points</p></td>
     </tr>
     <tr>
       <th>theo_size</th>
-      <td><p>theoretical point size</p></td>
+      <td><p>numeric; the size of theoretical point(s)</p></td>
     </tr>
     <tr>
       <th>theo_shape</th>
-      <td><p>the numerical value of basic plot shape</p></td>
+      <td><p>numeric; the shape symbol in the basic plot</p></td>
     </tr>
     <tr>
       <th>palette</th>
-      <td><p>The colour palette to use</p></td>
+      <td><p>the colour palette to be used</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional argument passed to <code><a href='https://rdrr.io/pkg/tourr/man/display_xy.html'>tourr::animate_xy()</a></code></p></td>
+      <td><p>other argument passed to <code><a href='https://rdrr.io/pkg/tourr/man/display_xy.html'>tourr::animate_xy()</a></code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a list containing various components needed for producing the tour plot</p>
+<p>a tour animation of the search path in the original high-dimensional basis space</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other plot: 
@@ -206,12 +210,11 @@
 <code><a href='flip_sign.html'>flip_sign</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>,
+    <pre class="examples"><div class='input'><span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>,
   group <span class='op'>=</span> <span class='va'>method</span>, palette <span class='op'>=</span> <span class='va'>botanical_palettes</span><span class='op'>$</span><span class='va'>fern</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span>
 <span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt; <span class='message'>map method to color</span></div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group PD </span></div><div class='output co'>#&gt; target_dist - cur_dist: 0 
+#&gt; generation:  dist =   1.767093 </div><div class='output co'>#&gt; <span class='message'>Using half_range 0.57</span></div><div class='img'><img src='explore_space_tour-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; target_dist - cur_dist: 1.767093 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
