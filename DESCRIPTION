@@ -3,10 +3,10 @@ Title: Facilitate Exploration of touRR optimisatioN
 Version: 0.0.1
 Authors@R: c(
     person("H. Sherry","Zhang", email = "huize.zhang@monash.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7122-1463")),
-    person("Di", "Cook", email = "dicook@monash.edu", role = "ctb", comment = c(ORCID = "0000-0002-3813-7155")),
-    person("Ursula", "Laa", email = "ursula.laa@boku.ac.at", role = "ctb", comment = c(ORCID = "0000-0002-0249-6439")),
-    person("Nicolas", "Langrené", email = "nicolas.langrene@csiro.au", role = "ctb", comment = c(ORCID = "0000-0001-7601-4618")),
-    person("Patricia", "Menéndez", email = "patricia.menendez@monash.edu", role = "ctb", comment = c(ORCID = "0000-0003-0701-6315"))
+    person("Di", "Cook", email = "dicook@monash.edu", role = "aut", comment = c(ORCID = "0000-0002-3813-7155")),
+    person("Ursula", "Laa", email = "ursula.laa@boku.ac.at", role = "aut", comment = c(ORCID = "0000-0002-0249-6439")),
+    person("Nicolas", "Langrené", email = "nicolas.langrene@csiro.au", role = "aut", comment = c(ORCID = "0000-0001-7601-4618")),
+    person("Patricia", "Menéndez", email = "patricia.menendez@monash.edu", role = "aut", comment = c(ORCID = "0000-0003-0701-6315"))
     )
 Description: `ferrn` serves to produce diagnostic plots for projection pursuit guided tour optimisers . 
     It also provides functionality for extracting various components in the data objects collected in `tourr`.

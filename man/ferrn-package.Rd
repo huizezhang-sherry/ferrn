@@ -22,12 +22,12 @@ Useful links:
 \author{
 \strong{Maintainer}: H. Sherry Zhang \email{huize.zhang@monash.edu} (\href{https://orcid.org/0000-0002-7122-1463}{ORCID})
 
-Other contributors:
+Authors:
 \itemize{
-  \item Di Cook \email{dicook@monash.edu} (\href{https://orcid.org/0000-0002-3813-7155}{ORCID}) [contributor]
-  \item Ursula Laa \email{ursula.laa@boku.ac.at} (\href{https://orcid.org/0000-0002-0249-6439}{ORCID}) [contributor]
-  \item Nicolas Langrené \email{nicolas.langrene@csiro.au} (\href{https://orcid.org/0000-0001-7601-4618}{ORCID}) [contributor]
-  \item Patricia Menéndez \email{patricia.menendez@monash.edu} (\href{https://orcid.org/0000-0003-0701-6315}{ORCID}) [contributor]
+  \item Di Cook \email{dicook@monash.edu} (\href{https://orcid.org/0000-0002-3813-7155}{ORCID})
+  \item Ursula Laa \email{ursula.laa@boku.ac.at} (\href{https://orcid.org/0000-0002-0249-6439}{ORCID})
+  \item Nicolas Langrené \email{nicolas.langrene@csiro.au} (\href{https://orcid.org/0000-0001-7601-4618}{ORCID})
+  \item Patricia Menéndez \email{patricia.menendez@monash.edu} (\href{https://orcid.org/0000-0003-0701-6315}{ORCID})
 }
 
 }
