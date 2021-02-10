@@ -220,12 +220,14 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 #'
 #' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
 #' @param group the variable to label different runs of the optimiser(s)
+#' @param flip logical; if the sign flipping need to be performed
 #' @param color the variable to be coloured by
 #' @param rand_size numeric; the size of random points
 #' @param point_size numeric; the size of points searched by the optimiser(s)
 #' @param end_size numeric; the size of end points
 #' @param theo_size numeric; the size of theoretical point(s)
 #' @param theo_shape numeric; the shape symbol in the basic plot
+#' @param theo_color character; the color of theoretical point(s)
 #' @param palette the colour palette to be used
 #' @param ... other argument passed to \code{tourr::animate_xy()}
 #' @examples
@@ -236,9 +238,9 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 #' @rdname explore_space_tour
 #' @return a list containing various components needed for producing the tour plot
 #' @export
-prep_space_tour <- function(dt, group = NULL,
+prep_space_tour <- function(dt, group = NULL, flip = FALSE,
                             color = NULL, rand_size = 1, point_size = 1.5, end_size = 5,
-                            theo_size = 3, theo_shape = 17,
+                            theo_size = 3, theo_shape = 17, theo_color = "black",
                             palette = botanical_palettes$fern, ...) {
   if (rlang::quo_is_null(dplyr::enquo(color))) {
     message("map method to color")
@@ -250,9 +252,14 @@ prep_space_tour <- function(dt, group = NULL,
     dplyr::mutate(row_num = dplyr::row_number()) %>%
     clean_method()
 
-  # see if any flip need to be done
-  flip <- dt %>% flip_sign(group = {{ group }})
-  basis <- flip$basis %>% bind_random_matrix(front = TRUE)
+  if (flip){
+    flip <- dt %>% flip_sign(group = {{ group }})
+    basis <- flip$basis %>% bind_random_matrix(front = TRUE)
+  } else{
+    flip = list(dt = dt)
+    basis <- dt %>% get_basis_matrix() %>% bind_random_matrix(front = TRUE)
+  }
+
   n_rand <- nrow(basis) - nrow(dt)
   n_end <- get_best(flip$dt, group = {{ group }}) %>% dplyr::pull(.data$row_num) + n_rand
 
@@ -288,7 +295,7 @@ prep_space_tour <- function(dt, group = NULL,
       dplyr::filter(.data$info == "theoretical") %>%
       dplyr::pull(.data$row_num)
 
-    col[theo_row_num + n_rand] <- "black"
+    col[theo_row_num + n_rand] <- theo_color
     cex[theo_row_num + n_rand] <- theo_size
     pch[theo_row_num + n_rand] <- theo_shape
   }
