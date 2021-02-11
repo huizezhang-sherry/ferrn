@@ -1,136 +1,8 @@
-#' Flip the sign of a group of bases
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
-#' @param group the variable to label different runs of the optimiser(s)
-#' @param ... other arguments received from \code{explore_space_pca()}
-#' @examples
-#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
-#'   flip_sign(group = method) %>%
-#'   str(max = 1)
-#' @rdname explore_space_pca
-#' @return a list containing 1) all the bases in a matrix format,
-#' 2) whether a flip of sign is performed, and 3) the original dataset supplied
-#' @export
-flip_sign <- function(dt, group = NULL, ...) {
-  if (!rlang::quo_is_null(dplyr::enquo(group))) {
-    group_name <- dt %>%
-      get_best(group = {{ group }}) %>%
-      dplyr::pull({{ group }})
-    num_method <- group_name %>% length()
-    max_bases <- dt %>%
-      get_best(group = {{ group }}) %>%
-      dplyr::pull(basis)
-    max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
-    extract <- function(matrix, pos) matrix[(pos - 1) %% nrow(matrix) + 1, ((pos - 1) %/% nrow(matrix)) + 1]
-    max_sign <- mapply(extract, max_bases, max_id) %>% sign()
-    group_to_flip <- group_name[max_sign < 0]
-    group_to_flip <- group_to_flip[group_to_flip != "theoretical"]
-
-    if (length(group_to_flip) == 0) {
-      message("there's no flip of the sign")
-      basis <- dt %>% get_basis_matrix()
-      dt_obj <- dt
-    } else {
-      message(paste("signs in all the bases will be flipped in group", group_to_flip, "\n"))
-      basis <- dt %>%
-        dplyr::mutate(basis = ifelse({{ group }} %in% group_to_flip & {{ group }} != "theoretical",
-          purrr::map(basis, ~ -.x), basis
-        )) %>%
-        get_basis_matrix()
-      dt_obj <- dt
-    }
-  } else {
-    basis <- dt %>% get_basis_matrix()
-    dt_obj <- dt
-  }
-
-  return(list(
-    basis = basis,
-    flip = !rlang::quo_is_null(dplyr::enquo(group)),
-    dt = dt_obj
-  ))
-}
-
-
-#' Compute PCA for the projection bases
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
-#' @param group the variable to label different runs of the optimiser(s)
-#' @param random logical; if random bases from the basis space need to be added to the data
-#' @param flip logical; if the sign flipping need to be performed
-#' @param ... other arguments received from \code{explore_space_pca()}
-#' @examples
-#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
-#' @rdname explore_space_pca
-#' @return a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate
-#' @export
-compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
-  if (!"basis" %in% colnames(dt)) {
-    stop("You need to have a basis column that contains the projection basis!")
-  }
-
-  num_col <- ncol(dt$basis[[1]])
-  num_row <- nrow(dt$basis[[1]])
-
-  group <- dplyr::enexpr(group)
-  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
-
-  if (flip) {
-    flip <- flip_sign(dt, group = {{ group }})
-    basis <- flip$basis
-  } else {
-    flip <- list(
-      basis = dt %>% get_basis_matrix(),
-      flip = FALSE
-    )
-    basis <- flip$basis
-  }
-
-  # Compute PCA
-  if (num_col == 1) {
-    pca <- basis %>%
-      bind_random_matrix() %>%
-      stats::prcomp(scale. = TRUE)
-    v <- suppressMessages(pca$x %>% tibble::as_tibble(.name_repair = "minimal"))
-    if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
-    aug <- dt_flip %>%
-      bind_random() %>%
-      dplyr::bind_cols(v)
-
-    aug <- aug %>% clean_method()
-  } else if (num_col == 2) {
-    message("Ferrn will perform PCA separately on each dimension")
-    basis_2d <- basis %>% bind_random_matrix()
-    pca1 <- stats::prcomp(basis_2d[, 1:num_row], scale. = TRUE)
-    pca2 <- stats::prcomp(basis_2d[, (num_row + 1):(2 * num_row)], scale. = TRUE)
-    pca <- list(pca1, pca2)
-
-    v1 <- suppressMessages(-pca1$x %>% tibble::as_tibble(.name_repair = "minimal"))
-    v2 <- suppressMessages(-pca2$x %>% tibble::as_tibble(.name_repair = "minimal"))
-    colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2 * num_row)))
-
-    if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
-    aug <- dt_flip %>%
-      bind_random() %>%
-      dplyr::bind_cols(v1) %>%
-      dplyr::bind_cols(v2)
-
-    aug <- aug %>% clean_method()
-  } else {
-    stop("ferrn can only handle 1d or 2d bases!")
-  }
-
-  return(list(pca_summary = pca, aug = aug))
-}
-
-
-
-
 #' Plot the PCA projection of the projection bases space
 #'
 #' The set of functions returns a primary ggplot object
 #' that plots the data object in a space reduced by PCA.
-#' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} does the plotting.`
+#' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} plots the bases in the PCA-projected space
 #' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
 #' @param details logical; if components other than start, end and interpolation need to be shown
 #' @param pca logical; if PCA coordinates need to be computed for the data
@@ -145,9 +17,15 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #'   ) %>%
 #'   explore_space_pca(group = method, details = TRUE) +
 #'   scale_color_discrete_botanical()
-#' @family plot
+#' @family main plot functions
 #' @rdname explore_space_pca
-#' @return a ggplot object for diagnosing the optimisers in the PCA-projected basis space
+#' @return
+#' \describe{
+#'   \item{\code{explore_space_pca()}}{a ggplot object for diagnosing the optimisers in the PCA-projected basis space}
+#'   \item{\code{flip_sign()}}{a list containing 1) all the bases in a matrix format,
+#'    2) whether a flip of sign is performed, and 3) the original dataset supplied}
+#'   \item{\code{compute_pca()}}{a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate}
+#' }
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
                               ..., animate = FALSE) {
@@ -216,8 +94,162 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
   p
 }
 
-#' Plot the grand tour animation of the projection bases space
+
+#' Flip the sign of a group of bases
 #'
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param ... other arguments received from \code{explore_space_pca()}
+#' @examples
+#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
+#'   flip_sign(group = method) %>%
+#'   str(max = 1)
+#' @rdname explore_space_pca
+#' @return
+#' \itemize{
+#' }
+#'
+#' @export
+flip_sign <- function(dt, group = NULL, ...) {
+  if (!rlang::quo_is_null(dplyr::enquo(group))) {
+    group_name <- dt %>%
+      get_best(group = {{ group }}) %>%
+      dplyr::pull({{ group }})
+    num_method <- group_name %>% length()
+    max_bases <- dt %>%
+      get_best(group = {{ group }}) %>%
+      dplyr::pull(basis)
+    max_id <- max_bases %>% vapply(function(x) abs(x) %>% which.max(), numeric(1))
+    extract <- function(matrix, pos) matrix[(pos - 1) %% nrow(matrix) + 1, ((pos - 1) %/% nrow(matrix)) + 1]
+    max_sign <- mapply(extract, max_bases, max_id) %>% sign()
+    group_to_flip <- group_name[max_sign < 0]
+    group_to_flip <- group_to_flip[group_to_flip != "theoretical"]
+
+    if (length(group_to_flip) == 0) {
+      message("there's no flip of the sign")
+      basis <- dt %>% get_basis_matrix()
+      dt_obj <- dt
+    } else {
+      message(paste("signs in all the bases will be flipped in group", group_to_flip, "\n"))
+      basis <- dt %>%
+        dplyr::mutate(basis = ifelse({{ group }} %in% group_to_flip & {{ group }} != "theoretical",
+          purrr::map(basis, ~ -.x), basis
+        )) %>%
+        get_basis_matrix()
+      dt_obj <- dt
+    }
+  } else {
+    basis <- dt %>% get_basis_matrix()
+    dt_obj <- dt
+  }
+
+  return(list(
+    basis = basis,
+    flip = !rlang::quo_is_null(dplyr::enquo(group)),
+    dt = dt_obj
+  ))
+}
+
+
+#' Compute PCA for the projection bases
+#'
+#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param random logical; if random bases from the basis space need to be added to the data
+#' @param flip logical; if the sign flipping need to be performed
+#' @param ... other arguments received from \code{explore_space_pca()}
+#' @examples
+#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
+#' @rdname explore_space_pca
+#' @return
+#' \itemize{
+#'
+#' }
+#' @export
+compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
+  if (!"basis" %in% colnames(dt)) {
+    stop("You need to have a basis column that contains the projection basis!")
+  }
+
+  num_col <- ncol(dt$basis[[1]])
+  num_row <- nrow(dt$basis[[1]])
+
+  group <- dplyr::enexpr(group)
+  dt <- dt %>% dplyr::mutate(row_num = dplyr::row_number())
+
+  if (flip) {
+    flip <- flip_sign(dt, group = {{ group }})
+    basis <- flip$basis
+  } else {
+    flip <- list(
+      basis = dt %>% get_basis_matrix(),
+      flip = FALSE
+    )
+    basis <- flip$basis
+  }
+
+  # Compute PCA
+  if (num_col == 1) {
+    pca <- basis %>%
+      bind_random_matrix() %>%
+      stats::prcomp(scale. = TRUE)
+    v <- suppressMessages(pca$x %>% tibble::as_tibble(.name_repair = "minimal"))
+    if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
+    aug <- dt_flip %>%
+      bind_random() %>%
+      dplyr::bind_cols(v)
+
+    aug <- aug %>% clean_method()
+  } else if (num_col == 2) {
+    message("Ferrn will perform PCA separately on each dimension")
+    basis_2d <- basis %>% bind_random_matrix()
+    pca1 <- stats::prcomp(basis_2d[, 1:num_row], scale. = TRUE)
+    pca2 <- stats::prcomp(basis_2d[, (num_row + 1):(2 * num_row)], scale. = TRUE)
+    pca <- list(pca1, pca2)
+
+    v1 <- suppressMessages(-pca1$x %>% tibble::as_tibble(.name_repair = "minimal"))
+    v2 <- suppressMessages(-pca2$x %>% tibble::as_tibble(.name_repair = "minimal"))
+    colnames(v2)[1:num_row] <- c(paste0("PC", seq(num_row + 1, 2 * num_row)))
+
+    if (flip$flip) dt_flip <- flip$dt else dt_flip <- dt
+    aug <- dt_flip %>%
+      bind_random() %>%
+      dplyr::bind_cols(v1) %>%
+      dplyr::bind_cols(v2)
+
+    aug <- aug %>% clean_method()
+  } else {
+    stop("ferrn can only handle 1d or 2d bases!")
+  }
+
+  return(list(pca_summary = pca, aug = aug))
+}
+
+
+
+
+
+#' Plot the grand tour animation of the bases space in high dimension
+
+#' @rdname explore_space_tour
+#' @family main plot functions
+#' @return
+#' \describe{
+#'   \item{\code{explore_space_tour()}}{ a tour animation of the search path in the original high-dimensional basis space}
+#'   \item{\code{prep_space_tour()}}{ a list containing various components needed for producing the tour plot}
+#' }
+#' @export
+explore_space_tour <- function(...) {
+  prep <- prep_space_tour(...)
+
+  tourr::animate_xy(prep$basis,
+                    col = prep$col, cex = prep$cex, pch = prep$pch,
+                    edges = prep$edges, edges.col = prep$edges_col,
+                    axes = "bottomleft"
+  )
+}
+
+
 #' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
 #' @param group the variable to label different runs of the optimiser(s)
 #' @param flip logical; if the sign flipping need to be performed
@@ -229,14 +261,12 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 #' @param theo_shape numeric; the shape symbol in the basic plot
 #' @param theo_color character; the color of theoretical point(s)
 #' @param palette the colour palette to be used
-#' @param ... other argument passed to \code{tourr::animate_xy()}
+#' @param ... other argument passed to \code{tourr::animate_xy()} and \code{prep_space_tour()}
 #' @examples
 #' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
 #'   group = method, palette = botanical_palettes$fern[c(1, 6)]
 #' )
-#' @family plot
 #' @rdname explore_space_tour
-#' @return a list containing various components needed for producing the tour plot
 #' @export
 prep_space_tour <- function(dt, group = NULL, flip = FALSE,
                             color = NULL, rand_size = 1, point_size = 1.5, end_size = 5,
@@ -308,17 +338,4 @@ prep_space_tour <- function(dt, group = NULL, flip = FALSE,
     edges = edges,
     edges_col = edges_col
   ))
-}
-
-#' @rdname explore_space_tour
-#' @return a tour animation of the search path in the original high-dimensional basis space
-#' @export
-explore_space_tour <- function(...) {
-  prep <- prep_space_tour(...)
-
-  tourr::animate_xy(prep$basis,
-    col = prep$col, cex = prep$cex, pch = prep$pch,
-    edges = prep$edges, edges.col = prep$edges_col,
-    axes = "bottomleft"
-  )
 }

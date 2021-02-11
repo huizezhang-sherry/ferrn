@@ -16,7 +16,7 @@
 #' holes_1d_better %>%
 #'   explore_trace_interp() +
 #'   scale_color_continuous_botanical(palette = "fern")
-#' @family plot
+#' @family main plot functions
 #' @return a ggplot object for diagnosing how the index value progresses during the interpolation
 #' @export
 #' @rdname explore_trace
@@ -111,7 +111,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #' p2 <- holes_2d_better_max_tries %>% explore_trace_search() +
 #'   scale_color_continuous_botanical(palette = "daisy")
 #' p1 / p2
-#' @family plot
+#' @family main plot functions
 #' @return a ggplot object for diagnosing how many points the optimiser(s) have searched
 #' @export
 explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, extend_lower = 0.95, ...) {

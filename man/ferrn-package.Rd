@@ -8,8 +8,10 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-`ferrn` serves to produce diagnostic plots for projection pursuit guided tour optimisers . 
-    It also provides functionality for extracting various components in the data objects collected in `tourr`.
+Diagnostic plots for optimisation, with a focus on projection pursuit. These show paths the optimiser 
+    takes in the high-dimensional space in multiple ways: by reducing the dimension using principal component analysis, and
+    also using the tour to show the path on the high-dimensional space. Several botanical colour palettes are included, reflecting the 
+    name of the package.
 }
 \seealso{
 Useful links:

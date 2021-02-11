@@ -140,7 +140,7 @@ get_dir_search <- function(dt, ratio = 5, ...) {
     dplyr::select(.data$tries, .data$anchor_x, .data$anchor_y) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(tries = dplyr::lead(.data$tries)) %>%
-    dplyr::filter(!is.na(tries))
+    dplyr::filter(!is.na(.data$tries))
 
   # compute the buffer
   dir_search <- dt %>% dplyr::filter(.data$info %in% c("direction_search", "best_direction_search"))
