@@ -122,7 +122,6 @@ get_search <- function(dt) {
 #' @return a tibble object containing the directional search bases in pseudo derivative search
 #' @export
 get_dir_search <- function(dt, ratio = 5, ...) {
-
   # check only valid for search_geodesic or pseudo-derivative
   if (!"PC1" %in% colnames(dt)) {
     message("get_dir_search() needs to be used on data projected by compute_pca()")
@@ -138,7 +137,10 @@ get_dir_search <- function(dt, ratio = 5, ...) {
     dplyr::group_by(.data$tries) %>%
     dplyr::filter(.data$loop == max(.data$loop)) %>%
     dplyr::rename(anchor_x = .data$PC1, anchor_y = .data$PC2) %>%
-    dplyr::select(.data$tries, .data$anchor_x, .data$anchor_y)
+    dplyr::select(.data$tries, .data$anchor_x, .data$anchor_y) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(tries = dplyr::lead(.data$tries)) %>%
+    dplyr::filter(!is.na(tries))
 
   # compute the buffer
   dir_search <- dt %>% dplyr::filter(.data$info %in% c("direction_search", "best_direction_search"))
