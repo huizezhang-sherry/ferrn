@@ -1,0 +1,34 @@
+Package: ferrn
+Title: Facilitate Exploration of touRR optimisatioN
+Version: 0.0.1
+Authors@R: c(
+    person("H. Sherry","Zhang", email = "huize.zhang@monash.edu", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7122-1463")),
+    person("Di", "Cook", email = "dicook@monash.edu", role = "aut", comment = c(ORCID = "0000-0002-3813-7155")),
+    person("Ursula", "Laa", email = "ursula.laa@boku.ac.at", role = "aut", comment = c(ORCID = "0000-0002-0249-6439")),
+    person("Nicolas", "Langrené", email = "nicolas.langrene@csiro.au", role = "aut", comment = c(ORCID = "0000-0001-7601-4618")),
+    person("Patricia", "Menéndez", email = "patricia.menendez@monash.edu", role = "aut", comment = c(ORCID = "0000-0003-0701-6315"))
+    )
+Description: Diagnostic plots for optimisation, with a focus on projection pursuit. These show paths the optimiser 
+    takes in the high-dimensional space in multiple ways: by reducing the dimension using principal component analysis, and
+    also using the tour to show the path on the high-dimensional space. Several botanical colour palettes are included, reflecting the 
+    name of the package. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/huizezhang-sherry/ferrn/
+BugReports: https://github.com/huizezhang-sherry/ferrn/issues
+Imports: rlang (>= 0.1.2), dplyr, magrittr, scales, gganimate, ggplot2,
+        tibble, purrr, geozoo, tourr, stringr, ggrepel, ggforce
+RoxygenNote: 7.1.1
+Depends: R (>= 2.10)
+Suggests: roxygen2, tidyr, covr, pkgdown, testthat, forcats, patchwork
+Language: en-GB
+NeedsCompilation: no
+Packaged: 2021-02-23 03:49:25 UTC; hzha400
+Author: H. Sherry Zhang [aut, cre] (<https://orcid.org/0000-0002-7122-1463>),
+  Di Cook [aut] (<https://orcid.org/0000-0002-3813-7155>),
+  Ursula Laa [aut] (<https://orcid.org/0000-0002-0249-6439>),
+  Nicolas Langrené [aut] (<https://orcid.org/0000-0001-7601-4618>),
+  Patricia Menéndez [aut] (<https://orcid.org/0000-0003-0701-6315>)
+Maintainer: H. Sherry Zhang <huize.zhang@monash.edu>
+Built: R 3.6.3; ; 2021-02-23 03:49:48 UTC; unix
