@@ -181,10 +181,10 @@
     <p>a ggplot object for diagnosing how many points the optimiser(s) have searched</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other plot: 
-<code><a href='explore_trace_interp.html'>explore_trace_interp</a>()</code>,
-<code><a href='flip_sign.html'>flip_sign</a>()</code>,
-<code><a href='prep_space_tour.html'>prep_space_tour</a>()</code></p></div>
+    <div class='dont-index'><p>Other main plot functions: 
+<code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
+<code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
+<code><a href='explore_trace_interp.html'>explore_trace_interp</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Summary plots for search points in two algorithms</span>
@@ -192,10 +192,8 @@
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='va'>holes_1d_better</span> <span class='op'>%&gt;%</span> <span class='fu'>explore_trace_search</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>map tries to the x-axis</span></div><div class='output co'>#&gt; <span class='message'>map tries to color</span></div><div class='output co'>#&gt; <span class='message'>Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-#&gt; <span class='message'>replace the existing scale.</span></div><div class='input'><span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='va'>holes_2d_better_max_tries</span> <span class='op'>%&gt;%</span> <span class='fu'>explore_trace_search</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"fern"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>map tries to the x-axis</span></div><div class='output co'>#&gt; <span class='message'>map tries to color</span></div><div class='input'><span class='va'>p2</span> <span class='op'>&lt;-</span> <span class='va'>holes_2d_better_max_tries</span> <span class='op'>%&gt;%</span> <span class='fu'>explore_trace_search</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_continuous_botanical</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"daisy"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>map tries to the x-axis</span></div><div class='output co'>#&gt; <span class='message'>map tries to color</span></div><div class='input'><span class='va'>p1</span> <span class='op'>/</span> <span class='va'>p2</span>
 </div><div class='img'><img src='explore_trace_search-1.png' alt='' width='700' height='433' /></div></pre>

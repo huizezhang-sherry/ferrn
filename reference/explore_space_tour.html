@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the grand tour animation of the projection bases space — prep_space_tour • ferrn</title>
+<title>Plot the grand tour animation of the bases space in high dimension — explore_space_tour • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Plot the grand tour animation of the projection bases space — prep_space_tour" />
-<meta property="og:description" content="Plot the grand tour animation of the projection bases space" />
+<meta property="og:title" content="Plot the grand tour animation of the bases space in high dimension — explore_space_tour" />
+<meta property="og:description" content="Plot the grand tour animation of the bases space in high dimension" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -129,33 +129,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the grand tour animation of the projection bases space</h1>
+    <h1>Plot the grand tour animation of the bases space in high dimension</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_space.R'><code>R/explore_space.R</code></a></small>
     <div class="hidden name"><code>explore_space_tour.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot the grand tour animation of the projection bases space</p>
+    <p>Plot the grand tour animation of the bases space in high dimension</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prep_space_tour</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>prep_space_tour</span><span class='op'>(</span>
   <span class='va'>dt</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  flip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
   rand_size <span class='op'>=</span> <span class='fl'>1</span>,
   point_size <span class='op'>=</span> <span class='fl'>1.5</span>,
   end_size <span class='op'>=</span> <span class='fl'>5</span>,
   theo_size <span class='op'>=</span> <span class='fl'>3</span>,
   theo_shape <span class='op'>=</span> <span class='fl'>17</span>,
+  theo_color <span class='op'>=</span> <span class='st'>"black"</span>,
   palette <span class='op'>=</span> <span class='va'>botanical_palettes</span><span class='op'>$</span><span class='va'>fern</span>,
   <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>other argument passed to <code><a href='https://rdrr.io/pkg/tourr/man/display_xy.html'>tourr::animate_xy()</a></code> and <code>prep_space_tour()</code></p></td>
+    </tr>
     <tr>
       <th>dt</th>
       <td><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></td>
@@ -163,6 +169,10 @@
     <tr>
       <th>group</th>
       <td><p>the variable to label different runs of the optimiser(s)</p></td>
+    </tr>
+    <tr>
+      <th>flip</th>
+      <td><p>logical; if the sign flipping need to be performed</p></td>
     </tr>
     <tr>
       <th>color</th>
@@ -189,25 +199,30 @@
       <td><p>numeric; the shape symbol in the basic plot</p></td>
     </tr>
     <tr>
-      <th>palette</th>
-      <td><p>the colour palette to be used</p></td>
+      <th>theo_color</th>
+      <td><p>character; the color of theoretical point(s)</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>other argument passed to <code><a href='https://rdrr.io/pkg/tourr/man/display_xy.html'>tourr::animate_xy()</a></code></p></td>
+      <th>palette</th>
+      <td><p>the colour palette to be used</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list containing various components needed for producing the tour plot</p>
-<p>a tour animation of the search path in the original high-dimensional basis space</p>
+    
+<dl>
+  <dt><code>explore_space_tour()</code></dt><dd><p>an animation of the search path in the high-dimensional sphere</p></dd>
+  <dt><code>prep_space_tour()</code></dt><dd><p>a list containing various components needed for producing the animation</p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other plot: 
+    <div class='dont-index'><p>Other main plot functions: 
+<code><a href='explore_space_pca.html'>explore_space_pca</a>()</code>,
 <code><a href='explore_trace_interp.html'>explore_trace_interp</a>()</code>,
-<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code>,
-<code><a href='flip_sign.html'>flip_sign</a>()</code></p></div>
+<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>explore_space_tour</span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span>,

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flip the sign of a group of bases — flip_sign • ferrn</title>
+<title>Plot the PCA projection of the projection bases space — explore_space_pca • ferrn</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="Flip the sign of a group of bases — flip_sign" />
+<meta property="og:title" content="Plot the PCA projection of the projection bases space — explore_space_pca" />
 <meta property="og:description" content="The set of functions returns a primary ggplot object
 that plots the data object in a space reduced by PCA.
-compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
+compute_pca() computes the PCA and explore_space_pca() plots the bases in the PCA-projected space" />
 <meta property="og:image" content="https://huizezhang-sherry.github.io/ferrn/logo.png" />
 
 
@@ -131,7 +131,7 @@ compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Flip the sign of a group of bases</h1>
+    <h1>Plot the PCA projection of the projection bases space</h1>
     <small class="dont-index">Source: <a href='https://github.com/huizezhang-sherry/ferrn/blob/master/R/explore_space.R'><code>R/explore_space.R</code></a></small>
     <div class="hidden name"><code>explore_space_pca.Rd</code></div>
     </div>
@@ -139,14 +139,10 @@ compute_pca() computes the PCA and explore_space_pca() does the plotting.`" />
     <div class="ref-description">
     <p>The set of functions returns a primary ggplot object
 that plots the data object in a space reduced by PCA.
-<code>compute_pca()</code> computes the PCA and <code>explore_space_pca()</code> does the plotting.`</p>
+<code>compute_pca()</code> computes the PCA and <code>explore_space_pca()</code> plots the bases in the PCA-projected space</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flip_sign</span><span class='op'>(</span><span class='va'>dt</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>compute_pca</span><span class='op'>(</span><span class='va'>dt</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, random <span class='op'>=</span> <span class='cn'>TRUE</span>, flip <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='fu'>explore_space_pca</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>explore_space_pca</span><span class='op'>(</span>
   <span class='va'>dt</span>,
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   pca <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -154,7 +150,11 @@ that plots the data object in a space reduced by PCA.
   color <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>,
   animate <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span>
+
+<span class='fu'>flip_sign</span><span class='op'>(</span><span class='va'>dt</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>compute_pca</span><span class='op'>(</span><span class='va'>dt</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, random <span class='op'>=</span> <span class='cn'>TRUE</span>, flip <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,22 +162,6 @@ that plots the data object in a space reduced by PCA.
     <tr>
       <th>dt</th>
       <td><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></td>
-    </tr>
-    <tr>
-      <th>group</th>
-      <td><p>the variable to label different runs of the optimiser(s)</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>other arguments passed to <code>add_*()</code> functions</p></td>
-    </tr>
-    <tr>
-      <th>random</th>
-      <td><p>logical; if random bases from the basis space need to be added to the data</p></td>
-    </tr>
-    <tr>
-      <th>flip</th>
-      <td><p>logical; if the sign flipping need to be performed</p></td>
     </tr>
     <tr>
       <th>details</th>
@@ -188,30 +172,65 @@ that plots the data object in a space reduced by PCA.
       <td><p>logical; if PCA coordinates need to be computed for the data</p></td>
     </tr>
     <tr>
+      <th>group</th>
+      <td><p>the variable to label different runs of the optimiser(s)</p></td>
+    </tr>
+    <tr>
       <th>color</th>
       <td><p>the variable to be coloured by</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments received from <code>explore_space_pca()</code></p></td>
     </tr>
     <tr>
       <th>animate</th>
       <td><p>logical; if the interpolation path needs to be animated</p></td>
     </tr>
+    <tr>
+      <th>random</th>
+      <td><p>logical; if random bases from the basis space need to be added to the data</p></td>
+    </tr>
+    <tr>
+      <th>flip</th>
+      <td><p>logical; if the sign flipping need to be performed</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list containing 1) all the bases in a matrix format,
-2) whether a flip of sign is performed, and 3) the original dataset supplied</p>
-<p>a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate</p>
-<p>a ggplot object for diagnosing the optimisers in the PCA-projected basis space</p>
+    
+<dl>
+  <dt><code>explore_space_pca()</code></dt><dd><p>a ggplot object for diagnosing the optimisers in the PCA-projected basis space</p></dd>
+  <dt><code>flip_sign()</code></dt><dd><p>a list containing
+    <ul>
+<li><p>a matrix of all the bases</p></li>
+<li><p>a logical value whether a flip of sign is performed</p></li>
+<li><p>a dataframe of the original dataset</p></li>
+</ul></p></dd>
+  <dt><code>compute_pca()</code></dt><dd><p>a list containing
+    <ul>
+<li><p>the PCA summary</p></li>
+<li><p>a dataframe with PC coordinates augmented</p></li>
+</ul></p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other plot: 
+    <div class='dont-index'><p>Other main plot functions: 
+<code><a href='explore_space_tour.html'>explore_space_tour</a>()</code>,
 <code><a href='explore_trace_interp.html'>explore_trace_interp</a>()</code>,
-<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code>,
-<code><a href='prep_space_tour.html'>prep_space_tour</a>()</code></p></div>
+<code><a href='explore_trace_search.html'>explore_trace_search</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_geo</span>, <span class='va'>holes_1d_better</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+    index <span class='op'>=</span> <span class='fu'>tourr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span><span class='op'>(</span><span class='op'>)</span>, raw_data <span class='op'>=</span> <span class='va'>boa5</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>explore_space_pca</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_discrete_botanical</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic </span></div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_geo</span>, <span class='va'>holes_1d_better</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>flip_sign</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span>max <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic </span></div><div class='output co'>#&gt; List of 3
@@ -246,13 +265,7 @@ that plots the data object in a space reduced by PCA.
 #&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 dire… PD      </span><span style='color: #BB0000;'>NA</span><span>       2     1     9       9 -</span><span style='color: #BB0000;'>1.84</span><span> -</span><span style='color: #BB0000;'>0.607</span><span>
 #&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>&lt;dbl</span><span>…     0.749 best… PD      </span><span style='color: #BB0000;'>NA</span><span>       2     1    10      10 -</span><span style='color: #BB0000;'>1.83</span><span> -</span><span style='color: #BB0000;'>0.635</span><span>
 #&gt; </span><span style='color: #555555;'># … with 2,985 more rows, and 3 more variables: PC3 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC4 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PC5 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </div><div class='input'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_geo</span>, <span class='va'>holes_1d_better</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='bind_theoretical.html'>bind_theoretical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
-    index <span class='op'>=</span> <span class='fu'>tourr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/tourr/man/holes.html'>holes</a></span><span class='op'>(</span><span class='op'>)</span>, raw_data <span class='op'>=</span> <span class='va'>boa5</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>explore_space_pca</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='scale_color_continuous_botanical.html'>scale_color_discrete_botanical</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>signs in all the bases will be flipped in group search_geodesic </span></div><div class='output co'>#&gt; <span class='message'>Adding missing grouping variables: `method`</span></div><div class='img'><img src='explore_space_pca-1.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
