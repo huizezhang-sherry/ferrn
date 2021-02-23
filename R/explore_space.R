@@ -22,9 +22,17 @@
 #' @return
 #' \describe{
 #'   \item{\code{explore_space_pca()}}{a ggplot object for diagnosing the optimisers in the PCA-projected basis space}
-#'   \item{\code{flip_sign()}}{a list containing 1) all the bases in a matrix format,
-#'    2) whether a flip of sign is performed, and 3) the original dataset supplied}
-#'   \item{\code{compute_pca()}}{a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate}
+#'   \item{\code{flip_sign()}}{a list containing
+#'     \itemize{
+#'         \item{a matrix of all the bases}
+#'         \item{a logical value whether a flip of sign is performed}
+#'         \item{a dataframe of the original dataset}}
+#'      }
+#'   \item{\code{compute_pca()}}{a list containing
+#'     \itemize{
+#'         \item{the PCA summary}
+#'         \item{a dataframe with PC coordinates augmented}
+#'      }}
 #' }
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
@@ -105,10 +113,6 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 #'   flip_sign(group = method) %>%
 #'   str(max = 1)
 #' @rdname explore_space_pca
-#' @return
-#' \itemize{
-#' }
-#'
 #' @export
 flip_sign <- function(dt, group = NULL, ...) {
   if (!rlang::quo_is_null(dplyr::enquo(group))) {
@@ -161,10 +165,6 @@ flip_sign <- function(dt, group = NULL, ...) {
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
 #' @rdname explore_space_pca
-#' @return
-#' \itemize{
-#'
-#' }
 #' @export
 compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
   if (!"basis" %in% colnames(dt)) {
@@ -235,8 +235,8 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 #' @family main plot functions
 #' @return
 #' \describe{
-#'   \item{\code{explore_space_tour()}}{ a tour animation of the search path in the original high-dimensional basis space}
-#'   \item{\code{prep_space_tour()}}{ a list containing various components needed for producing the tour plot}
+#'   \item{\code{explore_space_tour()}}{an animation of the search path in the high-dimensional sphere}
+#'   \item{\code{prep_space_tour()}}{a list containing various components needed for producing the animation}
 #' }
 #' @export
 explore_space_tour <- function(...) {

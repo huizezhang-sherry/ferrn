@@ -45,7 +45,7 @@ Trace the index value of search/ interpolation points in guided tour optimisatio
 # Compare the trace of interpolated points in two algorithms
 holes_1d_better \%>\%
   explore_trace_interp() +
-  scale_color_continuous_botanical(palette = "fern")
+  scale_color_continuous_botanical(palette = "fern", interp_size = 2)
 }
 \seealso{
 Other main plot functions: 

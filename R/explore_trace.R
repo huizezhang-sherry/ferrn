@@ -15,7 +15,7 @@
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
 #'   explore_trace_interp() +
-#'   scale_color_continuous_botanical(palette = "fern")
+#'   scale_color_continuous_botanical(palette = "fern", interp_size = 2)
 #' @family main plot functions
 #' @return a ggplot object for diagnosing how the index value progresses during the interpolation
 #' @export
@@ -106,8 +106,7 @@ explore_trace_interp <- function(dt, iter = NULL, color = NULL, group = NULL, cu
 #' library(dplyr)
 #' library(ggplot2)
 #' p1 <- holes_1d_better %>% explore_trace_search() +
-#'   scale_color_continuous_botanical(palette = "fern") +
-#'   xlim(c(1, 9))
+#'   scale_color_continuous_botanical(palette = "fern")
 #' p2 <- holes_2d_better_max_tries %>% explore_trace_search() +
 #'   scale_color_continuous_botanical(palette = "daisy")
 #' p1 / p2

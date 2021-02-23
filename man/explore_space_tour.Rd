@@ -49,8 +49,8 @@ prep_space_tour(
 }
 \value{
 \describe{
-  \item{\code{explore_space_tour()}}{ a tour animation of the search path in the original high-dimensional basis space}
-  \item{\code{prep_space_tour()}}{ a list containing various components needed for producing the tour plot}
+  \item{\code{explore_space_tour()}}{an animation of the search path in the high-dimensional sphere}
+  \item{\code{prep_space_tour()}}{a list containing various components needed for producing the animation}
 }
 }
 \description{

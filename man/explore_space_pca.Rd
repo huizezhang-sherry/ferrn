@@ -42,16 +42,17 @@ compute_pca(dt, group = NULL, random = TRUE, flip = TRUE, ...)
 \value{
 \describe{
   \item{\code{explore_space_pca()}}{a ggplot object for diagnosing the optimisers in the PCA-projected basis space}
-  \item{\code{flip_sign()}}{a list containing 1) all the bases in a matrix format,
-   2) whether a flip of sign is performed, and 3) the original dataset supplied}
-  \item{\code{compute_pca()}}{a list containing 1) the PCA summary and 2) the data object after augmenting the PC coordinate}
-}
-
-\itemize{
-}
-
-\itemize{
-
+  \item{\code{flip_sign()}}{a list containing
+    \itemize{
+        \item{a matrix of all the bases}
+        \item{a logical value whether a flip of sign is performed}
+        \item{a dataframe of the original dataset}}
+     }
+  \item{\code{compute_pca()}}{a list containing
+    \itemize{
+        \item{the PCA summary}
+        \item{a dataframe with PC coordinates augmented}
+     }}
 }
 }
 \description{

@@ -38,8 +38,7 @@ library(patchwork)
 library(dplyr)
 library(ggplot2)
 p1 <- holes_1d_better \%>\% explore_trace_search() +
-  scale_color_continuous_botanical(palette = "fern") +
-  xlim(c(1, 9))
+  scale_color_continuous_botanical(palette = "fern")
 p2 <- holes_2d_better_max_tries \%>\% explore_trace_search() +
   scale_color_continuous_botanical(palette = "daisy")
 p1 / p2
