@@ -14,8 +14,8 @@
 #' @examples
 #' # Compare the trace of interpolated points in two algorithms
 #' holes_1d_better %>%
-#'   explore_trace_interp() +
-#'   scale_color_continuous_botanical(palette = "fern", interp_size = 2)
+#'   explore_trace_interp(interp_size = 2) +
+#'   scale_color_continuous_botanical(palette = "fern")
 #' @family main plot functions
 #' @return a ggplot object for diagnosing how the index value progresses during the interpolation
 #' @export
