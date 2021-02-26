@@ -38,8 +38,8 @@ format_label <- function(labels, accuracy) {
 clean_method <- function(dt) {
   dt %>%
     dplyr::mutate(method = dplyr::case_when(
-      .data$method == "search_better" ~ "SA",
-      .data$method == "search_better_random" ~ "SAJO",
+      .data$method == "search_better" ~ "CRS",
+      .data$method == "search_better_random" ~ "SA",
       .data$method == "search_geodesic" ~ "PD",
       .data$method == "search_polish" ~ "polish",
       TRUE ~ NA_character_

@@ -245,8 +245,8 @@ get_theo <- function(dt) {
 #' @export
 get_interrupt <- function(dt, group = NULL, precision = 0.001) {
 
-  if (any(unique(dt$method) %in% c("SA","SAJO", "search_better", "search_better_random"))) {
-    dt <- dt %>% dplyr::filter(dt$method %in% c("SA", "SAJO" , "search_better", "search_better_random"))
+  if (any(unique(dt$method) %in% c("CRS","SA", "search_better", "search_better_random"))) {
+    dt <- dt %>% dplyr::filter(dt$method %in% c("CRS", "SA" , "search_better", "search_better_random"))
 
     anchor <- dt %>% get_anchor()
     interp_last <- dt %>% get_interp_last(group = {{ group }})
@@ -266,7 +266,7 @@ get_interrupt <- function(dt, group = NULL, precision = 0.001) {
       dplyr::mutate(id = paste0({{ group }}, .data$tries)) %>%
       dplyr::filter(.data$id %in% problem_tries$id)
   } else {
-    message("interrupt is only implemented in simulated annealing methods")
+    message("interrupt is only implemented for creeping random search (search_better) and simulated annealing (search_better_random)")
     return(NULL)
   }
 }
