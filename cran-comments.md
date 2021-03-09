@@ -8,3 +8,12 @@
 0 errors | 0 warnings | 0 note
 
 * This is a new release.
+
+## Resubmission
+
+This is a resubmission. In this version I have: 
+
+* modify the Description text
+* add \value in the documentation for add_* functions
+* remove examples with unexported functions
+* remove unnecessary \dontrun{}
