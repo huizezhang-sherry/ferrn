@@ -17,3 +17,9 @@ This is a resubmission. In this version I have:
 * add \value in the documentation for add_* functions
 * remove examples with unexported functions
 * remove unnecessary \dontrun{}
+
+This is a resubmission. In this version I have:
+
+* downsize the pacakge under 5 MB
+
+There is a paper we are working on at this stage and the link to it will be added once it is completed.
