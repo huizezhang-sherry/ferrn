@@ -71,11 +71,33 @@ View the projection bases on its original 5-D space via tour animation:
 
 ```{r tour-anim, eval = FALSE}
 bind_rows(holes_1d_geo, holes_1d_better) %>%
-  bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
-                   index = tourr::holes(), raw_data = boa5)%>% 
-  explore_space_tour(group = method, palette = botanical_palettes$fern[c(1, 6)],
-                     max_frames = 150)
+  explore_space_tour(flip = TRUE, group = method,
+                     palette = botanical_palettes$fern[c(1, 6)],
+                     max_frames = 20, 
+                     point_size = 2, end_size = 5)
 ```
+
+```{r eval = FALSE, echo = FALSE}
+prep <- prep_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo), 
+                        flip = TRUE, group = method, 
+                        palette = botanical_palettes$fern[c(1,6)], 
+                        axes = "bottomleft",
+                        point_size = 2, end_size = 5)
+
+# render gif
+set.seed(123456)
+render_gif(
+  prep$basis,
+  tour_path = grand_tour(),
+  display = display_xy(col = prep$col, cex = prep$cex, pch = prep$pch,
+                       edges = prep$edges, edges.col = prep$edges_col,
+                       axes = "bottomleft"),
+  rescale = FALSE,
+  frames = 20,
+  gif_file = here::here("man", "figures","tour.gif")
+)
+```
+
 
 <p align="center">
   <img src="man/figures/tour.gif">

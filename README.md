@@ -77,10 +77,10 @@ View the projection bases on its original 5-D space via tour animation:
 
 ``` r
 bind_rows(holes_1d_geo, holes_1d_better) %>%
-  bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
-                   index = tourr::holes(), raw_data = boa5)%>% 
-  explore_space_tour(group = method, palette = botanical_palettes$fern[c(1, 6)],
-                     max_frames = 150)
+  explore_space_tour(flip = TRUE, group = method,
+                     palette = botanical_palettes$fern[c(1, 6)],
+                     max_frames = 20, 
+                     point_size = 2, end_size = 5)
 ```
 
 <p align="center">
