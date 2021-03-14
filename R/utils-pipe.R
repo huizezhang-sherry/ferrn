@@ -6,6 +6,7 @@
 #' @rdname pipe
 #' @keywords internal
 #' @export
+#' @return this is a magrittr pipe!
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL

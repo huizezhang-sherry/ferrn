@@ -4,6 +4,7 @@
 #' @examples
 #' format_label(c(0.87, 0.87, 0.9, 0.93, 0.95), 0.01)
 #' format_label(c(0.87, 0.87, 0.9, 0.93, 0.95, 0.96, 0.96), 0.01)
+#' @return a vector of adjusted labels
 #' @export
 format_label <- function(labels, accuracy) {
   too_close <- diff(labels) < accuracy
@@ -35,6 +36,9 @@ format_label <- function(labels, accuracy) {
 #' @param dt a data object
 #' @export
 #' @rdname relevel
+#' @examples
+#' head(clean_method(holes_1d_better), 5)
+#' @return a tibble with method cleaned
 clean_method <- function(dt) {
   dt %>%
     dplyr::mutate(method = dplyr::case_when(

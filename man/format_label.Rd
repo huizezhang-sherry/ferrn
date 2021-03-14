@@ -11,6 +11,9 @@ format_label(labels, accuracy)
 
 \item{accuracy}{the accuracy of the label}
 }
+\value{
+a vector of adjusted labels
+}
 \description{
 Better label formatting to avoid overlapping
 }

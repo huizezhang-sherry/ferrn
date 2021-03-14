@@ -9,6 +9,12 @@ clean_method(dt)
 \arguments{
 \item{dt}{a data object}
 }
+\value{
+a tibble with method cleaned
+}
 \description{
 Clean method names
+}
+\examples{
+head(clean_method(holes_1d_better), 5)
 }
