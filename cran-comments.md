@@ -23,3 +23,7 @@ This is a resubmission. In this version I have:
 * downsize the pacakge under 5 MB
 
 There is a paper we are working on at this stage and the link to it will be added once it is completed.
+
+This is a resubmission. In this version I have:
+
+* add more \value in the documentation for format_label, revel, and pipe
