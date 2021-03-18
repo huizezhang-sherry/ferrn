@@ -46,6 +46,6 @@ clean_method <- function(dt) {
       .data$method == "search_better_random" ~ "SA",
       .data$method == "search_geodesic" ~ "PD",
       .data$method == "search_polish" ~ "polish",
-      TRUE ~ NA_character_
+      TRUE ~ method
     ))
 }
