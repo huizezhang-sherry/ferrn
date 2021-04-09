@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/huizezhang-sherry/ferrn/branch/master/graph/badge.svg)](https://codecov.io/gh/huizezhang-sherry/ferrn?branch=master)
 <!-- badges: end -->
 
-The **ferrn** package extracts key components in the data object collected by the guided tour optimisation, and produces diagnostic plots. 
+The **ferrn** package extracts key components in the data object collected by the guided tour optimisation, and produces diagnostic plots. An associated paper can be found at https://arxiv.org/abs/2104.03448.
 
 ## Installation
 

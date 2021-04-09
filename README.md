@@ -13,7 +13,8 @@ coverage](https://codecov.io/gh/huizezhang-sherry/ferrn/branch/master/graph/badg
 
 The **ferrn** package extracts key components in the data object
 collected by the guided tour optimisation, and produces diagnostic
-plots.
+plots. An associated paper can be found at
+<https://arxiv.org/abs/2104.03448>.
 
 ## Installation
 
@@ -84,7 +85,5 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
 ```
 
 <p align="center">
-
 <img src="man/figures/tour.gif">
-
 </p>

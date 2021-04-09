@@ -11,7 +11,7 @@ Authors@R: c(
 Description: Diagnostic plots for optimisation, with a focus on projection pursuit. These show paths the optimiser 
     takes in the high-dimensional space in multiple ways: by reducing the dimension using principal component analysis, and
     also using the tour to show the path on the high-dimensional space. Several botanical colour palettes are included, reflecting the 
-    name of the package. 
+    name of the package. A paper describing the methodology can be found at https://arxiv.org/abs/2104.03448.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
