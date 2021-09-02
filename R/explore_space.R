@@ -135,12 +135,12 @@ flip_sign <- function(dt, group = NULL, ...) {
       dt_obj <- dt
     } else {
       message(paste("signs in all the bases will be flipped in group", group_to_flip, "\n"))
-      basis <- dt %>%
+      dt_obj <- dt %>%
         dplyr::mutate(basis = ifelse({{ group }} %in% group_to_flip & {{ group }} != "theoretical",
           purrr::map(basis, ~ -.x), basis
-        )) %>%
-        get_basis_matrix()
-      dt_obj <- dt
+        ))
+
+      basis <- dt_obj %>% get_basis_matrix()
     }
   } else {
     basis <- dt %>% get_basis_matrix()
