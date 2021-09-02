@@ -173,12 +173,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>holes_1d_better</span>, <span class='va'>holes_1d_geo</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_best</span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>method</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 8</span><span>
-#&gt; </span><span style='color: #949494;'># Groups:   method [2]</span><span>
-#&gt;   basis            index_val info         method         alpha tries  loop    id
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.914 interpolati… search_better     </span><span style='color: #BB0000;'>NA</span><span>     5     6    55
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>&lt;dbl[,1] [5 × 1</span><span>…     0.933 interpolati… search_geodes…    </span><span style='color: #BB0000;'>NA</span><span>     9     3   152</div></span></pre>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 8</span>
+#&gt; <span style='color: #949494;'># Groups:   method [2]</span>
+#&gt;   basis         index_val info          method          alpha tries  loop    id
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> <span style='color: #949494;'>&lt;dbl [5 × 1]&gt;</span>     0.914 interpolation search_better      <span style='color: #BB0000;'>NA</span>     5     6    55
+#&gt; <span style='color: #BCBCBC;'>2</span> <span style='color: #949494;'>&lt;dbl [5 × 1]&gt;</span>     0.933 interpolation search_geodesic    <span style='color: #BB0000;'>NA</span>     9     3   152</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
