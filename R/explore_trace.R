@@ -184,7 +184,7 @@ explore_trace_search <- function(dt, iter = NULL, color = NULL, cutoff = 15, ext
     ggrepel::geom_label_repel(
       data = label_2,
       ggplot2::aes(y = 0.99 * lowest_index_val, label = .data[["n"]]),
-      col = "grey", direction = "y", ...
+      col = "grey", direction = "y", nudge_y = - 0.1, ...
     ) +
     # scale, lab and theme
     ggplot2::scale_x_continuous(breaks = seq(1, largest, 1)) +
