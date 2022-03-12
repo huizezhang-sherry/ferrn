@@ -36,6 +36,19 @@ remotes::install_github("huizezhang-sherry/ferrn")
 
 ## Usage
 
+To extract the data object from a guided tour, assign the `annimate_xx()` function a name: 
+
+```{r eval = FALSE}
+set.seed(123456)
+holes_1d_better <- animate_dist(
+  ferrn::boa5,
+  tour_path = guided_tour(holes(), d = 1,
+                          search_f =  search_better), 
+  rescale = FALSE)
+```
+
+The above code will collect data from the 1D animation on `boa5` dataset, a simulated data in the `ferrn` package. 
+
 The best projection basis found by the projection pursuit algorithm can be extracted via 
 
 ```{r get-best}
