@@ -59,19 +59,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_interp</span><span class="op">(</span><span class="va">dt</span>, group <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_interp</span><span class="op">(</span><span class="va">dt</span>, group <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dt</dt>
 <dd><p>a data object collected by the projection pursuit guided tour optimisation in the <code>tourr</code> package</p></dd>
+
+
 <dt>group</dt>
 <dd><p>the variable to label different runs of the optimiser(s)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a tibble object containing the interpolating bases</p>
+    
+
+<p>a tibble object containing the interpolating bases</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -91,9 +96,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">get_interp</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">get_interp</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   basis         index_val info          method        alpha tries  loop    id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -103,7 +108,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;dbl [5 × 1]&gt;</span>     0.751 interpolation search_better    <span style="color: #BB0000;">NA</span>     2     4     4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;dbl [5 × 1]&gt;</span>     0.752 interpolation search_better    <span style="color: #BB0000;">NA</span>     2     5     5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #949494;">&lt;dbl [5 × 1]&gt;</span>     0.752 interpolation search_better    <span style="color: #BB0000;">NA</span>     2     6     6</span>
-<span class="r-in"><span class="fu">get_interp</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_better</span>, <span class="va">holes_1d_geo</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">method</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">get_interp</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_better</span>, <span class="va">holes_1d_geo</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">method</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   basis         index_val info          method        alpha tries  loop    id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -127,7 +132,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

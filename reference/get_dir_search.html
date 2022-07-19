@@ -59,21 +59,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_dir_search</span><span class="op">(</span><span class="va">dt</span>, ratio <span class="op">=</span> <span class="fl">5</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_dir_search</span><span class="op">(</span><span class="va">dt</span>, ratio <span class="op">=</span> <span class="fl">5</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dt</dt>
 <dd><p>a data object collected by the projection pursuit guided tour optimisation in the <code>tourr</code> package</p></dd>
+
+
 <dt>ratio</dt>
 <dd><p>numeric; a buffer value to deviate directional search points from the anchor points</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments passed to <code><a href="explore_space_pca.html">compute_pca()</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a tibble object containing the directional search bases in pseudo derivative search</p>
+    
+
+<p>a tibble object containing the directional search bases in pseudo derivative search</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -93,10 +100,10 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">holes_1d_geo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="explore_space_pca.html">compute_pca</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"aug"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">get_dir_search</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">holes_1d_geo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="explore_space_pca.html">compute_pca</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html" class="external-link">pluck</a></span><span class="op">(</span><span class="st">"aug"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">get_dir_search</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 330 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    basis    index_val info   method alpha tries  loop    id row_num   PC1    PC2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -126,7 +133,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

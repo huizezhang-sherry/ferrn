@@ -61,23 +61,32 @@ Augment this information into the data object allows for evaluating the performa
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bind_theoretical</span><span class="op">(</span><span class="va">dt</span>, <span class="va">matrix</span>, <span class="va">index</span>, <span class="va">raw_data</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bind_theoretical</span><span class="op">(</span><span class="va">dt</span>, <span class="va">matrix</span>, <span class="va">index</span>, <span class="va">raw_data</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dt</dt>
 <dd><p>a data object collected by the projection pursuit guided tour optimisation in the <code>tourr</code> package</p></dd>
+
+
 <dt>matrix</dt>
 <dd><p>a matrix of the theoretical basis</p></dd>
+
+
 <dt>index</dt>
 <dd><p>the index function used to calculate the index value</p></dd>
+
+
 <dt>raw_data</dt>
 <dd><p>a tibble of the original data used to calculate the index value</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a tibble object containing both the searched and theoretical best bases</p>
+    
+
+<p>a tibble object containing both the searched and theoretical best bases</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -88,8 +97,8 @@ Augment this information into the data object allows for evaluating the performa
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">best</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">bind_theoretical</span><span class="op">(</span><span class="va">best</span>, <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">best</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">bind_theoretical</span><span class="op">(</span><span class="va">best</span>, <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   basis         index_val info        method alpha tries  loop    id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -108,7 +117,7 @@ Augment this information into the data object allows for evaluating the performa
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

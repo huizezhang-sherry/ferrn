@@ -59,24 +59,35 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bind_random_matrix</span><span class="op">(</span><span class="va">basis</span>, n <span class="op">=</span> <span class="fl">500</span>, front <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bind_random_matrix</span><span class="op">(</span><span class="va">basis</span>, n <span class="op">=</span> <span class="fl">500</span>, front <span class="op">=</span> <span class="cn">FALSE</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>basis</dt>
 <dd><p>a matrix returned by <code><a href="get_basis_matrix.html">get_basis_matrix()</a></code></p></dd>
+
+
 <dt>n</dt>
 <dd><p>numeric; the number of random bases to generate in each dimension by geozoo</p></dd>
+
+
 <dt>front</dt>
 <dd><p>logical; if the random bases should be bound before or after the original bases</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>numeric; a seed for generating reproducible random bases from geozoo</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>matrix
-a matrix containing both the searched and random bases</p>
+    
+
+<p>matrix</p>
+
+
+<p>a matrix containing both the searched and random bases</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -87,8 +98,8 @@ a matrix containing both the searched and random bases</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_basis_matrix.html">get_basis_matrix</a></span><span class="op">(</span><span class="va">holes_1d_geo</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bind_random_matrix</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_basis_matrix.html">get_basis_matrix</a></span><span class="op">(</span><span class="va">holes_1d_geo</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">bind_random_matrix</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  V1           V2         V3        V4         V5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2912,] -0.11500792  0.108791393 -0.2119039 0.6421904  0.7194622</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2913,] -0.64030197  0.470754738  0.3598407 0.2095701  0.4415862</span>
@@ -109,7 +120,7 @@ a matrix containing both the searched and random bases</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
