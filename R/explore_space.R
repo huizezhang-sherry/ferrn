@@ -297,7 +297,7 @@ prep_space_tour <- function(dt, group = NULL, flip = FALSE,
     dplyr::mutate(id = dplyr::row_number()) %>%
     dplyr::filter(.data$info == "interpolation") %>%
     dplyr::group_by(.data$method) %>%
-    dplyr::mutate(id2 = dplyr::lead(.data$id, defualt = NA)) %>%
+    dplyr::mutate(id2 = dplyr::lead(.data$id, default = NA)) %>%
     dplyr::ungroup() %>%
     dplyr::filter(!is.na(.data$id2))
 
