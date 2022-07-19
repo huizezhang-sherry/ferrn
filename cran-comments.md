@@ -1,29 +1,12 @@
 ## Test environments
-* local R installation, R 3.6.3
-* ubuntu 16.04 (on travis-ci), R 3.6.3
-* win-builder (devel)
+* local R installation, R 4.1.2 (2022-11-01)
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC
+* Windows Server 2022, R-devel, 64 bit
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 note
 
-* This is a new release.
+## Downstream dependencies
 
-## Resubmission
-
-This is a resubmission. In this version I have: 
-
-* modify the Description text
-* add \value in the documentation for add_* functions
-* remove examples with unexported functions
-* remove unnecessary \dontrun{}
-
-This is a resubmission. In this version I have:
-
-* downsize the pacakge under 5 MB
-
-There is a paper we are working on at this stage and the link to it will be added once it is completed.
-
-This is a resubmission. In this version I have:
-
-* add more \value in the documentation for format_label, revel, and pipe
+No reverse dependency to check
