@@ -111,6 +111,6 @@ render_gif(
 ```
 
 
-<p align="center">
+<p float="center">
   <img src="man/figures/tour.gif">
 </p>

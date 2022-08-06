@@ -97,6 +97,6 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
                      point_size = 2, end_size = 5)
 ```
 
-<p align="center">
+<p float="center">
 <img src="man/figures/tour.gif">
 </p>
