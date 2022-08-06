@@ -19,10 +19,9 @@ knitr::opts_chunk$set(
 # ferrn <a href='https://huizezhang-sherry.github.io/ferrn/'><img src='man/figures/logo.png' align="right" height="138.5" /></a>
 <!-- badges: start -->
 [![R build status](https://github.com/huizezhang-sherry/ferrn/workflows/R-CMD-check/badge.svg)](https://github.com/huizezhang-sherry/ferrn/actions)
-[![Codecov test coverage](https://codecov.io/gh/huizezhang-sherry/ferrn/branch/master/graph/badge.svg)](https://codecov.io/gh/huizezhang-sherry/ferrn?branch=master)
 <!-- badges: end -->
 
-The **ferrn** package extracts key components in the data object collected by the guided tour optimisation, and produces diagnostic plots. An associated paper can be found at https://arxiv.org/abs/2104.03448.
+The **ferrn** package extracts key components in the data object collected by the guided tour optimisation, and produces diagnostic plots. An associated paper can be found at <https://journal.r-project.org/archive/2021/RJ-2021-105/index.html>.
 
 ## Installation
 

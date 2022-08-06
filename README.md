@@ -7,14 +7,12 @@
 
 [![R build
 status](https://github.com/huizezhang-sherry/ferrn/workflows/R-CMD-check/badge.svg)](https://github.com/huizezhang-sherry/ferrn/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/huizezhang-sherry/ferrn/branch/master/graph/badge.svg)](https://codecov.io/gh/huizezhang-sherry/ferrn?branch=master)
 <!-- badges: end -->
 
 The **ferrn** package extracts key components in the data object
 collected by the guided tour optimisation, and produces diagnostic
 plots. An associated paper can be found at
-<https://arxiv.org/abs/2104.03448>.
+<https://journal.r-project.org/archive/2021/RJ-2021-105/index.html>.
 
 ## Installation
 
@@ -100,7 +98,5 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
 ```
 
 <p align="center">
-
 <img src="man/figures/tour.gif">
-
 </p>

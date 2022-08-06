@@ -59,17 +59,17 @@ boa5 <- select(boa, x1, x2, x8: x10)
 boa6 <- select(boa, x1, x2, x7: x10)
 }
 
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 79 rows and 8 columns.
 
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 98 rows and 8 columns.
 
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1499 rows and 8 columns.
 
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1000 rows and 10 columns.
 
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1000 rows and 5 columns.
 
-
-
-
-
-
-
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1000 rows and 6 columns.
 }
 \usage{
 holes_1d_geo
