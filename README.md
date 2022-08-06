@@ -99,4 +99,5 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
 
 <p float="center">
 <img src="man/figures/tour.gif">
+
 </p>
