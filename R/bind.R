@@ -50,23 +50,15 @@ bind_theoretical <- function(dt, matrix, index, raw_data) {
 #' @return a tibble object containing both the searched and random bases
 #' @export
 bind_random <- function(dt, n = 500, seed = 1) {
-  p <- nrow(dt$basis[[1]]) * ncol(dt$basis[[1]])
-  ncol <- nrow(dt$basis[[1]])
-
-  fix_matrix <- function(dt) {
-    dt <- t(as.matrix(dt, nrow = p, ncol = ncol))
-    rownames(dt) <- NULL
-    dt
-  }
+  m <- dt$basis[[1]]
 
   set.seed(seed)
-  n_geozoo <- p * n
-  suppressWarnings(sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points %>%
-    tibble::as_tibble() %>%
-    dplyr::nest_by(id = dplyr::row_number()) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(basis = purrr::map(.data$data, fix_matrix)) %>%
-    dplyr::select(.data$basis))
+  sphere_basis <- purrr::map_dfr(
+    1:n, ~tibble::tibble(
+      id = .x,
+      basis = list(tourr::basis_random(n = nrow(m), d = ncol(m)))
+      )
+    )
 
   sphere_points <- sphere_basis %>%
     dplyr::mutate(
@@ -86,6 +78,7 @@ bind_random <- function(dt, n = 500, seed = 1) {
 #'
 #' @param basis a matrix returned by \code{get_basis_matrix()}
 #' @param n numeric; the number of random bases to generate in each dimension by geozoo
+#' @param d numeric; dimension of the basis, d = 1, 2, ...
 #' @param front logical; if the random bases should be bound before or after the original bases
 #' @param seed numeric; a seed for generating reproducible random bases from geozoo
 #' @examples
@@ -95,18 +88,18 @@ bind_random <- function(dt, n = 500, seed = 1) {
 #' @family bind
 #' @return a matrix containing both the searched and random bases
 #' @export
-bind_random_matrix <- function(basis, n = 500, front = FALSE, seed = 1) {
-  p <- ncol(basis)
-  n_geozoo <- p * n
-  set.seed(seed)
-  sphere_basis <- geozoo::sphere.hollow(p, n_geozoo)$points
-  colnames(sphere_basis) <- colnames(basis)
+bind_random_matrix <- function(basis, n = 500, d = 1, front = FALSE, seed = 1) {
 
+  r <- ncol(basis)/d
+  set.seed(seed)
+  random_basis <- do.call(
+    rbind, purrr::map(1:n, ~t(tourr::basis_random(n = r, d = d)))
+    )
 
   if (front) {
-    out <- sphere_basis %>% rbind(basis)
+    out <- random_basis %>% rbind(basis)
   } else {
-    out <- basis %>% rbind(sphere_basis)
+    out <- basis %>% rbind(random_basis)
   }
 
   return(out)

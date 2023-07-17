@@ -40,5 +40,5 @@ data <- get_basis_matrix(holes_1d_geo)
 
 test_that("bind_random_matrix", {
   expect_true(bind_random_matrix(data) %>% is.matrix())
-  expect_equal(bind_random_matrix(data) %>% nrow(), nrow(data) + ncol(data) * 500)
+  expect_equal(bind_random_matrix(data) %>% nrow(), nrow(data) + 500)
 })

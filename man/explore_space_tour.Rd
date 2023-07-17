@@ -5,14 +5,16 @@
 \alias{prep_space_tour}
 \title{Plot the grand tour animation of the bases space in high dimension}
 \usage{
-explore_space_tour(...)
+explore_space_tour(..., axes = "bottomleft")
 
 prep_space_tour(
   dt,
   group = NULL,
   flip = FALSE,
+  n_random = 2000,
   color = NULL,
   rand_size = 1,
+  rand_color = "#D3D3D3",
   point_size = 1.5,
   end_size = 5,
   theo_size = 3,
@@ -25,15 +27,21 @@ prep_space_tour(
 \arguments{
 \item{...}{other argument passed to \code{tourr::animate_xy()} and \code{prep_space_tour()}}
 
+\item{axes}{see [tourr::animate_xy()]}
+
 \item{dt}{a data object collected by the projection pursuit guided tour optimisation in \code{tourr}}
 
 \item{group}{the variable to label different runs of the optimiser(s)}
 
 \item{flip}{logical; if the sign flipping need to be performed}
 
+\item{n_random}{numeric; the number of random basis to generate}
+
 \item{color}{the variable to be coloured by}
 
 \item{rand_size}{numeric; the size of random points}
+
+\item{rand_color}{character; the color hex code for random points}
 
 \item{point_size}{numeric; the size of points searched by the optimiser(s)}
 

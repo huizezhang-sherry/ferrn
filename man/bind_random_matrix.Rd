@@ -4,12 +4,14 @@
 \alias{bind_random_matrix}
 \title{Bind random bases in the projection bases space as a matrix}
 \usage{
-bind_random_matrix(basis, n = 500, front = FALSE, seed = 1)
+bind_random_matrix(basis, n = 500, d = 1, front = FALSE, seed = 1)
 }
 \arguments{
 \item{basis}{a matrix returned by \code{get_basis_matrix()}}
 
 \item{n}{numeric; the number of random bases to generate in each dimension by geozoo}
+
+\item{d}{numeric; dimension of the basis, d = 1, 2, ...}
 
 \item{front}{logical; if the random bases should be bound before or after the original bases}
 
