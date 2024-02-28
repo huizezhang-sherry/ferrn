@@ -1,65 +1,120 @@
-#' Extract the record with the largest index value
-#'
+#' Functions to get components from the data collecting object
 #' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
 #' @param group the variable to label different runs of the optimiser(s)
+#' @param iter the variable to be counted by
+#' @param group the variable to label different runs of the optimiser(s)
+#' @param precision numeric; if the index value of the last interpolating point and the anchor point differ by \code{precision}, an interruption is registered
+#' @param ratio numeric; a buffer value to deviate directional search points from the anchor points
+#' @param ... other arguments passed to \code{compute_pca()}
+#' @importFrom rlang .data
+#' @details
+#' \code{get_best}: extract the best basis found by the optimiser(s)
+#'
+#' \code{get_start}: extract the start point of the optimisation
+#'
+#' \code{get_interp}: extract the interpolation points
+#'
+#' \code{get_interp_last}: extract the last point in each interpolation
+#'
+#' \code{get_anchor}: extract the anchor points on the geodesic path
+#'
+#' \code{get_search}: extract search points in the optimisation (for
+#' \code{search_geodesic})
+#'
+#' \code{get_dir_search}: extract directional search points (for
+#' \code{search_geodesic})
+#'
+#' \code{get_space_param}: estimate the radius of the background circle
+#' based on the randomly generated points. The space of projected bases is a
+#' circle when reduced to 2D. A radius is estimated using the largest distance
+#' from the bases in the data object to the centre point.
+#'
+#' \code{get_theo}: extract the theoretical basis, if exist
+#'
+#' \code{get_interrupt}: extract the end point of the interpolation and the
+#' target point in the iteration when an interruption happens. The optimiser
+#' can find better basis on the interpolation path, an interruption is
+#' implemented to stop further interpolation from the highest point to the
+#' target point. This discrepancy is highlighted in the PCA plot.
+#'
+#' \code{get_search_count}: summarise the number of search points in each iteration
+#'
+#' \code{get_basis_matrix}: extract all the bases as a matrix
+#'
 #' @examples
-#' dplyr::bind_rows(holes_1d_better, holes_1d_geo) %>% get_best(group = method)
-#' @family get functions
+#' get_search(holes_1d_geo)
+#'
+#' get_anchor(holes_1d_geo)
+#'
+#' get_start(holes_1d_better)
+#'
+#' get_interrupt(holes_1d_better)
+#'
+#' get_interp(holes_1d_better) %>% head()
+#'
+#' get_basis_matrix(holes_1d_better) %>% head()
+#'
+#' get_best(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#'
+#' get_search_count(holes_1d_better)
+#' get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#'
+#' get_interp_last(holes_1d_better)
+#' get_interp_last(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
+#'
+#' res <- holes_1d_geo %>% compute_pca() %>% purrr::pluck("aug")
+#' get_dir_search(res)
+#'
+#' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
+#' holes_1d_better %>%
+#'   bind_theoretical(best, tourr::holes(), raw_data = boa5) %>%
+#'   get_theo()
+#' @rdname get
 #' @return a tibble object containing the best basis found by the optimiser(s)
 #' @export
 get_best <- function(dt, group = NULL) {
+
+  search_methods <- unique(dt[["method"]])
+  if (!"search_jellyfish" %in% search_methods) {
+    dt <- dt %>% dplyr::filter(.data[["info"]] == "interpolation")
+  }
+
   res <- dt %>%
-    dplyr::filter(.data[["info"]] == "interpolation") %>%
-    dplyr::group_by({{ group }}) %>%
-    dplyr::filter(.data$index_val == max(.data$index_val)) %>%
+    dplyr::filter(grepl("search", dt[["method"]])) %>%
+    dplyr::group_by({{group}}) %>%
+    dplyr::filter(.data$index_val == max(.data$index_val, na.rm = TRUE)) %>%
     dplyr::distinct(.data$index_val, .keep_all = TRUE)
 
   res
 }
 
-
-#' Extract the starting records
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @examples
-#' holes_1d_better %>% get_start()
-#' @family get functions
-#' @return a tibble object containing the start basis
+#' @rdname get
 #' @export
-get_start <- function(dt) {
+get_start <- function(dt, group = NULL) {
   dt %>%
-    dplyr::filter(.data[["id"]] == 1)
+    dplyr::group_by({{group}}) %>%
+    dplyr::filter(.data[["tries"]] == 1)
 }
 
-#' Extract interpolated records
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param group the variable to label different runs of the optimiser(s)
-#' @examples
-#' holes_1d_better %>%
-#'   get_interp() %>%
-#'   head()
-#' get_interp(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method) %>% head()
-#' @family get functions
-#' @return a tibble object containing the interpolating bases
+#' @rdname get
 #' @export
 get_interp <- function(dt, group = NULL) {
+
+  search_methods <- unique(dt[["method"]])
+  if (!"search_jellyfish" %in% search_methods) {
+    dt <- dt %>% dplyr::filter(.data[["info"]] == "interpolation")
+  } else{
+    dt <- dt |> dplyr::filter(.data[["method"]] == "search_jellyfish")
+  }
+
   dt %>%
-    dplyr::filter(.data[["info"]] == "interpolation") %>%
+    dplyr::filter(grepl("search", dt[["method"]])) %>%
     dplyr::group_by({{ group }}) %>%
     dplyr::mutate(id = dplyr::row_number()) %>%
     dplyr::ungroup()
 }
 
-#' Extract the end point at each interpolation
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param group the variable to label different runs of the optimiser(s)
-#' @examples
-#' holes_1d_better %>% get_interp_last()
-#' get_interp_last(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
-#' @family get functions
-#' @return a tibble object containing the last interpolating basis in each iteration
+#' @rdname get
 #' @export
 get_interp_last <- function(dt, group = NULL) {
   group <- dplyr::enexpr(group)
@@ -75,15 +130,7 @@ get_interp_last <- function(dt, group = NULL) {
     dplyr::ungroup()
 }
 
-#' Extract the anchor points on the geodesic path
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param group the variable to label different runs of the optimiser(s)
-#' @examples
-#' holes_1d_better %>% get_anchor()
-#' holes_1d_geo %>% get_anchor()
-#' @family get functions
-#' @return a tibble object containing the target bases in each iteration
+#' @rdname get
 #' @export
 get_anchor <- function(dt, group = NULL) {
   dt %>%
@@ -94,32 +141,15 @@ get_anchor <- function(dt, group = NULL) {
 }
 
 
-#' Extract search points during the optimisation
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @examples
-#' holes_1d_better %>% get_search()
-#' holes_1d_geo %>% get_search()
-#' @family get functions
-#' @return a tibble object containing the search bases
+#' @rdname get
 #' @export
 get_search <- function(dt) {
   dt %>%
     dplyr::filter(stringr::str_detect(.data[["info"]], "search"))
 }
 
-#' Extract directional search points during the optimisation
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param ratio numeric; a buffer value to deviate directional search points from the anchor points
-#' @param ... arguments passed to \code{compute_pca()}
-#' @examples
-#' holes_1d_geo %>%
-#'   compute_pca() %>%
-#'   purrr::pluck("aug") %>%
-#'   get_dir_search()
-#' @family get functions
-#' @return a tibble object containing the directional search bases in pseudo derivative search
+
+#' @rdname get
 #' @export
 get_dir_search <- function(dt, ratio = 5, ...) {
   # check only valid for search_geodesic or pseudo-derivative
@@ -159,19 +189,8 @@ get_dir_search <- function(dt, ratio = 5, ...) {
     )
 }
 
-#' Estimate the radius of the background circle based on the randomly generated points
-#'
-#' The space of projected bases is a circle when reduced to 2D. A radius is estimated using
-#' the largest distance from the bases in the data object to the centre point.
-#'
-#' This is  a wrapper function used by \code{explore_space_pca()} and
-#' should be be called directly by the user
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param ... other arguments passed to \code{compute_pca()}
-#' @importFrom rlang .data
-#' @family get functions
-#' @return a tibble object of the centre and radius of the basis space
+
+#' @rdname get
 #' @export
 get_space_param <- function(dt, ...) {
   basis <- dt[1, ] %>% dplyr::pull(basis)
@@ -204,16 +223,7 @@ get_space_param <- function(dt, ...) {
 }
 
 
-#' Extract the theoretical best basis, if applicable
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @examples
-#' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
-#' holes_1d_better %>%
-#'   bind_theoretical(best, tourr::holes(), raw_data = boa5) %>%
-#'   get_theo()
-#' @family get functions
-#' @return a tibble object containing the theoretical bases
+#' @rdname get
 #' @export
 get_theo <- function(dt) {
   theo <- dt %>% dplyr::filter(.data$info == "theoretical")
@@ -228,20 +238,8 @@ get_theo <- function(dt) {
   out
 }
 
-#' Extract the end point of the interpolation and the target point in the iteration when an interruption happens
-#'
-#' The optimiser can find better basis on the interpolation path, an interruption is
-#' implemented to stop further interpolation from the highest point to the target point.
-#' This discrepancy is highlighted in the PCA plot. You should not use geodesic search on this function.
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param group the variable to label different runs of the optimiser(s)
-#' @param precision numeric; if the index value of the last interpolating point and the anchor point differ by \code{precision}, an interruption is registered
-#' @examples
-#' holes_1d_better %>% get_interrupt()
-#' holes_1d_geo %>% get_interrupt()
-#' @family get functions
-#' @return a tibble object containing the target and anchor bases for the iteration when an interruption happens
+
+#' @rdname get
 #' @export
 get_interrupt <- function(dt, group = NULL, precision = 0.001) {
 
@@ -271,17 +269,7 @@ get_interrupt <- function(dt, group = NULL, precision = 0.001) {
   }
 }
 
-
-#' Extract the count in each iteration
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @param iter the variable to be counted by
-#' @param group the variable to label different runs of the optimiser(s)
-#' @examples
-#' get_search_count(holes_1d_better)
-#' get_search_count(dplyr::bind_rows(holes_1d_better, holes_1d_geo), group = method)
-#' @family get functions
-#' @return a tibble object of the number of searches conducted by the optimiser(s) in each iteration
+#' @rdname get
 #' @export
 get_search_count <- function(dt, iter = NULL, group = NULL) {
 
@@ -304,14 +292,7 @@ get_search_count <- function(dt, iter = NULL, group = NULL) {
   dt_count
 }
 
-
-#' Extract all the bases as a matrix
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in the \code{tourr} package
-#' @examples
-#' head(get_basis_matrix(holes_1d_better), 5)
-#' @family get functions
-#' @return a matrix that flattens each basis into a row
+#' @rdname get
 #' @export
 get_basis_matrix <- function(dt) {
   if (!"basis" %in% colnames(dt)) {
