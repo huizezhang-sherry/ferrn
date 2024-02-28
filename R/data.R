@@ -8,8 +8,6 @@
 #'
 #' The name \code{boa} comes from the fact that the density plot of each variable in the data looks like boa constrictors swallowing multiple French baguettes, rather than elephants, as in the novella the little prince.
 #'
-#'
-#'
 #' @format
 #' The code for simulating each data object is as follows:
 #' \preformatted{
@@ -25,6 +23,11 @@
 #'                                              search_f =  search_better),
 #'                rescale = FALSE)
 #'
+#'set.seed(123456);
+#' holes_1d_jellyfish <- animate_dist(
+#'   boa5, tour_path = guided_tour(
+#'     holes(), d = 1, search_f =  search_jellyfish, n_jellies = 100,
+#'      max.tries = 50), rescale = FALSE)
 #'
 #' set.seed(123456)
 #' holes_2d_better <-
@@ -75,6 +78,10 @@
 #' @format
 #' @rdname data
 "holes_1d_better"
+
+#' @format
+#' @rdname data
+"holes_1d_jellyfish"
 
 #' @format
 #' @rdname data

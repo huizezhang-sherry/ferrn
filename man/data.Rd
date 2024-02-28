@@ -4,6 +4,7 @@
 \name{holes_1d_geo}
 \alias{holes_1d_geo}
 \alias{holes_1d_better}
+\alias{holes_1d_jellyfish}
 \alias{holes_2d_better}
 \alias{holes_2d_better_max_tries}
 \alias{boa}
@@ -25,6 +26,11 @@ holes_1d_better <-
                                              search_f =  search_better),
                rescale = FALSE)
 
+set.seed(123456);
+holes_1d_jellyfish <- animate_dist(
+  boa5, tour_path = guided_tour(
+    holes(), d = 1, search_f =  search_jellyfish, n_jellies = 100,
+     max.tries = 50), rescale = FALSE)
 
 set.seed(123456)
 holes_2d_better <-
@@ -61,6 +67,8 @@ boa6 <- select(boa, x1, x2, x7: x10)
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 79 rows and 8 columns.
 
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 5000 rows and 8 columns.
+
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 98 rows and 8 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1499 rows and 8 columns.
@@ -75,6 +83,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 holes_1d_geo
 
 holes_1d_better
+
+holes_1d_jellyfish
 
 holes_2d_better
 
