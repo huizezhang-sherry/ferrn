@@ -264,14 +264,16 @@ add_anno <- function(dt, anno_color = "black", anno_lty = "dashed", anno_alpha =
 #' @param theo_label character; a symbol to label the theoretical point
 #' @param theo_size numeric; the size of the theoretical point
 #' @param theo_alpha numeric; the alpha of the theoretical point
+#' @param theo_color character; the colour of the theoretical point in hex
 #' @param ... other aesthetics inherent from \code{explore_space_pca()}
 #' @return a wrapper for drawing theoretical points in \code{explore_space_pca()}
 #' @family draw functions
 #' @export
-add_theo <- function(dt, theo_label = "*", theo_size = 25, theo_alpha = 0.8, ...) {
+add_theo <- function(dt, theo_label = "*", theo_size = 25, theo_alpha = 0.8,
+                     theo_color = "#000000", ...) {
   ggplot2::geom_text(
     data = dt,
     ggplot2::aes(x = .data$PC1, y = .data$PC2),
-    label = theo_label, size = theo_size, alpha = theo_alpha
+    label = theo_label, size = theo_size, alpha = theo_alpha, color = theo_color
   )
 }

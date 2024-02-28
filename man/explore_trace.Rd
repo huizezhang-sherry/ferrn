@@ -49,7 +49,7 @@ holes_1d_better \%>\%
 }
 \seealso{
 Other main plot functions: 
-\code{\link{explore_space_pca}()},
+\code{\link{explore_space_start}()},
 \code{\link{explore_space_tour}()},
 \code{\link{explore_trace_search}()}
 }
