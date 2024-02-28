@@ -1,15 +1,16 @@
 #' Plot the PCA projection of the projection bases space
 #'
-#' The set of functions returns a primary ggplot object
-#' that plots the data object in a space reduced by PCA.
-#' \code{compute_pca()} computes the PCA and \code{explore_space_pca()} plots the bases in the PCA-projected space
 #' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
 #' @param details logical; if components other than start, end and interpolation need to be shown
 #' @param pca logical; if PCA coordinates need to be computed for the data
 #' @param group the variable to label different runs of the optimiser(s)
 #' @param color the variable to be coloured by
+#' @param facet the variable to be faceted by
 #' @param ... other arguments passed to \code{add_*()} functions
 #' @param animate logical; if the interpolation path needs to be animated
+#' @family main plot functions
+#' @rdname explore_space_pca
+#' @return a ggplot2 object
 #' @examples
 #' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
 #'   bind_theoretical(matrix(c(0, 1, 0, 0, 0), nrow = 5),
@@ -17,41 +18,75 @@
 #'   ) %>%
 #'   explore_space_pca(group = method, details = TRUE) +
 #'   scale_color_discrete_botanical()
-#' @family main plot functions
-#' @rdname explore_space_pca
-#' @return
-#' \describe{
-#'   \item{\code{explore_space_pca()}}{a ggplot object for diagnosing the optimisers in the PCA-projected basis space}
-#'   \item{\code{flip_sign()}}{a list containing
-#'     \itemize{
-#'         \item{a matrix of all the bases}
-#'         \item{a logical value whether a flip of sign is performed}
-#'         \item{a dataframe of the original dataset}}
-#'      }
-#'   \item{\code{compute_pca()}}{a list containing
-#'     \itemize{
-#'         \item{the PCA summary}
-#'         \item{a dataframe with PC coordinates augmented}
-#'      }}
-#' }
+#'
+#' best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
+#' dt <- bind_theoretical(holes_1d_jellyfish, best, tourr::holes(), raw_data = boa5)
+#' explore_space_start(dt)
+#' explore_space_end(dt, group = loop, theo_size = 10, theo_color = "#FF0000")
+#' explore_space_pca(
+#'   dt, facet = loop, interp_size = 0.5, theo_size = 10,
+#'   start_size = 1, end_size = 3
+#'   )
 #' @export
-explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, color = NULL,
-                              ..., animate = FALSE) {
-
-  if (rlang::quo_is_null(dplyr::enquo(color))) color <- dplyr::enexpr(group)
+explore_space_start <- function(dt, group = NULL, pca = TRUE, ...) {
 
   if (pca) dt <- compute_pca(dt, group = {{ group }}, ...) %>% purrr::pluck("aug")
 
-  # set up the simplified version
+  ggplot2::ggplot() +
+    add_space(dt = get_space_param(dt, ...), ...) +
+    add_start(dt = get_start(dt, group = {{ group }}), start_size = 1, ...) +
+    ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+    ggplot2::theme_void() +
+    ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
+
+}
+
+
+#' @rdname explore_space_pca
+#' @export
+explore_space_end <- function(dt, group = NULL, pca = TRUE, ...) {
+  if (pca) {
+    dt <- compute_pca(dt, group = {{ group }}, ...) %>% purrr::pluck("aug")
+  }
+
   p <- ggplot2::ggplot() +
     add_space(dt = get_space_param(dt, ...), ...) +
-    add_start(dt = get_start(dt), start_color = {{ color }}, ...) +
+    add_end(dt = get_best(dt, group = {{ group }}), end_size = 1,  ...) +
+    ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+    ggplot2::theme_void() +
+    ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
+
+  if ("theoretical" %in% dt$info) p <- p + add_theo(dt = get_theo(dt), ...)
+
+  return(p)
+}
+
+#' @rdname explore_space_pca
+#' @export
+explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL,
+                              color = NULL, facet = NULL, ..., animate = FALSE) {
+
+  if (rlang::quo_is_null(dplyr::enquo(color))) color <- dplyr::enexpr(group)
+
+  facet <- rlang::enquo(facet)
+  if (!rlang::quo_is_missing(facet)) group <- facet
+
+  if (pca) dt <- compute_pca(dt, group = {{ group }}, ...) %>% purrr::pluck("aug")
+
+
+  if (!rlang::quo_is_missing(facet)){
+    p <- ggplot2::ggplot() + ggplot2::facet_wrap(ggplot2::vars(!!facet))
+  }
+  # set up the simplified version
+  p <- p +
+    add_space(dt = get_space_param(dt, ...), ...) +
+    add_start(dt = get_start(dt, group = {{ group }}), start_color = {{ color }}, ...) +
     add_end(dt = get_best(dt, group = {{ group }}), end_color = {{ color }}, ...) +
     add_interp(
-      dt = get_interp(dt, group = {{ group }}),
-      interp_alpha = .data[["id"]], interp_color = {{ color }}, interp_group = {{ group }}, ...
+      dt = get_interp(dt, group = {{ group }}), interp_alpha = .data[["id"]],
+      interp_color = {{ color }}, interp_group = {{ group }}, ...
     ) +
-    ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
+    #ggplot2::scale_alpha_continuous(range = c(0.3, 1), guide = "none") +
     ggplot2::theme_void() +
     ggplot2::theme(aspect.ratio = 1, legend.position = "bottom", legend.title = ggplot2::element_blank())
 
@@ -103,16 +138,25 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL, col
 }
 
 
-#' Flip the sign of a group of bases
+#' Helper functions for `explore_space_pca()`
 #'
 #' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
 #' @param group the variable to label different runs of the optimiser(s)
+#' @param random logical; if random bases from the basis space need to be added to the data
+#' @param flip logical; if the sign flipping need to be performed
 #' @param ... other arguments received from \code{explore_space_pca()}
+#' @return
+#' \code{flip_sign()}: a list containing a matrix of all the bases, a logical
+#'  value indicating whether a flip of sign is performed, and a data frame of
+#'   the original dataset.
+#'
+#' \code{compute_pca()}: a list containing the PCA summary and a data frame
+#'   with PC coordinates augmented.
 #' @examples
-#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>%
-#'   flip_sign(group = method) %>%
-#'   str(max = 1)
-#' @rdname explore_space_pca
+#' dt <- dplyr::bind_rows(holes_1d_geo, holes_1d_better)
+#'  flip_sign(dt, group = method) %>% str(max = 1)
+#' compute_pca(dt, group = method)
+#' @rdname pca-helper
 #' @export
 flip_sign <- function(dt, group = NULL, ...) {
   if (!rlang::quo_is_null(dplyr::enquo(group))) {
@@ -154,17 +198,7 @@ flip_sign <- function(dt, group = NULL, ...) {
   ))
 }
 
-
-#' Compute PCA for the projection bases
-#'
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
-#' @param group the variable to label different runs of the optimiser(s)
-#' @param random logical; if random bases from the basis space need to be added to the data
-#' @param flip logical; if the sign flipping need to be performed
-#' @param ... other arguments received from \code{explore_space_pca()}
-#' @examples
-#' dplyr::bind_rows(holes_1d_geo, holes_1d_better) %>% compute_pca(group = method)
-#' @rdname explore_space_pca
+#' @rdname pca-helper
 #' @export
 compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
   if (!"basis" %in% colnames(dt)) {
@@ -229,119 +263,3 @@ compute_pca <- function(dt, group = NULL, random = TRUE, flip = TRUE, ...) {
 
 
 
-#' Plot the grand tour animation of the bases space in high dimension
-
-#' @rdname explore_space_tour
-#' @family main plot functions
-#' @return
-#' \describe{
-#'   \item{\code{explore_space_tour()}}{an animation of the search path in the high-dimensional sphere}
-#'   \item{\code{prep_space_tour()}}{a list containing various components needed for producing the animation}
-#' }
-#' @export
-explore_space_tour <- function(..., axes = "bottomleft") {
-  prep <- prep_space_tour(...)
-
-  tourr::animate_xy(prep$basis,
-                    col = prep$col, cex = prep$cex, pch = prep$pch,
-                    edges = prep$edges, edges.col = prep$edges_col,
-                    axes = axes
-  )
-}
-
-
-#' @param dt a data object collected by the projection pursuit guided tour optimisation in \code{tourr}
-#' @param group the variable to label different runs of the optimiser(s)
-#' @param flip logical; if the sign flipping need to be performed
-#' @param n_random numeric; the number of random basis to generate
-#' @param color the variable to be coloured by
-#' @param rand_size numeric; the size of random points
-#' @param rand_color character; the color hex code for random points
-#' @param point_size numeric; the size of points searched by the optimiser(s)
-#' @param end_size numeric; the size of end points
-#' @param theo_size numeric; the size of theoretical point(s)
-#' @param theo_shape numeric; the shape symbol in the basic plot
-#' @param theo_color character; the color of theoretical point(s)
-#' @param palette the colour palette to be used
-#' @param axes see [tourr::animate_xy()]
-#' @param ... other argument passed to \code{tourr::animate_xy()} and \code{prep_space_tour()}
-#' @examples
-#' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
-#'   group = method, palette = botanical_palettes$fern[c(1, 6)]
-#' )
-#' @rdname explore_space_tour
-#' @export
-prep_space_tour <- function(dt, group = NULL, flip = FALSE, n_random = 2000,
-                            color = NULL, rand_size = 1, rand_color = "#D3D3D3",
-                            point_size = 1.5, end_size = 5, theo_size = 3,
-                            theo_shape = 17, theo_color = "black",
-                            palette = botanical_palettes$fern, ...) {
-  if (rlang::quo_is_null(dplyr::enquo(color))) {
-    message("map method to color")
-    color <- dplyr::sym("method")
-  }
-
-  # get start
-  dt <- dt %>%
-    dplyr::mutate(row_num = dplyr::row_number()) %>%
-    clean_method()
-
-  if (flip){
-    flip <- dt %>% flip_sign(group = {{ group }})
-    basis <- flip$basis %>% bind_random_matrix(front = TRUE)
-  } else{
-    flip = list(dt = dt)
-    basis <- dt %>%
-      get_basis_matrix() %>%
-      bind_random_matrix(n = n_random, front = TRUE)
-  }
-
-  n_rand <- nrow(basis) - nrow(dt)
-  n_end <- get_best(flip$dt, group = {{ group }}) %>% dplyr::pull(.data$row_num) + n_rand
-
-  edges_dt <- flip$dt %>%
-    dplyr::mutate(id = dplyr::row_number()) %>%
-    dplyr::filter(.data$info == "interpolation") %>%
-    dplyr::group_by(.data$method) %>%
-    dplyr::mutate(id2 = dplyr::lead(.data$id, default = NA)) %>%
-    dplyr::ungroup() %>%
-    dplyr::filter(!is.na(.data$id2))
-
-  edges <- edges_dt %>%
-    dplyr::select(.data$id, .data$id2) %>%
-    dplyr::mutate(id = .data$id + n_rand, id2 = .data$id2 + n_rand) %>%
-    as.matrix()
-
-  edges_col <- palette[as.factor(edges_dt %>% dplyr::pull({{ color }}))]
-
-  col <- c(
-    rep(rand_color, n_rand),
-    palette[as.factor(dt %>% dplyr::pull({{ color }}))]
-  )
-  cex <- c(
-    rep(rand_size, n_rand),
-    rep(point_size, nrow(dt))
-  )
-  cex[n_end] <- end_size
-
-  pch <- rep(20, nrow(basis))
-
-  if ("theoretical" %in% dt$info) {
-    theo_row_num <- dt %>%
-      dplyr::filter(.data$info == "theoretical") %>%
-      dplyr::pull(.data$row_num)
-
-    col[theo_row_num + n_rand] <- theo_color
-    cex[theo_row_num + n_rand] <- theo_size
-    pch[theo_row_num + n_rand] <- theo_shape
-  }
-
-  return(list(
-    basis = basis,
-    col = col,
-    cex = cex,
-    pch = pch,
-    edges = edges,
-    edges_col = edges_col
-  ))
-}
