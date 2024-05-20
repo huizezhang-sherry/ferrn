@@ -31,8 +31,9 @@ Imports:
     stringr,
     ggrepel,
     ggforce,
-    tidyr
-RoxygenNote: 7.2.3
+    tidyr,
+    GpGp
+RoxygenNote: 7.3.1
 Depends: 
     R (>= 2.10)
 Suggests: 

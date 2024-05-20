@@ -28,7 +28,7 @@ tail(holes_1d_better \%>\% bind_theoretical(best, tourr::holes(), raw_data = boa
 }
 \seealso{
 Other bind: 
-\code{\link{bind_random_matrix}()},
-\code{\link{bind_random}()}
+\code{\link{bind_random}()},
+\code{\link{bind_random_matrix}()}
 }
 \concept{bind}
