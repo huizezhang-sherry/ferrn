@@ -15,6 +15,7 @@ reference:
   - explore_trace_interp
   - explore_space_pca
   - explore_space_tour
+  - flip_sign
 - title: Get components
   desc: >
     Extracting components from existing data object

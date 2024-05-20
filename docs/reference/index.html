@@ -65,65 +65,25 @@
         </td>
         <td><p>Plot the trace the search progression</p></td>
       </tr><tr><td>
-          <p><code><a href="explore_space_pca.html">explore_space_pca()</a></code> <code><a href="explore_space_pca.html">flip_sign()</a></code> <code><a href="explore_space_pca.html">compute_pca()</a></code> </p>
+          <p><code><a href="explore_space_pca.html">explore_space_start()</a></code> <code><a href="explore_space_pca.html">explore_space_end()</a></code> <code><a href="explore_space_pca.html">explore_space_pca()</a></code> </p>
         </td>
         <td><p>Plot the PCA projection of the projection bases space</p></td>
       </tr><tr><td>
           <p><code><a href="explore_space_tour.html">explore_space_tour()</a></code> <code><a href="explore_space_tour.html">prep_space_tour()</a></code> </p>
         </td>
         <td><p>Plot the grand tour animation of the bases space in high dimension</p></td>
+      </tr><tr><td>
+          <p><code><a href="pca-helper.html">flip_sign()</a></code> <code><a href="pca-helper.html">compute_pca()</a></code> </p>
+        </td>
+        <td><p>Helper functions for `explore_space_pca()`</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="get-components">Get components <a href="#get-components" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Extracting components from existing data object</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="get_anchor.html">get_anchor()</a></code> </p>
+          <p><code><a href="get.html">get_best()</a></code> <code><a href="get.html">get_start()</a></code> <code><a href="get.html">get_interp()</a></code> <code><a href="get.html">get_interp_last()</a></code> <code><a href="get.html">get_anchor()</a></code> <code><a href="get.html">get_search()</a></code> <code><a href="get.html">get_dir_search()</a></code> <code><a href="get.html">get_space_param()</a></code> <code><a href="get.html">get_theo()</a></code> <code><a href="get.html">get_interrupt()</a></code> <code><a href="get.html">get_search_count()</a></code> <code><a href="get.html">get_basis_matrix()</a></code> </p>
         </td>
-        <td><p>Extract the anchor points on the geodesic path</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_basis_matrix.html">get_basis_matrix()</a></code> </p>
-        </td>
-        <td><p>Extract all the bases as a matrix</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_best.html">get_best()</a></code> </p>
-        </td>
-        <td><p>Extract the record with the largest index value</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_dir_search.html">get_dir_search()</a></code> </p>
-        </td>
-        <td><p>Extract directional search points during the optimisation</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_interp.html">get_interp()</a></code> </p>
-        </td>
-        <td><p>Extract interpolated records</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_interp_last.html">get_interp_last()</a></code> </p>
-        </td>
-        <td><p>Extract the end point at each interpolation</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_interrupt.html">get_interrupt()</a></code> </p>
-        </td>
-        <td><p>Extract the end point of the interpolation and the target point in the iteration when an interruption happens</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_search.html">get_search()</a></code> </p>
-        </td>
-        <td><p>Extract search points during the optimisation</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_search_count.html">get_search_count()</a></code> </p>
-        </td>
-        <td><p>Extract the count in each iteration</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_space_param.html">get_space_param()</a></code> </p>
-        </td>
-        <td><p>Estimate the radius of the background circle based on the randomly generated points</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_start.html">get_start()</a></code> </p>
-        </td>
-        <td><p>Extract the starting records</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_theo.html">get_theo()</a></code> </p>
-        </td>
-        <td><p>Extract the theoretical best basis, if applicable</p></td>
+        <td><p>Functions to get components from the data collecting object</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="bind-additionals">Bind additionals <a href="#bind-additionals" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Bind external data to the existing data object</p>
@@ -209,7 +169,7 @@
           <p class="section-desc"></p><p>Simulated example data</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="data.html">holes_1d_geo</a></code> <code><a href="data.html">holes_1d_better</a></code> <code><a href="data.html">holes_2d_better</a></code> <code><a href="data.html">holes_2d_better_max_tries</a></code> <code><a href="data.html">boa</a></code> <code><a href="data.html">boa5</a></code> <code><a href="data.html">boa6</a></code> </p>
+          <p><code><a href="data.html">holes_1d_geo</a></code> <code><a href="data.html">holes_1d_better</a></code> <code><a href="data.html">holes_1d_jellyfish</a></code> <code><a href="data.html">holes_2d_better</a></code> <code><a href="data.html">holes_2d_better_max_tries</a></code> <code><a href="data.html">boa</a></code> <code><a href="data.html">boa5</a></code> <code><a href="data.html">boa6</a></code> </p>
         </td>
         <td><p>Simulated data</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
@@ -237,7 +197,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

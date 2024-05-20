@@ -50,7 +50,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot the grand tour animation of the bases space in high dimension</h1>
-    <small class="dont-index">Source: <a href="https://github.com/huizezhang-sherry/ferrn/blob/HEAD/R/explore_space.R" class="external-link"><code>R/explore_space.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/huizezhang-sherry/ferrn/blob/HEAD/R/explore-space-tour.R" class="external-link"><code>R/explore-space-tour.R</code></a></small>
     <div class="hidden name"><code>explore_space_tour.Rd</code></div>
     </div>
 
@@ -59,54 +59,93 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">explore_space_tour</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="fu">prep_space_tour</span><span class="op">(</span>
-  <span class="va">dt</span>,
-  group <span class="op">=</span> <span class="cn">NULL</span>,
-  flip <span class="op">=</span> <span class="cn">FALSE</span>,
-  color <span class="op">=</span> <span class="cn">NULL</span>,
-  rand_size <span class="op">=</span> <span class="fl">1</span>,
-  point_size <span class="op">=</span> <span class="fl">1.5</span>,
-  end_size <span class="op">=</span> <span class="fl">5</span>,
-  theo_size <span class="op">=</span> <span class="fl">3</span>,
-  theo_shape <span class="op">=</span> <span class="fl">17</span>,
-  theo_color <span class="op">=</span> <span class="st">"black"</span>,
-  palette <span class="op">=</span> <span class="va">botanical_palettes</span><span class="op">$</span><span class="va">fern</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">explore_space_tour</span><span class="op">(</span><span class="va">...</span>, axes <span class="op">=</span> <span class="st">"bottomleft"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">prep_space_tour</span><span class="op">(</span></span>
+<span>  <span class="va">dt</span>,</span>
+<span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  flip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n_random <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rand_size <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  rand_color <span class="op">=</span> <span class="st">"#D3D3D3"</span>,</span>
+<span>  point_size <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>  end_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  theo_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  theo_shape <span class="op">=</span> <span class="fl">17</span>,</span>
+<span>  theo_color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  palette <span class="op">=</span> <span class="va">botanical_palettes</span><span class="op">$</span><span class="va">fern</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>...</dt>
 <dd><p>other argument passed to <code><a href="https://rdrr.io/pkg/tourr/man/display_xy.html" class="external-link">tourr::animate_xy()</a></code> and <code>prep_space_tour()</code></p></dd>
+
+
+<dt>axes</dt>
+<dd><p>see [tourr::animate_xy()]</p></dd>
+
+
 <dt>dt</dt>
 <dd><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></dd>
+
+
 <dt>group</dt>
 <dd><p>the variable to label different runs of the optimiser(s)</p></dd>
+
+
 <dt>flip</dt>
 <dd><p>logical; if the sign flipping need to be performed</p></dd>
+
+
+<dt>n_random</dt>
+<dd><p>numeric; the number of random basis to generate</p></dd>
+
+
 <dt>color</dt>
 <dd><p>the variable to be coloured by</p></dd>
+
+
 <dt>rand_size</dt>
 <dd><p>numeric; the size of random points</p></dd>
+
+
+<dt>rand_color</dt>
+<dd><p>character; the color hex code for random points</p></dd>
+
+
 <dt>point_size</dt>
 <dd><p>numeric; the size of points searched by the optimiser(s)</p></dd>
+
+
 <dt>end_size</dt>
 <dd><p>numeric; the size of end points</p></dd>
+
+
 <dt>theo_size</dt>
 <dd><p>numeric; the size of theoretical point(s)</p></dd>
+
+
 <dt>theo_shape</dt>
 <dd><p>numeric; the shape symbol in the basic plot</p></dd>
+
+
 <dt>theo_color</dt>
 <dd><p>character; the color of theoretical point(s)</p></dd>
+
+
 <dt>palette</dt>
 <dd><p>the colour palette to be used</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <dl><dt><code>explore_space_tour()</code></dt>
+    
+
+<dl><dt><code>explore_space_tour()</code></dt>
 <dd><p>an animation of the search path in the high-dimensional sphere</p></dd>
 
   <dt><code>prep_space_tour()</code></dt>
@@ -117,22 +156,23 @@
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other main plot functions: 
-<code><a href="explore_space_pca.html">explore_space_pca</a>()</code>,
+<code><a href="explore_space_pca.html">explore_space_start</a>()</code>,
 <code><a href="explore_trace.html">explore_trace_interp</a>()</code>,
 <code><a href="explore_trace_search.html">explore_trace_search</a>()</code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">explore_space_tour</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_better</span>, <span class="va">holes_1d_geo</span><span class="op">)</span>,</span>
-<span class="r-in">  group <span class="op">=</span> <span class="va">method</span>, palette <span class="op">=</span> <span class="va">botanical_palettes</span><span class="op">$</span><span class="va">fern</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">explore_space_tour</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_better</span>, <span class="va">holes_1d_geo</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  group <span class="op">=</span> <span class="va">method</span>, palette <span class="op">=</span> <span class="va">botanical_palettes</span><span class="op">$</span><span class="va">fern</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> map method to color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target_dist - cur_dist: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> generation:  dist =   1.767093 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using half_range 0.56</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `dplyr::filter()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `.data$index_val == max(.data$index_val, na.rm = TRUE)`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `max()`:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> no non-missing arguments to max; returning -Inf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using half_range 1.1</span>
 <span class="r-plt img"><img src="explore_space_tour-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target_dist - cur_dist: 1.767093 </span>
 </code></pre></div>
     </div>
   </div>
@@ -147,7 +187,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

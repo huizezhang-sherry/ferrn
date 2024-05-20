@@ -93,62 +93,64 @@
 </h2>
 <p>You can install the development version of ferrn from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"huizezhang-sherry/ferrn"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"huizezhang-sherry/ferrn"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>To extract the data object from a guided tour, assign the <code>annimate_xx()</code> function a name:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123456</span><span class="op">)</span>
-<span class="va">holes_1d_better</span> <span class="op">&lt;-</span> <span class="fu">animate_dist</span><span class="op">(</span>
-  <span class="fu">ferrn</span><span class="fu">::</span><span class="va"><a href="reference/data.html">boa5</a></span>,
-  tour_path <span class="op">=</span> <span class="fu">guided_tour</span><span class="op">(</span><span class="fu">holes</span><span class="op">(</span><span class="op">)</span>, d <span class="op">=</span> <span class="fl">1</span>,
-                          search_f <span class="op">=</span>  <span class="va">search_better</span><span class="op">)</span>, 
-  rescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123456</span><span class="op">)</span></span>
+<span><span class="va">holes_1d_better</span> <span class="op">&lt;-</span> <span class="fu">animate_dist</span><span class="op">(</span></span>
+<span>  <span class="fu">ferrn</span><span class="fu">::</span><span class="va"><a href="reference/data.html">boa5</a></span>,</span>
+<span>  tour_path <span class="op">=</span> <span class="fu">guided_tour</span><span class="op">(</span><span class="fu">holes</span><span class="op">(</span><span class="op">)</span>, d <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                          search_f <span class="op">=</span>  <span class="va">search_better</span><span class="op">)</span>, </span>
+<span>  rescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The above code will collect data from the 1D animation on <code>boa5</code> dataset, a simulated data in the <code>ferrn</code> package.</p>
 <p>The best projection basis found by the projection pursuit algorithm can be extracted via</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/huizezhang-sherry/ferrn/" class="external-link">ferrn</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/get_best.html">get_best</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 × 8</span>
-<span class="co">#&gt;   basis         index_val info          method        alpha tries  loop    id</span>
-<span class="co">#&gt;   &lt;list&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1 &lt;dbl [5 × 1]&gt;     0.914 interpolation search_better    NA     5     6    55</span>
-<span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/get_best.html">get_best</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">basis</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt;              [,1]</span>
-<span class="co">#&gt; [1,]  0.005468276</span>
-<span class="co">#&gt; [2,]  0.990167039</span>
-<span class="co">#&gt; [3,] -0.054198426</span>
-<span class="co">#&gt; [4,]  0.088415793</span>
-<span class="co">#&gt; [5,]  0.093725721</span>
-<span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/get_best.html">get_best</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">index_val</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.9136095</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/huizezhang-sherry/ferrn/" class="external-link">ferrn</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/get.html">get_best</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 8</span></span>
+<span><span class="co">#&gt;   basis         index_val info          method        alpha tries  loop    id</span></span>
+<span><span class="co">#&gt;   &lt;list&gt;            &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 &lt;dbl [5 × 1]&gt;     0.914 interpolation search_better    NA     5     6    55</span></span>
+<span><span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/get.html">get_best</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">basis</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;              [,1]</span></span>
+<span><span class="co">#&gt; [1,]  0.005468276</span></span>
+<span><span class="co">#&gt; [2,]  0.990167039</span></span>
+<span><span class="co">#&gt; [3,] -0.054198426</span></span>
+<span><span class="co">#&gt; [4,]  0.088415793</span></span>
+<span><span class="co">#&gt; [5,]  0.093725721</span></span>
+<span><span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/get.html">get_best</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">index_val</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.9136095</span></span></code></pre></div>
 <p>Trace plot for viewing the optimisation progression with botanical palette:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="reference/explore_trace.html">explore_trace_interp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/scale.html">scale_color_continuous_botanical</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">holes_1d_better</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="reference/explore_trace.html">explore_trace_interp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/scale.html">scale_color_continuous_botanical</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-trace-plot-1.png" width="100%"></p>
 <p>Compare two algorithms via plotting the projection bases on the reduced PCA space:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
-                   index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="reference/explore_space_pca.html">explore_space_pca</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">+</span>
-  <span class="fu"><a href="reference/scale.html">scale_color_discrete_botanical</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                   index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="reference/explore_space_pca.html">explore_space_pca</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/scale.html">scale_color_discrete_botanical</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-pca-plot-1.png" width="100%"></p>
 <p>View the projection bases on its original 5-D space via tour animation:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/explore_space_tour.html">explore_space_tour</a></span><span class="op">(</span>flip <span class="op">=</span> <span class="cn">TRUE</span>, group <span class="op">=</span> <span class="va">method</span>,
-                     palette <span class="op">=</span> <span class="va">botanical_palettes</span><span class="op">$</span><span class="va">fern</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span>,
-                     max_frames <span class="op">=</span> <span class="fl">20</span>, 
-                     point_size <span class="op">=</span> <span class="fl">2</span>, end_size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/explore_space_tour.html">explore_space_tour</a></span><span class="op">(</span>flip <span class="op">=</span> <span class="cn">TRUE</span>, group <span class="op">=</span> <span class="va">method</span>,</span>
+<span>                     palette <span class="op">=</span> <span class="va">botanical_palettes</span><span class="op">$</span><span class="va">fern</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                     max_frames <span class="op">=</span> <span class="fl">20</span>, </span>
+<span>                     point_size <span class="op">=</span> <span class="fl">2</span>, end_size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p float="center">
-<img src="reference/figures/tour.gif"></p>
+</p>
+<p><img src="reference/figures/tour.gif"></p>
+
 </div>
 </div>
   </div>
@@ -208,7 +210,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

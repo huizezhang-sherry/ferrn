@@ -59,58 +59,77 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">explore_trace_interp</span><span class="op">(</span>
-  <span class="va">dt</span>,
-  iter <span class="op">=</span> <span class="cn">NULL</span>,
-  color <span class="op">=</span> <span class="cn">NULL</span>,
-  group <span class="op">=</span> <span class="cn">NULL</span>,
-  cutoff <span class="op">=</span> <span class="fl">50</span>,
-  target_size <span class="op">=</span> <span class="fl">3</span>,
-  interp_size <span class="op">=</span> <span class="fl">1</span>,
-  accuracy_x <span class="op">=</span> <span class="fl">5</span>,
-  accuracy_y <span class="op">=</span> <span class="fl">0.01</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">explore_trace_interp</span><span class="op">(</span></span>
+<span>  <span class="va">dt</span>,</span>
+<span>  iter <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cutoff <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  target_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  interp_size <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  accuracy_x <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  accuracy_y <span class="op">=</span> <span class="fl">0.01</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dt</dt>
 <dd><p>a data object collected by the projection pursuit guided tour optimisation in <code>tourr</code></p></dd>
+
+
 <dt>iter</dt>
 <dd><p>the variable to be plotted on the x-axis</p></dd>
+
+
 <dt>color</dt>
 <dd><p>the variable to be coloured by</p></dd>
+
+
 <dt>group</dt>
 <dd><p>the variable to label different runs of the optimiser(s)</p></dd>
+
+
 <dt>cutoff</dt>
 <dd><p>numeric; if the number of interpolating points is smaller than <code>cutoff</code>, all the interpolation points will be plotted as dots</p></dd>
+
+
 <dt>target_size</dt>
 <dd><p>numeric; the size of target points in the interpolation</p></dd>
+
+
 <dt>interp_size</dt>
 <dd><p>numeric; the size of interpolation points</p></dd>
+
+
 <dt>accuracy_x</dt>
 <dd><p>numeric; If the difference of two neighbour x-labels is smaller than <code>accuracy_x</code>, only one of them will be displayed. Used for better axis label</p></dd>
+
+
 <dt>accuracy_y</dt>
 <dd><p>numeric; the precision of y-axis label</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a ggplot object for diagnosing how the index value progresses during the interpolation</p>
+    
+
+<p>a ggplot object for diagnosing how the index value progresses during the interpolation</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other main plot functions: 
-<code><a href="explore_space_pca.html">explore_space_pca</a>()</code>,
+<code><a href="explore_space_pca.html">explore_space_start</a>()</code>,
 <code><a href="explore_space_tour.html">explore_space_tour</a>()</code>,
 <code><a href="explore_trace_search.html">explore_trace_search</a>()</code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Compare the trace of interpolated points in two algorithms</span></span>
-<span class="r-in"><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">explore_trace_interp</span><span class="op">(</span>interp_size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu"><a href="scale.html">scale_color_continuous_botanical</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"fern"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Compare the trace of interpolated points in two algorithms</span></span></span>
+<span class="r-in"><span><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">explore_trace_interp</span><span class="op">(</span>interp_size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="scale.html">scale_color_continuous_botanical</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"fern"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> map id to the x-axis</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> map tries to color</span>
 <span class="r-plt img"><img src="explore_trace-1.png" alt="" width="700" height="433"></span>
@@ -128,7 +147,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
