@@ -44,4 +44,4 @@ calc_smoothness <- function(idx, data = sine1000, n_basis = 300, n = 6, d = 2,
 }
 
 
-globalVariables(c("basis"))
+globalVariables(c("basis", "sine1000"))

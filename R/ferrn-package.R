@@ -3,4 +3,5 @@
 #' @importFrom GpGp fit_model
 #' @importFrom cli cli_abort
 #' @importFrom tidyr unnest
+#' @importFrom rlang `:=`
 "_PACKAGE"
