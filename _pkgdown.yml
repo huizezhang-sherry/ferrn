@@ -45,6 +45,9 @@ reference:
   contents:
   - starts_with("boa")
   - starts_with("holes")
+- title: Calculate optimisation features
+  contents:
+  - starts_with("calc")
 - title: Miscellaneous
   desc: >
     Other misc functions
