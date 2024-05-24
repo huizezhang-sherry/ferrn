@@ -67,21 +67,22 @@
 <span>  d <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  best <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
 <span>  start_parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">0.5</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  other_gp_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>  other_gp_params <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">calc_squintability</span><span class="op">(</span></span>
 <span>  <span class="va">idx</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">sine1000</span>,</span>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ks"</span>, <span class="st">"nls"</span><span class="op">)</span>,</span>
-<span>  <span class="va">n_basis</span>,</span>
+<span>  n_basis <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>  d <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  proj_dist_threshold <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>  step <span class="op">=</span> <span class="fl">0.02</span>,</span>
 <span>  best <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
 <span>  bin_nobs_threshold <span class="op">=</span> <span class="fl">5000</span>,</span>
-<span>  bin_size <span class="op">=</span> <span class="fl">0.02</span></span>
+<span>  bin_width <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span>  sampling_seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -144,9 +145,13 @@ number of observations for
 applying binning before fitting the kernel</p></dd>
 
 
-<dt>bin_size</dt>
+<dt>bin_width</dt>
 <dd><p>only for squintability, the bin size for binning the data
 before fitting the kernel</p></dd>
+
+
+<dt>sampling_seed</dt>
+<dd><p>the seed used for sampling the random basis</p></dd>
 
 </dl></div>
 
