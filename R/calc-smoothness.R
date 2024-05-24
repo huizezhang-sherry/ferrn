@@ -15,7 +15,7 @@ calc_smoothness <- function(idx, data = sine1000, n_basis = 300, n = 6, d = 2,
                             best = matrix(c(0, 0, 0, 0, 1, 0,
                                             0, 0, 0, 0, 0, 1), nrow = 6),
                             start_parms = c(0.001, 0.5, 2, 2),
-                            other_gp_params = list(NULL)
+                            other_gp_params = NULL
                             ){
 
   # sample basis
@@ -23,7 +23,7 @@ calc_smoothness <- function(idx, data = sine1000, n_basis = 300, n = 6, d = 2,
   set.seed(123)
   seed <- sample(1: 10000, size = n_basis)
   basis_df <- tibble::tibble(basis = lapply(1:n_basis, function(i){
-    set.seed(seed[i]); tourr::basis_random(n = n, d = d)}))
+    set.seed(seed[i]); tourr::basis_random(n = n, d = d)})) |>
     dplyr::rowwise() |>
     dplyr::mutate(proj_dist = tourr::proj_dist(best, basis),
                   index_val = get(idx)()(as.matrix(data) %*% basis))
@@ -34,13 +34,13 @@ calc_smoothness <- function(idx, data = sine1000, n_basis = 300, n = 6, d = 2,
                     start_parms = start_parms, covfun_name = "matern_isotropic",
                     other_gp_params
                     )
-  fit <- do.call("GpGp::fit_model", gp_params)
+  fit <- do.call("fit_model", gp_params)
   cov_params <- tibble::as_tibble_row(fit$covparms, .name_repair = "unique")
   colnames(cov_params) <- c("variance", "range", "smoothness", "nugget", "convergence")
   cov_params <-  cov_params |> dplyr::mutate(convergence = fit$conv, idx = as.character(idx))
 
   # return
-  list(basis_df = basis_df, gp_res = fit, measure = cov_params)
+  list(basis_df = basis_df, gp_res = list(fit), measure = cov_params)
 }
 
 

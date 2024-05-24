@@ -7,7 +7,7 @@
 \alias{holes_1d_jellyfish}
 \alias{holes_2d_better}
 \alias{holes_2d_better_max_tries}
-\title{Data object collected during the projection pursuit optimisation}
+\title{Data objects collected during the projection pursuit optimisation}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 416 rows and 8 columns.
 

@@ -4,4 +4,5 @@
 #' @importFrom cli cli_abort
 #' @importFrom tidyr unnest
 #' @importFrom rlang `:=`
+#' @importFrom progress progress_bar
 "_PACKAGE"

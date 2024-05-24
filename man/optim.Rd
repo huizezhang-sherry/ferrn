@@ -13,21 +13,22 @@ calc_smoothness(
   d = 2,
   best = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1), nrow = 6),
   start_parms = c(0.001, 0.5, 2, 2),
-  other_gp_params = list(NULL)
+  other_gp_params = NULL
 )
 
 calc_squintability(
   idx,
   data = sine1000,
   method = c("ks", "nls"),
-  n_basis,
+  n_basis = 100,
   n = 6,
   d = 2,
   proj_dist_threshold = 1.5,
   step = 0.02,
   best = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1), nrow = 6),
   bin_nobs_threshold = 5000,
-  bin_size = 0.02
+  bin_width = 0.02,
+  sampling_seed = 123
 )
 }
 \arguments{
@@ -64,8 +65,10 @@ recommend between 0.01 and 0.1}
 number of observations for
 applying binning before fitting the kernel}
 
-\item{bin_size}{only for squintability, the bin size for binning the data
+\item{bin_width}{only for squintability, the bin size for binning the data
 before fitting the kernel}
+
+\item{sampling_seed}{the seed used for sampling the random basis}
 }
 \description{
 Function to calculate smoothness and squintability
