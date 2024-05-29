@@ -3,6 +3,7 @@
 \docType{data}
 \name{sine1000}
 \alias{sine1000}
+\alias{sine1000_8d}
 \alias{pipe1000}
 \alias{pipe1000_8d}
 \alias{pipe1000_10d}
@@ -13,6 +14,8 @@
 \title{Simulated sine, pipe, and gaussian mixture}
 \format{
 An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 6 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 8 columns.
 
 An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 6 columns.
 
@@ -30,6 +33,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 }
 \usage{
 sine1000
+
+sine1000_8d
 
 pipe1000
 

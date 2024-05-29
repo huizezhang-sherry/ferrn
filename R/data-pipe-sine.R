@@ -21,6 +21,9 @@
 "sine1000"
 
 #' @rdname pipe-sine-boa
+"sine1000_8d"
+
+#' @rdname pipe-sine-boa
 "pipe1000"
 
 #' @rdname pipe-sine-boa
