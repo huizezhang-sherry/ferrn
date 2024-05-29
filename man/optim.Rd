@@ -3,6 +3,8 @@
 \name{calc_smoothness}
 \alias{calc_smoothness}
 \alias{calc_squintability}
+\alias{fit_ks}
+\alias{fit_nls}
 \title{Function to calculate smoothness and squintability}
 \usage{
 calc_smoothness(
@@ -19,16 +21,27 @@ calc_smoothness(
 calc_squintability(
   idx,
   data = sine1000,
+  return_early = FALSE,
   method = c("ks", "nls"),
-  n_basis = 100,
+  n_basis = 50,
   n = 6,
   d = 2,
   proj_dist_threshold = 1.5,
-  step = 0.02,
+  step = 0.005,
   best = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1), nrow = 6),
   bin_nobs_threshold = 5000,
-  bin_width = 0.02,
+  bin_width = 0.005,
   sampling_seed = 123
+)
+
+fit_ks(basis_df, idx, bin_nobs_threshold = 5000, bin_width = 0.005)
+
+fit_nls(
+  basis_df,
+  idx,
+  bin_nobs_threshold = 5000,
+  bin_width = 0.005,
+  nls_params = list(start = list(theta1 = 1, theta2 = 1, theta3 = 50, theta4 = 0))
 )
 }
 \arguments{
@@ -52,6 +65,11 @@ fit_model will select default starting values.}
 
 \item{other_gp_params}{list, other parameters to be passed to \code{GpGp::fit_model}}
 
+\item{return_early}{logical, whether to return early of all the bases
+before fitting the kernel or non-linear least square. This can be useful if
+the index value evaluation is time-consuming and the user wants to save a copy
+before fitting the kernel or non-linear least square.}
+
 \item{method}{only for squintability, the method to calculate squintability,
 either through kernel smoothing ("ks") or non-linear least square ("nls")}
 
@@ -66,9 +84,15 @@ number of observations for
 applying binning before fitting the kernel}
 
 \item{bin_width}{only for squintability, the bin size for binning the data
-before fitting the kernel}
+before fitting the kernel, recommend to set as the same as step parameter}
 
 \item{sampling_seed}{the seed used for sampling the random basis}
+
+\item{basis_df}{a basis data frame, returned from \code{calc_squintability
+(..., return_early = TRUE)}}
+
+\item{nls_params}{additional parameter for fitting the nls model, see
+\code{stats::nls()}}
 }
 \description{
 Function to calculate smoothness and squintability
