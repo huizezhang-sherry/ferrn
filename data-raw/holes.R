@@ -9,7 +9,7 @@ holes_1d_better <-animate_dist(boa5, tour_path = guided_tour(
 
 set.seed(123456);
 holes_1d_jellyfish <- animate_dist(boa5, tour_path = guided_tour(
-    holes(), d = 1, search_f =  search_jellyfish, n_jellies = 100,
+    holes(), d = 1, search_f =  search_jellyfish, n_jellies = 50,
      max.tries = 50), rescale = FALSE)
 
 set.seed(123456)
