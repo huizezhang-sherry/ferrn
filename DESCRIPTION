@@ -26,7 +26,6 @@ Imports:
     ggplot2,
     tibble,
     purrr,
-    geozoo,
     tourr,
     stringr,
     ggrepel,

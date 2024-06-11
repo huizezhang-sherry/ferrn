@@ -80,7 +80,6 @@ get_best <- function(dt, group = NULL) {
   }
 
   res <- dt %>%
-    dplyr::filter(grepl("search", dt[["method"]])) %>%
     dplyr::group_by({{group}}) %>%
     dplyr::filter(.data$index_val == max(.data$index_val, na.rm = TRUE)) %>%
     dplyr::distinct(.data$index_val, .keep_all = TRUE)
@@ -108,7 +107,7 @@ get_interp <- function(dt, group = NULL) {
   }
 
   dt %>%
-    dplyr::filter(grepl("search", dt[["method"]])) %>%
+    #dplyr::filter(grepl("search", dt[["method"]])) %>%
     dplyr::group_by({{ group }}) %>%
     dplyr::mutate(id = dplyr::row_number()) %>%
     dplyr::ungroup()

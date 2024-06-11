@@ -221,7 +221,8 @@ add_interp <- function(dt, interp_size = 1.5, interp_alpha = NULL,
 #' @family draw functions
 #' @export
 add_interrupt <- function(dt, interrupt_size = 0.5, interrupt_alpha = NULL,
-                          interrupt_color = NULL, interrupt_group = NULL, interrupt_linetype = "dashed", ...) {
+                          interrupt_color = NULL, interrupt_group = NULL,
+                          interrupt_linetype = "dashed", ...) {
   ggplot2::geom_path(
     data = dt,
     ggplot2::aes(

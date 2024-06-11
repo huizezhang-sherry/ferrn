@@ -65,11 +65,10 @@ explore_space_end <- function(dt, group = NULL, pca = TRUE, ...) {
 #' @export
 explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL,
                               color = NULL, facet = NULL, ..., animate = FALSE) {
-
   if (rlang::quo_is_null(dplyr::enquo(color))) color <- dplyr::enexpr(group)
 
   facet <- rlang::enquo(facet)
-  if (!rlang::quo_is_missing(facet)) group <- facet
+  if (rlang::quo_is_missing(facet)) group <- facet else group <- dplyr::enexpr(group)
 
   if (pca) dt <- compute_pca(dt, group = {{ group }}, ...) %>% purrr::pluck("aug")
 
@@ -95,12 +94,14 @@ explore_space_pca <- function(dt, details = FALSE, pca = TRUE, group = NULL,
     # anchor points and last interpolation points
     p <- p +
       add_anchor(dt = get_anchor(dt), anchor_color = {{ color }}, ...) +
-      add_interp_last(dt = get_interp_last(dt, group = {{ group }}), interp_last_color = {{ color }}, ...) +
+      add_interp_last(dt = get_interp_last(dt, group = {{ group }}),
+                      interp_last_color = {{ color }}, ...) +
       # add annotation
       add_interrupt(
         dt = get_interrupt(dt, group = {{ group }}),
-        interrupt_color = {{ color }}, interrupt_group = interaction(.data[["tries"]], {{ group }}), ...
-      )
+        interrupt_color = {{ color }},
+        interrupt_group = interaction(.data[["tries"]], {{group}}),
+        ...)
 
     # search points
     p <- p +

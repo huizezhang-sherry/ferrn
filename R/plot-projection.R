@@ -15,9 +15,9 @@ plot_projection <- function(dt, data, cols = NULL){
   d <- ncol(proj_df) - 1 - length(cols)
 
   if (d == 2){
-   p <-  proj_df |>
+   p <- proj_df |>
       ggplot2::ggplot() +
-      ggplot2::geom_point(ggplot2::aes(x = V1, y = V2))
+      ggplot2::geom_point(ggplot2::aes(x = V1, y = V2), size = 0.5)
   } else if (d == 1) {
     p <- proj_df |>
       ggplot2::ggplot() +
