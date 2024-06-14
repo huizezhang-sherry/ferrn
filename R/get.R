@@ -73,6 +73,9 @@
 #' @return a tibble object containing the best basis found by the optimiser(s)
 #' @export
 get_best <- function(dt, group = NULL) {
+  group <- rlang::enexpr(group) |> as.list()
+  if (length(group) != 1) {group <- group[-1]}
+
 
   search_methods <- unique(dt[["method"]])
   if (!"search_jellyfish" %in% search_methods) {
@@ -80,9 +83,10 @@ get_best <- function(dt, group = NULL) {
   }
 
   res <- dt %>%
-    dplyr::group_by({{group}}) %>%
+    dplyr::group_by(!!!group) %>%
     dplyr::filter(.data$index_val == max(.data$index_val, na.rm = TRUE)) %>%
-    dplyr::distinct(.data$index_val, .keep_all = TRUE)
+    dplyr::distinct(.data$index_val, .keep_all = TRUE) |>
+    dplyr::ungroup()
 
   res
 }
