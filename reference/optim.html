@@ -67,8 +67,15 @@
 <span>  d <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  best <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
 <span>  start_parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">0.5</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  other_gp_params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  other_gp_params <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for smoothness_res</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for smoothness_res</span></span>
+<span><span class="fu">tbl_sum</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">calc_squintability</span><span class="op">(</span></span>
 <span>  <span class="va">idx</span>,</span>
@@ -135,6 +142,26 @@ fit_model will select default starting values.</p></dd>
 <dd><p>list, other parameters to be passed to <code><a href="https://rdrr.io/pkg/GpGp/man/fit_model.html" class="external-link">GpGp::fit_model</a></code></p></dd>
 
 
+<dt>verbose</dt>
+<dd><p>logical, whether to print optimisation progression when
+fitting the Gaussian process</p></dd>
+
+
+<dt>x</dt>
+<dd><p>any <span style="R">R</span> object (conceptually); typically numeric.</p></dd>
+
+
+<dt>width</dt>
+<dd><p><code>default</code> method: the <em>minimum</em> field width or
+    <code>NULL</code> or <code>0</code> for no restriction.</p>
+<p><code>AsIs</code> method: the <em>maximum</em> field width for non-character
+    objects.  <code>NULL</code> corresponds to the default <code>12</code>.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>further arguments passed to or from other methods.</p></dd>
+
+
 <dt>return_early</dt>
 <dd><p>logical, whether to return early of all the bases
 before fitting the kernel or non-linear least square. This can be useful if
@@ -183,6 +210,16 @@ before fitting the kernel, recommend to set as the same as step parameter</p></d
 
 </dl></div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ggobi/tourr" class="external-link">tourr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">calc_smoothness</span><span class="op">(</span><span class="st">"holes"</span>, data <span class="op">=</span> <span class="va">pipe1000</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> sample random bases ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> fit the gaussian process ...</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘fields’</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
