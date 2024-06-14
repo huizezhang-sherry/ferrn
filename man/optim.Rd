@@ -2,6 +2,8 @@
 % Please edit documentation in R/calc-smoothness.R, R/calc-squintability.R
 \name{calc_smoothness}
 \alias{calc_smoothness}
+\alias{print.smoothness_res}
+\alias{tbl_sum.smoothness_res}
 \alias{calc_squintability}
 \alias{fit_ks}
 \alias{fit_nls}
@@ -15,8 +17,13 @@ calc_smoothness(
   d = 2,
   best = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1), nrow = 6),
   start_parms = c(0.001, 0.5, 2, 2),
-  other_gp_params = NULL
+  other_gp_params = NULL,
+  verbose = FALSE
 )
+
+\method{print}{smoothness_res}(x, width = NULL, ...)
+
+\method{tbl_sum}{smoothness_res}(x)
 
 calc_squintability(
   idx,
@@ -65,6 +72,20 @@ fit_model will select default starting values.}
 
 \item{other_gp_params}{list, other parameters to be passed to \code{GpGp::fit_model}}
 
+\item{verbose}{logical, whether to print optimisation progression when
+fitting the Gaussian process}
+
+\item{x}{any \R object (conceptually); typically numeric.}
+
+\item{width}{\code{default} method: the \emph{minimum} field width or
+    \code{NULL} or \code{0} for no restriction.
+
+    \code{AsIs} method: the \emph{maximum} field width for non-character
+    objects.  \code{NULL} corresponds to the default \code{12}.
+  }
+
+\item{...}{further arguments passed to or from other methods.}
+
 \item{return_early}{logical, whether to return early of all the bases
 before fitting the kernel or non-linear least square. This can be useful if
 the index value evaluation is time-consuming and the user wants to save a copy
@@ -96,4 +117,9 @@ before fitting the kernel, recommend to set as the same as step parameter}
 }
 \description{
 Function to calculate smoothness and squintability
+}
+\examples{
+library(tourr)
+calc_smoothness("holes", data = pipe1000)
+
 }

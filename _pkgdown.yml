@@ -46,7 +46,7 @@ reference:
   contents:
   - starts_with("boa")
   - starts_with("holes")
-- title: Calculate optimisation features
+- title: Calculate projection pursuit optimisation properties
   contents:
   - starts_with("calc")
 - title: Miscellaneous

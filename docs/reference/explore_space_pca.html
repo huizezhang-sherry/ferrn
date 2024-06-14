@@ -131,59 +131,50 @@
 <span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">explore_space_pca</span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="scale.html">scale_color_discrete_botanical</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `dplyr::filter()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `.data$index_val == max(.data$index_val, na.rm = TRUE)`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `max()`:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> no non-missing arguments to max; returning -Inf</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `dplyr::filter()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `.data$loop == max(.data$loop)`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `max()`:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> no non-missing arguments to max; returning -Inf</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There was 1 warning in `dplyr::filter()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `.data$loop == max(.data$loop)`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `max()`:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> no non-missing arguments to max; returning -Inf</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dplyr::mutate(., match = ifelse(abs(round(.data$new_basis, 3) -     round(.data$interpolation, 3)) &gt; precision, TRUE, FALSE)):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `match = ifelse(...)`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `.data$interpolation`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Column `interpolation` not found in `.data`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group search_geodesic </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding missing grouping variables: `method`</span>
+<span class="r-plt img"><img src="explore_space_pca-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">best</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="va">holes_1d_jellyfish</span>, <span class="va">best</span>, <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">explore_space_start</span><span class="op">(</span><span class="va">dt</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="explore_space_pca-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">explore_space_end</span><span class="op">(</span><span class="va">dt</span>, group <span class="op">=</span> <span class="va">loop</span>, theo_size <span class="op">=</span> <span class="fl">10</span>, theo_color <span class="op">=</span> <span class="st">"#FF0000"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 99 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 36 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 41 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 90 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 29 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 1 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 78 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 42 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 80 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 30 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 47 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 94 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 20 </span>
 <span class="r-plt img"><img src="explore_space_pca-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">explore_space_end</span><span class="op">(</span><span class="va">dt</span>, group <span class="op">=</span> <span class="va">loop</span>, theo_size <span class="op">=</span> <span class="fl">10</span>, theo_color <span class="op">=</span> <span class="st">"#FF0000"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 7 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 33 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 11 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 29 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 44 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 47 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 34 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 41 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 42 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 45 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 49 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 3 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 4 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 10 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 12 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 13 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 17 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 21 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 22 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 24 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 25 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 27 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 28 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 32 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 38 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 43 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 46 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 48 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 50 </span>
+<span class="r-plt img"><img src="explore_space_pca-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">explore_space_pca</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">dt</span>, facet <span class="op">=</span> <span class="va">loop</span>, interp_size <span class="op">=</span> <span class="fl">0.5</span>, theo_size <span class="op">=</span> <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>  start_size <span class="op">=</span> <span class="fl">1</span>, end_size <span class="op">=</span> <span class="fl">3</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 99 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 36 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 41 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 90 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 29 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 1 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 78 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 42 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 80 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 30 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 47 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 94 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> signs in all the bases will be flipped in group 20 </span>
-<span class="r-plt img"><img src="explore_space_pca-3.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="explore_space_pca-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
