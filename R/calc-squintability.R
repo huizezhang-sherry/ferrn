@@ -1,93 +1,134 @@
-#' @param proj_dist_threshold only for squintability, the threshold for projection
+#' Function to calculate smoothness and squintability
+#'
+#' @param idx character, the name of projection pursuit index function, e.g.
+#' "holes"
+#' @param data a matrix or data frame, the high dimensional data to be projected
+#' @param n_basis numeric, the number of random bases to generate
+#' @param best a matrix, the theoretical/ empirical best projection matrix to
+#' calculate the projection distance from the simulated random bases.
+#' @param step_size numeric, step size for interpolating from each random basis to
+#' the best basis, recommend 0.005
+#' @param seed numeric, seed for sampling random bases
+#' @param x objects with specialised printing methods
+#' @param basis_df the basis data frame returned from \code{sample_bases}
+#' @param start_params list, the starting parameters for the Gaussian process
+#' for smoothness
+#' @param other_gp_params list, additional parameters to be passed to
+#' [GpGp::fit_model()]
+#' for calculating smoothness
+#' @param verbose logical, whether to print optimisation progression when
+#' fitting the Gaussian process
+#' @param min_proj_dist only for squintability, the threshold for projection
 #' distance for the random basis to be considered in sampling
-#' @param return_early logical, whether to return early of all the bases
-#' before fitting the kernel or non-linear least square. This can be useful if
-#' the index value evaluation is time-consuming and the user wants to save a copy
-#' before fitting the kernel or non-linear least square.
-#' @param method only for squintability, the method to calculate squintability,
-#' either through kernel smoothing ("ks") or non-linear least square ("nls")
-#' @param step only for squintability, the step size for interpolation,
-#' recommend between 0.01 and 0.1
-#' @param bin_nobs_threshold numeric, only for squintability, the threshold
-#' number of observations for
-#' applying binning before fitting the kernel
-#' @param bin_width only for squintability, the bin size for binning the data
-#' before fitting the kernel, recommend to set as the same as step parameter
-#' @param sampling_seed the seed used for sampling the random basis
-#' @param basis_df a basis data frame, returned from \code{calc_squintability
-#' (..., return_early = TRUE)}
-#' @param nls_params additional parameter for fitting the nls model, see
-#' \code{stats::nls()}
+#' @param method either "ks" (kernel smoothing) or "nls" (non-linear least
+#' square) for calculating squintability.
+#' @param bin_width numeric, the bin width to average the index value
+#' before fitting the kernel, recommend to set as the same as `step` parameter
+#' @param other_params list additional parameters for fitting kernel smoothing
+#' or non-linear least square, see [stats::ksmooth()] and
+#' [stats::nls()] for details
+#' @inheritParams base::print
+#' @importFrom stats ksmooth
+#' @examples
+#' # define the holes index as per tourr::holes
+#' holes <- function() {
+#' function(mat) {
+#'   n <- nrow(mat)
+#'   d <- ncol(mat)
+#'
+#'   num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
+#'   den <- 1 - exp(-d / 2)
+#'
+#'   num / den
+#' }
+#' }
+#' basis_smoothness <- sample_bases(idx = "holes")
+#' calc_smoothness(basis_smoothness)
+#' basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5)
+#' calc_squintability(basis_squint, method = "ks", bin_width = 0.01)
 #' @rdname optim
 #' @export
-calc_squintability <- function(idx, data = sine1000, return_early = FALSE,
-                               method = c("ks", "nls"), n_basis = 50, n = 6, d = 2,
-                               proj_dist_threshold = 1.5, step = 0.005,
-                               best = matrix(c(0, 0, 0, 0, 1, 0,
-                                               0, 0, 0, 0, 0, 1), nrow = 6),
-                               bin_nobs_threshold = 5000, bin_width = 0.005,
-                               sampling_seed = 123
-                               ){
-  cli::cli_inform("sample random bases ...")
-  ## sample basis
-  set.seed(sampling_seed)
-  seed <- sample(1: 10000, size = 1000)
+sample_bases <- function(idx, data = sine1000, n_basis = 300,
+                         best = matrix(c(0, 0, 0, 0, 1, 0,
+                                         0, 0, 0, 0, 0, 1), nrow = 6),
+                         min_proj_dist = NA, step_size = NA, seed = 123){
+
+  dim <- dim(best)
+  n <- dim[1]
+  d <- dim[2]
+  idx <- dplyr::sym(idx)
+  set.seed(seed)
+  seed_vec <- sample(1: 10000, size = 1000)
   bb_lst <- list()
   i <- 1
-  if (!all(dim(best) == c(n, d))){
-    cli::cli_abort("sampled bases and the best basis must have the same dimension,
-                     check the parameter {.field n}, {.field d}, and {.field best}.")
-  }
+
   while (length(bb_lst) < n_basis){
-    set.seed(seed[i])
-    bb <- tourr::basis_random(n = n, d = d)
-    if (tourr::proj_dist(best, bb) > proj_dist_threshold){
-      bb_lst <- c(bb_lst, list(bb))
+    set.seed(seed_vec[i]); bb <- tourr::basis_random(n = n, d = d)
+    if (!is.na(min_proj_dist)){
+      dist <- tourr::proj_dist(bb, best)
+      if (dist > min_proj_dist){bb_lst <- c(bb_lst, list(bb))}
+      i <- i +1
+    } else{
+      bb_lst <- c(bb_lst, list(bb)); i <- i + 1
     }
-    i <- i +1
   }
 
-  ## interpolate between the best and the random basis
-  ## TODO: progress bar here
-  cli::cli_inform("interpolate between the best and the random bases ...")
-  basis_df <- tibble::tibble(id = 1:n_basis) |>
-    dplyr::mutate(res = lapply(bb_lst, function(bb){
-      interp_bb_best(bb = bb, best = best, step = step)
-      })) |>
-    tidyr::unnest(res) |>
-    unnest(dist)
+  if (!is.na(step_size)){
+    basis_df <- tibble::tibble(id = 1:n_basis) |>
+      dplyr::mutate(basis = lapply(bb_lst, function(bb){
+        interp_bb_best(bb = bb, best = best, step = step_size)
+        })) |>
+      tidyr::unnest(basis)
+  } else{
+    basis_df <- tibble::tibble(id = 1:n_basis, basis = bb_lst)
+  }
 
   df_add_idx_val <- function(data, idx, org_data){
     pb$tick()
-    data |> dplyr::mutate(!!rlang::sym(idx) := get(idx)()(org_data %*% basis[[1]]))
+    tibble::as_tibble(data) |> dplyr::mutate(index := get(idx)()(org_data %*% basis[[1]]))
   }
 
-  idx_sym <- rlang::sym(idx)
-  cli::cli_inform("calculate index values for interpolated bases ...")
   pb <- progress::progress_bar$new(total = nrow(basis_df))
   basis_df <- basis_df |>
+    dplyr::mutate(dist = lapply(basis, function(bb){tourr::proj_dist(bb, best)})) |>
+    tidyr::unnest(dist) |>
     dplyr::group_split(aa = dplyr::row_number()) |>
     purrr::map_dfr(~df_add_idx_val(.x, idx, data)) |>
-    dplyr::mutate(!!idx_sym := if (idx %in% c("TIC")) {
-      (!!idx_sym - min(!!idx_sym)) / (max(!!idx_sym) - min(!!idx_sym))
-    } else {
-      !!idx_sym
-    }) |>
     dplyr::select(-aa)
 
- if (return_early) return(basis_df)
+  attr(basis_df, "data") <- tibble::as_tibble(data)
+  attr(basis_df, "idx") <- idx
+  attr(basis_df, "n_basis") <- n_basis
+  attr(basis_df, "best") <- best
+  attr(basis_df, "step_size") <- step_size
+  attr(basis_df, "min_proj_dist") <- min_proj_dist
+  attr(basis_df, "seed") <- seed
+  class(basis_df) <- c("basis_df", class(basis_df))
 
-  cli::cli_inform("fit kernel smoothing or non-linear least square ...")
-  res <- switch(method,
-                ks = fit_ks(basis_df, idx = idx, bin_width = bin_width,
-                            bin_nobs_threshold = bin_nobs_threshold),
-                nls = fit_nls(basis_df, idx = idx, bin_width = bin_width,
-                              bin_nobs_threshold = bin_nobs_threshold)
-                )
+  return(basis_df)
+}
 
-  tibble::tibble(basis_df = list(basis_df), measure = res) |>
-    unnest(measure)
+#' @rdname optim
+#' @export
+print.basis_df <- function(x, width = NULL, ...){
+  writeLines(format(x, width = width, ...))
+}
 
+
+#' @importFrom tibble tbl_sum
+#' @rdname optim
+#' @export
+tbl_sum.basis_df <- function(x){
+
+  dim <- x$basis[[1]] |> dim()
+  if (!is.na(attr(x, "step_size"))) {
+    line <- glue::glue(length(unique(x$id)), " -> ", nrow(x))
+  } else{
+    line <- glue::glue(nrow(x))
+    }
+  c("PP index" = attr(x, "idx"),"No. of bases" = line,
+    "interpolation step size" = attr(x, "step_size"),
+    "Min. proj. dist." = attr(x, "min_proj_dist"))
 }
 
 interp_bb_best <- function(bb, best, step = 0.02){
@@ -103,66 +144,177 @@ interp_bb_best <- function(bb, best, step = 0.02){
   class(t) <- c("history_array")
   tt <- tourr::interpolate(t, step)
   tt_mat <- lapply(1:length(tt), function(ll){
-    as.vector(tt[,,ll])|> matrix(nrow = n, ncol = d)})
-  dist <- as.vector(lapply(tt_mat,  function(mat){proj_dist(best, mat)}))
-  tibble::tibble(basis = tt_mat, dist = dist)
+    as.vector(tt[,,ll])|> matrix(nrow = n, ncol = d)
+  })
+  tibble::tibble(basis = tt_mat)
+}
+
+#' @rdname optim
+#' @export
+calc_smoothness <- function(basis_df, start_params = c(0.001, 0.5, 2, 2),
+                            other_gp_params = NULL, verbose = FALSE){
+
+  if (!inherits(basis_df, "basis_df")){
+    cli::cli_abort("Please use {.fn sample_bases} to generate the bases data frame first. See {.code ?calc_smoothness}")
+  }
+
+  # construct gp
+  if (verbose) {silent <- FALSE} else {silent <- TRUE}
+  gp_params <- list(y = basis_df[["index"]], locs = basis_df[["dist"]],
+                    X = as.matrix(rep(1,nrow(basis_df))),
+                    start_parms = start_params, covfun_name = "matern_isotropic",
+                    silent = silent,
+                    other_gp_params
+  )
+  fit <- do.call("fit_model", gp_params)
+
+  cov_params <- suppressMessages(tibble::as_tibble_row(fit$covparms, .name_repair = "unique"))
+  colnames(cov_params) <- c("variance", "range", "smoothness", "nugget", "convergence")
+  cov_params <-  cov_params |> dplyr::mutate(convergence = fit$conv)
+
+  # return
+  res <- tibble::as_tibble(cov_params)
+  attr(res, "basis_df") <- basis_df
+  attr(res, "fit_res") <- fit
+  class(res) <- c("smoothness_res", class(res))
+  return(res)
+}
+
+
+globalVariables(c("basis", "sine1000"))
+
+
+#' @rdname optim
+#' @export
+print.smoothness_res <- function(x, width = NULL, ...){
+  writeLines(format(x, width = width, ...))
+}
+
+#' @importFrom tibble tbl_sum
+#' @rdname optim
+#' @export
+tbl_sum.smoothness_res <- function(x){
+
+  dim <- attr(x, "basis_df")$basis[[1]] |> dim()
+  line <- glue::glue(nrow(attr(x, "basis_df")),
+                     " [", dim[1], " x ", dim[2], "]")
+  c("PP index" = attr(attr(x, "basis_df"), "idx"), "No. of bases" = line)
+}
+
+#' @rdname optim
+#' @export
+calc_squintability <- function(basis_df, method = c("ks", "nls"),
+                               bin_width = 0.005, other_params = NULL){
+
+  if (!inherits(basis_df, "basis_df")){
+    cli::cli_abort("Please use {.fn sample_bases} to generate the bases data frame first. See {.code ?calc_smoothness}")
+  }
+
+  cli::cli_inform("Apply bin width of 0.005...")
+  if (!is.na(bin_width)){
+    dist_bin <- ceiling(basis_df[["dist"]] / bin_width) * bin_width
+    basis_new <- basis_df |>
+      dplyr::bind_cols(dist_bin = dist_bin) |>
+      dplyr::group_by(dist_bin) |>
+      dplyr::summarise(index = mean(index))
+  } else{
+    basis_new <- basis_df |>
+      dplyr::mutate(dist_bin = dist,
+                    index = (index - min(index))/(max(index) - min(index)))
+  }
+
+  fit_params <- list(basis_new, other_params)
+  res <- switch(method,
+                ks = do.call("fit_ks", fit_params),
+                nls = do.call("fit_nls", fit_params)
+                )
+
+
+  if (method == "nls"){
+    max_dist <- basis_df |> dplyr::pull(dist) |> max()
+
+    res$res <- res$res  |>
+      dplyr::bind_cols(max_dist = max_dist) |>
+      dplyr::mutate(
+        dd = (1/(1 + exp(-theta3 * theta2)) - 1/(1 + exp(theta3 * (max_dist)))),
+        squint = abs((theta1 - theta4)/dd  * theta2 * theta3 / 4)) |>
+      dplyr::select(-dd, -max_dist)
+  }
+
+
+  attr(res$res, "basis_df") <- basis_df
+  attr(res$res, "fit_res") <- res$fit
+  attr(res$res, "method") <- method
+
+  class(res$res) <- c("squintability_res", class(res$res))
+  return(res$res)
+
+}
+
+#' @rdname optim
+#' @export
+print.squintability_res <- function(x, width = NULL, ...){
+  writeLines(format(x, width = width, ...))
+}
+
+#' @rdname optim
+#' @export
+tbl_sum.squintability_res <- function(x){
+
+  dim <- attr(x, "basis_df")$basis[[1]] |> dim()
+  basis_df <- attr(x, "basis_df")
+  line <- glue::glue(nrow(attr(x, "basis_df")),
+                     " [", dim[1], " x ", dim[2], "]")
+  if (length(attr(basis_df, "step_size")) != 0) {
+    line <- glue::glue(length(unique(basis_df$id)), " -> ", nrow(basis_df))
+  } else{
+    line <- glue::glue(nrow(x))
+  }
+  c("PP index" = attr(attr(x, "basis_df"), "idx"),
+    "No. of bases" = line, method = attr(x, "method"))
 }
 
 #' @export
 #' @rdname optim
-fit_ks <- function(basis_df, idx, bin_nobs_threshold = 5000, bin_width = 0.005){
-  if (nrow(basis_df) > bin_nobs_threshold){
-    cli::cli_inform("apply binning: bin_width = {bin_width}")
-    dist_bin <- ceiling(basis_df$dist / bin_width) * bin_width
-    basis_df <- basis_df |>
-      dplyr::bind_cols(dist_bin = dist_bin) |>
-      dplyr::group_by(dist_bin) |>
-      dplyr::summarise(!!rlang::sym(idx) := mean(!!rlang::sym(idx)))
-  } else{
-    basis_df <- basis_df |> dplyr::mutate(dist_bin = dist)
-  }
+fit_ks <- function(basis_df, idx, other_params = NULL){
 
-  fit <- stats::ksmooth(basis_df$dist_bin, basis_df[[idx]])
+  ks_params <- list(basis_df[["dist_bin"]], basis_df[["index"]], other_params)
+  fit <- do.call("ksmooth", ks_params)
   ks_dt <- tibble::tibble(x = fit$x, y = fit$y) |>
     dplyr::mutate(dy = c(NA, -diff(y) / diff(x)))
   largest <- ks_dt |> dplyr::filter(dy == max(dy, na.rm = TRUE))
-  tibble::tibble(idx = idx, max_x = largest$x, max_dev = largest$dy,
-         squintability = max_dev * max_x)
+  list(res = tibble::tibble(idx = idx, max_x = largest$x, max_d = largest$dy,
+                            squint = max_d * max_x),
+       fit_res = NULL)
 
 }
 
 #' @export
 #' @rdname optim
-fit_nls <- function(basis_df, idx, bin_nobs_threshold = 5000, bin_width = 0.005,
-                    nls_params = list(start = list(theta1 = 1, theta2 = 1, theta3 = 50, theta4 = 0))){
-  if (nrow(basis_df) > bin_nobs_threshold){
-    cli::cli_inform("apply binning: bin_width = {bin_width}")
-    dist_bin <- ceiling(basis_df$dist / bin_width) * bin_width
-    basis_df <- basis_df |>
-      dplyr::bind_cols(dist_bin = dist_bin ) |>
-      dplyr::group_by(dist_bin) |>
-      dplyr::summarise(idx := mean(!!rlang::sym(idx)))
-  } else{
-    dist_bin <- ceiling(basis_df$dist / bin_width) * bin_width
-    basis_df <- basis_df |> dplyr::bind_cols(dist_bin = dist_bin) |>
-       dplyr::rename(idx = !!dplyr::sym(idx))
-  }
-  ff <- function(x, theta2, theta3){
-    1 / (1 + exp(theta3 * (x - theta2)))
-  }
+fit_nls <- function(basis_df, other_params = NULL){
+
+  ff <- function(x, theta2, theta3){ 1 / (1 + exp(theta3 * (x - theta2)))}
+
   ff_ratio <- function(x, theta2, theta3){
     (ff(x, theta2, theta3) - ff(max(x), theta2, theta3))/
       (ff(0, theta2, theta3) - ff(max(x), theta2, theta3))
   }
 
   nls_prms <- list(
-    formula = idx ~ (theta1 - theta4) * ff_ratio(dist_bin, theta2, theta3) + theta4,
-    data = basis_df) |> append(nls_params)
+    formula = index ~ (theta1 - theta4) * ff_ratio(dist_bin, theta2, theta3) + theta4, data = basis_df) |>
+    append(other_params)
 
-  model <-  do.call("nls", nls_prms)
+  if (!"start" %in% names(other_params)){
+    nls_prms <- c(nls_prms, list(start = list(theta1 = 1, theta2 = 1, theta3 = 50, theta4 = 0)))
+  }
 
-  theta_params <- stats::coef(model)
-  tibble::tibble(idx = idx) |> dplyr::bind_cols(tibble::as_tibble_row(theta_params))
+  fit <-  do.call("nls", nls_prms)
+  theta_params <- stats::coef(fit)
+  list(res = tibble::as_tibble_row(theta_params),
+       fit = fit)
+
 }
 
-globalVariables(c("dist", "dist_bin", "dist", "y", "x", "dy", "max_dev", "max_x", "aa", "measure"))
+globalVariables(c("dist", "dist_bin", "dist", "y", "x", "dy",
+                  "max_d", "max_x", "aa", "measure", "index", "theta1",
+                  "theta2", "theta3", "theta4", "dd"))
