@@ -6,6 +6,9 @@
 #' @param n_basis numeric, the number of random bases to generate
 #' @param best a matrix, the theoretical/ empirical best projection matrix to
 #' calculate the projection distance from the simulated random bases.
+#' @param parallel logic, whether to use parallel computing for calculating the index.
+#' Recommend for the stringy index.
+#' @param scale logic, whether to scale the index value to 0-1 in squintability
 #' @param step_size numeric, step size for interpolating from each random basis to
 #' the best basis, recommend 0.005
 #' @param seed numeric, seed for sampling random bases
@@ -31,16 +34,17 @@
 #' @importFrom stats ksmooth
 #' @examples
 #' # define the holes index as per tourr::holes
+#' library(GpGp)
 #' holes <- function() {
-#' function(mat) {
-#'   n <- nrow(mat)
-#'   d <- ncol(mat)
+#'  function(mat) {
+#'    n <- nrow(mat)
+#'    d <- ncol(mat)
 #'
-#'   num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
-#'   den <- 1 - exp(-d / 2)
+#'    num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
+#'    den <- 1 - exp(-d / 2)
 #'
-#'   num / den
-#' }
+#'    num / den
+#'  }
 #' }
 #' basis_smoothness <- sample_bases(idx = "holes")
 #' calc_smoothness(basis_smoothness)
@@ -48,7 +52,7 @@
 #' calc_squintability(basis_squint, method = "ks", bin_width = 0.01)
 #' @rdname optim
 #' @export
-sample_bases <- function(idx, data = sine1000, n_basis = 300,
+sample_bases <- function(idx, data = sine1000, n_basis = 300, parallel = FALSE,
                          best = matrix(c(0, 0, 0, 0, 1, 0,
                                          0, 0, 0, 0, 0, 1), nrow = 6),
                          min_proj_dist = NA, step_size = NA, seed = 123){
@@ -92,9 +96,23 @@ sample_bases <- function(idx, data = sine1000, n_basis = 300,
   basis_df <- basis_df |>
     dplyr::mutate(dist = lapply(basis, function(bb){tourr::proj_dist(bb, best)})) |>
     tidyr::unnest(dist) |>
-    dplyr::group_split(aa = dplyr::row_number()) |>
-    purrr::map_dfr(~df_add_idx_val(.x, idx, data)) |>
-    dplyr::select(-aa)
+    dplyr::group_split(aa = dplyr::row_number())
+
+  if (parallel){
+    if (!requireNamespace("future.apply", quietly = TRUE))
+      cli::cli_abort("package {.code future.apply} is required, please install it first")
+    cli::cli_inform("Calculating projection index in parallel using future.apply ...")
+    basis_df <- future.apply::future_lapply(basis_df, function(basis_df) {
+        tibble::as_tibble(basis_df) |>
+          dplyr::mutate(index := get(idx)()(data %*% basis[[1]]))
+        }) |>
+     dplyr::bind_rows() |>
+     dplyr::select(-aa)
+  } else{
+    basis_df <- basis_df |>
+      purrr::map_dfr(~df_add_idx_val(.x, idx, data)) |>
+      dplyr::select(-aa)
+  }
 
   attr(basis_df, "data") <- tibble::as_tibble(data)
   attr(basis_df, "idx") <- idx
@@ -159,6 +177,7 @@ calc_smoothness <- function(basis_df, start_params = c(0.001, 0.5, 2, 2),
   }
 
   # construct gp
+  cli::cli_inform("Fitting a GP model ...")
   if (verbose) {silent <- FALSE} else {silent <- TRUE}
   gp_params <- list(y = basis_df[["index"]], locs = basis_df[["dist"]],
                     X = as.matrix(rep(1,nrow(basis_df))),
@@ -203,7 +222,7 @@ tbl_sum.smoothness_res <- function(x){
 
 #' @rdname optim
 #' @export
-calc_squintability <- function(basis_df, method = c("ks", "nls"),
+calc_squintability <- function(basis_df, method = c("ks", "nls"), scale = TRUE,
                                bin_width = 0.005, other_params = NULL){
 
   if (!inherits(basis_df, "basis_df")){
@@ -218,9 +237,12 @@ calc_squintability <- function(basis_df, method = c("ks", "nls"),
       dplyr::group_by(dist_bin) |>
       dplyr::summarise(index = mean(index))
   } else{
-    basis_new <- basis_df |>
-      dplyr::mutate(dist_bin = dist,
-                    index = (index - min(index))/(max(index) - min(index)))
+    basis_new <- basis_df |> dplyr::mutate(dist_bin = dist)
+  }
+
+  if (scale){
+    basis_new <- basis_new |>
+      dplyr::mutate( index = (index - min(index))/(max(index) - min(index)))
   }
 
   fit_params <- list(basis_new, other_params)
@@ -305,7 +327,7 @@ fit_nls <- function(basis_df, other_params = NULL){
     append(other_params)
 
   if (!"start" %in% names(other_params)){
-    nls_prms <- c(nls_prms, list(start = list(theta1 = 1, theta2 = 1, theta3 = 50, theta4 = 0)))
+    nls_prms <- c(nls_prms, list(start = list(theta1 = 1, theta2 = 1, theta3 = 50, theta4 = 0.01)))
   }
 
   fit <-  do.call("nls", nls_prms)

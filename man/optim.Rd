@@ -18,6 +18,7 @@ sample_bases(
   idx,
   data = sine1000,
   n_basis = 300,
+  parallel = FALSE,
   best = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1), nrow = 6),
   min_proj_dist = NA,
   step_size = NA,
@@ -42,6 +43,7 @@ calc_smoothness(
 calc_squintability(
   basis_df,
   method = c("ks", "nls"),
+  scale = TRUE,
   bin_width = 0.005,
   other_params = NULL
 )
@@ -61,6 +63,9 @@ fit_nls(basis_df, other_params = NULL)
 \item{data}{a matrix or data frame, the high dimensional data to be projected}
 
 \item{n_basis}{numeric, the number of random bases to generate}
+
+\item{parallel}{logic, whether to use parallel computing for calculating the index.
+Recommend for the stringy index.}
 
 \item{best}{a matrix, the theoretical/ empirical best projection matrix to
 calculate the projection distance from the simulated random bases.}
@@ -94,6 +99,8 @@ fitting the Gaussian process}
 \item{method}{either "ks" (kernel smoothing) or "nls" (non-linear least
 square) for calculating squintability.}
 
+\item{scale}{logic, whether to scale the index value to 0-1 in squintability}
+
 \item{bin_width}{numeric, the bin width to average the index value
 before fitting the kernel, recommend to set as the same as `step` parameter}
 
@@ -106,16 +113,17 @@ Function to calculate smoothness and squintability
 }
 \examples{
 # define the holes index as per tourr::holes
+library(GpGp)
 holes <- function() {
-function(mat) {
-  n <- nrow(mat)
-  d <- ncol(mat)
+ function(mat) {
+   n <- nrow(mat)
+   d <- ncol(mat)
 
-  num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
-  den <- 1 - exp(-d / 2)
+   num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
+   den <- 1 - exp(-d / 2)
 
-  num / den
-}
+   num / den
+ }
 }
 basis_smoothness <- sample_bases(idx = "holes")
 calc_smoothness(basis_smoothness)
