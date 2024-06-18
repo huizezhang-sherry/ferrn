@@ -35,17 +35,7 @@
 #' @examples
 #' # define the holes index as per tourr::holes
 #' library(GpGp)
-#' holes <- function() {
-#'  function(mat) {
-#'    n <- nrow(mat)
-#'    d <- ncol(mat)
-#'
-#'    num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
-#'    den <- 1 - exp(-d / 2)
-#'
-#'    num / den
-#'  }
-#' }
+#' library(tourr)
 #' basis_smoothness <- sample_bases(idx = "holes")
 #' calc_smoothness(basis_smoothness)
 #' basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5)

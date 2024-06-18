@@ -44,5 +44,6 @@ Suggests:
     pkgdown,
     testthat,
     forcats,
-    patchwork
+    patchwork,
+    future.apply
 Language: en-GB
