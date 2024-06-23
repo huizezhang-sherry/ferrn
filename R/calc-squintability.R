@@ -33,13 +33,15 @@
 #' @inheritParams base::print
 #' @importFrom stats ksmooth
 #' @examples
-#' # define the holes index as per tourr::holes
+#' \dontrun{
 #' library(GpGp)
+#' library(fields)
 #' library(tourr)
 #' basis_smoothness <- sample_bases(idx = "holes")
 #' calc_smoothness(basis_smoothness)
 #' basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5)
 #' calc_squintability(basis_squint, method = "ks", bin_width = 0.01)
+#'}
 #' @rdname optim
 #' @export
 sample_bases <- function(idx, data = sine1000, n_basis = 300, parallel = FALSE,
@@ -249,7 +251,7 @@ calc_squintability <- function(basis_df, method = c("ks", "nls"), scale = TRUE,
       dplyr::bind_cols(max_dist = max_dist) |>
       dplyr::mutate(
         dd = (1/(1 + exp(-theta3 * theta2)) - 1/(1 + exp(theta3 * (max_dist)))),
-        squint = abs((theta1 - theta4)/dd  * theta2 * theta3 / 4)) |>
+        squint = abs((theta1 - theta4)/dd  * theta2 * theta3)) |>
       dplyr::select(-dd, -max_dist)
   }
 

@@ -11,9 +11,7 @@ status](https://github.com/huizezhang-sherry/ferrn/workflows/R-CMD-check/badge.s
 
 The **ferrn** package extracts key components from the data object
 collected during projection pursuit (PP) guided tour optimisation,
-produces diagnostic plots, and calculates PP index scores. An associated
-paper can be found at
-<https://journal.r-project.org/archive/2021/RJ-2021-105/index.html>.
+produces diagnostic plots, and calculates PP index scores.
 
 ## Installation
 
@@ -25,7 +23,7 @@ You can install the development version of ferrn from
 remotes::install_github("huizezhang-sherry/ferrn")
 ```
 
-## Examples
+## Visualise PP optimisation
 
 The data object collected during a PP optimisation can be obtained by
 assigning the `tourr::annimate_xx()` function a name. In the following
@@ -112,34 +110,15 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
 <p float="center">
 <img src="man/figures/tour.gif">
 </p>
+<!-- ## Calculate PP index scores -->
+<!-- Properties of PP index described in @laa_using_2020s includes smoothness, squintability, flexibility, rotation invariance, and speed. Here implementations are provided to calculate smoothness and squintability scores.  -->
+<!-- ```{r} -->
+<!-- # define the holes index as per tourr::holes -->
+<!-- holes <- tourr::holes -->
+<!-- basis_smoothness <- sample_bases(idx = "holes") -->
+<!-- calc_smoothness(basis_smoothness) -->
+<!-- basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5) -->
+<!-- calc_squintability(basis_squint, method = "ks", bin_width = 0.01) -->
+<!-- ``` -->
 
-``` r
-# define the holes index as per tourr::holes
-holes <- function() {
- function(mat) {
-   n <- nrow(mat)
-   d <- ncol(mat)
-
-   num <- 1 - 1 / n * sum(exp(-0.5 * rowSums(mat^2)))
-   den <- 1 - exp(-d / 2)
-
-   num / den
- }
-}
-
-basis_smoothness <- sample_bases(idx = "holes")
-calc_smoothness(basis_smoothness)
-#> # PP index:     holes
-#> # No. of bases: 300 [6 x 2]
-#>     variance range smoothness nugget convergence
-#>        <dbl> <dbl>      <dbl>  <dbl> <lgl>      
-#> 1 0.00000672  18.1       1.03  1138. TRUE
-basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5)
-calc_squintability(basis_squint, method = "ks", bin_width = 0.01)
-#> # PP index:     holes
-#> # No. of bases: 100 -> 17159
-#> # method:       ks
-#>   max_x max_d squint
-#>   <dbl> <dbl>  <dbl>
-#> 1  1.87 0.482  0.901
-```
+# Reference

@@ -112,11 +112,13 @@ or non-linear least square, see [stats::ksmooth()] and
 Function to calculate smoothness and squintability
 }
 \examples{
-# define the holes index as per tourr::holes
+\dontrun{
 library(GpGp)
+library(fields)
 library(tourr)
 basis_smoothness <- sample_bases(idx = "holes")
 calc_smoothness(basis_smoothness)
 basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5)
 calc_squintability(basis_squint, method = "ks", bin_width = 0.01)
+}
 }
