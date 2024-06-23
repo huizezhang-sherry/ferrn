@@ -52,6 +52,7 @@ dplyr::bind_rows(holes_1d_geo, holes_1d_better) \%>\%
   explore_space_pca(group = method, details = TRUE) +
   scale_color_discrete_botanical()
 
+\dontrun{
 best <- matrix(c(0, 1, 0, 0, 0), nrow = 5)
 dt <- bind_theoretical(holes_1d_jellyfish, best, tourr::holes(), raw_data = boa5)
 explore_space_start(dt)
@@ -60,6 +61,7 @@ explore_space_pca(
   dt, facet = loop, interp_size = 0.5, theo_size = 10,
   start_size = 1, end_size = 3
   )
+}
 }
 \seealso{
 Other main plot functions: 

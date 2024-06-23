@@ -52,16 +52,11 @@ add_space <- function(dt, space_alpha = 0.5, space_fill = "grey92", space_color 
 #' library(ggplot2)
 #' # construct the space and start df for plotting
 #' space <- tibble::tibble(x0 = 0, y0 = 0, r = 5)
-#' start <- holes_1d_geo %>%
+#' holes_1d_geo %>%
 #'   compute_pca() %>%
 #'   purrr::pluck("aug") %>%
 #'   clean_method() %>%
 #'   get_start()
-#' ggplot() +
-#'   add_space(dt = space) +
-#'   add_start(dt = start, start_color = info) +
-#'   theme_void() +
-#'   theme(aspect.ratio = 1)
 #' @family draw functions
 #' @export
 add_start <- function(dt, start_size = 5, start_alpha = 1, start_color = NULL, ...) {
