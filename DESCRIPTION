@@ -1,6 +1,6 @@
 Package: ferrn
 Title: Facilitate Exploration of touRR optimisatioN
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("H. Sherry","Zhang", email = "huizezhangsh@gmail.com", role = c("aut","cre"), comment = c(ORCID = "0000-0002-7122-1463")),
     person("Dianne", "Cook", email = "dicook@monash.edu", role = "aut", comment = c(ORCID = "0000-0002-3813-7155")),

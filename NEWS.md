@@ -1,3 +1,5 @@
+# ferrn 0.2.0
+
 # ferrn 0.1.0
 
 * `get_best()` now accept multiple group variables
