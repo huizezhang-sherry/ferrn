@@ -9,7 +9,7 @@
 
   gtag('config', 'G-SPC6B94B10');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -37,20 +37,20 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/huizezhang-sherry/ferrn/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Function to calculate smoothness and squintability</h1>
-    <small class="dont-index">Source: <a href="https://github.com/huizezhang-sherry/ferrn/blob/HEAD/R/calc-squintability.R" class="external-link"><code>R/calc-squintability.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/huizezhang-sherry/ferrn/blob/master/R/calc-squintability.R" class="external-link"><code>R/calc-squintability.R</code></a></small>
     <div class="hidden name"><code>optim.Rd</code></div>
     </div>
 
@@ -70,10 +70,10 @@
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for basis_df</span></span>
+<span><span class="co"># S3 method for class 'basis_df'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for basis_df</span></span>
+<span><span class="co"># S3 method for class 'basis_df'</span></span>
 <span><span class="fu">tbl_sum</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">calc_smoothness</span><span class="op">(</span></span>
@@ -83,10 +83,10 @@
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for smoothness_res</span></span>
+<span><span class="co"># S3 method for class 'smoothness_res'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for smoothness_res</span></span>
+<span><span class="co"># S3 method for class 'smoothness_res'</span></span>
 <span><span class="fu">tbl_sum</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">calc_squintability</span><span class="op">(</span></span>
@@ -97,10 +97,10 @@
 <span>  other_params <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for squintability_res</span></span>
+<span><span class="co"># S3 method for class 'squintability_res'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for squintability_res</span></span>
+<span><span class="co"># S3 method for class 'squintability_res'</span></span>
 <span><span class="fu">tbl_sum</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">fit_ks</span><span class="op">(</span><span class="va">basis_df</span>, <span class="va">idx</span>, other_params <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
@@ -110,90 +110,92 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>idx</dt>
+
+
+<dl><dt id="arg-idx">idx<a class="anchor" aria-label="anchor" href="#arg-idx"></a></dt>
 <dd><p>character, the name of projection pursuit index function, e.g.
 "holes"</p></dd>
 
 
-<dt>data</dt>
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>a matrix or data frame, the high dimensional data to be projected</p></dd>
 
 
-<dt>n_basis</dt>
+<dt id="arg-n-basis">n_basis<a class="anchor" aria-label="anchor" href="#arg-n-basis"></a></dt>
 <dd><p>numeric, the number of random bases to generate</p></dd>
 
 
-<dt>parallel</dt>
+<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
 <dd><p>logic, whether to use parallel computing for calculating the index.
 Recommend for the stringy index.</p></dd>
 
 
-<dt>best</dt>
+<dt id="arg-best">best<a class="anchor" aria-label="anchor" href="#arg-best"></a></dt>
 <dd><p>a matrix, the theoretical/ empirical best projection matrix to
 calculate the projection distance from the simulated random bases.</p></dd>
 
 
-<dt>min_proj_dist</dt>
+<dt id="arg-min-proj-dist">min_proj_dist<a class="anchor" aria-label="anchor" href="#arg-min-proj-dist"></a></dt>
 <dd><p>only for squintability, the threshold for projection
 distance for the random basis to be considered in sampling</p></dd>
 
 
-<dt>step_size</dt>
+<dt id="arg-step-size">step_size<a class="anchor" aria-label="anchor" href="#arg-step-size"></a></dt>
 <dd><p>numeric, step size for interpolating from each random basis to
 the best basis, recommend 0.005</p></dd>
 
 
-<dt>seed</dt>
+<dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
 <dd><p>numeric, seed for sampling random bases</p></dd>
 
 
-<dt>x</dt>
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>objects with specialised printing methods</p></dd>
 
 
-<dt>width</dt>
+<dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
 <dd><p>only used when <code>max.levels</code> is NULL, see above.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>further arguments passed to or from other methods.</p></dd>
 
 
-<dt>basis_df</dt>
+<dt id="arg-basis-df">basis_df<a class="anchor" aria-label="anchor" href="#arg-basis-df"></a></dt>
 <dd><p>the basis data frame returned from <code>sample_bases</code></p></dd>
 
 
-<dt>start_params</dt>
+<dt id="arg-start-params">start_params<a class="anchor" aria-label="anchor" href="#arg-start-params"></a></dt>
 <dd><p>list, the starting parameters for the Gaussian process
 for smoothness</p></dd>
 
 
-<dt>other_gp_params</dt>
+<dt id="arg-other-gp-params">other_gp_params<a class="anchor" aria-label="anchor" href="#arg-other-gp-params"></a></dt>
 <dd><p>list, additional parameters to be passed to
 [GpGp::fit_model()]
 for calculating smoothness</p></dd>
 
 
-<dt>verbose</dt>
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>logical, whether to print optimisation progression when
 fitting the Gaussian process</p></dd>
 
 
-<dt>method</dt>
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>either "ks" (kernel smoothing) or "nls" (non-linear least
 square) for calculating squintability.</p></dd>
 
 
-<dt>scale</dt>
+<dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
 <dd><p>logic, whether to scale the index value to 0-1 in squintability</p></dd>
 
 
-<dt>bin_width</dt>
+<dt id="arg-bin-width">bin_width<a class="anchor" aria-label="anchor" href="#arg-bin-width"></a></dt>
 <dd><p>numeric, the bin width to average the index value
 before fitting the kernel, recommend to set as the same as `step` parameter</p></dd>
 
 
-<dt>other_params</dt>
+<dt id="arg-other-params">other_params<a class="anchor" aria-label="anchor" href="#arg-other-params"></a></dt>
 <dd><p>list additional parameters for fitting kernel smoothing
 or non-linear least square, see [stats::ksmooth()] and
 [stats::nls()] for details</p></dd>
@@ -202,7 +204,7 @@ or non-linear least square, see [stats::ksmooth()] and
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">GpGp</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dnychka/fieldsRPackage" class="external-link">fields</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ggobi/tourr" class="external-link">tourr</a></span><span class="op">)</span></span></span>
@@ -210,7 +212,7 @@ or non-linear least square, see [stats::ksmooth()] and
 <span class="r-in"><span><span class="fu">calc_smoothness</span><span class="op">(</span><span class="va">basis_smoothness</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">basis_squint</span> <span class="op">&lt;-</span> <span class="fu">sample_bases</span><span class="op">(</span>idx <span class="op">=</span> <span class="st">"holes"</span>, n_basis <span class="op">=</span> <span class="fl">100</span>, step_size <span class="op">=</span> <span class="fl">0.01</span>, min_proj_dist <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">calc_squintability</span><span class="op">(</span><span class="va">basis_squint</span>, method <span class="op">=</span> <span class="st">"ks"</span>, bin_width <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -225,15 +227,15 @@ or non-linear least square, see [stats::ksmooth()] and
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

@@ -32,7 +32,7 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +63,7 @@
 <li>
   <a href="https://github.com/huizezhang-sherry/ferrn/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -74,7 +74,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
@@ -130,7 +130,7 @@
 <span>  <span class="fu"><a href="reference/explore_trace.html">explore_trace_interp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="reference/scale.html">scale_color_continuous_botanical</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-trace-plot-1.png" width="100%"></p>
-<p>Different optimisers can be compared by plotting their projection bases on the reduced PCA space. Here <code>holes_1d_geo</code> is the data obtained from the same PP problem as <code>holes_1d_better</code> introduced above, but with a <code>search_geodesic</code> optimiser. The 5 <span class="math inline">×</span> 1 bases from the two datasets are first reduced to 2D via PCA, and then plotted to the PCA space. (PP bases are ortho-normal and the space for <span class="math inline"><em>n</em> × 1</span> bases is an <span class="math inline"><em>n</em></span>-d sphere, hence a circle when projected into 2D.)</p>
+<p>Different optimisers can be compared by plotting their projection bases on the reduced PCA space. Here <code>holes_1d_geo</code> is the data obtained from the same PP problem as <code>holes_1d_better</code> introduced above, but with a <code>search_geodesic</code> optimiser. The 5 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>×</mo><annotation encoding="application/x-tex">\times</annotation></semantics></math> 1 bases from the two datasets are first reduced to 2D via PCA, and then plotted to the PCA space. (PP bases are ortho-normal and the space for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n \times 1</annotation></semantics></math> bases is an <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>-d sphere, hence a circle when projected into 2D.)</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
@@ -221,16 +221,16 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
