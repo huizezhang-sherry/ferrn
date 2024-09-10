@@ -32,7 +32,7 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ferrn</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
 <li>
   <a href="https://github.com/huizezhang-sherry/ferrn/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -74,17 +74,18 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div class="section level1">
 <div class="page-header"><h1 id="ferrn-">ferrn <a href="https://huizezhang-sherry.github.io/ferrn/"><img src="reference/figures/logo.png" align="right" height="138.5"></a>
 <a class="anchor" aria-label="anchor" href="#ferrn-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The <strong>ferrn</strong> package extracts key components from the data object collected during projection pursuit (PP) guided tour optimisation, produces diagnostic plots, and calculates PP index scores. An associated paper can be found at <a href="https://journal.r-project.org/archive/2021/RJ-2021-105/index.html" class="external-link uri">https://journal.r-project.org/archive/2021/RJ-2021-105/index.html</a>.</p>
+<p>The <strong>ferrn</strong> package extracts key components from the data object collected during projection pursuit (PP) guided tour optimisation, produces diagnostic plots, and calculates PP index scores.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -94,7 +95,7 @@
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"huizezhang-sherry/ferrn"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="visualise-pp-optimisation">Visualise PP optimisation<a class="anchor" aria-label="anchor" href="#visualise-pp-optimisation"></a>
 </h2>
 <p>The data object collected during a PP optimisation can be obtained by assigning the <code>tourr::annimate_xx()</code> function a name. In the following example, the projection pursuit is finding the best projection basis that can detect multi-modality for the <code>boa5</code> dataset using the <code>holes()</code> index function and the optimiser <code>search_better</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -129,11 +130,11 @@
 <span>  <span class="fu"><a href="reference/explore_trace.html">explore_trace_interp</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="reference/scale.html">scale_color_continuous_botanical</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-trace-plot-1.png" width="100%"></p>
-<p>Different optimisers can be compared by plotting their projection bases on the reduced PCA space. Here <code>holes_1d_geo</code> is the data obtained from the same PP problem as <code>holes_1d_better</code> introduced above, but with a <code>search_geodesic</code> optimiser. The 5 <span class="math inline">×</span> 1 bases from the two datasets are first reduced to 2D via PCA, and then plotted to the PCA space. (PP bases are ortho-normal and the space for <span class="math inline"><em>n</em> × 1</span> bases is an <span class="math inline"><em>n</em></span>-d sphere, hence a circle when projected into 2D.)</p>
+<p>Different optimisers can be compared by plotting their projection bases on the reduced PCA space. Here <code>holes_1d_geo</code> is the data obtained from the same PP problem as <code>holes_1d_better</code> introduced above, but with a <code>search_geodesic</code> optimiser. The 5 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math> 1 bases from the two datasets are first reduced to 2D via PCA, and then plotted to the PCA space. (PP bases are ortho-normal and the space for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n \times 1</annotation></semantics></math> bases is an <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>-d sphere, hence a circle when projected into 2D.)</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">holes_1d_geo</span>, <span class="va">holes_1d_better</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/bind_theoretical.html">bind_theoretical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
-<span>                   index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>                   index <span class="op">=</span> <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/tourr/reference/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="reference/explore_space_pca.html">explore_space_pca</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">method</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">+</span></span>
 <span>  <span class="fu"><a href="reference/scale.html">scale_color_discrete_botanical</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-pca-plot-1.png" width="100%"></p>
@@ -146,37 +147,23 @@
 <span>                     point_size <span class="op">=</span> <span class="fl">2</span>, end_size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p float="center">
 <img src="reference/figures/tour.gif"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">holes</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span> <span class="kw">function</span><span class="op">(</span><span class="va">mat</span><span class="op">)</span> <span class="op">{</span></span>
-<span>   <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span></span>
-<span>   <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span></span>
-<span></span>
-<span>   <span class="va">num</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">n</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">mat</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>   <span class="va">den</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">d</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span>   <span class="va">num</span> <span class="op">/</span> <span class="va">den</span></span>
-<span> <span class="op">}</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">basis_smoothness</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optim.html">sample_bases</a></span><span class="op">(</span>idx <span class="op">=</span> <span class="st">"holes"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/optim.html">calc_smoothness</a></span><span class="op">(</span><span class="va">basis_smoothness</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # PP index:     holes</span></span>
-<span><span class="co">#&gt; # No. of bases: 300 [6 x 2]</span></span>
-<span><span class="co">#&gt;     variance range smoothness nugget convergence</span></span>
-<span><span class="co">#&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;      </span></span>
-<span><span class="co">#&gt; 1 0.00000672  18.1       1.03  1138. TRUE</span></span>
-<span><span class="va">basis_squint</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optim.html">sample_bases</a></span><span class="op">(</span>idx <span class="op">=</span> <span class="st">"holes"</span>, n_basis <span class="op">=</span> <span class="fl">100</span>, step_size <span class="op">=</span> <span class="fl">0.01</span>, min_proj_dist <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/optim.html">calc_squintability</a></span><span class="op">(</span><span class="va">basis_squint</span>, method <span class="op">=</span> <span class="st">"ks"</span>, bin_width <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # PP index:     holes</span></span>
-<span><span class="co">#&gt; # No. of bases: 100 -&gt; 17159</span></span>
-<span><span class="co">#&gt; # method:       ks</span></span>
-<span><span class="co">#&gt;   max_x max_d squint</span></span>
-<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  1.87 0.482  0.901</span></span></code></pre></div>
+<!-- ## Calculate PP index scores -->
+<!-- Properties of PP index described in @laa_using_2020s includes smoothness, squintability, flexibility, rotation invariance, and speed. Here implementations are provided to calculate smoothness and squintability scores.  -->
+<!-- ```{r} -->
+<!-- # define the holes index as per tourr::holes -->
+<!-- holes <- tourr::holes -->
+<!-- basis_smoothness <- sample_bases(idx = "holes") -->
+<!-- calc_smoothness(basis_smoothness) -->
+<!-- basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5) -->
+<!-- calc_squintability(basis_squint, method = "ks", bin_width = 0.01) -->
+<!-- ``` -->
 </div>
 </div>
+<div class="section level1">
+<h1 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h1>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -234,16 +221,16 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

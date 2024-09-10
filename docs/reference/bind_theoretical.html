@@ -10,7 +10,7 @@ Augment this information into the data object allows for evaluating the performa
 
   gtag('config', 'G-SPC6B94B10');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -24,7 +24,7 @@ Augment this information into the data object allows for evaluating the performa
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ferrn</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -38,14 +38,14 @@ Augment this information into the data object allows for evaluating the performa
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/huizezhang-sherry/ferrn/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -66,31 +66,31 @@ Augment this information into the data object allows for evaluating the performa
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>dt</dt>
+
+
+<dl><dt id="arg-dt">dt<a class="anchor" aria-label="anchor" href="#arg-dt"></a></dt>
 <dd><p>a data object collected by the projection pursuit guided tour optimisation in the <code>tourr</code> package</p></dd>
 
 
-<dt>matrix</dt>
+<dt id="arg-matrix">matrix<a class="anchor" aria-label="anchor" href="#arg-matrix"></a></dt>
 <dd><p>a matrix of the theoretical basis</p></dd>
 
 
-<dt>index</dt>
+<dt id="arg-index">index<a class="anchor" aria-label="anchor" href="#arg-index"></a></dt>
 <dd><p>the index function used to calculate the index value</p></dd>
 
 
-<dt>raw_data</dt>
+<dt id="arg-raw-data">raw_data<a class="anchor" aria-label="anchor" href="#arg-raw-data"></a></dt>
 <dd><p>a tibble of the original data used to calculate the index value</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>a tibble object containing both the searched and theoretical best bases</p>
+    <p>a tibble object containing both the searched and theoretical best bases</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other bind: 
+    <div class="dont-index"><p>Other bind:
 <code><a href="bind_random.html">bind_random</a>()</code>,
 <code><a href="bind_random_matrix.html">bind_random_matrix</a>()</code></p></div>
     </div>
@@ -98,7 +98,7 @@ Augment this information into the data object allows for evaluating the performa
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">best</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">bind_theoretical</span><span class="op">(</span><span class="va">best</span>, <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tourr/man/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">holes_1d_better</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">bind_theoretical</span><span class="op">(</span><span class="va">best</span>, <span class="fu">tourr</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/tourr/reference/holes.html" class="external-link">holes</a></span><span class="op">(</span><span class="op">)</span>, raw_data <span class="op">=</span> <span class="va">boa5</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   basis         index_val info        method alpha tries  loop    id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -117,15 +117,15 @@ Augment this information into the data object allows for evaluating the performa
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

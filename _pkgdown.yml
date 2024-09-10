@@ -17,6 +17,7 @@ reference:
   - explore_space_tour
   - plot_projection
   - flip_sign
+  - geom_huber
 - title: Get components
   desc: >
     Extracting components from existing data object

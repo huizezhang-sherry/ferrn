@@ -2,6 +2,7 @@
 % Please edit documentation in R/huber-plot.R
 \name{geom_huber}
 \alias{geom_huber}
+\alias{prep_huber}
 \alias{theme_huber}
 \title{Create Huber plot with ggplot2}
 \usage{
@@ -11,10 +12,11 @@ geom_huber(
   stat = "identity",
   position = "identity",
   ...,
-  index = NULL,
   show.legend = NA,
   inherit.aes = TRUE
 )
+
+prep_huber(data, index)
 
 theme_huber(...)
 }
@@ -93,8 +95,6 @@ lists which parameters it can accept.
 \link[ggplot2:draw_key]{key glyphs}, to change the display of the layer in the legend.
 }}
 
-\item{index}{a function, the projection pursuit index function, see examples}
-
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
@@ -105,7 +105,31 @@ display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+
+\item{index}{a function, the projection pursuit index function, see examples}
 }
 \description{
 Create Huber plot with ggplot2
+}
+\examples{
+library(ggplot2)
+library(tourr)
+data(randu)
+randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
+randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
+randu_df <- randu_std[c(1,4)]
+randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
+
+ggplot() +
+  geom_huber(data = randu_huber$idx_df, aes(x = x, y = y)) +
+  geom_point(data = randu_df, aes(x = x, y = yz)) +
+  geom_abline(slope = randu_huber$slope, intercept = 0) +
+  theme_huber() +
+  coord_fixed()
+
+ggplot(randu_huber$proj_df, aes(x = x)) +
+  geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
+  xlab("") + ylab("") +
+  theme_bw() +
+  theme(axis.text.y = element_blank())
 }
