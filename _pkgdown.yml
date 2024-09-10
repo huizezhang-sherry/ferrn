@@ -41,7 +41,7 @@ reference:
   - botanical_pal
   - starts_with("scale")
   - theme_fern
-- title: In-built data
+- title: Data
   desc: >
     Simulated example data
   contents:
