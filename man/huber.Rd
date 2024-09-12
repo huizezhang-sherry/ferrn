@@ -109,29 +109,46 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{index}{a function, the projection pursuit index function, see examples}
 }
 \description{
-Create Huber plot with ggplot2
+The Huber plot presents the projection pursuit index values of 2D data in each 1D
+projection in polar coordinates, corresponding to each projection direction.
+It offers a simpler illustration of more complex projection from
+high-dimensional data to lower dimensions in projection pursuit. The
+function \code{prep_huber()} calculates each component required for the Huber plot
+(see details), which can then be supplied to various geom layers in ggplot2.
+}
+\details{
+the \code{prep_huber()} function calculates components required for
+making the Huber plots. It returns a list including three elements:
+\describe{
+     \item{the \code{idx_df} data frame: }{the x/y coordinates of the index value, in polar
+coordinates. Used for plotting the index value at each projection direction,
+with the reference circle.}
+     \item{the \code{proj_df} data frame: }{the best 1D projection. Used for plotting
+the 1D projection in histogram.}
+     \item{the \code{slope} value: }{the slope to plot in the Huber plot to indicate the
+direction of the best 1D projection.}
+   }
 }
 \examples{
-if (require(ash, quietly = TRUE)) {
-  library(ggplot2)
-  library(tourr)
-  data(randu)
-  randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
-  randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
-  randu_df <- randu_std[c(1,4)]
-  randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
+library(ggplot2)
+library(tourr)
+library(ash)
+data(randu)
+randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
+randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
+randu_df <- randu_std[c(1,4)]
+randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
 
-  ggplot() +
-    geom_huber(data = randu_huber$idx_df, aes(x = x, y = y)) +
-    geom_point(data = randu_df, aes(x = x, y = yz)) +
-    geom_abline(slope = randu_huber$slope, intercept = 0) +
-    theme_huber() +
-    coord_fixed()
+ggplot() +
+  geom_huber(data = randu_huber$idx_df, aes(x = x, y = y)) +
+  geom_point(data = randu_df, aes(x = x, y = yz)) +
+  geom_abline(slope = randu_huber$slope, intercept = 0) +
+  theme_huber() +
+  coord_fixed()
 
-  ggplot(randu_huber$proj_df, aes(x = x)) +
-    geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
-    xlab("") + ylab("") +
-    theme_bw() +
-    theme(axis.text.y = element_blank())
-}
+ggplot(randu_huber$proj_df, aes(x = x)) +
+  geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
+  xlab("") + ylab("") +
+  theme_bw() +
+  theme(axis.text.y = element_blank())
 }

@@ -2,9 +2,7 @@ url: https://huizezhang-sherry.github.io/ferrn/
 
 
 template:
-  params:
-    bootswatch: cosmo
-    ganalytics: G-SPC6B94B10
+  bootstrap: 5
 
 reference:
 - title: Main plotting functions
@@ -18,6 +16,9 @@ reference:
   - plot_projection
   - flip_sign
   - geom_huber
+- title: Calculate projection pursuit index metrics
+  contents:
+  - starts_with("calc")
 - title: Get components
   desc: >
     Extracting components from existing data object
@@ -47,9 +48,6 @@ reference:
   contents:
   - starts_with("boa")
   - starts_with("holes")
-- title: Calculate projection pursuit optimisation properties
-  contents:
-  - starts_with("calc")
 - title: Miscellaneous
   desc: >
     Other misc functions

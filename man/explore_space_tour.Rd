@@ -65,9 +65,11 @@ prep_space_tour(
 Plot the grand tour animation of the bases space in high dimension
 }
 \examples{
+if (FALSE){
 explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
   group = method, palette = botanical_palettes$fern[c(1, 6)]
 )
+}
 }
 \seealso{
 Other main plot functions: 

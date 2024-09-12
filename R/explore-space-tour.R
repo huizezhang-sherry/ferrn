@@ -35,9 +35,11 @@ explore_space_tour <- function(..., axes = "bottomleft") {
 #' @param axes see [tourr::animate_xy()]
 #' @param ... other argument passed to \code{tourr::animate_xy()} and \code{prep_space_tour()}
 #' @examples
+#' if (FALSE){
 #' explore_space_tour(dplyr::bind_rows(holes_1d_better, holes_1d_geo),
 #'   group = method, palette = botanical_palettes$fern[c(1, 6)]
 #' )
+#' }
 #' @rdname explore_space_tour
 #' @export
 prep_space_tour <- function(dt, group = NULL, flip = FALSE, n_random = 2000,

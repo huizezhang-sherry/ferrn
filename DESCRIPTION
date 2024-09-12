@@ -15,7 +15,7 @@ Description: Diagnostic plots for optimisation, with a focus on projection pursu
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/huizezhang-sherry/ferrn/
+URL: https://github.com/huizezhang-sherry/ferrn/, https://huizezhang-sherry.github.io/ferrn
 BugReports: https://github.com/huizezhang-sherry/ferrn/issues
 Imports: 
     rlang (>= 0.1.2),
@@ -34,7 +34,7 @@ Imports:
     cli,
     progress,
     glue,
-    GpGp,
+    GpGp
 RoxygenNote: 7.3.2
 Depends: 
     R (>= 2.10)
@@ -46,5 +46,5 @@ Suggests:
     forcats,
     patchwork,
     future.apply,
-    ash
+    ash,
 Language: en-GB

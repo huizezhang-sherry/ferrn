@@ -14,6 +14,7 @@ Diagnostic plots for optimisation, with a focus on projection pursuit. These sho
 Useful links:
 \itemize{
   \item \url{https://github.com/huizezhang-sherry/ferrn/}
+  \item \url{https://huizezhang-sherry.github.io/ferrn}
   \item Report bugs at \url{https://github.com/huizezhang-sherry/ferrn/issues}
 }
 
