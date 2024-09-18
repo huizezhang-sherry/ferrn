@@ -171,9 +171,11 @@ calc_smoothness <- function(basis_df, start_params = c(0.001, 0.5, 2, 2),
   # construct gp
   cli::cli_inform("Fitting a GP model ...")
   if (verbose) {silent <- FALSE} else {silent <- TRUE}
-  gp_params <- list(y = basis_df[["index"]], locs = basis_df[["dist"]],
-                    X = as.matrix(rep(1,nrow(basis_df))),
-                    start_parms = start_params, covfun_name = "matern_isotropic",
+  locs <- purrr::map(basis_df[["basis"]], as.vector) |> purrr::reduce(rbind)
+  gp_params <- list(y = basis_df[["index"]], locs = locs,
+                    X = rep(1,nrow(basis_df)),
+                    start_parms = start_params,
+                    covfun_name = "matern_isotropic",
                     silent = silent,
                     other_gp_params
   )
