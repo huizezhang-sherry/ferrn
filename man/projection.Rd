@@ -5,16 +5,20 @@
 \alias{compute_projection}
 \title{Plot the projection from the optimisation data collected from projection pursuit}
 \usage{
-plot_projection(dt, data, cols = NULL)
+plot_projection(dt, data, id, cols = NULL, animate_along)
 
-compute_projection(dt, data, cols = NULL)
+compute_projection(dt, data, id = NULL, cols = NULL)
 }
 \arguments{
 \item{dt}{a data object collected by the projection pursuit guided tour optimisation in \code{tourr}}
 
 \item{data}{the original data}
 
+\item{id}{the grouping variable}
+
 \item{cols}{additional columns to include in the plot}
+
+\item{animate_along}{the variable to animate along}
 }
 \value{
 a ggplot object
