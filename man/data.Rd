@@ -5,6 +5,7 @@
 \alias{holes_1d_geo}
 \alias{holes_1d_better}
 \alias{holes_1d_jellyfish}
+\alias{holes_2d_jellyfish}
 \alias{holes_2d_better}
 \alias{holes_2d_better_max_tries}
 \title{Data objects collected during the projection pursuit optimisation}
@@ -12,6 +13,8 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 416 rows and 8 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 79 rows and 8 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2500 rows and 8 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2500 rows and 8 columns.
 
@@ -25,6 +28,8 @@ holes_1d_geo
 holes_1d_better
 
 holes_1d_jellyfish
+
+holes_2d_jellyfish
 
 holes_2d_better
 

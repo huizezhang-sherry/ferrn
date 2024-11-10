@@ -21,6 +21,9 @@
 "holes_1d_jellyfish"
 
 #' @rdname data
+"holes_2d_jellyfish"
+
+#' @rdname data
 "holes_2d_better"
 
 #' @rdname data

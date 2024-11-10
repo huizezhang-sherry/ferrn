@@ -12,6 +12,11 @@ holes_1d_jellyfish <- animate_dist(boa5, tour_path = guided_tour(
     holes(), d = 1, search_f =  search_jellyfish, n_jellies = 50,
      max.tries = 50), rescale = FALSE)
 
+set.seed(123456);
+holes_2d_jellyfish <- animate_xy(boa6, tour_path = guided_tour(
+  holes(), d = 2, search_f =  search_jellyfish, n_jellies = 50,
+  max.tries = 50), rescale = FALSE)
+
 set.seed(123456)
 holes_2d_better <- animate_xy(boa6, tour_path = guided_tour(
   holes(), d = 2, search_f =  search_better), rescale = FALSE)
@@ -41,6 +46,7 @@ boa6 <- select(boa, x1, x2, x7: x10)
 usethis::use_data(holes_1d_geo, overwrite = TRUE)
 usethis::use_data(holes_1d_better, overwrite = TRUE)
 usethis::use_data(holes_1d_jellyfish, overwrite = TRUE)
+usethis::use_data(holes_2d_jellyfish, overwrite = TRUE)
 usethis::use_data(holes_2d_better, overwrite = TRUE)
 usethis::use_data(holes_2d_max_tries, overwrite = TRUE)
 usethis::use_data(boa, overwrite = TRUE)
