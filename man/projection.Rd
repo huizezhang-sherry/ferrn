@@ -5,7 +5,15 @@
 \alias{compute_projection}
 \title{Plot the projection from the optimisation data collected from projection pursuit}
 \usage{
-plot_projection(dt, data, id, cols = NULL, animate_along)
+plot_projection(
+  dt,
+  data,
+  id = NULL,
+  cols = NULL,
+  label = TRUE,
+  animate_along = NULL,
+  keep = 0.2
+)
 
 compute_projection(dt, data, id = NULL, cols = NULL)
 }
@@ -18,7 +26,12 @@ compute_projection(dt, data, id = NULL, cols = NULL)
 
 \item{cols}{additional columns to include in the plot}
 
+\item{label}{logical, whether to label each panel by its index value}
+
 \item{animate_along}{the variable to animate along}
+
+\item{keep}{numeric, the proportion of the data to keep for animation
+(default is 0.2). Only used when `animate_along` is not NULL}
 }
 \value{
 a ggplot object
@@ -28,4 +41,11 @@ Plot the projection from the optimisation data collected from projection pursuit
 }
 \examples{
 holes_1d_jellyfish |> get_best() |> plot_projection(data = boa5)
+\dontrun{
+library(dplyr)
+holes_2d_jellyfish |>
+  filter(loop == 1) |>
+  plot_projection(data = boa6, animate_along = tries, id = loop)
+}
+
 }

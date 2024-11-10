@@ -47,4 +47,5 @@ Suggests:
     patchwork,
     future.apply,
     ash,
+    vdiffr
 Language: en-GB
