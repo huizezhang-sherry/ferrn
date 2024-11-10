@@ -9,9 +9,13 @@
 #'  (default is 0.2). Only used when `animate_along` is not NULL
 #' @return a ggplot object
 #' @examples
-#' holes_1d_jellyfish |> get_best() |> plot_projection(data = boa5)
+#' library(dplyr)
+#' holes_2d_jellyfish |>
+#'   filter(loop == 1, tries %in% seq(1, 50, 5)) |>
+#'   plot_projection(data = boa6)
 #' \dontrun{
 #' library(dplyr)
+#' # track the first jellyfish (loop == 1)
 #' holes_2d_jellyfish |>
 #'   filter(loop == 1) |>
 #'   plot_projection(data = boa6, animate_along = tries, id = loop)
