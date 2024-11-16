@@ -252,11 +252,10 @@ calc_squintability <- function(basis_df, method = c("ks", "nls"), scale = TRUE,
     res$res <- res$res  |>
       dplyr::bind_cols(max_dist = max_dist) |>
       dplyr::mutate(
-        dd = (1/(1 + exp(-theta3 * theta2)) - 1/(1 + exp(theta3 * (max_dist)))),
+        dd = (1/(1 + exp(-theta3 * theta2)) - 1/(1 + exp(theta3 * (max_dist - theta2)))),
         squint = abs((theta1 - theta4)/dd  * theta2 * theta3)) |>
       dplyr::select(-dd, -max_dist)
   }
-
 
   attr(res$res, "basis_df") <- basis_df
   attr(res$res, "fit_res") <- res$fit
@@ -308,14 +307,6 @@ fit_ks <- function(basis_df, idx, other_params = NULL){
 #' @export
 #' @rdname optim
 fit_nls <- function(basis_df, other_params = NULL){
-
-  ff <- function(x, theta2, theta3){ 1 / (1 + exp(theta3 * (x - theta2)))}
-
-  ff_ratio <- function(x, theta2, theta3){
-    (ff(x, theta2, theta3) - ff(max(x), theta2, theta3))/
-      (ff(0, theta2, theta3) - ff(max(x), theta2, theta3))
-  }
-
   nls_prms <- list(
     formula = index ~ (theta1 - theta4) * ff_ratio(dist_bin, theta2, theta3) + theta4, data = basis_df) |>
     append(other_params)
@@ -324,12 +315,68 @@ fit_nls <- function(basis_df, other_params = NULL){
     nls_prms <- c(nls_prms, list(start = list(theta1 = 1, theta2 = 1, theta3 = 50, theta4 = 0.01)))
   }
 
-  fit <-  do.call("nls", nls_prms)
-  theta_params <- stats::coef(fit)
-  list(res = tibble::as_tibble_row(theta_params),
-       fit = fit)
+  fit <- tryCatch(do.call("nls", nls_prms), error = function(e) {NULL})
+
+  if (!is.null(fit)){
+    theta_params <- stats::coef(fit)
+    return(list(res = tibble::as_tibble_row(theta_params),fit = fit))
+  } else{
+    fit <- est_theta2_theta3_interatively(data = basis_df)
+    return(list(res = fit$res, fit = fit$fit))
+  }
+
 
 }
+
+#' @keywords internal
+ff <- function(x, theta2, theta3){ 1 / (1 + exp(theta3 * (x - theta2)))}
+
+#' @keywords internal
+ff_ratio <- function(x, theta2, theta3){
+  (ff(x, theta2, theta3) - ff(2, theta2, theta3))/
+    (ff(0, theta2, theta3) - ff(2, theta2, theta3))
+}
+
+#' @keywords internal
+est_theta2_theta3_interatively <- function(data){
+  theta2 <- c(0.1, seq(0.01, 0.1, 0.01), seq(0.001, 0.01, 0.001))
+  res <- purrr::map(
+    theta2,
+    ~ stats::nls(index ~ (theta1 - theta4) * ff_ratio(dist_bin, .x, theta3) + theta4,
+          data = data,
+          start = list(theta1 = 1, theta3 = 3, theta4 = 0.14))
+    )
+
+  res_tidy <- purrr::map(res, function(x){
+    fit <- summary(x)
+    tibble::tibble(term = rownames(fit$parameters)) |>
+      dplyr::mutate(estimate = tibble::as_tibble(fit$parameters)$Estimate)
+    })
+  theta3_vec <- purrr::map_dbl(res_tidy, ~.x |>
+                                 dplyr::filter(term == "theta3") |>
+                                 dplyr::pull(estimate))
+
+  est_theta2 <- function(theta3){
+    stats::nls(index ~ (theta1 - theta4) * ff_ratio(dist_bin, theta2, theta3) + theta4,
+        data = data,
+        start = list(theta1 = 1, theta2 = 0.01, theta4 = 0.14)
+    )
+  }
+  safe_est_theta2 <- purrr::safely(est_theta2)
+  res2 <- purrr::map(theta3_vec, safe_est_theta2)
+  best_theta2_idx <- which(purrr::map_lgl(res2, ~is.null(.x$error)) == TRUE) |> max()
+  est_df <- res_tidy[[best_theta2_idx]]
+
+  theta_params <- tibble::tibble(
+    theta1 = est_df$estimate[1], theta2 = theta2[best_theta2_idx],
+    theta3 = est_df$estimate[2], theta4 = est_df$estimate[3]
+    )
+
+  fit <- list(res[[best_theta2_idx]], res2[[best_theta2_idx]])
+  return(list(res = theta_params, fit = fit))
+
+}
+
 
 globalVariables(c("dist", "dist_bin", "dist", "y", "x", "dy",
                   "max_d", "max_x", "aa", "measure", "index", "theta1",
