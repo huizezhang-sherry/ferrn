@@ -252,9 +252,13 @@ calc_squintability <- function(basis_df, method = c("ks", "nls"), scale = TRUE,
     res$res <- res$res  |>
       dplyr::bind_cols(max_dist = max_dist) |>
       dplyr::mutate(
-        dd = (1/(1 + exp(-theta3 * theta2)) - 1/(1 + exp(theta3 * (max_dist - theta2)))),
-        squint = abs((theta1 - theta4)/dd  * theta2 * theta3)) |>
-      dplyr::select(-dd, -max_dist)
+        # lx_max = 1/(1 + exp(theta3 * (max_dist - theta2))),
+        # lx_max_half = 1/(1 + exp(theta3 * (max_dist/2 - theta2))),
+        # dd = (1/(1 + exp(-theta3 * theta2)) - lx_max),
+        # squint = (lx_max_half - lx_max)/dd
+        squint = theta3^(2 * theta2 / max_dist - 1)
+        ) |>
+      dplyr::select(-max_dist)
   }
 
   attr(res$res, "basis_df") <- basis_df
@@ -339,7 +343,7 @@ ff_ratio <- function(x, theta2, theta3){
 
 #' @keywords internal
 est_theta2_theta3_interatively <- function(data){
-  theta2 <- c(0.1, seq(0.01, 0.1, 0.01), seq(0.001, 0.01, 0.001))
+  theta2 <- sort(c(0.1, 0.01, 0.05, 0.001, 0.005))
   res <- purrr::map(
     theta2,
     ~ stats::nls(index ~ (theta1 - theta4) * ff_ratio(dist_bin, .x, theta3) + theta4,
@@ -359,12 +363,12 @@ est_theta2_theta3_interatively <- function(data){
   est_theta2 <- function(theta3){
     stats::nls(index ~ (theta1 - theta4) * ff_ratio(dist_bin, theta2, theta3) + theta4,
         data = data,
-        start = list(theta1 = 1, theta2 = 0.01, theta4 = 0.14)
+        start = list(theta1 = 1, theta2 = 0.001, theta4 = 0.14)
     )
   }
   safe_est_theta2 <- purrr::safely(est_theta2)
   res2 <- purrr::map(theta3_vec, safe_est_theta2)
-  best_theta2_idx <- which(purrr::map_lgl(res2, ~is.null(.x$error)) == TRUE) |> max()
+  best_theta2_idx <- which(purrr::map_lgl(res2, ~is.null(.x$error)) == TRUE) |> min()
   est_df <- res_tidy[[best_theta2_idx]]
 
   theta_params <- tibble::tibble(
