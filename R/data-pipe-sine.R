@@ -2,7 +2,8 @@
 #'
 #' Simulated sine and pipe data for calculating optimisation features.
 #' Each dataset has 1000 observations and the last two columns contain the
-#' intended structure with the rest being noise.
+#' intended structure with the rest being noise. The most commonly used ones
+#' are `sine1000` and `pipe1000`, others have dimension suffixed.
 #' @rdname pipe-sine-boa
 #' @examples
 #' library(ggplot2)
@@ -21,10 +22,22 @@
 "sine1000"
 
 #' @rdname pipe-sine-boa
+"sine1000_4d"
+
+#' @rdname pipe-sine-boa
+"sine1000_6d"
+
+#' @rdname pipe-sine-boa
 "sine1000_8d"
 
 #' @rdname pipe-sine-boa
 "pipe1000"
+
+#' @rdname pipe-sine-boa
+"pipe1000_4d"
+
+#' @rdname pipe-sine-boa
+"pipe1000_6d"
 
 #' @rdname pipe-sine-boa
 "pipe1000_8d"

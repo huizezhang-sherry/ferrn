@@ -3,8 +3,12 @@
 \docType{data}
 \name{sine1000}
 \alias{sine1000}
+\alias{sine1000_4d}
+\alias{sine1000_6d}
 \alias{sine1000_8d}
 \alias{pipe1000}
+\alias{pipe1000_4d}
+\alias{pipe1000_6d}
 \alias{pipe1000_8d}
 \alias{pipe1000_10d}
 \alias{pipe1000_12d}
@@ -15,7 +19,15 @@
 \format{
 An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 6 columns.
 
+An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 4 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 6 columns.
+
 An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 8 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 6 columns.
+
+An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 4 columns.
 
 An object of class \code{matrix} (inherits from \code{array}) with 1000 rows and 6 columns.
 
@@ -34,9 +46,17 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \usage{
 sine1000
 
+sine1000_4d
+
+sine1000_6d
+
 sine1000_8d
 
 pipe1000
+
+pipe1000_4d
+
+pipe1000_6d
 
 pipe1000_8d
 
@@ -53,7 +73,8 @@ boa6
 \description{
 Simulated sine and pipe data for calculating optimisation features.
 Each dataset has 1000 observations and the last two columns contain the
-intended structure with the rest being noise.
+intended structure with the rest being noise. The most commonly used ones
+are `sine1000` and `pipe1000`, others have dimension suffixed.
 }
 \examples{
 library(ggplot2)
