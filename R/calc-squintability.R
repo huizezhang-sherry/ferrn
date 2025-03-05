@@ -252,11 +252,11 @@ calc_squintability <- function(basis_df, method = c("ks", "nls"), scale = TRUE,
     res$res <- res$res  |>
       dplyr::bind_cols(max_dist = max_dist) |>
       dplyr::mutate(
-        # lx_max = 1/(1 + exp(theta3 * (max_dist - theta2))),
-        # lx_max_half = 1/(1 + exp(theta3 * (max_dist/2 - theta2))),
-        # dd = (1/(1 + exp(-theta3 * theta2)) - lx_max),
-        # squint = (lx_max_half - lx_max)/dd
-        squint = theta3^(2 * theta2 / max_dist - 1)
+        lx_max = 1/(1 + exp(theta3 * (max_dist - theta2))),
+        lx_max_half = 1/(1 + exp(theta3 * (max_dist/2 - theta2))),
+        dd = (1/(1 + exp(-theta3 * theta2)) - lx_max),
+        squint = (lx_max_half - lx_max)/dd
+        #squint = theta3^(2 * theta2 / max_dist - 1)
         ) |>
       dplyr::select(-max_dist)
   }
