@@ -1,4 +1,4 @@
-#' Create Huber plot with ggplot2
+#' Create Huber plots with ggplot2
 #'
 #' The Huber plot presents the projection pursuit index values of 2D data in each 1D
 #' projection in polar coordinates, corresponding to each projection direction.
@@ -31,52 +31,79 @@
 #' randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
 #' randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
 #' randu_df <- randu_std[c(1,4)]
-#' randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
+#' # randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
 #'
-#' ggplot() +
-#'   geom_huber(data = randu_huber$idx_df, aes(x = x, y = y)) +
-#'   geom_point(data = randu_df, aes(x = x, y = yz)) +
-#'   geom_abline(slope = randu_huber$slope, intercept = 0) +
-#'   theme_huber() +
-#'   coord_fixed()
+#' ggplot()  +
+#'   geom_huber(data = randu_df, aes(x = x, y = yz),
+#'              index_fun = norm_bin(nr = nrow(randu_df))) +
+#'   coord_fixed() +
+#'   theme_huber()
 #'
-#' ggplot(randu_huber$proj_df, aes(x = x)) +
-#'   geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
-#'   xlab("") + ylab("") +
-#'   theme_bw() +
-#'   theme(axis.text.y = element_blank())
+#' # ggplot(randu_huber$proj_df, aes(x = x)) +
+#' #   geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
+#' #   xlab("") + ylab("") +
+#' #   theme_bw() +
+#' #   theme(axis.text.y = element_blank())
 geom_huber <- function(mapping = NULL, data = NULL, stat = "identity",
-                       position = "identity", ...,
-                       show.legend = NA, inherit.aes = TRUE) {
+                       position = "identity", ..., index_fun,
+                       na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
+  #browser()
+  index_fun <-  match.fun(index_fun)
   ggplot2::layer(
     data = data,
     mapping = mapping,
-    stat = stat,
+    stat = "huber",
     geom = GeomHuber,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
-    params = list(...)
+    params = list(na.rm = na.rm, index_fun = index_fun, ...)
   )
 }
+
+StatHuber <- ggplot2::ggproto(
+  "StatHuber",
+  ggplot2::Stat,
+  compute_group = function(data, scales, index_fun) {
+    prep_huber(data, index_fun)
+  },
+
+  required_aes = c("x", "y")
+)
+
+stat_huber <- function(mapping = NULL, data = NULL, geom = "path",
+                       position = "identity", ..., index_fun,
+                       na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
+  ggplot2::layer(
+    stat = StatHuber,
+    data = data,
+    mapping = mapping,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm, index_fun = index_fun, ...)
+  )
+}
+
 
 GeomHuber <- ggplot2::ggproto(
   "GeomHuber",
   ggplot2::Geom,
-  setup_data = function(data, params) {
-    huber_data_setup(data, params)
-  },
 
-  draw_panel = function(data, panel_params, coord, lineend = "butt", ...) {
-
+  draw_panel = function(data, panel_params, coord, index_fun, lineend = "butt", ...) {
     data_circle <- data |>
       dplyr::filter(type == "circle") |>
       dplyr::mutate(linetype = "dashed")
     data_huber <- data |> dplyr::filter(type == "huber")
+    data_orig <- data |> dplyr::filter(type == "original")
+    data_abline <- data_circle[1, ] |> dplyr::mutate(intercept = 0)
 
     grid::gList(
-      ggplot2::GeomPath$draw_panel(data_circle, panel_params, coord, ...),
-      ggplot2::GeomPath$draw_panel(data_huber, panel_params, coord, ...)
+      ggplot2::GeomPath$draw_panel(data_circle, panel_params, coord),
+      ggplot2::GeomPath$draw_panel(data_huber, panel_params, coord),
+      ggplot2::GeomPoint$draw_panel(data_orig, panel_params, coord),
+      ggplot2::GeomAbline$draw_panel(data_abline, panel_params, coord)
     )
 
   },
@@ -85,7 +112,7 @@ GeomHuber <- ggplot2::ggproto(
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(
     colour = "black", linewidth = 0.5, linetype = "solid", alpha = 1,
-    index = NULL
+    index = NULL, fill = NA, pch = 19, size = 1,
   )
 )
 
@@ -104,7 +131,6 @@ huber_data_setup <- function(data, param){
 #' @export
 #' @rdname huber
 prep_huber <- function(data, index){
-  data <- as.matrix(data)
   index_f <- index
   res <- tibble::tibble(i = 0:360, theta = pi/180 * i) |>
     dplyr::rowwise() |>
@@ -120,9 +146,23 @@ prep_huber <- function(data, index){
 
   sel_idx <- which(res$index[1:360] > signif(max(res$index), 6) - 1e-06)
   theta_best <- pi/180 * (sel_idx - 1)
-  slope <-  sin(theta_best)/cos(theta_best)
   proj_df <- tibble::tibble(x = cos(theta_best) * data[, 1] + sin(theta_best) * data[, 2])
-  return(list(idx_df = res, proj_df = proj_df, slope = slope))
+
+  res2 <- dplyr::bind_rows(res |> dplyr::select(x, y)) |>
+    dplyr::mutate(slope = sin(theta_best)/cos(theta_best))
+
+  theta <- pi/180 * (0:(nrow(res2) - 1))
+  res1 <- res2 |> dplyr::mutate(type = "huber", linetype = "solid", group = 1)
+  res2 <- res2 |> dplyr::mutate(
+    x = 4 * cos(theta),
+    y = 4 * sin(theta),
+    type = "circle", linetype = "dashed", group = 2)
+  orig_df <- data |> dplyr::select(x, y) |>
+    dplyr::mutate(type = "original", group = 3, linetype = "solid")
+  res <- dplyr::bind_rows(res1, res2, orig_df)
+
+  res
+  #return(list(idx_df = res, proj_df = proj_df, slope = slope))
 
 }
 

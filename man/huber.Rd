@@ -4,7 +4,7 @@
 \alias{geom_huber}
 \alias{prep_huber}
 \alias{theme_huber}
-\title{Create Huber plot with ggplot2}
+\title{Create Huber plots with ggplot2}
 \usage{
 geom_huber(
   mapping = NULL,
@@ -12,6 +12,8 @@ geom_huber(
   stat = "identity",
   position = "identity",
   ...,
+  index_fun,
+  na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
 )
@@ -43,7 +45,7 @@ from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{stat}{The statistical transformation to use on the data for this layer.
 When using a \verb{geom_*()} function to construct a layer, the \code{stat}
-argument can be used the override the default coupling between geoms and
+argument can be used to override the default coupling between geoms and
 stats. The \code{stat} argument accepts the following:
 \itemize{
 \item A \code{Stat} ggproto subclass, for example \code{StatCount}.
@@ -95,16 +97,21 @@ lists which parameters it can accept.
 \link[ggplot2:draw_key]{key glyphs}, to change the display of the layer in the legend.
 }}
 
+\item{na.rm}{If \code{FALSE}, the default, missing values are removed with
+a warning. If \code{TRUE}, missing values are silently removed.}
+
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
 It can also be a named logical vector to finely select the aesthetics to
-display.}
+display. To include legend keys for all levels, even
+when no data exists, use \code{TRUE}.  If \code{NA}, all levels are shown in legend,
+but unobserved levels are omitted.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 
 \item{index}{a function, the projection pursuit index function, see examples}
 }
@@ -137,18 +144,17 @@ data(randu)
 randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
 randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
 randu_df <- randu_std[c(1,4)]
-randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
+# randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
 
-ggplot() +
-  geom_huber(data = randu_huber$idx_df, aes(x = x, y = y)) +
-  geom_point(data = randu_df, aes(x = x, y = yz)) +
-  geom_abline(slope = randu_huber$slope, intercept = 0) +
-  theme_huber() +
-  coord_fixed()
+ggplot()  +
+  geom_huber(data = randu_df, aes(x = x, y = yz),
+             index_fun = norm_bin(nr = nrow(randu_df))) +
+  coord_fixed() +
+  theme_huber()
 
-ggplot(randu_huber$proj_df, aes(x = x)) +
-  geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
-  xlab("") + ylab("") +
-  theme_bw() +
-  theme(axis.text.y = element_blank())
+# ggplot(randu_huber$proj_df, aes(x = x)) +
+#   geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
+#   xlab("") + ylab("") +
+#   theme_bw() +
+#   theme(axis.text.y = element_blank())
 }
