@@ -20,7 +20,7 @@
 #'    }
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_path
-#' @param index.fun,index_fun a function, the projection pursuit index function, see examples
+#' @param index.fun,index_fun the projection pursuit index function, see examples
 #' @param ref.circle.color,ref.circle.colour,ref.circle.linetype,ref.circle.linewidth Default aesthetics for the reference circle
 #' @param idx.max.color,idx.max.colour,idx.max.linetype,idx.max.linewidth Default aesthetics for the line indicating the best projection direction
 #' @param idx.profile.color,idx.profile.colour,idx.profile.linetype,idx.profile.linewidth Default aesthetics for the index profile line
@@ -32,25 +32,32 @@
 #' library(tourr)
 #' library(ash)
 #' data(randu)
+#' # simplify the randu data into 2D for illustration
 #' randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
 #' randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
 #' randu_df <- randu_std[c(1,4)]
-#' # randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
 #'
-#' ggplot()  +
-#'   geom_huber(data = randu_df, aes(x = x, y = yz),
-#'              index.fun = norm_bin(nr = nrow(randu_df))) +
+#' # main example: Huber plot with geom_huber()
+#' randu_df |>
+#'   ggplot()  +
+#'   geom_huber(aes(x = x, y = yz), index.fun = norm_bin(nr = nrow(randu_df))) +
 #'   coord_fixed() +
 #'   theme_huber()
 #'
-#' # ggplot(randu_huber$proj_df, aes(x = x)) +
-#' #   geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
-#' #   xlab("") + ylab("") +
-#' #   theme_bw() +
-#' #   theme(axis.text.y = element_blank())
+#' # compute the best projection data for histogram
+#' randu_huber_best <- prep_huber_best_proj(
+#'   randu_df, index_fun = norm_bin(nr = nrow(randu_df))
+#'   )
+#' randu_huber_best |>
+#'   ggplot() +
+#'   geom_histogram(aes(x = x), breaks = seq(-2.2, 2.4, 0.12)) +
+#'   xlab("") + ylab("") +
+#'   theme_bw() +
+#'   theme(axis.text.y = element_blank())
 StatHuber <- ggplot2::ggproto("StatHuber", ggplot2::Stat,
                               compute_group = function(data, scales, index.fun) {
-                                prep_huber(data, index.fun)
+                                #browser()
+                                prep_huber_ggplot(data, index.fun)
                               },
                               required_aes = c("x", "y")
 )
@@ -91,7 +98,7 @@ geom_huber <- function(mapping = NULL,
 
                        idx.profile.color = NULL,
                        idx.profile.colour = NULL,
-                       idx.profile.linetype = NULL,
+                       idx.profile.linetype = "solid",
                        idx.profile.linewidth = NULL,
 
                        proj.points.color = NULL,
@@ -171,11 +178,16 @@ GeomHuber <- ggplot2::ggproto(
     data_ref_circle$linewidth <- ref_circle_gp$linewidth %||% data_ref_circle$linewidth[1]
 
 
-    data_idx_profile <- data[data$type == "huber",]
+    data_idx_profile <- data[data$type == "idx_profile",]
     data_idx_profile$colour <- idx_profile_gp$colour %||% data_idx_profile$colour[1]
     data_idx_profile$linetype <- idx_profile_gp$linetype %||% data_idx_profile$linetype[1]
     data_idx_profile$linewidth <- idx_profile_gp$linewidth %||% data_idx_profile$linewidth[1]
 
+    data_idx_max <- data_idx_profile[1, ]
+    data_idx_max$intercept <- 0
+    data_idx_max$colour <- idx_max_gp$colour %||% data_idx_max$colour[1]
+    data_idx_max$linetype <- idx_max_gp$linetype %||% data_idx_max$linetype[1]
+    data_idx_max$linewidth <- idx_max_gp$linewidth %||% data_idx_max$linewidth[1]
 
     data_proj_points <- data[data$type == "original",]
     data_proj_points$colour <- proj_points_gp$colour %||% data_proj_points$colour[1]
@@ -184,12 +196,6 @@ GeomHuber <- ggplot2::ggproto(
     data_proj_points$alpha <- proj_points_gp$alpha %||% data_proj_points$alpha[1]
     data_proj_points$size <- proj_points_gp$size %||% data_proj_points$size[1]
 
-
-    data_idx_max <- data_ref_circle[1, ]
-    data_idx_max$intercept <- 0
-    data_idx_max$colour <- idx_max_gp$colour %||% data_idx_max$colour[1]
-    data_idx_max$linetype <- idx_max_gp$linetype %||% data_idx_max$linetype[1]
-    data_idx_max$linewidth <- idx_max_gp$linewidth %||% data_idx_max$linewidth[1]
 
     grid::gList(
       ggplot2::GeomPath$draw_panel(data_ref_circle, panel_params, coord),
@@ -209,55 +215,74 @@ GeomHuber <- ggplot2::ggproto(
     weight = 1, shape = 19)
 )
 
-huber_data_setup <- function(data, param){
-  theta <- pi/180 * (0:(nrow(data) - 1))
-  res1 <- data |> dplyr::mutate(type = "huber")
-  res2 <- data |> dplyr::mutate(
-      x = 4 * cos(theta),
-      y = 4 * sin(theta),
-      type = "circle")
-  res <- dplyr::bind_rows(res1, res2)
-  return(res)
-
-}
 
 #' @export
 #' @rdname huber
-prep_huber <- function(data, index_fun){
-  index_f <- index_fun
+prep_huber_best_proj <- function(data, index_fun){
+  prep_huber_workhorse(data, index_fun)$proj_df
+}
+
+
+prep_huber_workhorse <- function(data, index_fun){
+
+  if(ncol(data) != 2){
+    cli::cli_abort("The input data must be a data frame with two columns The huber plot is only implemented for 2D data.")
+  }
+
+  # internal function
+  # calculate the projection pursuit index values at each projection direction: 0: 359
   res <- tibble::tibble(i = 0:360, theta = pi/180 * i) |>
     dplyr::rowwise() |>
     dplyr::mutate(
       proj_data = list(as.matrix(cos(theta) * data[,1] + sin(theta) * data[,2])),
-      index = index_f(proj_data)) |>
-    dplyr::ungroup() |>
+      index = index_fun(proj_data)) |>
+    dplyr::ungroup()
+
+  # find the best projection direction and calculate the projected data
+  sel_idx <- which(res$index[0:359] > signif(max(res$index), 6) - 1e-06)
+  theta_best <- pi/180 * (sel_idx - 1)
+  proj_df <- tibble::tibble(x = cos(theta_best) * data[, 1] + sin(theta_best) * data[, 2])
+
+  return(list(idx_df = res, proj_df = proj_df, data = tibble::as_tibble(data)))
+
+}
+
+prep_huber_ggplot <- function(data, index_fun){
+
+  # internal function: the input data is
+  # | x | y | PANEL | group |
+
+  # this is the internal function to prepare the data for ggplot2 Huber plot
+  # by combining all three components: original data, index profile, reference circle
+  # the slope for the best projection is included as a column in `idx_profile_dt`
+  prep_obj <- prep_huber_workhorse(data[1:2], index_fun)
+  prep_res <- prep_obj$idx_df
+
+  # get the original data
+  orig_df <- prep_obj$data |> dplyr::mutate(type = "original")
+  colnames(orig_df) <- c("x", "y", "type")
+
+  # compute the idx_profile data
+  idx_profile_dt <- prep_res |>
     dplyr::mutate(
       range = round(max(index) - min(index), 5),
       idx_scaled = (index - min(index))/range * 2 + 3,
       x = idx_scaled * cos(theta),
       y = idx_scaled * sin(theta))
 
-  sel_idx <- which(res$index[1:360] > signif(max(res$index), 6) - 1e-06)
+  sel_idx <- which(prep_res$index > signif(max(prep_res$index), 6) - 1e-06)
   theta_best <- pi/180 * (sel_idx - 1)
-  proj_df <- tibble::tibble(x = cos(theta_best) * data[, 1] + sin(theta_best) * data[, 2])
+  idx_profile_dt <- idx_profile_dt |> dplyr::select(x, y) |>
+    dplyr::mutate(slope = sin(theta_best)/cos(theta_best), type = "idx_profile")
 
-  res2 <- dplyr::bind_rows(res |> dplyr::select(x, y)) |>
-    dplyr::mutate(slope = sin(theta_best)/cos(theta_best))
+  # compute the reference circle data
+  circle_df <- prep_res |>
+    dplyr::mutate(x = 4 * cos(theta), y = 4 * sin(theta), type = "circle") |>
+    dplyr::select(x, y, type)
 
-  theta <- pi/180 * (0:(nrow(res2) - 1))
-  res1 <- res2 |> dplyr::mutate(type = "huber", linetype = "solid", group = 1)
-  res2 <- res2 |> dplyr::mutate(
-    x = 4 * cos(theta),
-    y = 4 * sin(theta),
-    type = "circle", linetype = "dashed", group = 2)
-  orig_df <- data |> dplyr::select(x, y) |>
-    dplyr::mutate(type = "original", group = 3, linetype = "solid")
-  res <- dplyr::bind_rows(res1, res2, orig_df)
-
-  res
-  #return(list(idx_df = res, proj_df = proj_df, slope = slope))
-
+  dplyr::bind_rows(orig_df, idx_profile_dt, circle_df)
 }
+
 
 #' @rdname huber
 #' @export
@@ -272,4 +297,4 @@ theme_huber <- function(...) {
       complete = TRUE
     )
 }
-globalVariables(c("i", "theta", "proj_data", "idx_scaled"))
+globalVariables(c("i", "theta", "proj_data", "idx_scaled", "type"))
