@@ -22,7 +22,10 @@ Main diagnostic plotting functions
 - [`flip_sign()`](https://huizezhang-sherry.github.io/ferrn/reference/pca-helper.md)
   [`compute_pca()`](https://huizezhang-sherry.github.io/ferrn/reference/pca-helper.md)
   : Helper functions for \`explore_space_pca()\`
-- [`geom_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
+- [`StatHuber`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
+  [`stat_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
+  [`geom_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
+  [`GeomHuber`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   [`prep_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   [`theme_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   : Create Huber plots with ggplot2

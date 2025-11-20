@@ -11,22 +11,64 @@ geom layers in ggplot2.
 ## Usage
 
 ``` r
-geom_huber(
+StatHuber
+
+stat_huber(
   mapping = NULL,
   data = NULL,
-  stat = "identity",
+  geom = "path",
   position = "identity",
   ...,
-  index_fun,
+  index.fun,
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
 )
 
-prep_huber(data, index)
+geom_huber(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  index.fun,
+  ref.circle.color = NULL,
+  ref.circle.colour = NULL,
+  ref.circle.linetype = "dashed",
+  ref.circle.linewidth = NULL,
+  idx.max.color = NULL,
+  idx.max.colour = NULL,
+  idx.max.linetype = "dashed",
+  idx.max.linewidth = NULL,
+  idx.profile.color = NULL,
+  idx.profile.colour = NULL,
+  idx.profile.linetype = NULL,
+  idx.profile.linewidth = NULL,
+  proj.points.color = NULL,
+  proj.points.colour = NULL,
+  proj.points.stroke = NULL,
+  proj.points.alpha = NULL,
+  proj.points.size = NULL,
+  proj.points.shape = NULL,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  ...
+)
+
+GeomHuber
+
+prep_huber(data, index_fun)
 
 theme_huber(...)
 ```
+
+## Format
+
+An object of class `StatHuber` (inherits from `Stat`, `ggproto`, `gg`)
+of length 3.
+
+An object of class `GeomHuber` (inherits from `Geom`, `ggproto`, `gg`)
+of length 4.
 
 ## Arguments
 
@@ -56,23 +98,23 @@ theme_huber(...)
   data. A `function` can be created from a `formula` (e.g.
   `~ head(.x, 10)`).
 
-- stat:
+- geom:
 
-  The statistical transformation to use on the data for this layer. When
-  using a `geom_*()` function to construct a layer, the `stat` argument
-  can be used to override the default coupling between geoms and stats.
-  The `stat` argument accepts the following:
+  The geometric object to use to display the data for this layer. When
+  using a `stat_*()` function to construct a layer, the `geom` argument
+  can be used to override the default coupling between stats and geoms.
+  The `geom` argument accepts the following:
 
-  - A `Stat` ggproto subclass, for example `StatCount`.
+  - A `Geom` ggproto subclass, for example `GeomPoint`.
 
-  - A string naming the stat. To give the stat as a string, strip the
-    function name of the `stat_` prefix. For example, to use
-    [`stat_count()`](https://ggplot2.tidyverse.org/reference/geom_bar.html),
-    give the stat as `"count"`.
+  - A string naming the geom. To give the geom as a string, strip the
+    function name of the `geom_` prefix. For example, to use
+    [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html),
+    give the geom as `"point"`.
 
-  - For more information and other ways to specify the stat, see the
+  - For more information and other ways to specify the geom, see the
     [layer
-    stat](https://ggplot2.tidyverse.org/reference/layer_stats.html)
+    geom](https://ggplot2.tidyverse.org/reference/layer_geoms.html)
     documentation.
 
 - position:
@@ -134,6 +176,10 @@ theme_huber(...)
     glyphs](https://ggplot2.tidyverse.org/reference/draw_key.html), to
     change the display of the layer in the legend.
 
+- index.fun, index_fun:
+
+  a function, the projection pursuit index function, see examples
+
 - na.rm:
 
   If `FALSE`, the default, missing values are removed with a warning. If
@@ -156,9 +202,44 @@ theme_huber(...)
   plot specification, e.g.
   [`annotation_borders()`](https://ggplot2.tidyverse.org/reference/annotation_borders.html).
 
-- index:
+- stat:
 
-  a function, the projection pursuit index function, see examples
+  The statistical transformation to use on the data for this layer. When
+  using a `geom_*()` function to construct a layer, the `stat` argument
+  can be used to override the default coupling between geoms and stats.
+  The `stat` argument accepts the following:
+
+  - A `Stat` ggproto subclass, for example `StatCount`.
+
+  - A string naming the stat. To give the stat as a string, strip the
+    function name of the `stat_` prefix. For example, to use
+    [`stat_count()`](https://ggplot2.tidyverse.org/reference/geom_bar.html),
+    give the stat as `"count"`.
+
+  - For more information and other ways to specify the stat, see the
+    [layer
+    stat](https://ggplot2.tidyverse.org/reference/layer_stats.html)
+    documentation.
+
+- ref.circle.color, ref.circle.colour, ref.circle.linetype,
+  ref.circle.linewidth:
+
+  Default aesthetics for the reference circle
+
+- idx.max.color, idx.max.colour, idx.max.linetype, idx.max.linewidth:
+
+  Default aesthetics for the line indicating the best projection
+  direction
+
+- idx.profile.color, idx.profile.colour, idx.profile.linetype,
+  idx.profile.linewidth:
+
+  Default aesthetics for the index profile line
+
+- proj.points.color, proj.points.colour, proj.points.stroke,
+  proj.points.alpha, proj.points.size, proj.points.shape:
+
+  Default aesthetics for the projected data points
 
 ## Details
 
@@ -195,7 +276,7 @@ randu_df <- randu_std[c(1,4)]
 
 ggplot()  +
   geom_huber(data = randu_df, aes(x = x, y = yz),
-             index_fun = norm_bin(nr = nrow(randu_df))) +
+             index.fun = norm_bin(nr = nrow(randu_df))) +
   coord_fixed() +
   theme_huber()
 
