@@ -1,14 +1,15 @@
+library(ggplot2)
+library(tourr)
+library(ash)
+data(randu)
+randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
+randu_std$yz <- sqrt(35)/6*randu_std$y - randu_std$z/6
+randu_df <- randu_std[c(1,4)]
+
+
 test_that("basic huber plot", {
   skip_on_cran()
   skip_if_not_installed("vdiffr")
-
-  library(ggplot2)
-  library(tourr)
-  library(ash)
-  data(randu)
-  randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
-  randu_std$yz <- sqrt(35)/6*randu_std$y - randu_std$z/6
-  randu_df <- randu_std[c(1,4)]
 
   p1 <- ggplot()  +
     geom_huber(data = randu_df, aes(x = x, y = yz),
@@ -22,15 +23,6 @@ test_that("basic huber plot", {
 
 test_that("geom_huber parameter sweep snapshot", {
   skip_if_not_installed("vdiffr")
-
-
-  library(ggplot2)
-  library(tourr)
-  library(ash)
-  data(randu)
-  randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
-  randu_std$yz <- sqrt(35)/6*randu_std$y - randu_std$z/6
-  randu_df <- randu_std[c(1,4)]
 
   base <- ggplot(randu_df, aes(x = x, y = yz)) +
     coord_fixed() +
@@ -59,4 +51,18 @@ test_that("geom_huber parameter sweep snapshot", {
     )
 
   vdiffr::expect_doppelganger("geom_huber-all-parameters", p)
+})
+
+test_that("huber theme variations", {
+  randu_huber_best <- prep_huber_best_proj(
+    randu_df, index_fun = norm_bin(nr = nrow(randu_df))
+  )
+  p1 <- randu_huber_best |>
+    ggplot() +
+    geom_histogram(aes(x = x), breaks = seq(-2.2, 2.4, 0.12)) +
+    xlab("") + ylab("") +
+    theme_bw() +
+    theme(axis.text.y = element_blank())
+
+  vdiffr::expect_doppelganger("huber-histogram", p1)
 })

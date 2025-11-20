@@ -92,6 +92,14 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
                    index = tourr::holes(), raw_data = boa5) %>% 
   explore_space_pca(group = method, details = TRUE)  +
   scale_color_discrete_botanical()
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the ferrn package.
+#>   Please report the issue at
+#>   <https://github.com/huizezhang-sherry/ferrn/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 <img src="man/figures/README-pca-plot-1.png" width="100%" />
@@ -108,17 +116,28 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
 ```
 
 <p float="center">
+
 <img src="man/figures/tour.gif">
 </p>
+
 <!-- ## Calculate PP index scores -->
+
 <!-- Properties of PP index described in @laa_using_2020s includes smoothness, squintability, flexibility, rotation invariance, and speed. Here implementations are provided to calculate smoothness and squintability scores.  -->
+
 <!-- ```{r} -->
+
 <!-- # define the holes index as per tourr::holes -->
+
 <!-- holes <- tourr::holes -->
+
 <!-- basis_smoothness <- sample_bases(idx = "holes") -->
+
 <!-- calc_smoothness(basis_smoothness) -->
+
 <!-- basis_squint <- sample_bases(idx = "holes", n_basis = 100, step_size = 0.01, min_proj_dist = 1.5) -->
+
 <!-- calc_squintability(basis_squint, method = "ks", bin_width = 0.01) -->
+
 <!-- ``` -->
 
 # Reference

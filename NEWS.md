@@ -1,3 +1,8 @@
+# ferrn 0.3.0
+
+* New ggplot2 implementation to plot the huber plot: `geom_huber()`
+* New functionalities to calculate smoothness and squintability: `calc_smoothness()` and `calc_squintability()`
+
 # ferrn 0.2.0
 
 # ferrn 0.1.0

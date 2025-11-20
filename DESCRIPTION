@@ -11,11 +11,11 @@ Authors@R: c(
 Description: Diagnostic plots for optimisation, with a focus on projection pursuit. These show paths the optimiser 
     takes in the high-dimensional space in multiple ways: by reducing the dimension using principal component analysis, and
     also using the tour to show the path on the high-dimensional space. Several botanical colour palettes are included, reflecting the 
-    name of the package. A paper describing the methodology can be found at <https://journal.r-project.org/archive/2021/RJ-2021-105/index.html>.
+    name of the package. A paper describing the methodology can be found at <https://journal.r-project.org/articles/RJ-2021-105/index.html>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/huizezhang-sherry/ferrn/, https://huizezhang-sherry.github.io/ferrn
+URL: https://github.com/huizezhang-sherry/ferrn/, https://huizezhang-sherry.github.io/ferrn/
 BugReports: https://github.com/huizezhang-sherry/ferrn/issues
 Imports: 
     rlang (>= 0.1.2),
@@ -37,7 +37,7 @@ Imports:
     GpGp
 RoxygenNote: 7.3.3
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1.0)
 Suggests: 
     roxygen2,
     covr,

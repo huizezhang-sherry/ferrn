@@ -1,5 +1,5 @@
 ## Test environments
-* local R installation, R 4.1.2 (2022-11-01)
+* local R installation, R 4.5.0 (2025-04-11)
 * Ubuntu Linux 20.04.1 LTS, R-release, GCC
 * Fedora Linux, R-devel, clang, gfortran
 * Windows Server 2022, R-devel, 64 bit
