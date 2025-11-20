@@ -20,7 +20,11 @@
 #'    }
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_path
-#' @param index a function, the projection pursuit index function, see examples
+#' @param index.fun,index_fun a function, the projection pursuit index function, see examples
+#' @param ref.circle.color,ref.circle.colour,ref.circle.linetype,ref.circle.linewidth Default aesthetics for the reference circle
+#' @param idx.max.color,idx.max.colour,idx.max.linetype,idx.max.linewidth Default aesthetics for the line indicating the best projection direction
+#' @param idx.profile.color,idx.profile.colour,idx.profile.linetype,idx.profile.linewidth Default aesthetics for the index profile line
+#' @param proj.points.color,proj.points.colour,proj.points.stroke,proj.points.alpha,proj.points.size,proj.points.shape Default aesthetics for the projected data points
 #' @rdname huber
 #' @export
 #' @examples
@@ -35,7 +39,7 @@
 #'
 #' ggplot()  +
 #'   geom_huber(data = randu_df, aes(x = x, y = yz),
-#'              index_fun = norm_bin(nr = nrow(randu_df))) +
+#'              index.fun = norm_bin(nr = nrow(randu_df))) +
 #'   coord_fixed() +
 #'   theme_huber()
 #'
@@ -44,35 +48,17 @@
 #' #   xlab("") + ylab("") +
 #' #   theme_bw() +
 #' #   theme(axis.text.y = element_blank())
-geom_huber <- function(mapping = NULL, data = NULL, stat = "identity",
-                       position = "identity", ..., index_fun,
-                       na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
-  #browser()
-  index_fun <-  match.fun(index_fun)
-  ggplot2::layer(
-    data = data,
-    mapping = mapping,
-    stat = "huber",
-    geom = GeomHuber,
-    position = position,
-    show.legend = show.legend,
-    inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, index_fun = index_fun, ...)
-  )
-}
-
-StatHuber <- ggplot2::ggproto(
-  "StatHuber",
-  ggplot2::Stat,
-  compute_group = function(data, scales, index_fun) {
-    prep_huber(data, index_fun)
-  },
-
-  required_aes = c("x", "y")
+StatHuber <- ggplot2::ggproto("StatHuber", ggplot2::Stat,
+                              compute_group = function(data, scales, index.fun) {
+                                prep_huber(data, index.fun)
+                              },
+                              required_aes = c("x", "y")
 )
 
+#' @export
+#' @rdname huber
 stat_huber <- function(mapping = NULL, data = NULL, geom = "path",
-                       position = "identity", ..., index_fun,
+                       position = "identity", ..., index.fun,
                        na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
   ggplot2::layer(
     stat = StatHuber,
@@ -82,38 +68,145 @@ stat_huber <- function(mapping = NULL, data = NULL, geom = "path",
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, index_fun = index_fun, ...)
+    params = list(na.rm = na.rm, index.fun = index.fun, ...)
   )
 }
 
+#' @export
+#' @rdname huber
+geom_huber <- function(mapping = NULL,
+                       data = NULL,
+                       stat = "identity",
+                       position = "identity",
+                       index.fun,
+                       ref.circle.color = NULL,
+                       ref.circle.colour = NULL,
+                       ref.circle.linetype = "dashed",
+                       ref.circle.linewidth = NULL,
 
+                       idx.max.color = NULL,
+                       idx.max.colour = NULL,
+                       idx.max.linetype = "dashed",
+                       idx.max.linewidth = NULL,
+
+                       idx.profile.color = NULL,
+                       idx.profile.colour = NULL,
+                       idx.profile.linetype = NULL,
+                       idx.profile.linewidth = NULL,
+
+                       proj.points.color = NULL,
+                       proj.points.colour = NULL,
+                       proj.points.stroke = NULL,
+                       proj.points.alpha = NULL,
+                       proj.points.size = NULL,
+                       proj.points.shape = NULL,
+
+
+                       na.rm = FALSE,
+                       show.legend = NA,
+                       inherit.aes = TRUE,
+                       ...) {
+  index.fun <-  match.fun(index.fun)
+
+  ref_circle_gp <- list(
+    colour = ref.circle.color %||% ref.circle.colour,
+    linetype = ref.circle.linetype,
+    linewidth = ref.circle.linewidth
+  )
+
+  idx_max_gp <- list(
+    colour = idx.max.color %||% idx.max.colour,
+    linetype = idx.max.linetype,
+    linewidth = idx.max.linewidth
+  )
+
+  idx_profile_gp <- list(
+    colour = idx.profile.color %||% idx.profile.colour,
+    linetype = idx.profile.linetype,
+    linewidth = idx.profile.linewidth
+  )
+
+  proj_points_gp <- list(
+    colour = proj.points.color %||% proj.points.colour,
+    stroke = proj.points.stroke,
+    alpha = proj.points.alpha,
+    size = proj.points.size,
+    shape = proj.points.shape
+
+  )
+
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = "huber",
+    geom = GeomHuber,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      index.fun = index.fun,
+      ref_circle_gp = ref_circle_gp,
+      idx_max_gp = idx_max_gp,
+      idx_profile_gp = idx_profile_gp,
+      proj_points_gp = proj_points_gp,
+      na.rm = na.rm,
+      ...)
+  )
+}
+
+#' @export
+#' @rdname huber
 GeomHuber <- ggplot2::ggproto(
   "GeomHuber",
   ggplot2::Geom,
 
-  draw_panel = function(data, panel_params, coord, index_fun, lineend = "butt", ...) {
-    data_circle <- data |>
-      dplyr::filter(type == "circle") |>
-      dplyr::mutate(linetype = "dashed")
-    data_huber <- data |> dplyr::filter(type == "huber")
-    data_orig <- data |> dplyr::filter(type == "original")
-    data_abline <- data_circle[1, ] |> dplyr::mutate(intercept = 0)
+  draw_panel = function(data, panel_params, coord, index.fun,
+                        lineend = "butt", ref_circle_gp = NULL,
+                        idx_max_gp = NULL, idx_profile_gp = NULL,
+                        proj_points_gp = NULL) {
+
+    data_ref_circle <- data[data$type == "circle",]
+    data_ref_circle$colour <- ref_circle_gp$colour %||% data_ref_circle$colour[1]
+    data_ref_circle$linetype <- ref_circle_gp$linetype %||% data_ref_circle$linetype[1]
+    data_ref_circle$linewidth <- ref_circle_gp$linewidth %||% data_ref_circle$linewidth[1]
+
+
+    data_idx_profile <- data[data$type == "huber",]
+    data_idx_profile$colour <- idx_profile_gp$colour %||% data_idx_profile$colour[1]
+    data_idx_profile$linetype <- idx_profile_gp$linetype %||% data_idx_profile$linetype[1]
+    data_idx_profile$linewidth <- idx_profile_gp$linewidth %||% data_idx_profile$linewidth[1]
+
+
+    data_proj_points <- data[data$type == "original",]
+    data_proj_points$colour <- proj_points_gp$colour %||% data_proj_points$colour[1]
+    data_proj_points$shape <- proj_points_gp$shape %||% data_proj_points$shape[1]
+    data_proj_points$stroke <- proj_points_gp$stroke %||% data_proj_points$stroke[1]
+    data_proj_points$alpha <- proj_points_gp$alpha %||% data_proj_points$alpha[1]
+    data_proj_points$size <- proj_points_gp$size %||% data_proj_points$size[1]
+
+
+    data_idx_max <- data_ref_circle[1, ]
+    data_idx_max$intercept <- 0
+    data_idx_max$colour <- idx_max_gp$colour %||% data_idx_max$colour[1]
+    data_idx_max$linetype <- idx_max_gp$linetype %||% data_idx_max$linetype[1]
+    data_idx_max$linewidth <- idx_max_gp$linewidth %||% data_idx_max$linewidth[1]
 
     grid::gList(
-      ggplot2::GeomPath$draw_panel(data_circle, panel_params, coord),
-      ggplot2::GeomPath$draw_panel(data_huber, panel_params, coord),
-      ggplot2::GeomPoint$draw_panel(data_orig, panel_params, coord),
-      ggplot2::GeomAbline$draw_panel(data_abline, panel_params, coord)
+      ggplot2::GeomPath$draw_panel(data_ref_circle, panel_params, coord),
+      ggplot2::GeomPath$draw_panel(data_idx_profile, panel_params, coord),
+      ggplot2::GeomPoint$draw_panel(data_proj_points, panel_params, coord),
+      ggplot2::GeomAbline$draw_panel(data_idx_max, panel_params, coord)
     )
 
   },
 
-
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(
-    colour = "black", linewidth = 0.5, linetype = "solid", alpha = 1,
-    index = NULL, fill = NA, pch = 19, size = 1,
-  )
+    colour = from_theme(colour %||% scales::col_mix(ink, paper, 0.2)),
+    fill = from_theme(fill %||% paper),
+    size = from_theme(pointsize),
+    linewidth = 0.5, linetype = "dashed", alpha = 1,
+    weight = 1, shape = 19)
 )
 
 huber_data_setup <- function(data, param){
@@ -130,8 +223,8 @@ huber_data_setup <- function(data, param){
 
 #' @export
 #' @rdname huber
-prep_huber <- function(data, index){
-  index_f <- index
+prep_huber <- function(data, index_fun){
+  index_f <- index_fun
   res <- tibble::tibble(i = 0:360, theta = pi/180 * i) |>
     dplyr::rowwise() |>
     dplyr::mutate(

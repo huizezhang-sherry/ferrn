@@ -384,4 +384,4 @@ est_theta2_theta3_interatively <- function(data){
 
 globalVariables(c("dist", "dist_bin", "dist", "y", "x", "dy",
                   "max_d", "max_x", "aa", "measure", "index", "theta1",
-                  "theta2", "theta3", "theta4", "dd"))
+                  "theta2", "theta3", "theta4", "dd", "lx_max", "lx_max_half"))
