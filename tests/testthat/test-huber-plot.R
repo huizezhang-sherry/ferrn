@@ -22,6 +22,7 @@ test_that("basic huber plot", {
 })
 
 test_that("geom_huber parameter sweep snapshot", {
+  skip_on_cran()
   skip_if_not_installed("vdiffr")
 
   base <- ggplot(randu_df, aes(x = x, y = yz)) +
@@ -54,6 +55,7 @@ test_that("geom_huber parameter sweep snapshot", {
 })
 
 test_that("huber theme variations", {
+  skip_on_cran()
   randu_huber_best <- prep_huber_best_proj(
     randu_df, index_fun = norm_bin(nr = nrow(randu_df))
   )
