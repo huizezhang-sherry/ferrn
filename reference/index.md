@@ -26,7 +26,7 @@ Main diagnostic plotting functions
   [`stat_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   [`geom_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   [`GeomHuber`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
-  [`prep_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
+  [`prep_huber_best_proj()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   [`theme_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
   : Create Huber plots with ggplot2
 

@@ -41,7 +41,7 @@ geom_huber(
   idx.max.linewidth = NULL,
   idx.profile.color = NULL,
   idx.profile.colour = NULL,
-  idx.profile.linetype = NULL,
+  idx.profile.linetype = "solid",
   idx.profile.linewidth = NULL,
   proj.points.color = NULL,
   proj.points.colour = NULL,
@@ -57,7 +57,7 @@ geom_huber(
 
 GeomHuber
 
-prep_huber(data, index_fun)
+prep_huber_best_proj(data, index_fun)
 
 theme_huber(...)
 ```
@@ -178,7 +178,7 @@ of length 4.
 
 - index.fun, index_fun:
 
-  a function, the projection pursuit index function, see examples
+  the projection pursuit index function, see examples
 
 - na.rm:
 
@@ -269,21 +269,27 @@ library(ggplot2)
 library(tourr)
 library(ash)
 data(randu)
+# simplify the randu data into 2D for illustration
 randu_std <- as.data.frame(apply(randu, 2, function(x) (x-mean(x))/sd(x)))
 randu_std$yz <- sqrt(35)/6*randu_std$y-randu_std$z/6
 randu_df <- randu_std[c(1,4)]
-# randu_huber <- prep_huber(randu_df, index = norm_bin(nr = nrow(randu_df)))
 
-ggplot()  +
-  geom_huber(data = randu_df, aes(x = x, y = yz),
-             index.fun = norm_bin(nr = nrow(randu_df))) +
+# main example: Huber plot with geom_huber()
+randu_df |>
+  ggplot()  +
+  geom_huber(aes(x = x, y = yz), index.fun = norm_bin(nr = nrow(randu_df))) +
   coord_fixed() +
   theme_huber()
 
 
-# ggplot(randu_huber$proj_df, aes(x = x)) +
-#   geom_histogram(breaks = seq(-2.2, 2.4, 0.12)) +
-#   xlab("") + ylab("") +
-#   theme_bw() +
-#   theme(axis.text.y = element_blank())
+# compute the best projection data for histogram
+randu_huber_best <- prep_huber_best_proj(
+  randu_df, index_fun = norm_bin(nr = nrow(randu_df))
+  )
+randu_huber_best |>
+  ggplot() +
+  geom_histogram(aes(x = x), breaks = seq(-2.2, 2.4, 0.12)) +
+  xlab("") + ylab("") +
+  theme_bw() +
+  theme(axis.text.y = element_blank())
 ```

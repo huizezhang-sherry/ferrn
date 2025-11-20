@@ -83,6 +83,14 @@ bind_rows(holes_1d_geo, holes_1d_better) %>%
                    index = tourr::holes(), raw_data = boa5) %>% 
   explore_space_pca(group = method, details = TRUE)  +
   scale_color_discrete_botanical()
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> ℹ The deprecated feature was likely used in the ferrn package.
+#>   Please report the issue at
+#>   <https://github.com/huizezhang-sherry/ferrn/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 ![](reference/figures/README-pca-plot-1.png)

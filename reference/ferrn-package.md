@@ -7,7 +7,7 @@ analysis, and also using the tour to show the path on the
 high-dimensional space. Several botanical colour palettes are included,
 reflecting the name of the package. A paper describing the methodology
 can be found at
-<https://journal.r-project.org/archive/2021/RJ-2021-105/index.html>.
+<https://journal.r-project.org/articles/RJ-2021-105/index.html>.
 
 ## See also
 
@@ -15,7 +15,7 @@ Useful links:
 
 - <https://github.com/huizezhang-sherry/ferrn/>
 
-- <https://huizezhang-sherry.github.io/ferrn>
+- <https://huizezhang-sherry.github.io/ferrn/>
 
 - Report bugs at <https://github.com/huizezhang-sherry/ferrn/issues>
 

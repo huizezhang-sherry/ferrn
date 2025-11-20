@@ -1,5 +1,14 @@
 # Changelog
 
+## ferrn 0.3.0
+
+- New ggplot2 implementation to plot the huber plot:
+  [`geom_huber()`](https://huizezhang-sherry.github.io/ferrn/reference/huber.md)
+- New functionalities to calculate smoothness and squintability:
+  [`calc_smoothness()`](https://huizezhang-sherry.github.io/ferrn/reference/optim.md)
+  and
+  [`calc_squintability()`](https://huizezhang-sherry.github.io/ferrn/reference/optim.md)
+
 ## ferrn 0.2.0
 
 ## ferrn 0.1.0
